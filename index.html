@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FL3 Business Dashboard</title>
+<style>
+  :root {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --border: #334155;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --accent: #f59e0b;
+    --green: #22c55e;
+    --red: #ef4444;
+    --blue: #3b82f6;
+    --purple: #a855f7;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 24px;
+    min-height: 100vh;
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .header .updated {
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+  .grid.full { grid-template-columns: 1fr; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .card h2 {
+    font-size: 18px;
+    margin-bottom: 16px;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card h2 .icon { font-size: 20px; }
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .kpi {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+  }
+  .kpi .value {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .kpi .label {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .kpi .trend {
+    font-size: 14px;
+    margin-top: 8px;
+  }
+  .kpi .trend.up { color: var(--green); }
+  .kpi .trend.down { color: var(--red); }
+  .kpi .trend.flat { color: var(--muted); }
+  .asset-list { list-style: none; }
+  .asset-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .asset-item:last-child { border-bottom: none; }
+  .asset-name { font-size: 14px; }
+  .asset-name a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--muted);
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .asset-name a:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+  .asset-name .no-link {
+    color: var(--muted);
+    opacity: 0.7;
+  }
+  .status-badge {
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .status-complete { background: rgba(34,197,94,0.15); color: var(--green); }
+  .status-in_progress { background: rgba(59,130,246,0.15); color: var(--blue); }
+  .status-not_started { background: rgba(148,163,184,0.15); color: var(--muted); }
+  .status-review { background: rgba(168,85,247,0.15); color: var(--purple); }
+  .progress-bar {
+    width: 100%;
+    height: 12px;
+    background: var(--bg);
+    border-radius: 6px;
+    margin: 16px 0 8px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: 6px;
+    transition: width 0.5s ease;
+  }
+  .progress-fill.green { background: var(--green); }
+  .progress-fill.blue { background: var(--blue); }
+  .progress-fill.amber { background: var(--accent); }
+  .progress-text {
+    font-size: 13px;
+    color: var(--muted);
+    text-align: right;
+  }
+  .launch-countdown {
+    text-align: center;
+    padding: 24px;
+  }
+  .countdown-value {
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .countdown-label {
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .goal-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .goal-label { font-size: 14px; }
+  .goal-values {
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .chart-placeholder {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-style: italic;
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    margin-top: 12px;
+  }
+  .metric-bar-container { margin-bottom: 16px; }
+  .metric-bar-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+  .instructions {
+    background: rgba(245,158,11,0.1);
+    border: 1px solid rgba(245,158,11,0.3);
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .instructions code {
+    background: var(--bg);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: var(--accent);
+  }
+
+  /* Content Creation Pipeline */
+  .content-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .content-tab {
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .content-tab:hover { color: var(--text); }
+  .content-tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+  .content-view { display: none; }
+  .content-view.active { display: block; }
+
+  .kanban-board {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    margin-top: 8px;
+  }
+  .kanban-column {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    min-height: 200px;
+  }
+  .kanban-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .kanban-title {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text);
+  }
+  .kanban-count {
+    font-size: 12px;
+    background: var(--card);
+    color: var(--muted);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+  }
+  .kanban-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .kanban-empty {
+    font-size: 12px;
+    color: var(--muted);
+    text-align: center;
+    padding: 24px 8px;
+    font-style: italic;
+    opacity: 0.6;
+  }
+
+  .content-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px;
+    transition: border-color 0.2s;
+  }
+  .content-card:hover {
+    border-color: var(--accent);
+  }
+  .content-card-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+  .content-type-badge {
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .type-youtube { background: rgba(239,68,68,0.15); color: var(--red); }
+  .type-blog { background: rgba(168,85,247,0.15); color: var(--purple); }
+  .type-social { background: rgba(59,130,246,0.15); color: var(--blue); }
+  .type-newsletter { background: rgba(34,197,94,0.15); color: var(--green); }
+  .type-email-sequence { background: rgba(245,158,11,0.15); color: var(--accent); }
+  .type-ad-copy { background: rgba(236,72,153,0.15); color: #ec4899; }
+  .type-webinar { background: rgba(139,92,246,0.15); color: #8b5cf6; }
+  .type-sales-page { background: rgba(34,197,94,0.15); color: var(--green); }
+
+  .content-card-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+  .content-card-title a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px dashed transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .content-card-title a:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+  .content-card-title .untitled {
+    color: var(--muted);
+    font-style: italic;
+    font-weight: 400;
+  }
+  .content-card-steps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 12px;
+    margin-bottom: 8px;
+  }
+  .step-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    font-size: 11px;
+    color: var(--muted);
+    user-select: none;
+    transition: color 0.15s;
+  }
+  .step-checkbox:hover { color: var(--text); }
+  .step-checkbox input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 3px;
+    background: var(--bg);
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .step-checkbox input[type="checkbox"]:checked {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  .step-checkbox input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    left: 3.5px;
+    top: 1px;
+    width: 4px;
+    height: 7px;
+    border: solid var(--bg);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  .step-checkbox.checked { color: var(--accent); }
+  .step-checkbox.checked span { text-decoration: line-through; opacity: 0.7; }
+
+  .content-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .content-card-week { font-weight: 600; }
+  .content-card-due { display: flex; align-items: center; gap: 4px; }
+  .content-card-due.overdue { color: var(--red); }
+  .content-card-due.today { color: var(--accent); }
+
+  /* Markdown Preview Overlay */
+  .md-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 1000;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(4px);
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 24px;
+    overflow-y: auto;
+  }
+  .md-overlay.active { display: flex; }
+  .md-panel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 800px;
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+    position: relative;
+  }
+  .md-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: var(--card);
+    border-radius: 16px 16px 0 0;
+    z-index: 1;
+  }
+  .md-panel-header h3 {
+    font-size: 16px;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .md-close-btn {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .md-close-btn:hover { color: var(--text); border-color: var(--accent); }
+  .md-panel-body {
+    padding: 24px;
+    line-height: 1.8;
+    font-size: 15px;
+    color: var(--text);
+  }
+  .md-panel-body h1 { font-size: 24px; font-weight: 700; color: var(--accent); margin: 0 0 16px; line-height: 1.3; }
+  .md-panel-body h2 { font-size: 20px; font-weight: 700; color: var(--text); margin: 28px 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+  .md-panel-body h3 { font-size: 17px; font-weight: 600; color: var(--text); margin: 20px 0 8px; }
+  .md-panel-body p { margin: 0 0 16px; }
+  .md-panel-body strong { color: var(--accent); font-weight: 700; }
+  .md-panel-body em { color: var(--muted); font-style: italic; }
+  .md-panel-body ul, .md-panel-body ol { margin: 0 0 16px; padding-left: 24px; }
+  .md-panel-body li { margin-bottom: 6px; }
+  .md-panel-body blockquote {
+    border-left: 3px solid var(--accent);
+    padding: 8px 16px;
+    margin: 0 0 16px;
+    color: var(--muted);
+    background: rgba(245,158,11,0.05);
+    border-radius: 0 8px 8px 0;
+  }
+  .md-panel-body code {
+    background: var(--bg);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+    color: var(--accent);
+  }
+  .md-panel-body pre {
+    background: var(--bg);
+    padding: 16px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 0 0 16px;
+    border: 1px solid var(--border);
+  }
+  .md-panel-body pre code { padding: 0; background: none; }
+  .md-panel-body hr { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+  .md-panel-body a { color: var(--blue); text-decoration: none; border-bottom: 1px dashed var(--blue); }
+  .md-panel-body a:hover { color: var(--accent); border-color: var(--accent); }
+  .md-panel-body .meta-block {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .md-loading {
+    text-align: center;
+    padding: 60px 24px;
+    color: var(--muted);
+    font-style: italic;
+  }
+  .md-error {
+    text-align: center;
+    padding: 40px 24px;
+    color: var(--red);
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Freedom Life 3.0 Dashboard</h1>
+  <div class="updated">Last updated: <span id="lastUpdated">Loading...</span></div>
+</div>
+
+<!-- KPI Row -->
+<div class="kpi-row">
+  <div class="kpi">
+    <div class="value" id="kpiEmailList">--</div>
+    <div class="label">Email List Size</div>
+    <div class="trend flat" id="kpiEmailTrend">--</div>
+  </div>
+  <div class="kpi">
+    <div class="value" id="kpiRevenue">--</div>
+    <div class="label">Revenue</div>
+    <div class="trend flat" id="kpiRevenueTrend">--</div>
+  </div>
+  <div class="kpi">
+    <div class="value" id="kpiCourseSales">--</div>
+    <div class="label">Course Sales</div>
+    <div class="trend flat" id="kpiSalesTrend">--</div>
+  </div>
+  <div class="kpi">
+    <div class="value" id="kpiCPL">--</div>
+    <div class="label">Cost Per Lead</div>
+    <div class="trend flat" id="kpiCPLTrend">--</div>
+  </div>
+</div>
+
+<!-- Row 1: Launch Status + Launch Assets -->
+<div class="grid">
+
+  <!-- Launch Status -->
+  <div class="card">
+    <h2><span class="icon">&#x1F680;</span> Launch Status</h2>
+    <div id="launchStatus">
+      <div class="launch-countdown">
+        <div class="countdown-label" id="launchStatusText">Status: Planning</div>
+        <div class="countdown-value" id="launchCountdown">--</div>
+        <div class="countdown-label" id="launchCountdownLabel">Set launch dates to see countdown</div>
+      </div>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill amber" id="launchProgress" style="width: 0%"></div>
+    </div>
+    <div class="progress-text" id="launchProgressText">0% complete</div>
+  </div>
+
+  <!-- Launch Assets -->
+  <div class="card">
+    <h2><span class="icon">&#x1F4CB;</span> Launch Assets</h2>
+    <ul class="asset-list" id="assetList">
+      <li class="asset-item"><span>Loading...</span></li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- Row 2: Lead Magnet + Goals -->
+<div class="grid">
+
+  <!-- Lead Magnet Assets -->
+  <div class="card">
+    <h2><span class="icon">&#x1F9F2;</span> <span id="leadMagnetName">Lead Magnet</span></h2>
+    <ul class="asset-list" id="leadMagnetList">
+      <li class="asset-item"><span>Loading...</span></li>
+    </ul>
+    <div class="progress-bar">
+      <div class="progress-fill green" id="leadMagnetProgress" style="width: 0%"></div>
+    </div>
+    <div class="progress-text" id="leadMagnetProgressText">0% complete</div>
+  </div>
+
+  <!-- Goals Progress -->
+  <div class="card">
+    <h2><span class="icon">&#x1F3AF;</span> Goals Progress</h2>
+    <div id="goalsContainer">
+      <div class="metric-bar-container">
+        <div class="metric-bar-label">
+          <span>Email List</span>
+          <span id="goalEmail">0 / 2,000</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill blue" id="goalEmailBar" style="width: 0%"></div>
+        </div>
+      </div>
+      <div class="metric-bar-container">
+        <div class="metric-bar-label">
+          <span>Revenue</span>
+          <span id="goalRevenue">$0 / $10,000</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill green" id="goalRevenueBar" style="width: 0%"></div>
+        </div>
+      </div>
+      <div class="metric-bar-container">
+        <div class="metric-bar-label">
+          <span>Course Sales</span>
+          <span id="goalSales">0 / 20</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill amber" id="goalSalesBar" style="width: 0%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Row 3: Weekly Metrics (full width) -->
+<div class="grid full">
+  <div class="card">
+    <h2><span class="icon">&#x1F4CA;</span> Weekly Metrics</h2>
+    <div id="weeklyMetrics">
+      <div class="metric-bar-container">
+        <div class="metric-bar-label">
+          <span>Ad Spend</span>
+          <span id="metricAdSpend">$0</span>
+        </div>
+      </div>
+      <div class="metric-bar-container">
+        <div class="metric-bar-label">
+          <span>Leads Generated</span>
+          <span id="metricLeads">0</span>
+        </div>
+      </div>
+      <div class="metric-bar-container">
+        <div class="metric-bar-label">
+          <span>Email Open Rate</span>
+          <span id="metricOpenRate">0%</span>
+        </div>
+      </div>
+      <div class="metric-bar-container">
+        <div class="metric-bar-label">
+          <span>YouTube Views</span>
+          <span id="metricYTViews">0</span>
+        </div>
+      </div>
+      <div class="metric-bar-container">
+        <div class="metric-bar-label">
+          <span>Webinar Registrations</span>
+          <span id="metricWebReg">0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Row 4: Content Creation Pipeline (full width) -->
+<div class="grid full">
+  <div class="card">
+    <h2><span class="icon">&#x270D;&#xFE0F;</span> Content Creation Pipeline</h2>
+
+    <div class="content-tabs">
+      <button class="content-tab active" data-tab="weekly">Weekly Content</button>
+      <button class="content-tab" data-tab="launch">Launch Content</button>
+    </div>
+
+    <!-- Weekly Content Kanban -->
+    <div id="weeklyContentView" class="content-view active">
+      <div class="kanban-board">
+        <div class="kanban-column">
+          <div class="kanban-header">
+            <span class="kanban-title">Planned</span>
+            <span class="kanban-count" id="weeklyPlannedCount">0</span>
+          </div>
+          <div class="kanban-cards" id="weeklyPlannedCards"></div>
+        </div>
+        <div class="kanban-column">
+          <div class="kanban-header">
+            <span class="kanban-title">Drafted</span>
+            <span class="kanban-count" id="weeklyDraftedCount">0</span>
+          </div>
+          <div class="kanban-cards" id="weeklyDraftedCards"></div>
+        </div>
+        <div class="kanban-column">
+          <div class="kanban-header">
+            <span class="kanban-title">Filmed</span>
+            <span class="kanban-count" id="weeklyFilmedCount">0</span>
+          </div>
+          <div class="kanban-cards" id="weeklyFilmedCards"></div>
+        </div>
+        <div class="kanban-column">
+          <div class="kanban-header">
+            <span class="kanban-title">Edited</span>
+            <span class="kanban-count" id="weeklyEditedCount">0</span>
+          </div>
+          <div class="kanban-cards" id="weeklyEditedCards"></div>
+        </div>
+        <div class="kanban-column">
+          <div class="kanban-header">
+            <span class="kanban-title">Published</span>
+            <span class="kanban-count" id="weeklyPublishedCount">0</span>
+          </div>
+          <div class="kanban-cards" id="weeklyPublishedCards"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Launch Content Kanban -->
+    <div id="launchContentView" class="content-view">
+      <div class="kanban-board">
+        <div class="kanban-column">
+          <div class="kanban-header">
+            <span class="kanban-title">Planned</span>
+            <span class="kanban-count" id="launchPlannedCount">0</span>
+          </div>
+          <div class="kanban-cards" id="launchPlannedCards"></div>
+        </div>
+        <div class="kanban-column">
+          <div class="kanban-header">
+            <span class="kanban-title">Drafted</span>
+            <span class="kanban-count" id="launchDraftedCount">0</span>
+          </div>
+          <div class="kanban-cards" id="launchDraftedCards"></div>
+        </div>
+        <div class="kanban-column">
+          <div class="kanban-header">
+            <span class="kanban-title">Filmed</span>
+            <span class="kanban-count" id="launchFilmedCount">0</span>
+          </div>
+          <div class="kanban-cards" id="launchFilmedCards"></div>
+        </div>
+        <div class="kanban-column">
+          <div class="kanban-header">
+            <span class="kanban-title">Edited</span>
+            <span class="kanban-count" id="launchEditedCount">0</span>
+          </div>
+          <div class="kanban-cards" id="launchEditedCards"></div>
+        </div>
+        <div class="kanban-column">
+          <div class="kanban-header">
+            <span class="kanban-title">Published</span>
+            <span class="kanban-count" id="launchPublishedCount">0</span>
+          </div>
+          <div class="kanban-cards" id="launchPublishedCards"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Instructions -->
+<div class="instructions">
+  <strong>How to update this dashboard:</strong><br>
+  Run <code>/fl3-dashboard</code> in Claude Code to update metrics and launch status.<br>
+  Or manually edit <code>FL3-Content/metrics/dashboard-data.json</code>, then run <code>/fl3-dashboard sync</code> to regenerate the JS file, and refresh this page.<br>
+  Open this file in your browser: <code>FL3-Content/metrics/dashboard.html</code><br>
+  <strong>Multi-machine:</strong> This dashboard syncs via Dropbox. Data loads from <code>dashboard-data.js</code> which works on any machine with the shared folder.
+</div>
+
+<!-- Markdown Preview Overlay -->
+<div class="md-overlay" id="mdOverlay">
+  <div class="md-panel">
+    <div class="md-panel-header">
+      <h3 id="mdPanelTitle">Content Preview</h3>
+      <button class="md-close-btn" id="mdCloseBtn">&times;</button>
+    </div>
+    <div class="md-panel-body" id="mdPanelBody">
+      <div class="md-loading">Loading...</div>
+    </div>
+  </div>
+</div>
+
+<script src="dashboard-data.js"></script>
+<script>
+// Data loading: uses dashboard-data.js (synced via Dropbox, works in file:// mode)
+// Falls back to fetch of dashboard-data.json for HTTP mode
+// Checkbox state stored in localStorage as local cache only
+async function loadData() {
+  var data;
+
+  // Priority 1: dashboard-data.js sets window.FL3_DASHBOARD_DATA (works in file:// and http://)
+  if (window.FL3_DASHBOARD_DATA) {
+    data = JSON.parse(JSON.stringify(window.FL3_DASHBOARD_DATA));
+  } else {
+    // Priority 2: fetch JSON (http:// mode only)
+    try {
+      var response = await fetch('dashboard-data.json');
+      if (!response.ok) throw new Error('HTTP ' + response.status);
+      data = await response.json();
+    } catch (e) {
+      console.error('Could not load dashboard data. Make sure dashboard-data.js exists in the same folder.');
+      renderPlaceholder();
+      return;
+    }
+  }
+
+  // Merge checkbox state from localStorage if available (local cache for interactive clicks)
+  var stored = loadFromLocalStorage();
+  if (stored && stored.contentSchedule) {
+    mergeSteps(data, stored);
+  }
+  render(data);
+}
+
+function mergeSteps(target, source) {
+  if (!target.contentSchedule || !source.contentSchedule) return;
+  var tw = target.contentSchedule.weeklyContent || [];
+  var sw = source.contentSchedule.weeklyContent || [];
+  tw.forEach(function(week, wi) {
+    if (!sw[wi]) return;
+    (week.items || []).forEach(function(item, ii) {
+      if (sw[wi].items && sw[wi].items[ii] && sw[wi].items[ii].steps) {
+        item.steps = sw[wi].items[ii].steps;
+      }
+    });
+  });
+  var tl = target.contentSchedule.launchContent || [];
+  var sl = source.contentSchedule.launchContent || [];
+  tl.forEach(function(item, i) {
+    if (sl[i] && sl[i].steps) {
+      item.steps = sl[i].steps;
+    }
+  });
+}
+
+function renderAssetList(listEl, assets) {
+  listEl.innerHTML = '';
+  let complete = 0;
+  let total = 0;
+  for (const [key, asset] of Object.entries(assets)) {
+    total++;
+    if (asset.status === 'complete') complete++;
+    const li = document.createElement('li');
+    li.className = 'asset-item';
+    var nameHtml;
+    if (asset.path && asset.path.match(/\.md$/)) {
+      nameHtml = `<a href="#" class="md-preview-link" data-path="${asset.path}" data-title="${asset.label}">${asset.label}</a>`;
+    } else if (asset.path) {
+      nameHtml = `<a href="${asset.path}" title="Open ${asset.label}">${asset.label}</a>`;
+    } else {
+      nameHtml = `<span class="no-link">${asset.label}</span>`;
+    }
+    li.innerHTML = `<span class="asset-name">${nameHtml}</span><span class="status-badge status-${asset.status}">${asset.status.replace('_', ' ')}</span>`;
+    // Attach preview handler for .md links
+    var mdLink = li.querySelector('.md-preview-link');
+    if (mdLink) {
+      mdLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        openMdPreview(mdLink.dataset.path, mdLink.dataset.title);
+      });
+    }
+    listEl.appendChild(li);
+  }
+  return { complete, total };
+}
+
+function render(data) {
+  // Last updated
+  document.getElementById('lastUpdated').textContent = data.lastUpdated;
+
+  // KPIs from latest week
+  const latest = data.metrics.weeks[data.metrics.weeks.length - 1];
+  const prev = data.metrics.weeks.length > 1 ? data.metrics.weeks[data.metrics.weeks.length - 2] : null;
+
+  document.getElementById('kpiEmailList').textContent = latest.emailList.toLocaleString();
+  document.getElementById('kpiRevenue').textContent = '$' + latest.revenue.toLocaleString();
+  document.getElementById('kpiCourseSales').textContent = latest.courseSales;
+  document.getElementById('kpiCPL').textContent = latest.costPerLead > 0 ? '$' + latest.costPerLead.toFixed(2) : '--';
+
+  // Trends
+  if (prev) {
+    setTrend('kpiEmailTrend', latest.emailList, prev.emailList);
+    setTrend('kpiRevenueTrend', latest.revenue, prev.revenue);
+    setTrend('kpiSalesTrend', latest.courseSales, prev.courseSales);
+    setTrend('kpiCPLTrend', prev.costPerLead, latest.costPerLead); // reversed: lower is better
+  }
+
+  // Launch status
+  const launch = data.launch;
+  document.getElementById('launchStatusText').textContent = 'Status: ' + launch.status;
+
+  if (launch.cartOpen) {
+    const daysUntil = Math.ceil((new Date(launch.cartOpen) - new Date()) / (1000*60*60*24));
+    if (daysUntil > 0) {
+      document.getElementById('launchCountdown').textContent = daysUntil;
+      document.getElementById('launchCountdownLabel').textContent = 'days until cart opens';
+    } else if (launch.cartClose) {
+      const daysLeft = Math.ceil((new Date(launch.cartClose) - new Date()) / (1000*60*60*24));
+      if (daysLeft > 0) {
+        document.getElementById('launchCountdown').textContent = daysLeft;
+        document.getElementById('launchCountdownLabel').textContent = 'days until cart closes';
+        document.getElementById('launchCountdown').style.color = '#ef4444';
+      } else {
+        document.getElementById('launchCountdown').textContent = 'Closed';
+        document.getElementById('launchCountdownLabel').textContent = 'Launch complete';
+      }
+    }
+  }
+
+  // Launch assets
+  const launchResult = renderAssetList(
+    document.getElementById('assetList'),
+    launch.assets
+  );
+  const launchPct = launchResult.total > 0 ? Math.round((launchResult.complete / launchResult.total) * 100) : 0;
+  document.getElementById('launchProgress').style.width = launchPct + '%';
+  document.getElementById('launchProgressText').textContent = launchPct + '% complete (' + launchResult.complete + '/' + launchResult.total + ' assets)';
+
+  // Lead Magnet assets
+  if (data.leadMagnet) {
+    document.getElementById('leadMagnetName').textContent = data.leadMagnet.name;
+    const lmResult = renderAssetList(
+      document.getElementById('leadMagnetList'),
+      data.leadMagnet.assets
+    );
+    const lmPct = lmResult.total > 0 ? Math.round((lmResult.complete / lmResult.total) * 100) : 0;
+    document.getElementById('leadMagnetProgress').style.width = lmPct + '%';
+    document.getElementById('leadMagnetProgressText').textContent = lmPct + '% complete (' + lmResult.complete + '/' + lmResult.total + ' assets)';
+  }
+
+  // Goals
+  const goals = data.goals;
+  setGoalBar('goalEmail', 'goalEmailBar', latest.emailList, goals.emailListTarget);
+  setGoalBar('goalRevenue', 'goalRevenueBar', latest.revenue, goals.revenueTarget, true);
+  setGoalBar('goalSales', 'goalSalesBar', latest.courseSales, goals.courseSalesTarget);
+
+  // Weekly metrics
+  document.getElementById('metricAdSpend').textContent = '$' + latest.adSpend.toLocaleString();
+  document.getElementById('metricLeads').textContent = latest.leads.toLocaleString();
+  document.getElementById('metricOpenRate').textContent = (latest.emailOpenRate * 100).toFixed(1) + '%';
+  document.getElementById('metricYTViews').textContent = latest.youtubeViews.toLocaleString();
+  document.getElementById('metricWebReg').textContent = latest.webinarRegistrations.toLocaleString();
+
+  // Content creation pipeline
+  renderContentSchedule(data);
+}
+
+function setTrend(id, current, previous) {
+  const el = document.getElementById(id);
+  if (previous === 0) { el.textContent = '--'; return; }
+  const change = ((current - previous) / previous * 100).toFixed(1);
+  if (change > 0) {
+    el.textContent = '+' + change + '%';
+    el.className = 'trend up';
+  } else if (change < 0) {
+    el.textContent = change + '%';
+    el.className = 'trend down';
+  } else {
+    el.textContent = '0%';
+    el.className = 'trend flat';
+  }
+}
+
+function setGoalBar(labelId, barId, current, target, isMoney) {
+  const pct = Math.min(100, Math.round((current / target) * 100));
+  document.getElementById(barId).style.width = pct + '%';
+  const fmt = isMoney
+    ? '$' + current.toLocaleString() + ' / $' + target.toLocaleString()
+    : current.toLocaleString() + ' / ' + target.toLocaleString();
+  document.getElementById(labelId).textContent = fmt;
+}
+
+// --- Content Creation Pipeline ---
+
+var _dashboardData = null;
+
+function getStepDefs(type) {
+  if (type === 'youtube') return [
+    { key: 'research', label: 'Research' },
+    { key: 'script',   label: 'Script' },
+    { key: 'film',     label: 'Film' },
+    { key: 'edit',     label: 'Edit' },
+    { key: 'publish',  label: 'Publish' }
+  ];
+  return [
+    { key: 'research', label: 'Research' },
+    { key: 'write',    label: 'Write' },
+    { key: 'edit',     label: 'Edit' },
+    { key: 'publish',  label: 'Publish' }
+  ];
+}
+
+function getStatusFromSteps(type, steps) {
+  if (!steps) return 'planned';
+  if (steps.publish) return 'published';
+  if (steps.edit) return 'edited';
+  if (type === 'youtube' && steps.film) return 'filmed';
+  if (steps.script || steps.write) return 'drafted';
+  return 'planned';
+}
+
+function renderContentSchedule(data) {
+  _dashboardData = data;
+  if (!data.contentSchedule) return;
+  renderKanban(data.contentSchedule.weeklyContent || [], 'weekly', true);
+  renderKanban(data.contentSchedule.launchContent || [], 'launch', false);
+  setupContentTabs();
+}
+
+function renderKanban(items, prefix, isWeekly) {
+  var columns = { planned: [], drafted: [], filmed: [], edited: [], published: [] };
+
+  if (isWeekly) {
+    items.forEach(function(week) {
+      (week.items || []).forEach(function(item) {
+        var status = getStatusFromSteps(item.type, item.steps);
+        if (columns[status]) {
+          columns[status].push(createContentCard(item, week.weekLabel));
+        }
+      });
+    });
+  } else {
+    items.forEach(function(item) {
+      var status = getStatusFromSteps(item.type, item.steps);
+      if (columns[status]) {
+        columns[status].push(createContentCard(item, null));
+      }
+    });
+  }
+
+  ['planned', 'drafted', 'filmed', 'edited', 'published'].forEach(function(status) {
+    var cap = status.charAt(0).toUpperCase() + status.slice(1);
+    var cardsEl = document.getElementById(prefix + cap + 'Cards');
+    var countEl = document.getElementById(prefix + cap + 'Count');
+    if (!cardsEl || !countEl) return;
+    cardsEl.innerHTML = '';
+    if (columns[status].length === 0) {
+      cardsEl.innerHTML = '<div class="kanban-empty">No items</div>';
+    } else {
+      columns[status].forEach(function(card) { cardsEl.appendChild(card); });
+    }
+    countEl.textContent = columns[status].length;
+  });
+}
+
+function createContentCard(item, weekLabel) {
+  var card = document.createElement('div');
+  card.className = 'content-card';
+
+  var typeLabel = item.type.replace(/-/g, ' ');
+  var typeClass = 'type-' + item.type;
+
+  var titleHtml;
+  if (!item.title) {
+    titleHtml = '<span class="untitled">Untitled</span>';
+  } else if (item.path && item.path.match(/\.md$/)) {
+    titleHtml = '<a href="#" class="md-preview-link" data-path="' + item.path + '" data-title="' + (item.title || '').replace(/"/g, '&quot;') + '">' + item.title + '</a>';
+  } else if (item.path) {
+    titleHtml = '<a href="' + item.path + '" title="Open ' + item.title + '">' + item.title + '</a>';
+  } else {
+    titleHtml = item.title;
+  }
+
+  // Build checkbox row
+  var stepDefs = getStepDefs(item.type);
+  var steps = item.steps || {};
+  var stepsHtml = '<div class="content-card-steps">';
+  stepDefs.forEach(function(def) {
+    var checked = steps[def.key] ? true : false;
+    var checkedClass = checked ? ' checked' : '';
+    var checkedAttr = checked ? ' checked' : '';
+    stepsHtml += '<label class="step-checkbox' + checkedClass + '">' +
+      '<input type="checkbox"' + checkedAttr + ' data-step="' + def.key + '">' +
+      '<span>' + def.label + '</span></label>';
+  });
+  stepsHtml += '</div>';
+
+  var metaParts = [];
+  if (weekLabel) {
+    metaParts.push('<span class="content-card-week">' + weekLabel + '</span>');
+  }
+  if (item.category) {
+    metaParts.push('<span>' + item.category + '</span>');
+  }
+  if (item.dueDate) {
+    var dueClass = getDueDateClass(item.dueDate);
+    metaParts.push('<span class="content-card-due ' + dueClass + '">&#x1F4C5; ' + formatShortDate(item.dueDate) + '</span>');
+  }
+
+  card.innerHTML =
+    '<div class="content-card-header">' +
+      '<span class="content-type-badge ' + typeClass + '">' + typeLabel + '</span>' +
+    '</div>' +
+    '<div class="content-card-title">' + titleHtml + '</div>' +
+    stepsHtml +
+    (metaParts.length ? '<div class="content-card-meta">' + metaParts.join('') + '</div>' : '');
+
+  // Attach click handlers to checkboxes
+  card.querySelectorAll('input[type="checkbox"]').forEach(function(cb) {
+    cb.addEventListener('change', function(e) {
+      var stepKey = e.target.dataset.step;
+      if (!item.steps) item.steps = {};
+      item.steps[stepKey] = e.target.checked;
+      saveToLocalStorage();
+      renderContentSchedule(_dashboardData);
+    });
+  });
+
+  // Attach click handlers for markdown preview links
+  card.querySelectorAll('.md-preview-link').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      openMdPreview(link.dataset.path, link.dataset.title);
+    });
+  });
+
+  return card;
+}
+
+function saveToLocalStorage() {
+  if (!_dashboardData) return;
+  try {
+    localStorage.setItem('fl3-dashboard-data', JSON.stringify(_dashboardData));
+  } catch(e) {}
+}
+
+function loadFromLocalStorage() {
+  try {
+    var stored = localStorage.getItem('fl3-dashboard-data');
+    if (stored) return JSON.parse(stored);
+  } catch(e) {}
+  return null;
+}
+
+function getDueDateClass(dueDate) {
+  var today = new Date();
+  today.setHours(0,0,0,0);
+  var due = new Date(dueDate + 'T00:00:00');
+  if (due < today) return 'overdue';
+  if (due.getTime() === today.getTime()) return 'today';
+  return '';
+}
+
+function formatShortDate(dateStr) {
+  var d = new Date(dateStr + 'T00:00:00');
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+
+function setupContentTabs() {
+  var tabs = document.querySelectorAll('.content-tab');
+  tabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      var target = tab.dataset.tab;
+      tabs.forEach(function(t) { t.classList.remove('active'); });
+      tab.classList.add('active');
+      document.getElementById('weeklyContentView').classList.toggle('active', target === 'weekly');
+      document.getElementById('launchContentView').classList.toggle('active', target === 'launch');
+    });
+  });
+}
+
+function renderPlaceholder() {
+  document.getElementById('lastUpdated').textContent = 'Unable to load data.';
+}
+
+// --- Markdown Preview System ---
+
+function parseMarkdown(md) {
+  // Separate metadata block (lines starting with **Key:** Value before first ---)
+  var lines = md.split('\n');
+  var metaLines = [];
+  var bodyLines = [];
+  var foundHr = false;
+  var inMeta = false;
+
+  // Check if the first non-empty, non-heading line looks like metadata
+  var firstContentIdx = 0;
+  for (var i = 0; i < lines.length; i++) {
+    var trimmed = lines[i].trim();
+    if (trimmed === '' || trimmed.match(/^#\s/)) { firstContentIdx = i + 1; continue; }
+    if (trimmed.match(/^\*\*[^*]+:\*\*/)) { inMeta = true; }
+    break;
+  }
+
+  if (inMeta) {
+    for (var i = 0; i < lines.length; i++) {
+      var trimmed = lines[i].trim();
+      if (trimmed === '---') { foundHr = true; continue; }
+      if (!foundHr && (trimmed.match(/^\*\*[^*]+:\*\*/) || trimmed === '' || trimmed.match(/^#\s/))) {
+        metaLines.push(lines[i]);
+      } else {
+        bodyLines.push(lines[i]);
+      }
+    }
+  } else {
+    bodyLines = lines;
+  }
+
+  var html = '';
+
+  // Render metadata block if present
+  if (metaLines.length > 0) {
+    var metaHtml = metaLines.filter(function(l) { return l.trim() !== '' && !l.trim().match(/^#\s/); })
+      .map(function(l) { return convertInline(l.trim()); }).join('<br>');
+    if (metaHtml) {
+      html += '<div class="meta-block">' + metaHtml + '</div>';
+    }
+    // Extract H1 from meta lines
+    metaLines.forEach(function(l) {
+      if (l.trim().match(/^#\s/)) {
+        html = '<h1>' + convertInline(l.trim().replace(/^#\s+/, '')) + '</h1>' + html;
+      }
+    });
+  }
+
+  // Parse body
+  html += parseBody(bodyLines.join('\n'));
+  return html;
+}
+
+function parseBody(text) {
+  var html = '';
+  var lines = text.split('\n');
+  var i = 0;
+  var inList = false;
+  var listType = '';
+  var inCodeBlock = false;
+  var codeContent = '';
+
+  while (i < lines.length) {
+    var line = lines[i];
+    var trimmed = line.trim();
+
+    // Code blocks
+    if (trimmed.match(/^```/)) {
+      if (inCodeBlock) {
+        html += '<pre><code>' + escapeHtml(codeContent.trim()) + '</code></pre>';
+        codeContent = '';
+        inCodeBlock = false;
+        i++; continue;
+      } else {
+        if (inList) { html += '</' + listType + '>'; inList = false; }
+        inCodeBlock = true;
+        i++; continue;
+      }
+    }
+    if (inCodeBlock) { codeContent += line + '\n'; i++; continue; }
+
+    // Empty line
+    if (trimmed === '') {
+      if (inList) { html += '</' + listType + '>'; inList = false; }
+      i++; continue;
+    }
+
+    // Horizontal rule
+    if (trimmed.match(/^-{3,}$/) || trimmed.match(/^\*{3,}$/)) {
+      if (inList) { html += '</' + listType + '>'; inList = false; }
+      html += '<hr>';
+      i++; continue;
+    }
+
+    // Headings
+    var headingMatch = trimmed.match(/^(#{1,6})\s+(.*)/);
+    if (headingMatch) {
+      if (inList) { html += '</' + listType + '>'; inList = false; }
+      var level = headingMatch[1].length;
+      html += '<h' + level + '>' + convertInline(headingMatch[2]) + '</h' + level + '>';
+      i++; continue;
+    }
+
+    // Blockquote
+    if (trimmed.match(/^>\s/)) {
+      if (inList) { html += '</' + listType + '>'; inList = false; }
+      var quoteLines = [];
+      while (i < lines.length && lines[i].trim().match(/^>/)) {
+        quoteLines.push(lines[i].trim().replace(/^>\s?/, ''));
+        i++;
+      }
+      html += '<blockquote>' + quoteLines.map(function(l) { return convertInline(l); }).join('<br>') + '</blockquote>';
+      continue;
+    }
+
+    // Ordered list
+    var olMatch = trimmed.match(/^\d+\.\s+(.*)/);
+    if (olMatch) {
+      if (inList && listType !== 'ol') { html += '</' + listType + '>'; inList = false; }
+      if (!inList) { html += '<ol>'; inList = true; listType = 'ol'; }
+      html += '<li>' + convertInline(olMatch[1]) + '</li>';
+      i++; continue;
+    }
+
+    // Unordered list
+    var ulMatch = trimmed.match(/^[-*+]\s+(.*)/);
+    if (ulMatch) {
+      if (inList && listType !== 'ul') { html += '</' + listType + '>'; inList = false; }
+      if (!inList) { html += '<ul>'; inList = true; listType = 'ul'; }
+      html += '<li>' + convertInline(ulMatch[1]) + '</li>';
+      i++; continue;
+    }
+
+    // Paragraph
+    if (inList) { html += '</' + listType + '>'; inList = false; }
+    var paraLines = [];
+    while (i < lines.length && lines[i].trim() !== '' && !lines[i].trim().match(/^(#{1,6}\s|[-*+]\s|\d+\.\s|```|---|>\s)/)) {
+      paraLines.push(lines[i].trim());
+      i++;
+    }
+    if (paraLines.length > 0) {
+      html += '<p>' + convertInline(paraLines.join(' ')) + '</p>';
+    }
+    continue;
+
+    i++;
+  }
+  if (inList) html += '</' + listType + '>';
+  if (inCodeBlock) html += '<pre><code>' + escapeHtml(codeContent.trim()) + '</code></pre>';
+  return html;
+}
+
+function convertInline(text) {
+  // Bold + italic
+  text = text.replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>');
+  // Bold
+  text = text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  // Italic
+  text = text.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+  // Inline code
+  text = text.replace(/`([^`]+)`/g, '<code>$1</code>');
+  // Links
+  text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
+  return text;
+}
+
+function escapeHtml(text) {
+  return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function openMdPreview(path, title) {
+  var overlay = document.getElementById('mdOverlay');
+  var body = document.getElementById('mdPanelBody');
+  var panelTitle = document.getElementById('mdPanelTitle');
+
+  panelTitle.textContent = title || 'Content Preview';
+  body.innerHTML = '<div class="md-loading">Loading content...</div>';
+  overlay.classList.add('active');
+
+  fetch(path)
+    .then(function(resp) {
+      if (!resp.ok) throw new Error('Could not load file');
+      return resp.text();
+    })
+    .then(function(md) {
+      body.innerHTML = parseMarkdown(md);
+    })
+    .catch(function(err) {
+      body.innerHTML = '<div class="md-error">Could not load this file in preview mode.<br><br>' +
+        'This is expected when opening the dashboard as a local file (file://).<br>' +
+        'The file exists at:<br><code>' + escapeHtml(path) + '</code><br><br>' +
+        'To enable preview, serve this folder with a local server:<br>' +
+        '<code>python3 -m http.server 8000</code><br>' +
+        'Then open <a href="http://localhost:8000/dashboard.html" style="color:var(--accent)">localhost:8000/dashboard.html</a></div>';
+    });
+}
+
+// Overlay close handlers
+document.getElementById('mdCloseBtn').addEventListener('click', function() {
+  document.getElementById('mdOverlay').classList.remove('active');
+});
+document.getElementById('mdOverlay').addEventListener('click', function(e) {
+  if (e.target === this) this.classList.remove('active');
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') document.getElementById('mdOverlay').classList.remove('active');
+});
+
+// Note: /fl3-dashboard skill updates dashboard-data.json AND regenerates dashboard-data.js
+// The .js file is loaded via <script src> so it works in file:// mode across all machines
+
+loadData();
+</script>
+</body>
+</html>
