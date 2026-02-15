@@ -1353,6 +1353,14 @@ function openMdPreview(path, title) {
   body.innerHTML = '<div class="md-loading">Loading content...</div>';
   overlay.classList.add('active');
 
+  // Check for embedded markdown content first (used by GitHub Pages deployment)
+  var embedded = window.FL3_DASHBOARD_DATA && window.FL3_DASHBOARD_DATA._embeddedMd;
+  if (embedded && embedded[path]) {
+    body.innerHTML = parseMarkdown(embedded[path]);
+    return;
+  }
+
+  // Fall back to fetch (works with local HTTP server)
   fetch(path)
     .then(function(resp) {
       if (!resp.ok) throw new Error('Could not load file');
