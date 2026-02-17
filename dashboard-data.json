@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-02-15",
+  "lastUpdated": "2026-02-17",
   "launch": {
     "name": "The Great Catch-Up Launch",
     "cartOpen": null,
@@ -96,7 +96,7 @@
     "emailListTarget": 2000,
     "revenueTarget": 10000,
     "courseSalesTarget": 20,
-    "costPerLeadTarget": 5.00
+    "costPerLeadTarget": 5
   },
   "contentSchedule": {
     "weeklyContent": [
@@ -106,10 +106,55 @@
         "pillar": "1: Math",
         "avatar": "Technophobe",
         "items": [
-          { "type": "youtube", "title": "The Number That's Quietly Destroying Your Retirement", "steps": { "research": true, "script": true, "film": false, "edit": false, "publish": false }, "dueDate": "2026-02-20", "path": "../youtube/drafts/2026-02-17-the-invisible-inflation-theft.md" },
-          { "type": "blog", "title": "The Risk Flip: What's Really Dangerous for Your Retirement", "steps": { "research": true, "write": true, "edit": false, "publish": false }, "dueDate": null, "path": "../blog/drafts/the-risk-flip-what-is-really-dangerous-for-your-retirement.md" },
-          { "type": "social", "title": "", "steps": { "research": false, "write": false, "edit": false, "publish": false }, "dueDate": null, "path": null },
-          { "type": "newsletter", "title": "", "steps": { "research": false, "write": false, "edit": false, "publish": false }, "dueDate": null, "path": null }
+          {
+            "type": "youtube",
+            "title": "The Number That's Quietly Destroying Your Retirement",
+            "steps": {
+              "research": true,
+              "script": true,
+              "film": true,
+              "edit": false,
+              "publish": false
+            },
+            "dueDate": "2026-02-20",
+            "path": "../youtube/drafts/2026-02-17-the-invisible-inflation-theft.md"
+          },
+          {
+            "type": "blog",
+            "title": "The Risk Flip: What's Really Dangerous for Your Retirement",
+            "steps": {
+              "research": true,
+              "write": true,
+              "edit": false,
+              "publish": false
+            },
+            "dueDate": null,
+            "path": "../blog/drafts/the-risk-flip-what-is-really-dangerous-for-your-retirement.md"
+          },
+          {
+            "type": "social",
+            "title": "",
+            "steps": {
+              "research": false,
+              "write": false,
+              "edit": false,
+              "publish": false
+            },
+            "dueDate": null,
+            "path": null
+          },
+          {
+            "type": "newsletter",
+            "title": "",
+            "steps": {
+              "research": false,
+              "write": false,
+              "edit": false,
+              "publish": false
+            },
+            "dueDate": null,
+            "path": null
+          }
         ]
       },
       {
@@ -118,10 +163,55 @@
         "pillar": "3: Vehicles",
         "avatar": "Skeptic",
         "items": [
-          { "type": "youtube", "title": "", "steps": { "research": false, "script": false, "film": false, "edit": false, "publish": false }, "dueDate": null, "path": null },
-          { "type": "blog", "title": "", "steps": { "research": false, "write": false, "edit": false, "publish": false }, "dueDate": null, "path": null },
-          { "type": "social", "title": "", "steps": { "research": false, "write": false, "edit": false, "publish": false }, "dueDate": null, "path": null },
-          { "type": "newsletter", "title": "", "steps": { "research": false, "write": false, "edit": false, "publish": false }, "dueDate": null, "path": null }
+          {
+            "type": "youtube",
+            "title": "",
+            "steps": {
+              "research": false,
+              "script": false,
+              "film": false,
+              "edit": false,
+              "publish": false
+            },
+            "dueDate": null,
+            "path": null
+          },
+          {
+            "type": "blog",
+            "title": "",
+            "steps": {
+              "research": false,
+              "write": false,
+              "edit": false,
+              "publish": false
+            },
+            "dueDate": null,
+            "path": null
+          },
+          {
+            "type": "social",
+            "title": "",
+            "steps": {
+              "research": false,
+              "write": false,
+              "edit": false,
+              "publish": false
+            },
+            "dueDate": null,
+            "path": null
+          },
+          {
+            "type": "newsletter",
+            "title": "",
+            "steps": {
+              "research": false,
+              "write": false,
+              "edit": false,
+              "publish": false
+            },
+            "dueDate": null,
+            "path": null
+          }
         ]
       },
       {
@@ -130,10 +220,55 @@
         "pillar": "2: Trad Advice",
         "avatar": "Pursuer",
         "items": [
-          { "type": "youtube", "title": "", "steps": { "research": false, "script": false, "film": false, "edit": false, "publish": false }, "dueDate": null, "path": null },
-          { "type": "blog", "title": "", "steps": { "research": false, "write": false, "edit": false, "publish": false }, "dueDate": null, "path": null },
-          { "type": "social", "title": "", "steps": { "research": false, "write": false, "edit": false, "publish": false }, "dueDate": null, "path": null },
-          { "type": "newsletter", "title": "", "steps": { "research": false, "write": false, "edit": false, "publish": false }, "dueDate": null, "path": null }
+          {
+            "type": "youtube",
+            "title": "",
+            "steps": {
+              "research": false,
+              "script": false,
+              "film": false,
+              "edit": false,
+              "publish": false
+            },
+            "dueDate": null,
+            "path": null
+          },
+          {
+            "type": "blog",
+            "title": "",
+            "steps": {
+              "research": false,
+              "write": false,
+              "edit": false,
+              "publish": false
+            },
+            "dueDate": null,
+            "path": null
+          },
+          {
+            "type": "social",
+            "title": "",
+            "steps": {
+              "research": false,
+              "write": false,
+              "edit": false,
+              "publish": false
+            },
+            "dueDate": null,
+            "path": null
+          },
+          {
+            "type": "newsletter",
+            "title": "",
+            "steps": {
+              "research": false,
+              "write": false,
+              "edit": false,
+              "publish": false
+            },
+            "dueDate": null,
+            "path": null
+          }
         ]
       },
       {
@@ -142,10 +277,55 @@
         "pillar": "4: Risk Flip",
         "avatar": "All",
         "items": [
-          { "type": "youtube", "title": "", "steps": { "research": false, "script": false, "film": false, "edit": false, "publish": false }, "dueDate": null, "path": null },
-          { "type": "blog", "title": "", "steps": { "research": false, "write": false, "edit": false, "publish": false }, "dueDate": null, "path": null },
-          { "type": "social", "title": "", "steps": { "research": false, "write": false, "edit": false, "publish": false }, "dueDate": null, "path": null },
-          { "type": "newsletter", "title": "", "steps": { "research": false, "write": false, "edit": false, "publish": false }, "dueDate": null, "path": null }
+          {
+            "type": "youtube",
+            "title": "",
+            "steps": {
+              "research": false,
+              "script": false,
+              "film": false,
+              "edit": false,
+              "publish": false
+            },
+            "dueDate": null,
+            "path": null
+          },
+          {
+            "type": "blog",
+            "title": "",
+            "steps": {
+              "research": false,
+              "write": false,
+              "edit": false,
+              "publish": false
+            },
+            "dueDate": null,
+            "path": null
+          },
+          {
+            "type": "social",
+            "title": "",
+            "steps": {
+              "research": false,
+              "write": false,
+              "edit": false,
+              "publish": false
+            },
+            "dueDate": null,
+            "path": null
+          },
+          {
+            "type": "newsletter",
+            "title": "",
+            "steps": {
+              "research": false,
+              "write": false,
+              "edit": false,
+              "publish": false
+            },
+            "dueDate": null,
+            "path": null
+          }
         ]
       }
     ],
