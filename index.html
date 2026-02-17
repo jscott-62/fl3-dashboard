@@ -926,12 +926,13 @@
     <p>To sync checkbox changes across all your devices, this dashboard needs a GitHub personal access token with write access to the fl3-dashboard repo.</p>
     <ol>
       <li>Go to <a href="https://github.com/settings/tokens?type=beta" target="_blank">GitHub Settings &gt; Fine-grained tokens</a></li>
-      <li>Click "Generate new token"</li>
-      <li>Name it "FL3 Dashboard"</li>
-      <li>Under Repository access, select "Only select repositories" and choose <strong>fl3-dashboard</strong></li>
-      <li>Under Permissions &gt; Repository permissions, set <strong>Contents</strong> to "Read and write"</li>
+      <li>Click <strong>"Generate new token"</strong></li>
+      <li>Name it <strong>"FL3 Dashboard"</strong>, set expiration to 90 days or "No expiration"</li>
+      <li>Under <strong>Repository access</strong>, select "Only select repositories" and choose <strong>fl3-dashboard</strong></li>
+      <li style="color: var(--accent); font-weight: 600;">IMPORTANT: Under Permissions &gt; Repository permissions, find "Contents" and set it to "Read and write" (not just "Read")</li>
       <li>Click "Generate token" and paste it below</li>
     </ol>
+    <p style="font-size: 12px; color: var(--red);">If you already have a token that shows "Sync failed", your token is missing the Contents write permission. Go to github.com/settings/tokens, click your token, and change Contents to "Read and write".</p>
     <input type="text" id="tokenInput" placeholder="github_pat_..." autocomplete="off" spellcheck="false">
     <div class="setup-actions">
       <button class="btn-secondary" onclick="closeSetup()">Cancel</button>
@@ -1389,18 +1390,66 @@ async function saveToken() {
   var token = document.getElementById('tokenInput').value.trim();
   if (!token) return;
 
-  // Validate the token by making a test API call
+  // Validate the token by making a REAL write test (not just repo metadata)
   try {
+    // Step 1: Can we read the repo?
     var resp = await fetch('https://api.github.com/repos/' + GITHUB_OWNER + '/' + GITHUB_REPO, {
       headers: { 'Authorization': 'Bearer ' + token }
     });
-    if (!resp.ok) throw new Error('Invalid token or no access');
-    var repo = await resp.json();
-    if (!repo.permissions || !repo.permissions.push) {
-      throw new Error('Token does not have write access');
+    if (!resp.ok) throw new Error('Invalid token or no access to repository');
+
+    // Step 2: Test actual write permission by reading a file and doing a no-op commit test
+    // The best test is to try reading the file via Contents API (which requires Contents permission)
+    var contentsResp = await fetch('https://api.github.com/repos/' + GITHUB_OWNER + '/' + GITHUB_REPO + '/contents/' + GITHUB_FILE, {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    if (!contentsResp.ok) {
+      throw new Error('Token cannot access file contents. Make sure "Contents" is set to "Read and write" in your token permissions.');
     }
+    var fileData = await contentsResp.json();
+
+    // Step 3: Actually test a write by updating the file with the same content
+    var writeTest = await fetch('https://api.github.com/repos/' + GITHUB_OWNER + '/' + GITHUB_REPO + '/contents/' + GITHUB_FILE, {
+      method: 'PUT',
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        message: 'Verify write access',
+        content: fileData.content.replace(/\n/g, ''),
+        sha: fileData.sha
+      })
+    });
+
+    if (!writeTest.ok) {
+      var writeErr = await writeTest.json().catch(function() { return {}; });
+      if (writeTest.status === 403) {
+        throw new Error('TOKEN_NEEDS_CONTENTS_WRITE');
+      }
+      throw new Error('Write test failed: ' + (writeErr.message || writeTest.status));
+    }
+
+    // Update SHA after successful write test
+    var writeResult = await writeTest.json();
+    _githubSha = writeResult.content.sha;
+
   } catch(e) {
-    alert('Token validation failed: ' + e.message + '\n\nMake sure the token has Contents read/write permission for the fl3-dashboard repo.');
+    if (e.message === 'TOKEN_NEEDS_CONTENTS_WRITE') {
+      alert(
+        'Your token can read the repo but CANNOT write to it.\n\n' +
+        'This means the "Contents" permission is not set to "Read and write".\n\n' +
+        'To fix this:\n' +
+        '1. Go to github.com/settings/tokens\n' +
+        '2. Click on your "FL3 Dashboard" token\n' +
+        '3. Under Repository permissions, find "Contents"\n' +
+        '4. Change it from "Read" to "Read and write"\n' +
+        '5. Click "Update token"\n' +
+        '6. Come back here and paste the token again'
+      );
+    } else {
+      alert('Token validation failed: ' + e.message);
+    }
     return;
   }
 
@@ -1531,6 +1580,19 @@ async function saveToGitHub() {
         _githubSha = null;
         _isSaving = false;
         return saveToGitHub();
+      }
+      // If 403, the token lacks Contents write permission
+      if (commitResp.status === 403) {
+        // Clear stored token so user is prompted to re-enter
+        localStorage.removeItem('fl3-github-token');
+        updateSyncStatus('disconnected');
+        alert(
+          'Your GitHub token does not have write permission.\n\n' +
+          'Go to github.com/settings/tokens, click your FL3 Dashboard token, ' +
+          'and set "Contents" to "Read and write" under Repository permissions.\n\n' +
+          'Then click the sync status to re-enter your token.'
+        );
+        throw new Error('Token lacks Contents write permission (403)');
       }
       throw new Error('GitHub API error: ' + (errBody.message || commitResp.status));
     }
