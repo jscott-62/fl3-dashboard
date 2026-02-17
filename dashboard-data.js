@@ -127,7 +127,7 @@ window.FL3_DASHBOARD_DATA = {
               "research": true,
               "write": true,
               "edit": true,
-              "publish": false
+              "publish": true
             },
             "dueDate": null,
             "path": "../blog/drafts/the-risk-flip-what-is-really-dangerous-for-your-retirement.md"
