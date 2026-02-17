@@ -126,7 +126,7 @@ window.FL3_DASHBOARD_DATA = {
             "steps": {
               "research": true,
               "write": true,
-              "edit": false,
+              "edit": true,
               "publish": false
             },
             "dueDate": null,
