@@ -249,6 +249,100 @@
   .save-btn:hover { opacity: 0.9; }
   .save-btn:disabled { opacity: 0.5; cursor: default; }
 
+  /* Token setup modal */
+  .setup-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 2000;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(6px);
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+  }
+  .setup-overlay.active { display: flex; }
+  .setup-panel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    max-width: 520px;
+    width: 100%;
+  }
+  .setup-panel h3 {
+    font-size: 18px;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+  .setup-panel p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  .setup-panel ol {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.8;
+    padding-left: 20px;
+    margin-bottom: 20px;
+  }
+  .setup-panel ol a { color: var(--blue); }
+  .setup-panel input[type="text"] {
+    width: 100%;
+    padding: 10px 14px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 14px;
+    font-family: monospace;
+    margin-bottom: 16px;
+  }
+  .setup-panel input[type="text"]:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  .setup-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+  }
+  .setup-actions button {
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid var(--border);
+  }
+  .setup-actions .btn-primary {
+    background: var(--accent);
+    color: var(--bg);
+    border-color: var(--accent);
+  }
+  .setup-actions .btn-secondary {
+    background: transparent;
+    color: var(--muted);
+  }
+  .sync-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--muted);
+    margin-left: 12px;
+  }
+  .sync-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--muted);
+  }
+  .sync-dot.connected { background: var(--green); }
+  .sync-dot.disconnected { background: var(--red); }
+
   /* Content Creation Pipeline */
   .content-tabs {
     display: flex;
@@ -564,7 +658,13 @@
 
 <div class="header">
   <h1>Freedom Life 3.0 Dashboard</h1>
-  <div class="updated">Last updated: <span id="lastUpdated">Loading...</span></div>
+  <div class="updated">
+    Last updated: <span id="lastUpdated">Loading...</span>
+    <span class="sync-status" id="syncStatus">
+      <span class="sync-dot" id="syncDot"></span>
+      <span id="syncLabel">checking...</span>
+    </span>
+  </div>
 </div>
 
 <!-- KPI Row -->
@@ -809,14 +909,35 @@
 <div class="instructions">
   <strong>How to update this dashboard:</strong><br>
   Run <code>/fl3-dashboard</code> in Claude Code to update metrics and launch status.<br>
-  <strong>Content checkboxes:</strong> Click checkboxes to update content progress. Changes auto-save to <code>dashboard-data.json</code> and <code>dashboard-data.js</code> after a short delay. On first save, your browser will ask you to select the metrics folder for write access.<br>
-  <strong>Multi-machine sync:</strong> Checkbox changes are saved to disk and sync via Dropbox automatically. Any machine with the shared folder will see your updates on refresh.
+  <strong>Content checkboxes:</strong> Click checkboxes to update content progress. Changes auto-save to GitHub and sync across all devices.<br>
+  <strong>Setup:</strong> First time? Click the sync status indicator next to "Last updated" to connect your GitHub token. You only need to do this once per browser.
 </div>
 
-<!-- Save Bar (shows when unsaved changes exist) -->
+<!-- Save Bar (shows when syncing to GitHub) -->
 <div class="save-bar" id="saveBar">
   <span class="save-msg" id="saveMsg"><span class="unsaved">Unsaved changes</span></span>
-  <button class="save-btn" id="saveBtn" onclick="saveToFiles()">Save Changes</button>
+  <button class="save-btn" id="saveBtn" onclick="saveToGitHub()">Sync to GitHub</button>
+</div>
+
+<!-- Token Setup Modal -->
+<div class="setup-overlay" id="setupOverlay">
+  <div class="setup-panel">
+    <h3>Connect to GitHub</h3>
+    <p>To sync checkbox changes across all your devices, this dashboard needs a GitHub personal access token with write access to the fl3-dashboard repo.</p>
+    <ol>
+      <li>Go to <a href="https://github.com/settings/tokens?type=beta" target="_blank">GitHub Settings &gt; Fine-grained tokens</a></li>
+      <li>Click "Generate new token"</li>
+      <li>Name it "FL3 Dashboard"</li>
+      <li>Under Repository access, select "Only select repositories" and choose <strong>fl3-dashboard</strong></li>
+      <li>Under Permissions &gt; Repository permissions, set <strong>Contents</strong> to "Read and write"</li>
+      <li>Click "Generate token" and paste it below</li>
+    </ol>
+    <input type="text" id="tokenInput" placeholder="github_pat_..." autocomplete="off" spellcheck="false">
+    <div class="setup-actions">
+      <button class="btn-secondary" onclick="closeSetup()">Cancel</button>
+      <button class="btn-primary" onclick="saveToken()">Connect</button>
+    </div>
+  </div>
 </div>
 
 <!-- Markdown Preview Overlay -->
@@ -834,48 +955,74 @@
 
 <script src="dashboard-data.js"></script>
 <script>
-// Data loading: uses dashboard-data.js (synced via Dropbox, works in file:// mode)
-// Falls back to fetch of dashboard-data.json for HTTP mode
-// Checkbox changes auto-save to both files and sync across machines via Dropbox
+// Data loading priority:
+// 1. GitHub API (always fetch fresh if token available, so all devices see latest)
+// 2. dashboard-data.js (bundled fallback, works offline)
+// 3. localStorage (last resort if both fail)
 async function loadData() {
-  var data;
+  var data = null;
 
-  // Priority 1: dashboard-data.js sets window.FL3_DASHBOARD_DATA (works in file:// and http://)
-  if (window.FL3_DASHBOARD_DATA) {
-    data = JSON.parse(JSON.stringify(window.FL3_DASHBOARD_DATA));
+  // Priority 1: Fetch fresh data from GitHub API
+  if (hasToken()) {
+    try {
+      var resp = await fetch('https://api.github.com/repos/' + GITHUB_OWNER + '/' + GITHUB_REPO + '/contents/' + GITHUB_FILE, {
+        headers: {
+          'Authorization': 'Bearer ' + getToken(),
+          'Accept': 'application/vnd.github.v3.raw'
+        },
+        cache: 'no-store'
+      });
+      if (resp.ok) {
+        data = await resp.json();
+        // Also get the SHA for future updates
+        var metaResp = await fetch('https://api.github.com/repos/' + GITHUB_OWNER + '/' + GITHUB_REPO + '/contents/' + GITHUB_FILE, {
+          headers: { 'Authorization': 'Bearer ' + getToken() }
+        });
+        if (metaResp.ok) {
+          var metaJson = await metaResp.json();
+          _githubSha = metaJson.sha;
+        }
+        updateSyncStatus('connected');
+      } else {
+        updateSyncStatus('disconnected');
+      }
+    } catch(e) {
+      console.warn('GitHub API fetch failed, using fallback:', e);
+      updateSyncStatus('disconnected');
+    }
   } else {
-    // Priority 2: fetch JSON (http:// mode only)
+    updateSyncStatus('disconnected');
+  }
+
+  // Priority 2: Use bundled dashboard-data.js
+  if (!data && window.FL3_DASHBOARD_DATA) {
+    data = JSON.parse(JSON.stringify(window.FL3_DASHBOARD_DATA));
+  }
+
+  // Priority 3: Try fetching the JSON file directly
+  if (!data) {
     try {
       var response = await fetch('dashboard-data.json');
-      if (!response.ok) throw new Error('HTTP ' + response.status);
-      data = await response.json();
-    } catch (e) {
-      console.error('Could not load dashboard data. Make sure dashboard-data.js exists in the same folder.');
-      renderPlaceholder();
-      return;
-    }
+      if (response.ok) data = await response.json();
+    } catch(e) {}
   }
 
-  // Merge checkbox state from localStorage.
-  // On GitHub Pages: always merge (localStorage is the only persistence).
-  // On local/Dropbox: only merge if localStorage is newer than the file data.
-  var stored = loadFromLocalStorage();
-  if (stored && stored.contentSchedule) {
-    var isHosted = window.location.hostname.indexOf('github.io') !== -1;
-    if (isHosted) {
-      // GitHub Pages: localStorage is the only way to persist checkbox state
-      mergeSteps(data, stored);
-    } else if (stored._localSaveTime) {
-      var fileTime = new Date(data.lastUpdated || 0).getTime();
-      var localTime = new Date(stored._localSaveTime).getTime();
-      if (localTime > fileTime) {
-        mergeSteps(data, stored);
-      } else {
-        // File is newer (updated from another machine), clear stale localStorage
-        try { localStorage.removeItem('fl3-dashboard-data'); } catch(e) {}
-      }
-    }
+  // Priority 4: localStorage fallback
+  if (!data) {
+    var stored = loadFromLocalStorage();
+    if (stored) data = stored;
   }
+
+  if (!data) {
+    renderPlaceholder();
+    return;
+  }
+
+  // Preserve _embeddedMd from the bundled JS for markdown previews
+  if (window.FL3_DASHBOARD_DATA && window.FL3_DASHBOARD_DATA._embeddedMd && !data._embeddedMd) {
+    data._embeddedMd = window.FL3_DASHBOARD_DATA._embeddedMd;
+  }
+
   render(data);
 }
 
@@ -1184,40 +1331,104 @@ function createContentCard(item, weekLabel) {
   return card;
 }
 
-// --- Persistence Layer ---
-// Checkbox changes are saved to both localStorage (immediate cache) and
-// written back to dashboard-data.json + dashboard-data.js (Dropbox-synced).
-// On GitHub Pages, only localStorage is used (read-only deployment).
+// --- Persistence Layer: GitHub API ---
+// Checkbox changes are committed directly to the GitHub repo via the Contents API.
+// This means any browser on any device sees the same data on refresh.
+// A GitHub personal access token (fine-grained, repo-scoped) is stored in localStorage.
+
+var GITHUB_OWNER = 'jscott-62';
+var GITHUB_REPO = 'fl3-dashboard';
+var GITHUB_FILE = 'dashboard-data.json';
+var GITHUB_JS_FILE = 'dashboard-data.js';
 
 var _hasUnsavedChanges = false;
 var _saveDebounceTimer = null;
-var _jsonFileHandle = null;
-var _jsFileHandle = null;
-var _isHosted = window.location.hostname.indexOf('github.io') !== -1;
+var _githubSha = null;       // SHA of current dashboard-data.json (needed for updates)
+var _githubJsSha = null;     // SHA of current dashboard-data.js
+var _isSaving = false;
+
+function getToken() {
+  try { return localStorage.getItem('fl3-github-token') || ''; } catch(e) { return ''; }
+}
+
+function hasToken() { return getToken().length > 10; }
+
+function updateSyncStatus(state) {
+  var dot = document.getElementById('syncDot');
+  var label = document.getElementById('syncLabel');
+  var status = document.getElementById('syncStatus');
+  if (state === 'connected') {
+    dot.className = 'sync-dot connected';
+    label.textContent = 'synced';
+    status.style.cursor = 'pointer';
+    status.onclick = openSetup;
+  } else if (state === 'disconnected') {
+    dot.className = 'sync-dot disconnected';
+    label.textContent = 'not connected';
+    status.style.cursor = 'pointer';
+    status.onclick = openSetup;
+  } else {
+    dot.className = 'sync-dot';
+    label.textContent = 'checking...';
+    status.style.cursor = 'default';
+    status.onclick = null;
+  }
+}
+
+function openSetup() {
+  document.getElementById('setupOverlay').classList.add('active');
+  document.getElementById('tokenInput').value = '';
+  document.getElementById('tokenInput').focus();
+}
+
+function closeSetup() {
+  document.getElementById('setupOverlay').classList.remove('active');
+}
+
+async function saveToken() {
+  var token = document.getElementById('tokenInput').value.trim();
+  if (!token) return;
+
+  // Validate the token by making a test API call
+  try {
+    var resp = await fetch('https://api.github.com/repos/' + GITHUB_OWNER + '/' + GITHUB_REPO, {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    if (!resp.ok) throw new Error('Invalid token or no access');
+    var repo = await resp.json();
+    if (!repo.permissions || !repo.permissions.push) {
+      throw new Error('Token does not have write access');
+    }
+  } catch(e) {
+    alert('Token validation failed: ' + e.message + '\n\nMake sure the token has Contents read/write permission for the fl3-dashboard repo.');
+    return;
+  }
+
+  localStorage.setItem('fl3-github-token', token);
+  closeSetup();
+  updateSyncStatus('connected');
+
+  // If there are pending changes, save them now
+  if (_hasUnsavedChanges) {
+    saveToGitHub();
+  }
+}
 
 function saveToLocalStorage() {
   if (!_dashboardData) return;
-  // Stamp local save time so we can detect stale localStorage on other machines
-  _dashboardData._localSaveTime = new Date().toISOString();
   try {
     localStorage.setItem('fl3-dashboard-data', JSON.stringify(_dashboardData));
   } catch(e) {}
 
-  // On GitHub Pages, localStorage is the only persistence (no file system access)
-  if (_isHosted) return;
-
-  // Mark unsaved changes
   _hasUnsavedChanges = true;
 
-  if (_jsonFileHandle) {
-    // We already have file handles (user granted access), auto-save with debounce
+  if (hasToken()) {
     showSaveBar('unsaved');
     clearTimeout(_saveDebounceTimer);
-    _saveDebounceTimer = setTimeout(function() { saveToFiles(); }, 1500);
+    _saveDebounceTimer = setTimeout(function() { saveToGitHub(); }, 2000);
   } else {
-    // No file handles yet. Show the save bar so user clicks "Save Changes"
-    // (the click provides the user gesture needed for the directory picker)
-    showSaveBar('unsaved');
+    // No token. Show bar prompting setup.
+    showSaveBar('needs-setup');
   }
 }
 
@@ -1235,136 +1446,143 @@ function showSaveBar(state) {
   var btn = document.getElementById('saveBtn');
   if (state === 'unsaved') {
     bar.classList.add('visible');
-    msg.innerHTML = '<span class="unsaved">Unsaved changes</span>';
+    msg.innerHTML = '<span class="unsaved">Syncing in 2s...</span>';
     btn.disabled = false;
-    btn.textContent = 'Save Changes';
+    btn.textContent = 'Sync Now';
+    btn.onclick = function() { saveToGitHub(); };
   } else if (state === 'saving') {
-    msg.innerHTML = '<span class="unsaved">Saving...</span>';
+    bar.classList.add('visible');
+    msg.innerHTML = '<span class="unsaved">Syncing to GitHub...</span>';
     btn.disabled = true;
-    btn.textContent = 'Saving...';
+    btn.textContent = 'Syncing...';
   } else if (state === 'saved') {
-    msg.innerHTML = '<span class="saved">All changes saved to disk</span>';
+    msg.innerHTML = '<span class="saved">Synced to GitHub</span>';
     btn.disabled = true;
-    btn.textContent = 'Saved';
+    btn.textContent = 'Synced';
     setTimeout(function() {
       if (!_hasUnsavedChanges) bar.classList.remove('visible');
     }, 2500);
-  } else if (state === 'error') {
-    msg.innerHTML = '<span class="error">Could not auto-save. Click to retry or use manual save.</span>';
+  } else if (state === 'needs-setup') {
+    bar.classList.add('visible');
+    msg.innerHTML = '<span class="unsaved">Changes saved locally only</span>';
     btn.disabled = false;
-    btn.textContent = 'Retry Save';
+    btn.textContent = 'Connect GitHub';
+    btn.onclick = openSetup;
+  } else if (state === 'error') {
+    bar.classList.add('visible');
+    msg.innerHTML = '<span class="error">Sync failed. Click to retry.</span>';
+    btn.disabled = false;
+    btn.textContent = 'Retry';
+    btn.onclick = function() { saveToGitHub(); };
   }
 }
 
 function extractPersistableData(data) {
-  // Build a clean copy without transient fields
   var clean = JSON.parse(JSON.stringify(data));
   delete clean._embeddedMd;
   delete clean._localSaveTime;
-  // Update the lastUpdated timestamp so other machines see fresh data
   clean.lastUpdated = new Date().toISOString().split('T')[0];
   return clean;
 }
 
-function buildJsContent(jsonData) {
-  // Preserve _embeddedMd from the original loaded data if it exists
-  var jsData = JSON.parse(JSON.stringify(jsonData));
-  if (window.FL3_DASHBOARD_DATA && window.FL3_DASHBOARD_DATA._embeddedMd) {
-    jsData._embeddedMd = window.FL3_DASHBOARD_DATA._embeddedMd;
-  }
-  return '// Auto-generated by dashboard. Do not edit manually.\n' +
-    '// Edit dashboard-data.json instead, then run build-dashboard-js.py to regenerate.\n' +
-    '// This file is loaded via <script src> so the dashboard works in file:// mode across all machines.\n' +
-    'window.FL3_DASHBOARD_DATA = ' + JSON.stringify(jsData, null, 2) + ';\n';
-}
+async function saveToGitHub() {
+  if (!_dashboardData || _isSaving) return;
+  if (!hasToken()) { showSaveBar('needs-setup'); return; }
 
-async function saveToFiles() {
-  if (!_dashboardData) return;
+  _isSaving = true;
   _hasUnsavedChanges = false;
+  clearTimeout(_saveDebounceTimer);
   showSaveBar('saving');
 
+  var token = getToken();
   var cleanData = extractPersistableData(_dashboardData);
   var jsonStr = JSON.stringify(cleanData, null, 2) + '\n';
-  var jsStr = buildJsContent(cleanData);
 
-  // Try File System Access API first (Chrome/Edge, works with file:// and http://)
-  if (window.showSaveFilePicker || _jsonFileHandle) {
-    try {
-      await saveViaFSAPI(jsonStr, jsStr);
-      // Also update the in-memory FL3_DASHBOARD_DATA so future reloads start fresh
-      window.FL3_DASHBOARD_DATA = JSON.parse(jsStr.replace(/^[^{]*/, '').replace(/;\s*$/, ''));
-      showSaveBar('saved');
-      return;
-    } catch (e) {
-      if (e.name === 'AbortError') {
-        // User cancelled the file picker
-        _hasUnsavedChanges = true;
-        showSaveBar('unsaved');
-        return;
-      }
-      console.warn('File System Access API failed, trying fallback:', e);
-    }
-  }
-
-  // Fallback: use the Origin Private File System or direct download
   try {
-    await saveViaDownload(jsonStr, jsStr);
+    // 1. Get the latest SHA for dashboard-data.json (in case it changed)
+    if (!_githubSha) {
+      var meta = await fetch('https://api.github.com/repos/' + GITHUB_OWNER + '/' + GITHUB_REPO + '/contents/' + GITHUB_FILE, {
+        headers: { 'Authorization': 'Bearer ' + token }
+      });
+      if (meta.ok) {
+        var metaJson = await meta.json();
+        _githubSha = metaJson.sha;
+      }
+    }
+
+    // 2. Commit dashboard-data.json
+    var commitResp = await fetch('https://api.github.com/repos/' + GITHUB_OWNER + '/' + GITHUB_REPO + '/contents/' + GITHUB_FILE, {
+      method: 'PUT',
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        message: 'Update content progress',
+        content: btoa(unescape(encodeURIComponent(jsonStr))),
+        sha: _githubSha
+      })
+    });
+
+    if (!commitResp.ok) {
+      var errBody = await commitResp.json().catch(function() { return {}; });
+      // If SHA mismatch (409), refetch and retry once
+      if (commitResp.status === 409) {
+        _githubSha = null;
+        _isSaving = false;
+        return saveToGitHub();
+      }
+      throw new Error('GitHub API error: ' + (errBody.message || commitResp.status));
+    }
+
+    var commitResult = await commitResp.json();
+    _githubSha = commitResult.content.sha;
+
+    // 3. Also update dashboard-data.js (so the page loads fast from the JS file)
+    var jsData = JSON.parse(JSON.stringify(cleanData));
+    if (window.FL3_DASHBOARD_DATA && window.FL3_DASHBOARD_DATA._embeddedMd) {
+      jsData._embeddedMd = window.FL3_DASHBOARD_DATA._embeddedMd;
+    }
+    var jsStr = '// Auto-generated by dashboard. Do not edit manually.\n' +
+      'window.FL3_DASHBOARD_DATA = ' + JSON.stringify(jsData, null, 2) + ';\n';
+
+    // Get JS file SHA
+    if (!_githubJsSha) {
+      var jsMeta = await fetch('https://api.github.com/repos/' + GITHUB_OWNER + '/' + GITHUB_REPO + '/contents/' + GITHUB_JS_FILE, {
+        headers: { 'Authorization': 'Bearer ' + token }
+      });
+      if (jsMeta.ok) {
+        var jsMetaJson = await jsMeta.json();
+        _githubJsSha = jsMetaJson.sha;
+      }
+    }
+
+    var jsResp = await fetch('https://api.github.com/repos/' + GITHUB_OWNER + '/' + GITHUB_REPO + '/contents/' + GITHUB_JS_FILE, {
+      method: 'PUT',
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        message: 'Update dashboard-data.js',
+        content: btoa(unescape(encodeURIComponent(jsStr))),
+        sha: _githubJsSha
+      })
+    });
+
+    if (jsResp.ok) {
+      var jsResult = await jsResp.json();
+      _githubJsSha = jsResult.content.sha;
+    }
+
     showSaveBar('saved');
   } catch(e) {
-    console.error('Save failed:', e);
+    console.error('GitHub save failed:', e);
+    _hasUnsavedChanges = true;
     showSaveBar('error');
+  } finally {
+    _isSaving = false;
   }
-}
-
-async function saveViaFSAPI(jsonStr, jsStr) {
-  // Get file handles if we don't have them yet
-  if (!_jsonFileHandle) {
-    // Try to get handles via the directory picker for a smoother experience
-    // The user picks the metrics folder once, then we can write freely
-    try {
-      var dirHandle = await window.showDirectoryPicker({
-        id: 'fl3-metrics',
-        mode: 'readwrite',
-        startIn: 'documents'
-      });
-      _jsonFileHandle = await dirHandle.getFileHandle('dashboard-data.json', { create: false });
-      _jsFileHandle = await dirHandle.getFileHandle('dashboard-data.js', { create: false });
-    } catch(e) {
-      // If directory picker not available or user cancels, throw to try fallback
-      throw e;
-    }
-  }
-
-  // Write JSON file
-  var jsonWritable = await _jsonFileHandle.createWritable();
-  await jsonWritable.write(jsonStr);
-  await jsonWritable.close();
-
-  // Write JS file
-  var jsWritable = await _jsFileHandle.createWritable();
-  await jsWritable.write(jsStr);
-  await jsWritable.close();
-}
-
-async function saveViaDownload(jsonStr, jsStr) {
-  // Download both files. Browser will save to Downloads folder.
-  // User can then move them to the metrics folder.
-  downloadFile('dashboard-data.json', jsonStr, 'application/json');
-  // Small delay so browser doesn't block second download
-  await new Promise(function(r) { setTimeout(r, 500); });
-  downloadFile('dashboard-data.js', jsStr, 'application/javascript');
-}
-
-function downloadFile(filename, content, mimeType) {
-  var blob = new Blob([content], { type: mimeType });
-  var url = URL.createObjectURL(blob);
-  var a = document.createElement('a');
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
 }
 
 function getDueDateClass(dueDate) {
@@ -1616,9 +1834,17 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') document.getElementById('mdOverlay').classList.remove('active');
 });
 
-// Persistence: checkbox changes auto-save to dashboard-data.json + dashboard-data.js
-// via File System Access API (Chrome/Edge). Files sync across machines via Dropbox.
-// The /fl3-dashboard skill also updates these files for metrics/launch status changes.
+// Persistence: checkbox changes auto-save to GitHub repo via Contents API.
+// Token is stored in localStorage (per-browser, entered once via setup modal).
+// Data loads fresh from GitHub API on every page load, so all devices see latest.
+
+// Setup overlay: click outside to close
+document.getElementById('setupOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeSetup();
+});
+
+// Sync status click handler
+document.getElementById('syncStatus').addEventListener('click', openSetup);
 
 loadData();
 </script>
