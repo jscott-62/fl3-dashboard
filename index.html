@@ -211,6 +211,44 @@
     color: var(--accent);
   }
 
+  /* Save indicator */
+  .save-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--card);
+    border-top: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 900;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+  }
+  .save-bar.visible { transform: translateY(0); }
+  .save-bar .save-msg {
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .save-bar .save-msg .unsaved { color: var(--accent); font-weight: 600; }
+  .save-bar .save-msg .saved { color: var(--green); font-weight: 600; }
+  .save-bar .save-msg .error { color: var(--red); font-weight: 600; }
+  .save-btn {
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    padding: 8px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .save-btn:hover { opacity: 0.9; }
+  .save-btn:disabled { opacity: 0.5; cursor: default; }
+
   /* Content Creation Pipeline */
   .content-tabs {
     display: flex;
@@ -771,9 +809,14 @@
 <div class="instructions">
   <strong>How to update this dashboard:</strong><br>
   Run <code>/fl3-dashboard</code> in Claude Code to update metrics and launch status.<br>
-  Or manually edit <code>FL3-Content/metrics/dashboard-data.json</code>, then run <code>/fl3-dashboard sync</code> to regenerate the JS file, and refresh this page.<br>
-  Open this file in your browser: <code>FL3-Content/metrics/dashboard.html</code><br>
-  <strong>Multi-machine:</strong> This dashboard syncs via Dropbox. Data loads from <code>dashboard-data.js</code> which works on any machine with the shared folder.
+  <strong>Content checkboxes:</strong> Click checkboxes to update content progress. Changes auto-save to <code>dashboard-data.json</code> and <code>dashboard-data.js</code> after a short delay. On first save, your browser will ask you to select the metrics folder for write access.<br>
+  <strong>Multi-machine sync:</strong> Checkbox changes are saved to disk and sync via Dropbox automatically. Any machine with the shared folder will see your updates on refresh.
+</div>
+
+<!-- Save Bar (shows when unsaved changes exist) -->
+<div class="save-bar" id="saveBar">
+  <span class="save-msg" id="saveMsg"><span class="unsaved">Unsaved changes</span></span>
+  <button class="save-btn" id="saveBtn" onclick="saveToFiles()">Save Changes</button>
 </div>
 
 <!-- Markdown Preview Overlay -->
@@ -793,7 +836,7 @@
 <script>
 // Data loading: uses dashboard-data.js (synced via Dropbox, works in file:// mode)
 // Falls back to fetch of dashboard-data.json for HTTP mode
-// Checkbox state stored in localStorage as local cache only
+// Checkbox changes auto-save to both files and sync across machines via Dropbox
 async function loadData() {
   var data;
 
@@ -813,10 +856,25 @@ async function loadData() {
     }
   }
 
-  // Merge checkbox state from localStorage if available (local cache for interactive clicks)
+  // Merge checkbox state from localStorage.
+  // On GitHub Pages: always merge (localStorage is the only persistence).
+  // On local/Dropbox: only merge if localStorage is newer than the file data.
   var stored = loadFromLocalStorage();
   if (stored && stored.contentSchedule) {
-    mergeSteps(data, stored);
+    var isHosted = window.location.hostname.indexOf('github.io') !== -1;
+    if (isHosted) {
+      // GitHub Pages: localStorage is the only way to persist checkbox state
+      mergeSteps(data, stored);
+    } else if (stored._localSaveTime) {
+      var fileTime = new Date(data.lastUpdated || 0).getTime();
+      var localTime = new Date(stored._localSaveTime).getTime();
+      if (localTime > fileTime) {
+        mergeSteps(data, stored);
+      } else {
+        // File is newer (updated from another machine), clear stale localStorage
+        try { localStorage.removeItem('fl3-dashboard-data'); } catch(e) {}
+      }
+    }
   }
   render(data);
 }
@@ -1126,11 +1184,41 @@ function createContentCard(item, weekLabel) {
   return card;
 }
 
+// --- Persistence Layer ---
+// Checkbox changes are saved to both localStorage (immediate cache) and
+// written back to dashboard-data.json + dashboard-data.js (Dropbox-synced).
+// On GitHub Pages, only localStorage is used (read-only deployment).
+
+var _hasUnsavedChanges = false;
+var _saveDebounceTimer = null;
+var _jsonFileHandle = null;
+var _jsFileHandle = null;
+var _isHosted = window.location.hostname.indexOf('github.io') !== -1;
+
 function saveToLocalStorage() {
   if (!_dashboardData) return;
+  // Stamp local save time so we can detect stale localStorage on other machines
+  _dashboardData._localSaveTime = new Date().toISOString();
   try {
     localStorage.setItem('fl3-dashboard-data', JSON.stringify(_dashboardData));
   } catch(e) {}
+
+  // On GitHub Pages, localStorage is the only persistence (no file system access)
+  if (_isHosted) return;
+
+  // Mark unsaved changes
+  _hasUnsavedChanges = true;
+
+  if (_jsonFileHandle) {
+    // We already have file handles (user granted access), auto-save with debounce
+    showSaveBar('unsaved');
+    clearTimeout(_saveDebounceTimer);
+    _saveDebounceTimer = setTimeout(function() { saveToFiles(); }, 1500);
+  } else {
+    // No file handles yet. Show the save bar so user clicks "Save Changes"
+    // (the click provides the user gesture needed for the directory picker)
+    showSaveBar('unsaved');
+  }
 }
 
 function loadFromLocalStorage() {
@@ -1139,6 +1227,144 @@ function loadFromLocalStorage() {
     if (stored) return JSON.parse(stored);
   } catch(e) {}
   return null;
+}
+
+function showSaveBar(state) {
+  var bar = document.getElementById('saveBar');
+  var msg = document.getElementById('saveMsg');
+  var btn = document.getElementById('saveBtn');
+  if (state === 'unsaved') {
+    bar.classList.add('visible');
+    msg.innerHTML = '<span class="unsaved">Unsaved changes</span>';
+    btn.disabled = false;
+    btn.textContent = 'Save Changes';
+  } else if (state === 'saving') {
+    msg.innerHTML = '<span class="unsaved">Saving...</span>';
+    btn.disabled = true;
+    btn.textContent = 'Saving...';
+  } else if (state === 'saved') {
+    msg.innerHTML = '<span class="saved">All changes saved to disk</span>';
+    btn.disabled = true;
+    btn.textContent = 'Saved';
+    setTimeout(function() {
+      if (!_hasUnsavedChanges) bar.classList.remove('visible');
+    }, 2500);
+  } else if (state === 'error') {
+    msg.innerHTML = '<span class="error">Could not auto-save. Click to retry or use manual save.</span>';
+    btn.disabled = false;
+    btn.textContent = 'Retry Save';
+  }
+}
+
+function extractPersistableData(data) {
+  // Build a clean copy without transient fields
+  var clean = JSON.parse(JSON.stringify(data));
+  delete clean._embeddedMd;
+  delete clean._localSaveTime;
+  // Update the lastUpdated timestamp so other machines see fresh data
+  clean.lastUpdated = new Date().toISOString().split('T')[0];
+  return clean;
+}
+
+function buildJsContent(jsonData) {
+  // Preserve _embeddedMd from the original loaded data if it exists
+  var jsData = JSON.parse(JSON.stringify(jsonData));
+  if (window.FL3_DASHBOARD_DATA && window.FL3_DASHBOARD_DATA._embeddedMd) {
+    jsData._embeddedMd = window.FL3_DASHBOARD_DATA._embeddedMd;
+  }
+  return '// Auto-generated by dashboard. Do not edit manually.\n' +
+    '// Edit dashboard-data.json instead, then run build-dashboard-js.py to regenerate.\n' +
+    '// This file is loaded via <script src> so the dashboard works in file:// mode across all machines.\n' +
+    'window.FL3_DASHBOARD_DATA = ' + JSON.stringify(jsData, null, 2) + ';\n';
+}
+
+async function saveToFiles() {
+  if (!_dashboardData) return;
+  _hasUnsavedChanges = false;
+  showSaveBar('saving');
+
+  var cleanData = extractPersistableData(_dashboardData);
+  var jsonStr = JSON.stringify(cleanData, null, 2) + '\n';
+  var jsStr = buildJsContent(cleanData);
+
+  // Try File System Access API first (Chrome/Edge, works with file:// and http://)
+  if (window.showSaveFilePicker || _jsonFileHandle) {
+    try {
+      await saveViaFSAPI(jsonStr, jsStr);
+      // Also update the in-memory FL3_DASHBOARD_DATA so future reloads start fresh
+      window.FL3_DASHBOARD_DATA = JSON.parse(jsStr.replace(/^[^{]*/, '').replace(/;\s*$/, ''));
+      showSaveBar('saved');
+      return;
+    } catch (e) {
+      if (e.name === 'AbortError') {
+        // User cancelled the file picker
+        _hasUnsavedChanges = true;
+        showSaveBar('unsaved');
+        return;
+      }
+      console.warn('File System Access API failed, trying fallback:', e);
+    }
+  }
+
+  // Fallback: use the Origin Private File System or direct download
+  try {
+    await saveViaDownload(jsonStr, jsStr);
+    showSaveBar('saved');
+  } catch(e) {
+    console.error('Save failed:', e);
+    showSaveBar('error');
+  }
+}
+
+async function saveViaFSAPI(jsonStr, jsStr) {
+  // Get file handles if we don't have them yet
+  if (!_jsonFileHandle) {
+    // Try to get handles via the directory picker for a smoother experience
+    // The user picks the metrics folder once, then we can write freely
+    try {
+      var dirHandle = await window.showDirectoryPicker({
+        id: 'fl3-metrics',
+        mode: 'readwrite',
+        startIn: 'documents'
+      });
+      _jsonFileHandle = await dirHandle.getFileHandle('dashboard-data.json', { create: false });
+      _jsFileHandle = await dirHandle.getFileHandle('dashboard-data.js', { create: false });
+    } catch(e) {
+      // If directory picker not available or user cancels, throw to try fallback
+      throw e;
+    }
+  }
+
+  // Write JSON file
+  var jsonWritable = await _jsonFileHandle.createWritable();
+  await jsonWritable.write(jsonStr);
+  await jsonWritable.close();
+
+  // Write JS file
+  var jsWritable = await _jsFileHandle.createWritable();
+  await jsWritable.write(jsStr);
+  await jsWritable.close();
+}
+
+async function saveViaDownload(jsonStr, jsStr) {
+  // Download both files. Browser will save to Downloads folder.
+  // User can then move them to the metrics folder.
+  downloadFile('dashboard-data.json', jsonStr, 'application/json');
+  // Small delay so browser doesn't block second download
+  await new Promise(function(r) { setTimeout(r, 500); });
+  downloadFile('dashboard-data.js', jsStr, 'application/javascript');
+}
+
+function downloadFile(filename, content, mimeType) {
+  var blob = new Blob([content], { type: mimeType });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
 
 function getDueDateClass(dueDate) {
@@ -1390,8 +1616,9 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') document.getElementById('mdOverlay').classList.remove('active');
 });
 
-// Note: /fl3-dashboard skill updates dashboard-data.json AND regenerates dashboard-data.js
-// The .js file is loaded via <script src> so it works in file:// mode across all machines
+// Persistence: checkbox changes auto-save to dashboard-data.json + dashboard-data.js
+// via File System Access API (Chrome/Edge). Files sync across machines via Dropbox.
+// The /fl3-dashboard skill also updates these files for metrics/launch status changes.
 
 loadData();
 </script>
