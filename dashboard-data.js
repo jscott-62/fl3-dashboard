@@ -385,7 +385,7 @@ window.FL3_DASHBOARD_DATA = {
     ]
   },
   "goals": {
-    "emailListTarget": 2000,
+    "emailListTarget": 5000,
     "revenueTarget": 10000,
     "courseSalesTarget": 20,
     "costPerLeadTarget": 5.0

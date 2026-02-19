@@ -387,7 +387,7 @@
   /* ===== WEEKLY METRICS ===== */
   .metrics-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     gap: 16px;
     margin-bottom: 32px;
   }
@@ -748,6 +748,10 @@
 <!-- ===== WEEKLY METRICS ===== -->
 <div class="metrics-grid" id="weeklyMetrics">
   <div class="metric-card">
+    <div class="metric-value" id="metricNewEmails">0</div>
+    <div class="metric-label">New Emails This Week</div>
+  </div>
+  <div class="metric-card">
     <div class="metric-value" id="metricAdSpend">$0</div>
     <div class="metric-label">Ad Spend</div>
   </div>
@@ -949,6 +953,15 @@ function render(data) {
   setGoalBarInverse('goalCPL', 'goalCPLBar', latest.costPerLead, goals.costPerLeadTarget, true);
 
   // Weekly metrics
+  var newEmails = 0;
+  if (weeks.length >= 2) {
+    var previous = weeks[weeks.length - 2];
+    newEmails = latest.emailList - previous.emailList;
+  }
+  var newEmailsEl = document.getElementById('metricNewEmails');
+  newEmailsEl.textContent = (newEmails >= 0 ? '+' : '') + newEmails.toLocaleString();
+  newEmailsEl.style.color = newEmails > 0 ? 'var(--green)' : 'var(--text)';
+
   document.getElementById('metricAdSpend').textContent = '$' + latest.adSpend.toLocaleString();
   document.getElementById('metricLeads').textContent = latest.leads.toLocaleString();
   document.getElementById('metricOpenRate').textContent = (latest.emailOpenRate * 100).toFixed(1) + '%';
