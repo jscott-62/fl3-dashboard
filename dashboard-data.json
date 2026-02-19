@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-02-18",
+  "lastUpdated": "2026-02-19",
   "projects": {
     "wrong-asset-manifesto": {
       "name": "The Wrong Asset Manifesto",
@@ -7,12 +7,36 @@
       "description": "Lead magnet funnel: Facebook ads to landing page to email capture",
       "folder": "Projects/Wrong-Asset-Manifesto/",
       "assets": {
-        "leadMagnet": { "status": "complete", "label": "Wrong Asset Manifesto (PDF)", "path": null },
-        "landingPage": { "status": "complete", "label": "Landing Page", "path": null },
-        "facebookAdsStandard": { "status": "complete", "label": "Facebook Ads (Standard)", "path": null },
-        "facebookAdsCompliant": { "status": "complete", "label": "Facebook Ads (Compliant)", "path": null },
-        "emailSequence": { "status": "complete", "label": "Email Nurture Sequence (6)", "path": null },
-        "socialMedia": { "status": "not_started", "label": "Social Media Posts", "path": null }
+        "leadMagnet": {
+          "status": "complete",
+          "label": "Wrong Asset Manifesto (PDF)",
+          "path": null
+        },
+        "landingPage": {
+          "status": "complete",
+          "label": "Landing Page",
+          "path": null
+        },
+        "facebookAdsStandard": {
+          "status": "complete",
+          "label": "Facebook Ads (Standard)",
+          "path": null
+        },
+        "facebookAdsCompliant": {
+          "status": "complete",
+          "label": "Facebook Ads (Compliant)",
+          "path": null
+        },
+        "emailSequence": {
+          "status": "complete",
+          "label": "Email Nurture Sequence (6)",
+          "path": null
+        },
+        "socialMedia": {
+          "status": "not_started",
+          "label": "Social Media Posts",
+          "path": null
+        }
       }
     },
     "the-great-catch-up": {
@@ -21,13 +45,41 @@
       "description": "6-week program ($495): core revenue product",
       "folder": "Projects/The-Great-Catch-Up/",
       "assets": {
-        "courseCurriculum": { "status": "complete", "label": "Course Curriculum", "path": null },
-        "frameworkOutputs": { "status": "complete", "label": "Framework Forge Outputs", "path": null },
-        "salesPage": { "status": "review", "label": "Sales Page", "path": null },
-        "emailSequences": { "status": "not_started", "label": "Email Sequences", "path": null },
-        "facebookAds": { "status": "not_started", "label": "Facebook Ads", "path": null },
-        "socialMedia": { "status": "not_started", "label": "Social Media Campaign", "path": null },
-        "pricingStrategy": { "status": "not_started", "label": "Pricing Strategy", "path": null }
+        "courseCurriculum": {
+          "status": "complete",
+          "label": "Course Curriculum",
+          "path": null
+        },
+        "frameworkOutputs": {
+          "status": "complete",
+          "label": "Framework Forge Outputs",
+          "path": null
+        },
+        "salesPage": {
+          "status": "review",
+          "label": "Sales Page",
+          "path": null
+        },
+        "emailSequences": {
+          "status": "not_started",
+          "label": "Email Sequences",
+          "path": null
+        },
+        "facebookAds": {
+          "status": "not_started",
+          "label": "Facebook Ads",
+          "path": null
+        },
+        "socialMedia": {
+          "status": "not_started",
+          "label": "Social Media Campaign",
+          "path": null
+        },
+        "pricingStrategy": {
+          "status": "not_started",
+          "label": "Pricing Strategy",
+          "path": null
+        }
       }
     },
     "webinar": {
@@ -36,11 +88,31 @@
       "description": "Conversion event to sell The Great Catch Up",
       "folder": "Projects/Webinar/",
       "assets": {
-        "slidesScript": { "status": "in_progress", "label": "Webinar Slides/Script", "path": null },
-        "registrationPage": { "status": "in_progress", "label": "Registration Page", "path": null },
-        "facebookAds": { "status": "not_started", "label": "Facebook Ads", "path": null },
-        "emailSequences": { "status": "not_started", "label": "Email Sequences (Pre/Post)", "path": null },
-        "socialMedia": { "status": "not_started", "label": "Social Media Promotion", "path": null }
+        "slidesScript": {
+          "status": "in_progress",
+          "label": "Webinar Slides/Script",
+          "path": null
+        },
+        "registrationPage": {
+          "status": "in_progress",
+          "label": "Registration Page",
+          "path": null
+        },
+        "facebookAds": {
+          "status": "not_started",
+          "label": "Facebook Ads",
+          "path": null
+        },
+        "emailSequences": {
+          "status": "not_started",
+          "label": "Email Sequences (Pre/Post)",
+          "path": null
+        },
+        "socialMedia": {
+          "status": "not_started",
+          "label": "Social Media Promotion",
+          "path": null
+        }
       }
     },
     "weekly-content": {
@@ -55,10 +127,55 @@
           "pillar": "1: Math",
           "avatar": "Technophobe",
           "items": [
-            { "type": "youtube", "title": "The Number That's Quietly Destroying Your Retirement", "steps": { "research": true, "script": true, "film": false, "edit": false, "publish": false }, "dueDate": "2026-02-20", "path": null },
-            { "type": "blog", "title": "The Risk Flip: What's Really Dangerous for Your Retirement", "steps": { "research": true, "write": true, "edit": false, "publish": false }, "dueDate": null, "path": null },
-            { "type": "social", "title": "", "steps": { "research": false, "write": false, "edit": false, "publish": false }, "dueDate": null, "path": null },
-            { "type": "newsletter", "title": "", "steps": { "research": false, "write": false, "edit": false, "publish": false }, "dueDate": null, "path": null }
+            {
+              "type": "youtube",
+              "title": "The Number That's Quietly Destroying Your Retirement",
+              "steps": {
+                "research": true,
+                "script": true,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "dueDate": "2026-02-20",
+              "path": null
+            },
+            {
+              "type": "blog",
+              "title": "The Risk Flip: What's Really Dangerous for Your Retirement",
+              "steps": {
+                "research": true,
+                "write": true,
+                "edit": false,
+                "publish": false
+              },
+              "dueDate": null,
+              "path": null
+            },
+            {
+              "type": "social",
+              "title": "",
+              "steps": {
+                "research": false,
+                "write": false,
+                "edit": false,
+                "publish": false
+              },
+              "dueDate": null,
+              "path": null
+            },
+            {
+              "type": "newsletter",
+              "title": "",
+              "steps": {
+                "research": false,
+                "write": false,
+                "edit": false,
+                "publish": false
+              },
+              "dueDate": null,
+              "path": null
+            }
           ]
         },
         {
@@ -67,10 +184,55 @@
           "pillar": "3: Vehicles",
           "avatar": "Skeptic",
           "items": [
-            { "type": "youtube", "title": "", "steps": { "research": false, "script": false, "film": false, "edit": false, "publish": false }, "dueDate": null, "path": null },
-            { "type": "blog", "title": "", "steps": { "research": false, "write": false, "edit": false, "publish": false }, "dueDate": null, "path": null },
-            { "type": "social", "title": "", "steps": { "research": false, "write": false, "edit": false, "publish": false }, "dueDate": null, "path": null },
-            { "type": "newsletter", "title": "", "steps": { "research": false, "write": false, "edit": false, "publish": false }, "dueDate": null, "path": null }
+            {
+              "type": "youtube",
+              "title": "",
+              "steps": {
+                "research": false,
+                "script": false,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "dueDate": null,
+              "path": null
+            },
+            {
+              "type": "blog",
+              "title": "",
+              "steps": {
+                "research": false,
+                "write": false,
+                "edit": false,
+                "publish": false
+              },
+              "dueDate": null,
+              "path": null
+            },
+            {
+              "type": "social",
+              "title": "",
+              "steps": {
+                "research": false,
+                "write": false,
+                "edit": false,
+                "publish": false
+              },
+              "dueDate": null,
+              "path": null
+            },
+            {
+              "type": "newsletter",
+              "title": "",
+              "steps": {
+                "research": false,
+                "write": false,
+                "edit": false,
+                "publish": false
+              },
+              "dueDate": null,
+              "path": null
+            }
           ]
         },
         {
@@ -79,10 +241,55 @@
           "pillar": "2: Trad Advice",
           "avatar": "Pursuer",
           "items": [
-            { "type": "youtube", "title": "", "steps": { "research": false, "script": false, "film": false, "edit": false, "publish": false }, "dueDate": null, "path": null },
-            { "type": "blog", "title": "", "steps": { "research": false, "write": false, "edit": false, "publish": false }, "dueDate": null, "path": null },
-            { "type": "social", "title": "", "steps": { "research": false, "write": false, "edit": false, "publish": false }, "dueDate": null, "path": null },
-            { "type": "newsletter", "title": "", "steps": { "research": false, "write": false, "edit": false, "publish": false }, "dueDate": null, "path": null }
+            {
+              "type": "youtube",
+              "title": "",
+              "steps": {
+                "research": false,
+                "script": false,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "dueDate": null,
+              "path": null
+            },
+            {
+              "type": "blog",
+              "title": "",
+              "steps": {
+                "research": false,
+                "write": false,
+                "edit": false,
+                "publish": false
+              },
+              "dueDate": null,
+              "path": null
+            },
+            {
+              "type": "social",
+              "title": "",
+              "steps": {
+                "research": false,
+                "write": false,
+                "edit": false,
+                "publish": false
+              },
+              "dueDate": null,
+              "path": null
+            },
+            {
+              "type": "newsletter",
+              "title": "",
+              "steps": {
+                "research": false,
+                "write": false,
+                "edit": false,
+                "publish": false
+              },
+              "dueDate": null,
+              "path": null
+            }
           ]
         },
         {
@@ -91,10 +298,55 @@
           "pillar": "4: Risk Flip",
           "avatar": "All",
           "items": [
-            { "type": "youtube", "title": "", "steps": { "research": false, "script": false, "film": false, "edit": false, "publish": false }, "dueDate": null, "path": null },
-            { "type": "blog", "title": "", "steps": { "research": false, "write": false, "edit": false, "publish": false }, "dueDate": null, "path": null },
-            { "type": "social", "title": "", "steps": { "research": false, "write": false, "edit": false, "publish": false }, "dueDate": null, "path": null },
-            { "type": "newsletter", "title": "", "steps": { "research": false, "write": false, "edit": false, "publish": false }, "dueDate": null, "path": null }
+            {
+              "type": "youtube",
+              "title": "",
+              "steps": {
+                "research": false,
+                "script": false,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "dueDate": null,
+              "path": null
+            },
+            {
+              "type": "blog",
+              "title": "",
+              "steps": {
+                "research": false,
+                "write": false,
+                "edit": false,
+                "publish": false
+              },
+              "dueDate": null,
+              "path": null
+            },
+            {
+              "type": "social",
+              "title": "",
+              "steps": {
+                "research": false,
+                "write": false,
+                "edit": false,
+                "publish": false
+              },
+              "dueDate": null,
+              "path": null
+            },
+            {
+              "type": "newsletter",
+              "title": "",
+              "steps": {
+                "research": false,
+                "write": false,
+                "edit": false,
+                "publish": false
+              },
+              "dueDate": null,
+              "path": null
+            }
           ]
         }
       ]
@@ -105,7 +357,11 @@
       "description": "Authority builder and lead generation",
       "folder": "Projects/Book/",
       "assets": {
-        "manuscript": { "status": "complete", "label": "Manuscript (14 Chapters + Epilogue)", "path": null }
+        "manuscript": {
+          "status": "complete",
+          "label": "Manuscript (14 Chapters + Epilogue)",
+          "path": null
+        }
       }
     }
   },
@@ -113,7 +369,7 @@
     "weeks": [
       {
         "date": "2026-02-13",
-        "emailList": 500,
+        "emailList": 2510,
         "emailOpenRate": 0,
         "youtubeSubscribers": 0,
         "youtubeViews": 0,
@@ -131,6 +387,6 @@
     "emailListTarget": 2000,
     "revenueTarget": 10000,
     "courseSalesTarget": 20,
-    "costPerLeadTarget": 5.00
+    "costPerLeadTarget": 5.0
   }
 }
