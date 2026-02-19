@@ -707,15 +707,6 @@
     <h2>Goals Progress</h2>
     <div class="metric-bar-container">
       <div class="metric-bar-label">
-        <span>Email List</span>
-        <span id="goalEmail">0 / 2,000</span>
-      </div>
-      <div class="progress-bar">
-        <div class="progress-fill blue" id="goalEmailBar" style="width: 0%"></div>
-      </div>
-    </div>
-    <div class="metric-bar-container">
-      <div class="metric-bar-label">
         <span>Revenue</span>
         <span id="goalRevenue">$0 / $10,000</span>
       </div>
@@ -927,7 +918,6 @@ function render(data) {
 
   // Goals
   var goals = data.goals;
-  setGoalBar('goalEmail', 'goalEmailBar', latest.emailList, goals.emailListTarget);
   setGoalBar('goalRevenue', 'goalRevenueBar', latest.revenue, goals.revenueTarget, true);
   setGoalBar('goalSales', 'goalSalesBar', latest.courseSales, goals.courseSalesTarget);
 
