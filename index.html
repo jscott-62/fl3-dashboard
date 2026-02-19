@@ -65,38 +65,6 @@
   .sync-dot.connected { background: var(--green); }
   .sync-dot.disconnected { background: var(--red); }
 
-  /* ===== KPI ROW ===== */
-  .kpi-row {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin-bottom: 32px;
-  }
-  .kpi {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px;
-    text-align: center;
-  }
-  .kpi .value {
-    font-size: 36px;
-    font-weight: 700;
-    color: var(--accent);
-  }
-  .kpi .label {
-    font-size: 13px;
-    color: var(--muted);
-    margin-top: 4px;
-  }
-  .kpi .trend {
-    font-size: 14px;
-    margin-top: 8px;
-  }
-  .kpi .trend.up { color: var(--green); }
-  .kpi .trend.down { color: var(--red); }
-  .kpi .trend.flat { color: var(--muted); }
-
   /* ===== CARDS ===== */
   .card {
     background: var(--card);
@@ -703,14 +671,12 @@
   @media (max-width: 768px) {
     body { padding: 16px; padding-bottom: 80px; }
     .header { flex-direction: column; gap: 8px; align-items: flex-start; }
-    .kpi-row { grid-template-columns: repeat(2, 1fr); }
     .kanban-board { grid-template-columns: 1fr; }
     .metrics-grid { grid-template-columns: repeat(2, 1fr); }
     .project-tabs { gap: 0; }
     .project-tab { padding: 10px 14px; font-size: 13px; }
   }
   @media (max-width: 480px) {
-    .kpi-row { grid-template-columns: 1fr; }
     .metrics-grid { grid-template-columns: 1fr; }
   }
 </style>
@@ -726,30 +692,6 @@
       <span class="sync-dot" id="syncDot"></span>
       <span id="syncLabel">checking...</span>
     </span>
-  </div>
-</div>
-
-<!-- ===== KPI ROW ===== -->
-<div class="kpi-row">
-  <div class="kpi">
-    <div class="value" id="kpiEmailList">--</div>
-    <div class="label">Email List Size</div>
-    <div class="trend flat" id="kpiEmailTrend">--</div>
-  </div>
-  <div class="kpi">
-    <div class="value" id="kpiRevenue">--</div>
-    <div class="label">Revenue</div>
-    <div class="trend flat" id="kpiRevenueTrend">--</div>
-  </div>
-  <div class="kpi">
-    <div class="value" id="kpiCourseSales">--</div>
-    <div class="label">Course Sales</div>
-    <div class="trend flat" id="kpiSalesTrend">--</div>
-  </div>
-  <div class="kpi">
-    <div class="value" id="kpiCPL">--</div>
-    <div class="label">Cost Per Lead</div>
-    <div class="trend flat" id="kpiCPLTrend">--</div>
   </div>
 </div>
 
@@ -976,24 +918,9 @@ function render(data) {
   // Last updated
   document.getElementById('lastUpdated').textContent = data.lastUpdated;
 
-  // KPIs
+  // Metrics data
   var weeks = data.metrics.weeks;
   var latest = weeks[weeks.length - 1];
-  var prev = weeks.length > 1 ? weeks[weeks.length - 2] : null;
-
-  document.getElementById('kpiEmailList').textContent = latest.emailList.toLocaleString();
-  document.getElementById('kpiRevenue').textContent = '$' + latest.revenue.toLocaleString();
-  document.getElementById('kpiCourseSales').textContent = latest.courseSales;
-  document.getElementById('kpiCPL').textContent = latest.costPerLead > 0 ? '$' + latest.costPerLead.toFixed(2) : '--';
-
-  // Trends
-  if (prev) {
-    setTrend('kpiEmailTrend', latest.emailList, prev.emailList);
-    setTrend('kpiRevenueTrend', latest.revenue, prev.revenue);
-    setTrend('kpiSalesTrend', latest.courseSales, prev.courseSales);
-    // Cost Per Lead: reversed (lower is better)
-    setTrend('kpiCPLTrend', prev.costPerLead, latest.costPerLead);
-  }
 
   // Build project tabs and views
   renderProjectTabs(data);
@@ -1010,27 +937,6 @@ function render(data) {
   document.getElementById('metricOpenRate').textContent = (latest.emailOpenRate * 100).toFixed(1) + '%';
   document.getElementById('metricYTViews').textContent = latest.youtubeViews.toLocaleString();
   document.getElementById('metricWebReg').textContent = latest.webinarRegistrations.toLocaleString();
-}
-
-// =====================================================================
-// KPI TRENDS
-// =====================================================================
-
-function setTrend(id, current, previous) {
-  var el = document.getElementById(id);
-  if (previous === 0 && current === 0) { el.textContent = '--'; el.className = 'trend flat'; return; }
-  if (previous === 0) { el.textContent = '--'; el.className = 'trend flat'; return; }
-  var change = ((current - previous) / previous * 100).toFixed(1);
-  if (change > 0) {
-    el.textContent = '+' + change + '%';
-    el.className = 'trend up';
-  } else if (change < 0) {
-    el.textContent = change + '%';
-    el.className = 'trend down';
-  } else {
-    el.textContent = '0%';
-    el.className = 'trend flat';
-  }
 }
 
 function setGoalBar(labelId, barId, current, target, isMoney) {
