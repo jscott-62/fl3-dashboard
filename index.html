@@ -23,8 +23,11 @@
     background: var(--bg);
     color: var(--text);
     padding: 24px;
+    padding-bottom: 80px;
     min-height: 100vh;
   }
+
+  /* ===== HEADER ===== */
   .header {
     display: flex;
     justify-content: space-between;
@@ -41,29 +44,28 @@
   .header .updated {
     color: var(--muted);
     font-size: 14px;
-  }
-  .grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    margin-bottom: 32px;
-  }
-  .grid.full { grid-template-columns: 1fr; }
-  .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 24px;
-  }
-  .card h2 {
-    font-size: 18px;
-    margin-bottom: 16px;
-    color: var(--accent);
     display: flex;
     align-items: center;
     gap: 8px;
   }
-  .card h2 .icon { font-size: 20px; }
+  .sync-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--muted);
+    cursor: pointer;
+  }
+  .sync-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--muted);
+  }
+  .sync-dot.connected { background: var(--green); }
+  .sync-dot.disconnected { background: var(--red); }
+
+  /* ===== KPI ROW ===== */
   .kpi-row {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -94,6 +96,98 @@
   .kpi .trend.up { color: var(--green); }
   .kpi .trend.down { color: var(--red); }
   .kpi .trend.flat { color: var(--muted); }
+
+  /* ===== CARDS ===== */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .card h2 {
+    font-size: 18px;
+    margin-bottom: 16px;
+    color: var(--accent);
+  }
+
+  /* ===== PROJECT TABS ===== */
+  .project-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+  }
+  .project-tab {
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .project-tab:hover { color: var(--text); }
+  .project-tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+  .tab-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .tab-dot.live { background: var(--green); }
+  .tab-dot.active { background: var(--blue); }
+  .tab-dot.in_development { background: var(--accent); }
+  .tab-dot.planned { background: var(--muted); }
+  .tab-dot.in_progress { background: var(--blue); }
+
+  /* ===== PROJECT VIEWS ===== */
+  .project-view { display: none; }
+  .project-view.active { display: block; }
+  .project-header {
+    margin-bottom: 20px;
+  }
+  .project-header h2 {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 4px;
+  }
+  .project-description {
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* ===== STATUS BADGES ===== */
+  .status-badge {
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+  .status-complete { background: rgba(34,197,94,0.15); color: var(--green); }
+  .status-in_progress { background: rgba(59,130,246,0.15); color: var(--blue); }
+  .status-not_started { background: rgba(148,163,184,0.15); color: var(--muted); }
+  .status-review { background: rgba(168,85,247,0.15); color: var(--purple); }
+  .status-live { background: rgba(34,197,94,0.15); color: var(--green); }
+  .status-active { background: rgba(59,130,246,0.15); color: var(--blue); }
+  .status-in_development { background: rgba(245,158,11,0.15); color: var(--accent); }
+  .status-planned { background: rgba(148,163,184,0.15); color: var(--muted); }
+
+  /* ===== ASSET LIST ===== */
   .asset-list { list-style: none; }
   .asset-item {
     display: flex;
@@ -118,18 +212,8 @@
     color: var(--muted);
     opacity: 0.7;
   }
-  .status-badge {
-    font-size: 12px;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-  .status-complete { background: rgba(34,197,94,0.15); color: var(--green); }
-  .status-in_progress { background: rgba(59,130,246,0.15); color: var(--blue); }
-  .status-not_started { background: rgba(148,163,184,0.15); color: var(--muted); }
-  .status-review { background: rgba(168,85,247,0.15); color: var(--purple); }
+
+  /* ===== PROGRESS BARS ===== */
   .progress-bar {
     width: 100%;
     height: 12px;
@@ -151,224 +235,8 @@
     color: var(--muted);
     text-align: right;
   }
-  .launch-countdown {
-    text-align: center;
-    padding: 24px;
-  }
-  .countdown-value {
-    font-size: 48px;
-    font-weight: 700;
-    color: var(--accent);
-  }
-  .countdown-label {
-    font-size: 14px;
-    color: var(--muted);
-  }
-  .goal-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-  }
-  .goal-label { font-size: 14px; }
-  .goal-values {
-    font-size: 13px;
-    color: var(--muted);
-  }
-  .chart-placeholder {
-    height: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--muted);
-    font-style: italic;
-    border: 1px dashed var(--border);
-    border-radius: 8px;
-    margin-top: 12px;
-  }
-  .metric-bar-container { margin-bottom: 16px; }
-  .metric-bar-label {
-    display: flex;
-    justify-content: space-between;
-    font-size: 13px;
-    margin-bottom: 4px;
-  }
-  .instructions {
-    background: rgba(245,158,11,0.1);
-    border: 1px solid rgba(245,158,11,0.3);
-    border-radius: 8px;
-    padding: 16px;
-    margin-top: 16px;
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.6;
-  }
-  .instructions code {
-    background: var(--bg);
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 12px;
-    color: var(--accent);
-  }
 
-  /* Save indicator */
-  .save-bar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: var(--card);
-    border-top: 1px solid var(--border);
-    padding: 12px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    z-index: 900;
-    transform: translateY(100%);
-    transition: transform 0.3s ease;
-  }
-  .save-bar.visible { transform: translateY(0); }
-  .save-bar .save-msg {
-    font-size: 14px;
-    color: var(--muted);
-  }
-  .save-bar .save-msg .unsaved { color: var(--accent); font-weight: 600; }
-  .save-bar .save-msg .saved { color: var(--green); font-weight: 600; }
-  .save-bar .save-msg .error { color: var(--red); font-weight: 600; }
-  .save-btn {
-    background: var(--accent);
-    color: var(--bg);
-    border: none;
-    padding: 8px 24px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: opacity 0.2s;
-  }
-  .save-btn:hover { opacity: 0.9; }
-  .save-btn:disabled { opacity: 0.5; cursor: default; }
-
-  /* Token setup modal */
-  .setup-overlay {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    z-index: 2000;
-    background: rgba(0,0,0,0.8);
-    backdrop-filter: blur(6px);
-    justify-content: center;
-    align-items: center;
-    padding: 24px;
-  }
-  .setup-overlay.active { display: flex; }
-  .setup-panel {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 32px;
-    max-width: 520px;
-    width: 100%;
-  }
-  .setup-panel h3 {
-    font-size: 18px;
-    color: var(--accent);
-    margin-bottom: 16px;
-  }
-  .setup-panel p {
-    font-size: 14px;
-    color: var(--muted);
-    line-height: 1.6;
-    margin-bottom: 16px;
-  }
-  .setup-panel ol {
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.8;
-    padding-left: 20px;
-    margin-bottom: 20px;
-  }
-  .setup-panel ol a { color: var(--blue); }
-  .setup-panel input[type="text"] {
-    width: 100%;
-    padding: 10px 14px;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    color: var(--text);
-    font-size: 14px;
-    font-family: monospace;
-    margin-bottom: 16px;
-  }
-  .setup-panel input[type="text"]:focus {
-    outline: none;
-    border-color: var(--accent);
-  }
-  .setup-actions {
-    display: flex;
-    gap: 12px;
-    justify-content: flex-end;
-  }
-  .setup-actions button {
-    padding: 8px 20px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    border: 1px solid var(--border);
-  }
-  .setup-actions .btn-primary {
-    background: var(--accent);
-    color: var(--bg);
-    border-color: var(--accent);
-  }
-  .setup-actions .btn-secondary {
-    background: transparent;
-    color: var(--muted);
-  }
-  .sync-status {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    color: var(--muted);
-    margin-left: 12px;
-  }
-  .sync-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--muted);
-  }
-  .sync-dot.connected { background: var(--green); }
-  .sync-dot.disconnected { background: var(--red); }
-
-  /* Content Creation Pipeline */
-  .content-tabs {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 24px;
-    border-bottom: 1px solid var(--border);
-  }
-  .content-tab {
-    background: transparent;
-    border: none;
-    color: var(--muted);
-    padding: 12px 20px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    transition: color 0.2s, border-color 0.2s;
-  }
-  .content-tab:hover { color: var(--text); }
-  .content-tab.active {
-    color: var(--accent);
-    border-bottom-color: var(--accent);
-  }
-  .content-view { display: none; }
-  .content-view.active { display: block; }
-
+  /* ===== KANBAN BOARD ===== */
   .kanban-board {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -419,6 +287,7 @@
     opacity: 0.6;
   }
 
+  /* ===== CONTENT CARDS ===== */
   .content-card {
     background: var(--card);
     border: 1px solid var(--border);
@@ -447,10 +316,6 @@
   .type-blog { background: rgba(168,85,247,0.15); color: var(--purple); }
   .type-social { background: rgba(59,130,246,0.15); color: var(--blue); }
   .type-newsletter { background: rgba(34,197,94,0.15); color: var(--green); }
-  .type-email-sequence { background: rgba(245,158,11,0.15); color: var(--accent); }
-  .type-ad-copy { background: rgba(236,72,153,0.15); color: #ec4899; }
-  .type-webinar { background: rgba(139,92,246,0.15); color: #8b5cf6; }
-  .type-sales-page { background: rgba(34,197,94,0.15); color: var(--green); }
 
   .content-card-title {
     font-size: 13px;
@@ -534,7 +399,180 @@
   .content-card-due.overdue { color: var(--red); }
   .content-card-due.today { color: var(--accent); }
 
-  /* Markdown Preview Overlay */
+  /* ===== GOALS SECTION ===== */
+  .goals-section {
+    margin-top: 32px;
+    margin-bottom: 32px;
+  }
+  .metric-bar-container { margin-bottom: 16px; }
+  .metric-bar-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+
+  /* ===== WEEKLY METRICS ===== */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .metric-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+  }
+  .metric-card .metric-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .metric-card .metric-label {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* ===== INSTRUCTIONS ===== */
+  .instructions {
+    background: rgba(245,158,11,0.1);
+    border: 1px solid rgba(245,158,11,0.3);
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .instructions code {
+    background: var(--bg);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: var(--accent);
+  }
+
+  /* ===== SAVE BAR ===== */
+  .save-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--card);
+    border-top: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 900;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+  }
+  .save-bar.visible { transform: translateY(0); }
+  .save-bar .save-msg {
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .save-bar .save-msg .unsaved { color: var(--accent); font-weight: 600; }
+  .save-bar .save-msg .saved { color: var(--green); font-weight: 600; }
+  .save-bar .save-msg .error { color: var(--red); font-weight: 600; }
+  .save-btn {
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    padding: 8px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .save-btn:hover { opacity: 0.9; }
+  .save-btn:disabled { opacity: 0.5; cursor: default; }
+
+  /* ===== TOKEN SETUP MODAL ===== */
+  .setup-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 2000;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(6px);
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+  }
+  .setup-overlay.active { display: flex; }
+  .setup-panel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    max-width: 520px;
+    width: 100%;
+  }
+  .setup-panel h3 {
+    font-size: 18px;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+  .setup-panel p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  .setup-panel ol {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.8;
+    padding-left: 20px;
+    margin-bottom: 20px;
+  }
+  .setup-panel ol a { color: var(--blue); }
+  .setup-panel input[type="text"] {
+    width: 100%;
+    padding: 10px 14px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 14px;
+    font-family: monospace;
+    margin-bottom: 16px;
+  }
+  .setup-panel input[type="text"]:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  .setup-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+  }
+  .setup-actions button {
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid var(--border);
+  }
+  .setup-actions .btn-primary {
+    background: var(--accent);
+    color: var(--bg);
+    border-color: var(--accent);
+  }
+  .setup-actions .btn-secondary {
+    background: transparent;
+    color: var(--muted);
+  }
+
+  /* ===== MARKDOWN PREVIEW OVERLAY ===== */
   .md-overlay {
     display: none;
     position: fixed;
@@ -652,10 +690,34 @@
     padding: 40px 24px;
     color: var(--red);
   }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 1200px) {
+    .kanban-board {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .metrics-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (max-width: 768px) {
+    body { padding: 16px; padding-bottom: 80px; }
+    .header { flex-direction: column; gap: 8px; align-items: flex-start; }
+    .kpi-row { grid-template-columns: repeat(2, 1fr); }
+    .kanban-board { grid-template-columns: 1fr; }
+    .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+    .project-tabs { gap: 0; }
+    .project-tab { padding: 10px 14px; font-size: 13px; }
+  }
+  @media (max-width: 480px) {
+    .kpi-row { grid-template-columns: 1fr; }
+    .metrics-grid { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
 
+<!-- ===== HEADER ===== -->
 <div class="header">
   <h1>Freedom Life 3.0 Dashboard</h1>
   <div class="updated">
@@ -667,7 +729,7 @@
   </div>
 </div>
 
-<!-- KPI Row -->
+<!-- ===== KPI ROW ===== -->
 <div class="kpi-row">
   <div class="kpi">
     <div class="value" id="kpiEmailList">--</div>
@@ -691,221 +753,71 @@
   </div>
 </div>
 
-<!-- Row 1: Launch Status + Launch Assets -->
-<div class="grid">
+<!-- ===== PROJECT TABS ===== -->
+<div class="project-tabs" id="projectTabs"></div>
 
-  <!-- Launch Status -->
+<!-- ===== PROJECT VIEWS ===== -->
+<div id="projectViews"></div>
+
+<!-- ===== GOALS PROGRESS ===== -->
+<div class="goals-section">
   <div class="card">
-    <h2><span class="icon">&#x1F680;</span> Launch Status</h2>
-    <div id="launchStatus">
-      <div class="launch-countdown">
-        <div class="countdown-label" id="launchStatusText">Status: Planning</div>
-        <div class="countdown-value" id="launchCountdown">--</div>
-        <div class="countdown-label" id="launchCountdownLabel">Set launch dates to see countdown</div>
+    <h2>Goals Progress</h2>
+    <div class="metric-bar-container">
+      <div class="metric-bar-label">
+        <span>Email List</span>
+        <span id="goalEmail">0 / 2,000</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill blue" id="goalEmailBar" style="width: 0%"></div>
       </div>
     </div>
-    <div class="progress-bar">
-      <div class="progress-fill amber" id="launchProgress" style="width: 0%"></div>
-    </div>
-    <div class="progress-text" id="launchProgressText">0% complete</div>
-  </div>
-
-  <!-- Launch Assets -->
-  <div class="card">
-    <h2><span class="icon">&#x1F4CB;</span> Launch Assets</h2>
-    <ul class="asset-list" id="assetList">
-      <li class="asset-item"><span>Loading...</span></li>
-    </ul>
-  </div>
-
-</div>
-
-<!-- Row 2: Lead Magnet + Goals -->
-<div class="grid">
-
-  <!-- Lead Magnet Assets -->
-  <div class="card">
-    <h2><span class="icon">&#x1F9F2;</span> <span id="leadMagnetName">Lead Magnet</span></h2>
-    <ul class="asset-list" id="leadMagnetList">
-      <li class="asset-item"><span>Loading...</span></li>
-    </ul>
-    <div class="progress-bar">
-      <div class="progress-fill green" id="leadMagnetProgress" style="width: 0%"></div>
-    </div>
-    <div class="progress-text" id="leadMagnetProgressText">0% complete</div>
-  </div>
-
-  <!-- Goals Progress -->
-  <div class="card">
-    <h2><span class="icon">&#x1F3AF;</span> Goals Progress</h2>
-    <div id="goalsContainer">
-      <div class="metric-bar-container">
-        <div class="metric-bar-label">
-          <span>Email List</span>
-          <span id="goalEmail">0 / 2,000</span>
-        </div>
-        <div class="progress-bar">
-          <div class="progress-fill blue" id="goalEmailBar" style="width: 0%"></div>
-        </div>
+    <div class="metric-bar-container">
+      <div class="metric-bar-label">
+        <span>Revenue</span>
+        <span id="goalRevenue">$0 / $10,000</span>
       </div>
-      <div class="metric-bar-container">
-        <div class="metric-bar-label">
-          <span>Revenue</span>
-          <span id="goalRevenue">$0 / $10,000</span>
-        </div>
-        <div class="progress-bar">
-          <div class="progress-fill green" id="goalRevenueBar" style="width: 0%"></div>
-        </div>
-      </div>
-      <div class="metric-bar-container">
-        <div class="metric-bar-label">
-          <span>Course Sales</span>
-          <span id="goalSales">0 / 20</span>
-        </div>
-        <div class="progress-bar">
-          <div class="progress-fill amber" id="goalSalesBar" style="width: 0%"></div>
-        </div>
+      <div class="progress-bar">
+        <div class="progress-fill green" id="goalRevenueBar" style="width: 0%"></div>
       </div>
     </div>
-  </div>
-
-</div>
-
-<!-- Row 3: Weekly Metrics (full width) -->
-<div class="grid full">
-  <div class="card">
-    <h2><span class="icon">&#x1F4CA;</span> Weekly Metrics</h2>
-    <div id="weeklyMetrics">
-      <div class="metric-bar-container">
-        <div class="metric-bar-label">
-          <span>Ad Spend</span>
-          <span id="metricAdSpend">$0</span>
-        </div>
+    <div class="metric-bar-container">
+      <div class="metric-bar-label">
+        <span>Course Sales</span>
+        <span id="goalSales">0 / 20</span>
       </div>
-      <div class="metric-bar-container">
-        <div class="metric-bar-label">
-          <span>Leads Generated</span>
-          <span id="metricLeads">0</span>
-        </div>
-      </div>
-      <div class="metric-bar-container">
-        <div class="metric-bar-label">
-          <span>Email Open Rate</span>
-          <span id="metricOpenRate">0%</span>
-        </div>
-      </div>
-      <div class="metric-bar-container">
-        <div class="metric-bar-label">
-          <span>YouTube Views</span>
-          <span id="metricYTViews">0</span>
-        </div>
-      </div>
-      <div class="metric-bar-container">
-        <div class="metric-bar-label">
-          <span>Webinar Registrations</span>
-          <span id="metricWebReg">0</span>
-        </div>
+      <div class="progress-bar">
+        <div class="progress-fill amber" id="goalSalesBar" style="width: 0%"></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Row 4: Content Creation Pipeline (full width) -->
-<div class="grid full">
-  <div class="card">
-    <h2><span class="icon">&#x270D;&#xFE0F;</span> Content Creation Pipeline</h2>
-
-    <div class="content-tabs">
-      <button class="content-tab active" data-tab="weekly">Weekly Content</button>
-      <button class="content-tab" data-tab="launch">Launch Content</button>
-    </div>
-
-    <!-- Weekly Content Kanban -->
-    <div id="weeklyContentView" class="content-view active">
-      <div class="kanban-board">
-        <div class="kanban-column">
-          <div class="kanban-header">
-            <span class="kanban-title">Planned</span>
-            <span class="kanban-count" id="weeklyPlannedCount">0</span>
-          </div>
-          <div class="kanban-cards" id="weeklyPlannedCards"></div>
-        </div>
-        <div class="kanban-column">
-          <div class="kanban-header">
-            <span class="kanban-title">Drafted</span>
-            <span class="kanban-count" id="weeklyDraftedCount">0</span>
-          </div>
-          <div class="kanban-cards" id="weeklyDraftedCards"></div>
-        </div>
-        <div class="kanban-column">
-          <div class="kanban-header">
-            <span class="kanban-title">Filmed</span>
-            <span class="kanban-count" id="weeklyFilmedCount">0</span>
-          </div>
-          <div class="kanban-cards" id="weeklyFilmedCards"></div>
-        </div>
-        <div class="kanban-column">
-          <div class="kanban-header">
-            <span class="kanban-title">Edited</span>
-            <span class="kanban-count" id="weeklyEditedCount">0</span>
-          </div>
-          <div class="kanban-cards" id="weeklyEditedCards"></div>
-        </div>
-        <div class="kanban-column">
-          <div class="kanban-header">
-            <span class="kanban-title">Published</span>
-            <span class="kanban-count" id="weeklyPublishedCount">0</span>
-          </div>
-          <div class="kanban-cards" id="weeklyPublishedCards"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Launch Content Kanban -->
-    <div id="launchContentView" class="content-view">
-      <div class="kanban-board">
-        <div class="kanban-column">
-          <div class="kanban-header">
-            <span class="kanban-title">Planned</span>
-            <span class="kanban-count" id="launchPlannedCount">0</span>
-          </div>
-          <div class="kanban-cards" id="launchPlannedCards"></div>
-        </div>
-        <div class="kanban-column">
-          <div class="kanban-header">
-            <span class="kanban-title">Drafted</span>
-            <span class="kanban-count" id="launchDraftedCount">0</span>
-          </div>
-          <div class="kanban-cards" id="launchDraftedCards"></div>
-        </div>
-        <div class="kanban-column">
-          <div class="kanban-header">
-            <span class="kanban-title">Filmed</span>
-            <span class="kanban-count" id="launchFilmedCount">0</span>
-          </div>
-          <div class="kanban-cards" id="launchFilmedCards"></div>
-        </div>
-        <div class="kanban-column">
-          <div class="kanban-header">
-            <span class="kanban-title">Edited</span>
-            <span class="kanban-count" id="launchEditedCount">0</span>
-          </div>
-          <div class="kanban-cards" id="launchEditedCards"></div>
-        </div>
-        <div class="kanban-column">
-          <div class="kanban-header">
-            <span class="kanban-title">Published</span>
-            <span class="kanban-count" id="launchPublishedCount">0</span>
-          </div>
-          <div class="kanban-cards" id="launchPublishedCards"></div>
-        </div>
-      </div>
-    </div>
-
+<!-- ===== WEEKLY METRICS ===== -->
+<div class="metrics-grid" id="weeklyMetrics">
+  <div class="metric-card">
+    <div class="metric-value" id="metricAdSpend">$0</div>
+    <div class="metric-label">Ad Spend</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-value" id="metricLeads">0</div>
+    <div class="metric-label">Leads Generated</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-value" id="metricOpenRate">0%</div>
+    <div class="metric-label">Email Open Rate</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-value" id="metricYTViews">0</div>
+    <div class="metric-label">YouTube Views</div>
+  </div>
+  <div class="metric-card">
+    <div class="metric-value" id="metricWebReg">0</div>
+    <div class="metric-label">Webinar Registrations</div>
   </div>
 </div>
 
-<!-- Instructions -->
+<!-- ===== INSTRUCTIONS ===== -->
 <div class="instructions">
   <strong>How to update this dashboard:</strong><br>
   Run <code>/fl3-dashboard</code> in Claude Code to update metrics and launch status.<br>
@@ -913,13 +825,13 @@
   <strong>Setup:</strong> First time? Click the sync status indicator next to "Last updated" to connect your GitHub token. You only need to do this once per browser.
 </div>
 
-<!-- Save Bar (shows when syncing to GitHub) -->
+<!-- ===== SAVE BAR ===== -->
 <div class="save-bar" id="saveBar">
   <span class="save-msg" id="saveMsg"><span class="unsaved">Unsaved changes</span></span>
   <button class="save-btn" id="saveBtn" onclick="saveToGitHub()">Sync to GitHub</button>
 </div>
 
-<!-- Token Setup Modal -->
+<!-- ===== TOKEN SETUP MODAL ===== -->
 <div class="setup-overlay" id="setupOverlay">
   <div class="setup-panel">
     <h3>Connect to GitHub</h3>
@@ -941,7 +853,7 @@
   </div>
 </div>
 
-<!-- Markdown Preview Overlay -->
+<!-- ===== MARKDOWN PREVIEW OVERLAY ===== -->
 <div class="md-overlay" id="mdOverlay">
   <div class="md-panel">
     <div class="md-panel-header">
@@ -956,10 +868,37 @@
 
 <script src="dashboard-data.js"></script>
 <script>
-// Data loading priority:
-// 1. GitHub API (always fetch fresh if token available, so all devices see latest)
-// 2. dashboard-data.js (bundled fallback, works offline)
-// 3. localStorage (last resort if both fail)
+// =====================================================================
+// FL3 Business Dashboard - GitHub Pages Single-Page App
+// Syncs checkbox state to GitHub via the Contents API
+// =====================================================================
+
+// --- GitHub Configuration ---
+var GITHUB_OWNER = 'jscott-62';
+var GITHUB_REPO = 'fl3-dashboard';
+var GITHUB_FILE = 'dashboard-data.json';
+var GITHUB_JS_FILE = 'dashboard-data.js';
+
+var _dashboardData = null;
+var _hasUnsavedChanges = false;
+var _saveDebounceTimer = null;
+var _githubSha = null;
+var _githubJsSha = null;
+var _isSaving = false;
+
+// --- Project tab order ---
+var PROJECT_ORDER = [
+  'wrong-asset-manifesto',
+  'the-great-catch-up',
+  'webinar',
+  'weekly-content',
+  'book'
+];
+
+// =====================================================================
+// DATA LOADING (Priority: GitHub API > bundled JS > fetch JSON > localStorage)
+// =====================================================================
+
 async function loadData() {
   var data = null;
 
@@ -1027,65 +966,20 @@ async function loadData() {
   render(data);
 }
 
-function mergeSteps(target, source) {
-  if (!target.contentSchedule || !source.contentSchedule) return;
-  var tw = target.contentSchedule.weeklyContent || [];
-  var sw = source.contentSchedule.weeklyContent || [];
-  tw.forEach(function(week, wi) {
-    if (!sw[wi]) return;
-    (week.items || []).forEach(function(item, ii) {
-      if (sw[wi].items && sw[wi].items[ii] && sw[wi].items[ii].steps) {
-        item.steps = sw[wi].items[ii].steps;
-      }
-    });
-  });
-  var tl = target.contentSchedule.launchContent || [];
-  var sl = source.contentSchedule.launchContent || [];
-  tl.forEach(function(item, i) {
-    if (sl[i] && sl[i].steps) {
-      item.steps = sl[i].steps;
-    }
-  });
-}
-
-function renderAssetList(listEl, assets) {
-  listEl.innerHTML = '';
-  let complete = 0;
-  let total = 0;
-  for (const [key, asset] of Object.entries(assets)) {
-    total++;
-    if (asset.status === 'complete') complete++;
-    const li = document.createElement('li');
-    li.className = 'asset-item';
-    var nameHtml;
-    if (asset.path && asset.path.match(/\.md$/)) {
-      nameHtml = `<a href="#" class="md-preview-link" data-path="${asset.path}" data-title="${asset.label}">${asset.label}</a>`;
-    } else if (asset.path) {
-      nameHtml = `<a href="${asset.path}" title="Open ${asset.label}">${asset.label}</a>`;
-    } else {
-      nameHtml = `<span class="no-link">${asset.label}</span>`;
-    }
-    li.innerHTML = `<span class="asset-name">${nameHtml}</span><span class="status-badge status-${asset.status}">${asset.status.replace('_', ' ')}</span>`;
-    // Attach preview handler for .md links
-    var mdLink = li.querySelector('.md-preview-link');
-    if (mdLink) {
-      mdLink.addEventListener('click', function(e) {
-        e.preventDefault();
-        openMdPreview(mdLink.dataset.path, mdLink.dataset.title);
-      });
-    }
-    listEl.appendChild(li);
-  }
-  return { complete, total };
-}
+// =====================================================================
+// MAIN RENDER
+// =====================================================================
 
 function render(data) {
+  _dashboardData = data;
+
   // Last updated
   document.getElementById('lastUpdated').textContent = data.lastUpdated;
 
-  // KPIs from latest week
-  const latest = data.metrics.weeks[data.metrics.weeks.length - 1];
-  const prev = data.metrics.weeks.length > 1 ? data.metrics.weeks[data.metrics.weeks.length - 2] : null;
+  // KPIs
+  var weeks = data.metrics.weeks;
+  var latest = weeks[weeks.length - 1];
+  var prev = weeks.length > 1 ? weeks[weeks.length - 2] : null;
 
   document.getElementById('kpiEmailList').textContent = latest.emailList.toLocaleString();
   document.getElementById('kpiRevenue').textContent = '$' + latest.revenue.toLocaleString();
@@ -1097,54 +991,15 @@ function render(data) {
     setTrend('kpiEmailTrend', latest.emailList, prev.emailList);
     setTrend('kpiRevenueTrend', latest.revenue, prev.revenue);
     setTrend('kpiSalesTrend', latest.courseSales, prev.courseSales);
-    setTrend('kpiCPLTrend', prev.costPerLead, latest.costPerLead); // reversed: lower is better
+    // Cost Per Lead: reversed (lower is better)
+    setTrend('kpiCPLTrend', prev.costPerLead, latest.costPerLead);
   }
 
-  // Launch status
-  const launch = data.launch;
-  document.getElementById('launchStatusText').textContent = 'Status: ' + launch.status;
-
-  if (launch.cartOpen) {
-    const daysUntil = Math.ceil((new Date(launch.cartOpen) - new Date()) / (1000*60*60*24));
-    if (daysUntil > 0) {
-      document.getElementById('launchCountdown').textContent = daysUntil;
-      document.getElementById('launchCountdownLabel').textContent = 'days until cart opens';
-    } else if (launch.cartClose) {
-      const daysLeft = Math.ceil((new Date(launch.cartClose) - new Date()) / (1000*60*60*24));
-      if (daysLeft > 0) {
-        document.getElementById('launchCountdown').textContent = daysLeft;
-        document.getElementById('launchCountdownLabel').textContent = 'days until cart closes';
-        document.getElementById('launchCountdown').style.color = '#ef4444';
-      } else {
-        document.getElementById('launchCountdown').textContent = 'Closed';
-        document.getElementById('launchCountdownLabel').textContent = 'Launch complete';
-      }
-    }
-  }
-
-  // Launch assets
-  const launchResult = renderAssetList(
-    document.getElementById('assetList'),
-    launch.assets
-  );
-  const launchPct = launchResult.total > 0 ? Math.round((launchResult.complete / launchResult.total) * 100) : 0;
-  document.getElementById('launchProgress').style.width = launchPct + '%';
-  document.getElementById('launchProgressText').textContent = launchPct + '% complete (' + launchResult.complete + '/' + launchResult.total + ' assets)';
-
-  // Lead Magnet assets
-  if (data.leadMagnet) {
-    document.getElementById('leadMagnetName').textContent = data.leadMagnet.name;
-    const lmResult = renderAssetList(
-      document.getElementById('leadMagnetList'),
-      data.leadMagnet.assets
-    );
-    const lmPct = lmResult.total > 0 ? Math.round((lmResult.complete / lmResult.total) * 100) : 0;
-    document.getElementById('leadMagnetProgress').style.width = lmPct + '%';
-    document.getElementById('leadMagnetProgressText').textContent = lmPct + '% complete (' + lmResult.complete + '/' + lmResult.total + ' assets)';
-  }
+  // Build project tabs and views
+  renderProjectTabs(data);
 
   // Goals
-  const goals = data.goals;
+  var goals = data.goals;
   setGoalBar('goalEmail', 'goalEmailBar', latest.emailList, goals.emailListTarget);
   setGoalBar('goalRevenue', 'goalRevenueBar', latest.revenue, goals.revenueTarget, true);
   setGoalBar('goalSales', 'goalSalesBar', latest.courseSales, goals.courseSalesTarget);
@@ -1155,15 +1010,17 @@ function render(data) {
   document.getElementById('metricOpenRate').textContent = (latest.emailOpenRate * 100).toFixed(1) + '%';
   document.getElementById('metricYTViews').textContent = latest.youtubeViews.toLocaleString();
   document.getElementById('metricWebReg').textContent = latest.webinarRegistrations.toLocaleString();
-
-  // Content creation pipeline
-  renderContentSchedule(data);
 }
 
+// =====================================================================
+// KPI TRENDS
+// =====================================================================
+
 function setTrend(id, current, previous) {
-  const el = document.getElementById(id);
-  if (previous === 0) { el.textContent = '--'; return; }
-  const change = ((current - previous) / previous * 100).toFixed(1);
+  var el = document.getElementById(id);
+  if (previous === 0 && current === 0) { el.textContent = '--'; el.className = 'trend flat'; return; }
+  if (previous === 0) { el.textContent = '--'; el.className = 'trend flat'; return; }
+  var change = ((current - previous) / previous * 100).toFixed(1);
   if (change > 0) {
     el.textContent = '+' + change + '%';
     el.className = 'trend up';
@@ -1177,17 +1034,183 @@ function setTrend(id, current, previous) {
 }
 
 function setGoalBar(labelId, barId, current, target, isMoney) {
-  const pct = Math.min(100, Math.round((current / target) * 100));
+  var pct = Math.min(100, Math.round((current / target) * 100));
   document.getElementById(barId).style.width = pct + '%';
-  const fmt = isMoney
+  var fmt = isMoney
     ? '$' + current.toLocaleString() + ' / $' + target.toLocaleString()
     : current.toLocaleString() + ' / ' + target.toLocaleString();
   document.getElementById(labelId).textContent = fmt;
 }
 
-// --- Content Creation Pipeline ---
+// =====================================================================
+// PROJECT TABS
+// =====================================================================
 
-var _dashboardData = null;
+function renderProjectTabs(data) {
+  var tabsEl = document.getElementById('projectTabs');
+  var viewsEl = document.getElementById('projectViews');
+  tabsEl.innerHTML = '';
+  viewsEl.innerHTML = '';
+
+  PROJECT_ORDER.forEach(function(key, idx) {
+    var project = data.projects[key];
+    if (!project) return;
+
+    // Tab button
+    var tab = document.createElement('button');
+    tab.className = 'project-tab' + (idx === 0 ? ' active' : '');
+    tab.dataset.project = key;
+    tab.innerHTML = '<span class="tab-dot ' + project.status + '"></span>' + project.name;
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.project-tab').forEach(function(t) { t.classList.remove('active'); });
+      document.querySelectorAll('.project-view').forEach(function(v) { v.classList.remove('active'); });
+      tab.classList.add('active');
+      document.getElementById('view-' + key).classList.add('active');
+    });
+    tabsEl.appendChild(tab);
+
+    // View container
+    var view = document.createElement('div');
+    view.className = 'project-view' + (idx === 0 ? ' active' : '');
+    view.id = 'view-' + key;
+
+    if (key === 'weekly-content') {
+      view.appendChild(buildWeeklyContentView(project, data));
+    } else {
+      view.appendChild(buildAssetProjectView(project));
+    }
+
+    viewsEl.appendChild(view);
+  });
+}
+
+// =====================================================================
+// ASSET PROJECT VIEW (WAM, Great Catch Up, Webinar, Book)
+// =====================================================================
+
+function buildAssetProjectView(project) {
+  var card = document.createElement('div');
+  card.className = 'card';
+
+  // Header
+  var header = document.createElement('div');
+  header.className = 'project-header';
+  header.innerHTML = '<h2>' + project.name + ' <span class="status-badge status-' + project.status + '">' + project.status.replace(/_/g, ' ') + '</span></h2>' +
+    '<p class="project-description">' + project.description + '</p>';
+  card.appendChild(header);
+
+  // Asset list
+  var list = document.createElement('ul');
+  list.className = 'asset-list';
+  var completeCount = 0;
+  var totalCount = 0;
+
+  for (var key in project.assets) {
+    var asset = project.assets[key];
+    totalCount++;
+    if (asset.status === 'complete') completeCount++;
+
+    var li = document.createElement('li');
+    li.className = 'asset-item';
+
+    var nameHtml;
+    if (asset.path && asset.path.match(/\.md$/)) {
+      nameHtml = '<a href="#" class="md-preview-link" data-path="' + asset.path + '" data-title="' + escapeAttr(asset.label) + '">' + asset.label + '</a>';
+    } else if (asset.path) {
+      nameHtml = '<a href="' + asset.path + '" title="Open ' + escapeAttr(asset.label) + '">' + asset.label + '</a>';
+    } else {
+      nameHtml = '<span class="no-link">' + asset.label + '</span>';
+    }
+
+    li.innerHTML = '<span class="asset-name">' + nameHtml + '</span>' +
+      '<span class="status-badge status-' + asset.status + '">' + asset.status.replace(/_/g, ' ') + '</span>';
+
+    var mdLink = li.querySelector('.md-preview-link');
+    if (mdLink) {
+      mdLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        openMdPreview(this.dataset.path, this.dataset.title);
+      });
+    }
+
+    list.appendChild(li);
+  }
+
+  card.appendChild(list);
+
+  // Progress bar
+  var pct = totalCount > 0 ? Math.round((completeCount / totalCount) * 100) : 0;
+  var barColor = pct === 100 ? 'green' : (pct >= 50 ? 'blue' : 'amber');
+  var progressHtml = '<div class="progress-bar"><div class="progress-fill ' + barColor + '" style="width: ' + pct + '%"></div></div>' +
+    '<div class="progress-text">' + pct + '% complete (' + completeCount + '/' + totalCount + ' assets)</div>';
+  var progressDiv = document.createElement('div');
+  progressDiv.innerHTML = progressHtml;
+  card.appendChild(progressDiv);
+
+  return card;
+}
+
+// =====================================================================
+// WEEKLY CONTENT VIEW (Kanban)
+// =====================================================================
+
+function buildWeeklyContentView(project, data) {
+  var card = document.createElement('div');
+  card.className = 'card';
+
+  // Header
+  var header = document.createElement('div');
+  header.className = 'project-header';
+  header.innerHTML = '<h2>' + project.name + ' <span class="status-badge status-' + project.status + '">' + project.status.replace(/_/g, ' ') + '</span></h2>' +
+    '<p class="project-description">' + project.description + '</p>';
+  card.appendChild(header);
+
+  // Kanban board
+  var board = document.createElement('div');
+  board.className = 'kanban-board';
+  board.id = 'weeklyKanbanBoard';
+
+  var columns = { planned: [], drafted: [], filmed: [], edited: [], published: [] };
+  var schedule = project.contentSchedule || [];
+
+  schedule.forEach(function(week) {
+    (week.items || []).forEach(function(item) {
+      var status = getStatusFromSteps(item.type, item.steps);
+      if (columns[status]) {
+        columns[status].push({ item: item, weekLabel: week.weekLabel });
+      }
+    });
+  });
+
+  ['planned', 'drafted', 'filmed', 'edited', 'published'].forEach(function(colKey) {
+    var col = document.createElement('div');
+    col.className = 'kanban-column';
+
+    var colTitle = colKey.charAt(0).toUpperCase() + colKey.slice(1);
+    col.innerHTML = '<div class="kanban-header"><span class="kanban-title">' + colTitle + '</span><span class="kanban-count">' + columns[colKey].length + '</span></div>';
+
+    var cardsDiv = document.createElement('div');
+    cardsDiv.className = 'kanban-cards';
+
+    if (columns[colKey].length === 0) {
+      cardsDiv.innerHTML = '<div class="kanban-empty">No items</div>';
+    } else {
+      columns[colKey].forEach(function(entry) {
+        cardsDiv.appendChild(createContentCard(entry.item, entry.weekLabel, data));
+      });
+    }
+
+    col.appendChild(cardsDiv);
+    board.appendChild(col);
+  });
+
+  card.appendChild(board);
+  return card;
+}
+
+// =====================================================================
+// CONTENT CARDS + KANBAN LOGIC
+// =====================================================================
 
 function getStepDefs(type) {
   if (type === 'youtube') return [
@@ -1211,54 +1234,11 @@ function getStatusFromSteps(type, steps) {
   if (steps.edit) return 'edited';
   if (type === 'youtube' && steps.film) return 'filmed';
   if (steps.script || steps.write) return 'drafted';
+  if (steps.research) return 'planned';
   return 'planned';
 }
 
-function renderContentSchedule(data) {
-  _dashboardData = data;
-  if (!data.contentSchedule) return;
-  renderKanban(data.contentSchedule.weeklyContent || [], 'weekly', true);
-  renderKanban(data.contentSchedule.launchContent || [], 'launch', false);
-  setupContentTabs();
-}
-
-function renderKanban(items, prefix, isWeekly) {
-  var columns = { planned: [], drafted: [], filmed: [], edited: [], published: [] };
-
-  if (isWeekly) {
-    items.forEach(function(week) {
-      (week.items || []).forEach(function(item) {
-        var status = getStatusFromSteps(item.type, item.steps);
-        if (columns[status]) {
-          columns[status].push(createContentCard(item, week.weekLabel));
-        }
-      });
-    });
-  } else {
-    items.forEach(function(item) {
-      var status = getStatusFromSteps(item.type, item.steps);
-      if (columns[status]) {
-        columns[status].push(createContentCard(item, null));
-      }
-    });
-  }
-
-  ['planned', 'drafted', 'filmed', 'edited', 'published'].forEach(function(status) {
-    var cap = status.charAt(0).toUpperCase() + status.slice(1);
-    var cardsEl = document.getElementById(prefix + cap + 'Cards');
-    var countEl = document.getElementById(prefix + cap + 'Count');
-    if (!cardsEl || !countEl) return;
-    cardsEl.innerHTML = '';
-    if (columns[status].length === 0) {
-      cardsEl.innerHTML = '<div class="kanban-empty">No items</div>';
-    } else {
-      columns[status].forEach(function(card) { cardsEl.appendChild(card); });
-    }
-    countEl.textContent = columns[status].length;
-  });
-}
-
-function createContentCard(item, weekLabel) {
+function createContentCard(item, weekLabel, data) {
   var card = document.createElement('div');
   card.className = 'content-card';
 
@@ -1269,14 +1249,14 @@ function createContentCard(item, weekLabel) {
   if (!item.title) {
     titleHtml = '<span class="untitled">Untitled</span>';
   } else if (item.path && item.path.match(/\.md$/)) {
-    titleHtml = '<a href="#" class="md-preview-link" data-path="' + item.path + '" data-title="' + (item.title || '').replace(/"/g, '&quot;') + '">' + item.title + '</a>';
+    titleHtml = '<a href="#" class="md-preview-link" data-path="' + escapeAttr(item.path) + '" data-title="' + escapeAttr(item.title) + '">' + escapeHtml(item.title) + '</a>';
   } else if (item.path) {
-    titleHtml = '<a href="' + item.path + '" title="Open ' + item.title + '">' + item.title + '</a>';
+    titleHtml = '<a href="' + escapeAttr(item.path) + '" title="Open ' + escapeAttr(item.title) + '">' + escapeHtml(item.title) + '</a>';
   } else {
-    titleHtml = item.title;
+    titleHtml = escapeHtml(item.title);
   }
 
-  // Build checkbox row
+  // Checkboxes
   var stepDefs = getStepDefs(item.type);
   var steps = item.steps || {};
   var stepsHtml = '<div class="content-card-steps">';
@@ -1290,12 +1270,10 @@ function createContentCard(item, weekLabel) {
   });
   stepsHtml += '</div>';
 
+  // Meta
   var metaParts = [];
   if (weekLabel) {
     metaParts.push('<span class="content-card-week">' + weekLabel + '</span>');
-  }
-  if (item.category) {
-    metaParts.push('<span>' + item.category + '</span>');
   }
   if (item.dueDate) {
     var dueClass = getDueDateClass(item.dueDate);
@@ -1310,18 +1288,37 @@ function createContentCard(item, weekLabel) {
     stepsHtml +
     (metaParts.length ? '<div class="content-card-meta">' + metaParts.join('') + '</div>' : '');
 
-  // Attach click handlers to checkboxes
+  // Checkbox change handlers
   card.querySelectorAll('input[type="checkbox"]').forEach(function(cb) {
     cb.addEventListener('change', function(e) {
       var stepKey = e.target.dataset.step;
       if (!item.steps) item.steps = {};
       item.steps[stepKey] = e.target.checked;
+
+      // Update label styling
+      var label = e.target.closest('.step-checkbox');
+      if (e.target.checked) {
+        label.classList.add('checked');
+      } else {
+        label.classList.remove('checked');
+      }
+
+      // Save + debounced sync
       saveToLocalStorage();
-      renderContentSchedule(_dashboardData);
+
+      // Re-render the weekly content kanban to move cards between columns
+      var weeklyView = document.getElementById('view-weekly-content');
+      if (weeklyView && _dashboardData) {
+        var weeklyProject = _dashboardData.projects['weekly-content'];
+        if (weeklyProject) {
+          weeklyView.innerHTML = '';
+          weeklyView.appendChild(buildWeeklyContentView(weeklyProject, _dashboardData));
+        }
+      }
     });
   });
 
-  // Attach click handlers for markdown preview links
+  // Markdown preview link handlers
   card.querySelectorAll('.md-preview-link').forEach(function(link) {
     link.addEventListener('click', function(e) {
       e.preventDefault();
@@ -1332,21 +1329,23 @@ function createContentCard(item, weekLabel) {
   return card;
 }
 
-// --- Persistence Layer: GitHub API ---
-// Checkbox changes are committed directly to the GitHub repo via the Contents API.
-// This means any browser on any device sees the same data on refresh.
-// A GitHub personal access token (fine-grained, repo-scoped) is stored in localStorage.
+function getDueDateClass(dueDate) {
+  var today = new Date();
+  today.setHours(0,0,0,0);
+  var due = new Date(dueDate + 'T00:00:00');
+  if (due < today) return 'overdue';
+  if (due.getTime() === today.getTime()) return 'today';
+  return '';
+}
 
-var GITHUB_OWNER = 'jscott-62';
-var GITHUB_REPO = 'fl3-dashboard';
-var GITHUB_FILE = 'dashboard-data.json';
-var GITHUB_JS_FILE = 'dashboard-data.js';
+function formatShortDate(dateStr) {
+  var d = new Date(dateStr + 'T00:00:00');
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
 
-var _hasUnsavedChanges = false;
-var _saveDebounceTimer = null;
-var _githubSha = null;       // SHA of current dashboard-data.json (needed for updates)
-var _githubJsSha = null;     // SHA of current dashboard-data.js
-var _isSaving = false;
+// =====================================================================
+// PERSISTENCE LAYER: GitHub API
+// =====================================================================
 
 function getToken() {
   try { return localStorage.getItem('fl3-github-token') || ''; } catch(e) { return ''; }
@@ -1357,22 +1356,15 @@ function hasToken() { return getToken().length > 10; }
 function updateSyncStatus(state) {
   var dot = document.getElementById('syncDot');
   var label = document.getElementById('syncLabel');
-  var status = document.getElementById('syncStatus');
   if (state === 'connected') {
     dot.className = 'sync-dot connected';
     label.textContent = 'synced';
-    status.style.cursor = 'pointer';
-    status.onclick = openSetup;
   } else if (state === 'disconnected') {
     dot.className = 'sync-dot disconnected';
     label.textContent = 'not connected';
-    status.style.cursor = 'pointer';
-    status.onclick = openSetup;
   } else {
     dot.className = 'sync-dot';
     label.textContent = 'checking...';
-    status.style.cursor = 'default';
-    status.onclick = null;
   }
 }
 
@@ -1390,7 +1382,6 @@ async function saveToken() {
   var token = document.getElementById('tokenInput').value.trim();
   if (!token) return;
 
-  // Validate the token by making a REAL write test (not just repo metadata)
   try {
     // Step 1: Can we read the repo?
     var resp = await fetch('https://api.github.com/repos/' + GITHUB_OWNER + '/' + GITHUB_REPO, {
@@ -1398,8 +1389,7 @@ async function saveToken() {
     });
     if (!resp.ok) throw new Error('Invalid token or no access to repository');
 
-    // Step 2: Test actual write permission by reading a file and doing a no-op commit test
-    // The best test is to try reading the file via Contents API (which requires Contents permission)
+    // Step 2: Read file contents
     var contentsResp = await fetch('https://api.github.com/repos/' + GITHUB_OWNER + '/' + GITHUB_REPO + '/contents/' + GITHUB_FILE, {
       headers: { 'Authorization': 'Bearer ' + token }
     });
@@ -1408,7 +1398,7 @@ async function saveToken() {
     }
     var fileData = await contentsResp.json();
 
-    // Step 3: Actually test a write by updating the file with the same content
+    // Step 3: Test write by updating the file with the same content
     var writeTest = await fetch('https://api.github.com/repos/' + GITHUB_OWNER + '/' + GITHUB_REPO + '/contents/' + GITHUB_FILE, {
       method: 'PUT',
       headers: {
@@ -1423,10 +1413,10 @@ async function saveToken() {
     });
 
     if (!writeTest.ok) {
-      var writeErr = await writeTest.json().catch(function() { return {}; });
       if (writeTest.status === 403) {
         throw new Error('TOKEN_NEEDS_CONTENTS_WRITE');
       }
+      var writeErr = await writeTest.json().catch(function() { return {}; });
       throw new Error('Write test failed: ' + (writeErr.message || writeTest.status));
     }
 
@@ -1476,7 +1466,6 @@ function saveToLocalStorage() {
     clearTimeout(_saveDebounceTimer);
     _saveDebounceTimer = setTimeout(function() { saveToGitHub(); }, 2000);
   } else {
-    // No token. Show bar prompting setup.
     showSaveBar('needs-setup');
   }
 }
@@ -1583,7 +1572,6 @@ async function saveToGitHub() {
       }
       // If 403, the token lacks Contents write permission
       if (commitResp.status === 403) {
-        // Clear stored token so user is prompted to re-enter
         localStorage.removeItem('fl3-github-token');
         updateSyncStatus('disconnected');
         alert(
@@ -1647,52 +1635,20 @@ async function saveToGitHub() {
   }
 }
 
-function getDueDateClass(dueDate) {
-  var today = new Date();
-  today.setHours(0,0,0,0);
-  var due = new Date(dueDate + 'T00:00:00');
-  if (due < today) return 'overdue';
-  if (due.getTime() === today.getTime()) return 'today';
-  return '';
-}
-
-function formatShortDate(dateStr) {
-  var d = new Date(dateStr + 'T00:00:00');
-  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-}
-
-function setupContentTabs() {
-  var tabs = document.querySelectorAll('.content-tab');
-  tabs.forEach(function(tab) {
-    tab.addEventListener('click', function() {
-      var target = tab.dataset.tab;
-      tabs.forEach(function(t) { t.classList.remove('active'); });
-      tab.classList.add('active');
-      document.getElementById('weeklyContentView').classList.toggle('active', target === 'weekly');
-      document.getElementById('launchContentView').classList.toggle('active', target === 'launch');
-    });
-  });
-}
-
-function renderPlaceholder() {
-  document.getElementById('lastUpdated').textContent = 'Unable to load data.';
-}
-
-// --- Markdown Preview System ---
+// =====================================================================
+// MARKDOWN PREVIEW SYSTEM
+// =====================================================================
 
 function parseMarkdown(md) {
-  // Separate metadata block (lines starting with **Key:** Value before first ---)
   var lines = md.split('\n');
   var metaLines = [];
   var bodyLines = [];
   var foundHr = false;
   var inMeta = false;
 
-  // Check if the first non-empty, non-heading line looks like metadata
-  var firstContentIdx = 0;
   for (var i = 0; i < lines.length; i++) {
     var trimmed = lines[i].trim();
-    if (trimmed === '' || trimmed.match(/^#\s/)) { firstContentIdx = i + 1; continue; }
+    if (trimmed === '' || trimmed.match(/^#\s/)) continue;
     if (trimmed.match(/^\*\*[^*]+:\*\*/)) { inMeta = true; }
     break;
   }
@@ -1713,14 +1669,12 @@ function parseMarkdown(md) {
 
   var html = '';
 
-  // Render metadata block if present
   if (metaLines.length > 0) {
     var metaHtml = metaLines.filter(function(l) { return l.trim() !== '' && !l.trim().match(/^#\s/); })
       .map(function(l) { return convertInline(l.trim()); }).join('<br>');
     if (metaHtml) {
       html += '<div class="meta-block">' + metaHtml + '</div>';
     }
-    // Extract H1 from meta lines
     metaLines.forEach(function(l) {
       if (l.trim().match(/^#\s/)) {
         html = '<h1>' + convertInline(l.trim().replace(/^#\s+/, '')) + '</h1>' + html;
@@ -1728,7 +1682,6 @@ function parseMarkdown(md) {
     });
   }
 
-  // Parse body
   html += parseBody(bodyLines.join('\n'));
   return html;
 }
@@ -1746,7 +1699,6 @@ function parseBody(text) {
     var line = lines[i];
     var trimmed = line.trim();
 
-    // Code blocks
     if (trimmed.match(/^```/)) {
       if (inCodeBlock) {
         html += '<pre><code>' + escapeHtml(codeContent.trim()) + '</code></pre>';
@@ -1761,20 +1713,17 @@ function parseBody(text) {
     }
     if (inCodeBlock) { codeContent += line + '\n'; i++; continue; }
 
-    // Empty line
     if (trimmed === '') {
       if (inList) { html += '</' + listType + '>'; inList = false; }
       i++; continue;
     }
 
-    // Horizontal rule
     if (trimmed.match(/^-{3,}$/) || trimmed.match(/^\*{3,}$/)) {
       if (inList) { html += '</' + listType + '>'; inList = false; }
       html += '<hr>';
       i++; continue;
     }
 
-    // Headings
     var headingMatch = trimmed.match(/^(#{1,6})\s+(.*)/);
     if (headingMatch) {
       if (inList) { html += '</' + listType + '>'; inList = false; }
@@ -1783,7 +1732,6 @@ function parseBody(text) {
       i++; continue;
     }
 
-    // Blockquote
     if (trimmed.match(/^>\s/)) {
       if (inList) { html += '</' + listType + '>'; inList = false; }
       var quoteLines = [];
@@ -1795,7 +1743,6 @@ function parseBody(text) {
       continue;
     }
 
-    // Ordered list
     var olMatch = trimmed.match(/^\d+\.\s+(.*)/);
     if (olMatch) {
       if (inList && listType !== 'ol') { html += '</' + listType + '>'; inList = false; }
@@ -1804,7 +1751,6 @@ function parseBody(text) {
       i++; continue;
     }
 
-    // Unordered list
     var ulMatch = trimmed.match(/^[-*+]\s+(.*)/);
     if (ulMatch) {
       if (inList && listType !== 'ul') { html += '</' + listType + '>'; inList = false; }
@@ -1813,7 +1759,6 @@ function parseBody(text) {
       i++; continue;
     }
 
-    // Paragraph
     if (inList) { html += '</' + listType + '>'; inList = false; }
     var paraLines = [];
     while (i < lines.length && lines[i].trim() !== '' && !lines[i].trim().match(/^(#{1,6}\s|[-*+]\s|\d+\.\s|```|---|>\s)/)) {
@@ -1833,21 +1778,20 @@ function parseBody(text) {
 }
 
 function convertInline(text) {
-  // Bold + italic
   text = text.replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>');
-  // Bold
   text = text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-  // Italic
   text = text.replace(/\*([^*]+)\*/g, '<em>$1</em>');
-  // Inline code
   text = text.replace(/`([^`]+)`/g, '<code>$1</code>');
-  // Links
   text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
   return text;
 }
 
 function escapeHtml(text) {
   return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function escapeAttr(text) {
+  return (text || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
 function openMdPreview(path, title) {
@@ -1859,14 +1803,14 @@ function openMdPreview(path, title) {
   body.innerHTML = '<div class="md-loading">Loading content...</div>';
   overlay.classList.add('active');
 
-  // Check for embedded markdown content first (used by GitHub Pages deployment)
+  // Check for embedded markdown content first
   var embedded = window.FL3_DASHBOARD_DATA && window.FL3_DASHBOARD_DATA._embeddedMd;
   if (embedded && embedded[path]) {
     body.innerHTML = parseMarkdown(embedded[path]);
     return;
   }
 
-  // Fall back to fetch (works with local HTTP server)
+  // Fall back to fetch
   fetch(path)
     .then(function(resp) {
       if (!resp.ok) throw new Error('Could not load file');
@@ -1881,33 +1825,45 @@ function openMdPreview(path, title) {
         'The file exists at:<br><code>' + escapeHtml(path) + '</code><br><br>' +
         'To enable preview, serve this folder with a local server:<br>' +
         '<code>python3 -m http.server 8000</code><br>' +
-        'Then open <a href="http://localhost:8000/dashboard.html" style="color:var(--accent)">localhost:8000/dashboard.html</a></div>';
+        'Then open <a href="http://localhost:8000" style="color:var(--accent)">localhost:8000</a></div>';
     });
 }
 
-// Overlay close handlers
+function renderPlaceholder() {
+  document.getElementById('lastUpdated').textContent = 'Unable to load data.';
+}
+
+// =====================================================================
+// EVENT LISTENERS
+// =====================================================================
+
+// Markdown overlay close
 document.getElementById('mdCloseBtn').addEventListener('click', function() {
   document.getElementById('mdOverlay').classList.remove('active');
 });
 document.getElementById('mdOverlay').addEventListener('click', function(e) {
   if (e.target === this) this.classList.remove('active');
 });
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') document.getElementById('mdOverlay').classList.remove('active');
-});
 
-// Persistence: checkbox changes auto-save to GitHub repo via Contents API.
-// Token is stored in localStorage (per-browser, entered once via setup modal).
-// Data loads fresh from GitHub API on every page load, so all devices see latest.
-
-// Setup overlay: click outside to close
+// Setup overlay close
 document.getElementById('setupOverlay').addEventListener('click', function(e) {
   if (e.target === this) closeSetup();
 });
 
-// Sync status click handler
+// Sync status click opens setup
 document.getElementById('syncStatus').addEventListener('click', openSetup);
 
+// Escape key closes overlays
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    document.getElementById('mdOverlay').classList.remove('active');
+    closeSetup();
+  }
+});
+
+// =====================================================================
+// INIT
+// =====================================================================
 loadData();
 </script>
 </body>
