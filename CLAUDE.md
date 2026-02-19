@@ -32,7 +32,7 @@ The Freedom Life 3.0 (FL3) Business Dashboard is a single-page HTML app hosted o
 
 1. **Header**: Title + last updated date + GitHub sync status
 2. **Goals Progress**: 2x2 grid of progress bars (Email List, Revenue, Course Sales, Cost Per Lead)
-3. **Weekly Metrics**: 5-card row (Ad Spend, Leads, Email Open Rate, YouTube Views, Webinar Registrations)
+3. **Weekly Metrics**: 6-card row (New Emails This Week, Ad Spend, Leads, Email Open Rate, YouTube Views, Webinar Registrations)
 4. **Project Tabs**: Tabbed views for each project (Wrong Asset Manifesto, The Great Catch Up, Webinar, Weekly Content, Book)
 5. **Instructions**: How-to text for updating the dashboard
 6. **Save Bar**: Fixed bottom bar showing sync status
@@ -59,7 +59,7 @@ The Freedom Life 3.0 (FL3) Business Dashboard is a single-page HTML app hosted o
     "weeks": [
       {
         "date": "YYYY-MM-DD",
-        "emailList": 500,
+        "emailList": 2510,
         "emailOpenRate": 0,
         "youtubeSubscribers": 0,
         "youtubeViews": 0,
@@ -74,7 +74,7 @@ The Freedom Life 3.0 (FL3) Business Dashboard is a single-page HTML app hosted o
     ]
   },
   "goals": {
-    "emailListTarget": 2000,
+    "emailListTarget": 5000,
     "revenueTarget": 10000,
     "courseSalesTarget": 20,
     "costPerLeadTarget": 5.00
@@ -132,11 +132,17 @@ GHL_LOCATION_ID=AIb...
 ```
 This fetches the count from GHL, updates `dashboard-data.json` and `dashboard-data.js`, commits, and pushes to GitHub.
 
+**Automatic weekly snapshots:** The script checks the date of the latest week entry in `metrics.weeks`. If it is 7 or more days old, it freezes the current week as a historical snapshot and creates a new week entry with fresh data. If less than 7 days old, it updates the current week in place. This is what powers the "New Emails This Week" metric card, which computes the difference between the two most recent week entries.
+
+**"New Emails This Week" metric:** Calculated in `index.html` render function as `latest.emailList - previous.emailList`. Displays in green when positive. Shows `+0` when there is only one week of data.
+
 **Claude can also update directly** by:
-1. Calling the GHL API with curl using the credentials from `.env`
-2. Updating the `emailList` value in the latest metrics week in `dashboard-data.json`
-3. Regenerating `dashboard-data.js`
-4. Committing and pushing
+1. Reading credentials from `.env` at `Projects/fl3-dashboard/.env`
+2. Calling the GHL API with curl
+3. Checking if a new week entry is needed (latest week date 7+ days old)
+4. Updating `emailList` in `dashboard-data.json` (new week entry or update in place)
+5. Regenerating `dashboard-data.js`
+6. Committing and pushing to GitHub
 
 ## How to Deploy Changes
 
