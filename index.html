@@ -369,10 +369,14 @@
 
   /* ===== GOALS SECTION ===== */
   .goals-section {
-    margin-top: 32px;
-    margin-bottom: 32px;
+    margin-bottom: 24px;
   }
-  .metric-bar-container { margin-bottom: 16px; }
+  .goals-bars {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 32px;
+  }
+  .metric-bar-container { margin-bottom: 0; }
   .metric-bar-label {
     display: flex;
     justify-content: space-between;
@@ -673,6 +677,7 @@
     .header { flex-direction: column; gap: 8px; align-items: flex-start; }
     .kanban-board { grid-template-columns: 1fr; }
     .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+    .goals-bars { grid-template-columns: 1fr; }
     .project-tabs { gap: 0; }
     .project-tab { padding: 10px 14px; font-size: 13px; }
   }
@@ -695,32 +700,46 @@
   </div>
 </div>
 
-<!-- ===== PROJECT TABS ===== -->
-<div class="project-tabs" id="projectTabs"></div>
-
-<!-- ===== PROJECT VIEWS ===== -->
-<div id="projectViews"></div>
-
 <!-- ===== GOALS PROGRESS ===== -->
 <div class="goals-section">
   <div class="card">
     <h2>Goals Progress</h2>
-    <div class="metric-bar-container">
-      <div class="metric-bar-label">
-        <span>Revenue</span>
-        <span id="goalRevenue">$0 / $10,000</span>
+    <div class="goals-bars">
+      <div class="metric-bar-container">
+        <div class="metric-bar-label">
+          <span>Email List</span>
+          <span id="goalEmail">500 / 2,000</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill blue" id="goalEmailBar" style="width: 0%"></div>
+        </div>
       </div>
-      <div class="progress-bar">
-        <div class="progress-fill green" id="goalRevenueBar" style="width: 0%"></div>
+      <div class="metric-bar-container">
+        <div class="metric-bar-label">
+          <span>Revenue</span>
+          <span id="goalRevenue">$0 / $10,000</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill green" id="goalRevenueBar" style="width: 0%"></div>
+        </div>
       </div>
-    </div>
-    <div class="metric-bar-container">
-      <div class="metric-bar-label">
-        <span>Course Sales</span>
-        <span id="goalSales">0 / 20</span>
+      <div class="metric-bar-container">
+        <div class="metric-bar-label">
+          <span>Course Sales</span>
+          <span id="goalSales">0 / 20</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill amber" id="goalSalesBar" style="width: 0%"></div>
+        </div>
       </div>
-      <div class="progress-bar">
-        <div class="progress-fill amber" id="goalSalesBar" style="width: 0%"></div>
+      <div class="metric-bar-container">
+        <div class="metric-bar-label">
+          <span>Cost Per Lead</span>
+          <span id="goalCPL">$0.00 / $5.00</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill blue" id="goalCPLBar" style="width: 0%"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -749,6 +768,12 @@
     <div class="metric-label">Webinar Registrations</div>
   </div>
 </div>
+
+<!-- ===== PROJECT TABS ===== -->
+<div class="project-tabs" id="projectTabs"></div>
+
+<!-- ===== PROJECT VIEWS ===== -->
+<div id="projectViews"></div>
 
 <!-- ===== INSTRUCTIONS ===== -->
 <div class="instructions">
@@ -918,8 +943,10 @@ function render(data) {
 
   // Goals
   var goals = data.goals;
+  setGoalBar('goalEmail', 'goalEmailBar', latest.emailList, goals.emailListTarget);
   setGoalBar('goalRevenue', 'goalRevenueBar', latest.revenue, goals.revenueTarget, true);
   setGoalBar('goalSales', 'goalSalesBar', latest.courseSales, goals.courseSalesTarget);
+  setGoalBarInverse('goalCPL', 'goalCPLBar', latest.costPerLead, goals.costPerLeadTarget, true);
 
   // Weekly metrics
   document.getElementById('metricAdSpend').textContent = '$' + latest.adSpend.toLocaleString();
@@ -935,6 +962,23 @@ function setGoalBar(labelId, barId, current, target, isMoney) {
   var fmt = isMoney
     ? '$' + current.toLocaleString() + ' / $' + target.toLocaleString()
     : current.toLocaleString() + ' / ' + target.toLocaleString();
+  document.getElementById(labelId).textContent = fmt;
+}
+
+function setGoalBarInverse(labelId, barId, current, target, isMoney) {
+  // For metrics where lower is better (e.g., cost per lead)
+  // If current is 0 (no data yet), show 0%; if at or below target, show 100%
+  var pct = 0;
+  if (current > 0) {
+    pct = current <= target ? 100 : Math.max(0, Math.round((target / current) * 100));
+  }
+  document.getElementById(barId).style.width = pct + '%';
+  var bar = document.getElementById(barId);
+  // Green if at or below target, amber if above
+  bar.className = 'progress-fill ' + (current > 0 && current <= target ? 'green' : 'amber');
+  var fmt = isMoney
+    ? '$' + current.toFixed(2) + ' / $' + target.toFixed(2)
+    : current + ' / ' + target;
   document.getElementById(labelId).textContent = fmt;
 }
 
