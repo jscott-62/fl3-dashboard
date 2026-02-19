@@ -4,6 +4,10 @@
 # Pulls email list count from GoHighLevel API and updates
 # dashboard-data.json + dashboard-data.js, then pushes to GitHub.
 #
+# Automatically creates a new weekly snapshot if the latest
+# week entry is 7+ days old, preserving the previous week
+# for week-over-week comparison.
+#
 # Usage: ./update-metrics.sh
 # Requires: curl, python3, git
 # ============================================================
@@ -49,28 +53,58 @@ fi
 
 echo "Email list count: $TOTAL"
 
-# ── Update dashboard-data.json ──
+# ── Update dashboard-data.json (with automatic weekly snapshots) ──
 echo "Updating dashboard-data.json..."
 
 python3 -c "
-import json, sys
-from datetime import date
+import json
+from datetime import date, datetime
 
-with open('$JSON_FILE', 'r') as f:
+JSON_FILE = '$JSON_FILE'
+TOTAL = $TOTAL
+
+with open(JSON_FILE, 'r') as f:
     data = json.load(f)
 
-# Update the latest week's emailList
 weeks = data['metrics']['weeks']
-weeks[-1]['emailList'] = $TOTAL
+latest = weeks[-1]
+today = date.today()
+latest_date = datetime.strptime(latest['date'], '%Y-%m-%d').date()
+days_since = (today - latest_date).days
 
-# Update lastUpdated
-data['lastUpdated'] = str(date.today())
+if days_since >= 7:
+    # New week: snapshot previous week, create fresh entry
+    new_week = {
+        'date': str(today),
+        'emailList': TOTAL,
+        'emailOpenRate': 0,
+        'youtubeSubscribers': latest.get('youtubeSubscribers', 0),
+        'youtubeViews': 0,
+        'adSpend': 0,
+        'costPerLead': 0,
+        'leads': 0,
+        'courseSales': 0,
+        'revenue': 0,
+        'webinarRegistrations': 0,
+        'webinarAttendance': 0
+    }
+    weeks.append(new_week)
+    prev_emails = latest.get('emailList', 0)
+    delta = TOTAL - prev_emails
+    print(f'Created new week ({today}). Email list: {TOTAL} (+{delta} from last week)')
+else:
+    # Same week: update in place
+    prev_emails = weeks[-2]['emailList'] if len(weeks) >= 2 else 0
+    latest['emailList'] = TOTAL
+    delta = TOTAL - prev_emails if prev_emails > 0 else 0
+    suffix = f' (+{delta} from last week)' if prev_emails > 0 else ''
+    print(f'Updated current week ({latest[\"date\"]}). Email list: {TOTAL}{suffix}')
 
-with open('$JSON_FILE', 'w') as f:
+data['lastUpdated'] = str(today)
+
+with open(JSON_FILE, 'w') as f:
     json.dump(data, f, indent=2)
     f.write('\n')
-
-print('Updated emailList to $TOTAL in latest metrics week')
 "
 
 # ── Regenerate dashboard-data.js ──
