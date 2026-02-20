@@ -374,7 +374,7 @@ window.FL3_DASHBOARD_DATA = {
         "emailOpenRate": 0,
         "youtubeSubscribers": 0,
         "youtubeViews": 0,
-        "adSpend": 0,
+        "adSpend": 34.87,
         "costPerLead": 0,
         "ctr": 0,
         "leads": 0,
@@ -385,7 +385,7 @@ window.FL3_DASHBOARD_DATA = {
         "fbAds": [
           {
             "campaign": "wrong-asset-manifesto",
-            "adSpend": 0,
+            "adSpend": 34.87,
             "leads": 0,
             "ctr": 0
           }
