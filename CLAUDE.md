@@ -33,7 +33,7 @@ The Freedom Life 3.0 (FL3) Business Dashboard is a single-page HTML app hosted o
 1. **Header**: Title + last updated date + GitHub sync status
 2. **Goals Progress**: 2x2 grid of progress bars (Email List, Revenue, Course Sales, Cost Per Lead)
 3. **Weekly Metrics**: 4-card row (New Emails This Week, Email Open Rate, YouTube Views, Webinar Registrations)
-4. **Facebook Ads**: Per-campaign rows with click-to-edit (Ad Spend, Leads, CPL auto-calc, CTR) + totals row + Add Campaign button
+4. **Facebook Ads**: Project groups with nested campaigns, click-to-edit metrics, subtotals per project, grand total
 5. **Project Tabs**: Tabbed views for each project (Wrong Asset Manifesto, The Great Catch Up, Webinar, Weekly Content, Book)
 6. **Instructions**: How-to text for updating the dashboard
 7. **Save Bar**: Fixed bottom bar showing sync status
@@ -73,7 +73,13 @@ The Freedom Life 3.0 (FL3) Business Dashboard is a single-page HTML app hosted o
         "webinarRegistrations": 0,
         "webinarAttendance": 0,
         "fbAds": [
-          { "campaign": "wrong-asset-manifesto", "adSpend": 0, "leads": 0, "ctr": 0 }
+          {
+            "project": "wrong-asset-manifesto",
+            "campaigns": [
+              { "name": "Standard Ads", "adSpend": 0, "leads": 0, "ctr": 0 },
+              { "name": "Retargeting", "adSpend": 0, "leads": 0, "ctr": 0 }
+            ]
+          }
         ]
       }
     ]
@@ -151,17 +157,20 @@ This fetches the count from GHL, updates `dashboard-data.json` and `dashboard-da
 
 ## Facebook Ads Section
 
-Tracks Facebook ad metrics per campaign, linked to projects. Each campaign gets its own row with click-to-edit values.
+Tracks Facebook ad metrics in a two-level hierarchy: **Projects > Campaigns**.
 
-**Per-campaign data:** Each entry in `fbAds[]` has `campaign` (project key), `adSpend`, `leads`, `ctr`. CPL is auto-calculated per row.
+**Data structure:** `fbAds[]` contains project entries. Each has `project` (project key) and `campaigns[]`. Each campaign has `name`, `adSpend`, `leads`, `ctr`. CPL is auto-calculated per campaign, per project subtotal, and grand total.
 
-**Totals row:** When 2+ campaigns exist, a totals row sums Ad Spend and Leads, calculates overall CPL, and shows spend-weighted average CTR.
+**UI layout:**
+- **"+ Add Project"** button in header shows picker (excludes weekly-content and book)
+- Each project group has a header bar with the project name, "+ Campaign" button, and remove X
+- Campaigns listed in a table with click-to-edit Ad Spend, Leads, CTR
+- **Subtotal row** per project sums all campaigns
+- **Grand total** shown when 2+ projects exist (spend-weighted average CTR)
 
-**Add Campaign:** The "+ Add Campaign" button shows a picker with projects not yet tracked (excludes weekly-content and book). Each campaign persists week to week.
+**Migration:** Old flat format (`{campaign, adSpend, leads, ctr}`) is auto-migrated to the new nested format on first render.
 
-**Remove Campaign:** An X button appears on hover for each campaign row.
-
-**Top-level sync:** The `adSpend`, `leads`, `costPerLead` fields at the week level are auto-synced from campaign totals, keeping the Cost Per Lead goal bar working.
+**Top-level sync:** The `adSpend`, `leads`, `costPerLead` fields at the week level are auto-synced from grand totals, keeping the Cost Per Lead goal bar working.
 
 **Future automation:** When Facebook Marketing API integration is added, a script can populate the `fbAds` array in `dashboard-data.json` directly. The same UI will display without changes.
 

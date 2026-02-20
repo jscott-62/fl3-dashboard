@@ -410,155 +410,105 @@
   }
 
   /* ===== FACEBOOK ADS SECTION ===== */
-  .fb-ads-section {
-    margin-bottom: 32px;
-  }
+  .fb-ads-section { margin-bottom: 32px; }
   .fb-ads-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 12px;
+    display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;
   }
-  .fb-ads-header .fb-title {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--amber);
-  }
-  .fb-ads-header .fb-hint {
-    font-size: 12px;
-    color: var(--muted);
-    margin-left: 8px;
-    font-weight: 400;
-  }
+  .fb-ads-header .fb-title { font-size: 16px; font-weight: 700; color: var(--amber); }
+  .fb-ads-header .fb-hint { font-size: 12px; color: var(--muted); margin-left: 8px; font-weight: 400; }
   .fb-add-btn {
-    background: transparent;
-    border: 1px dashed var(--amber);
-    color: var(--amber);
-    padding: 4px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 13px;
-    transition: background 0.2s;
+    background: transparent; border: 1px dashed var(--amber); color: var(--amber);
+    padding: 4px 12px; border-radius: 6px; cursor: pointer; font-size: 13px; transition: background 0.2s;
   }
   .fb-add-btn:hover { background: rgba(245,158,11,0.1); }
-  .fb-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
+  .fb-add-btn.small { font-size: 11px; padding: 2px 8px; }
+
+  /* Project groups */
+  .fb-project-group { margin-bottom: 16px; }
+  .fb-project-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 12px; background: rgba(245,158,11,0.08); border-radius: 8px 8px 0 0;
+    border: 1px solid var(--border); border-bottom: none;
   }
+  .fb-project-header .fb-project-name { font-size: 14px; font-weight: 600; color: var(--amber); }
+  .fb-project-header .fb-project-actions { display: flex; gap: 8px; align-items: center; }
+  .fb-project-remove {
+    background: none; border: none; color: var(--muted); cursor: pointer;
+    font-size: 16px; padding: 0 4px; opacity: 0.5; transition: opacity 0.2s;
+  }
+  .fb-project-remove:hover { opacity: 1; color: #ef4444; }
+
+  /* Table */
+  .fb-table { width: 100%; border-collapse: separate; border-spacing: 0; }
   .fb-table th {
-    text-align: right;
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    padding: 0 12px 8px 0;
+    text-align: right; font-size: 11px; font-weight: 600; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.5px; padding: 6px 12px;
+    background: var(--card); border-top: 1px solid var(--border);
   }
-  .fb-table th:first-child { text-align: left; }
+  .fb-table th:first-child { text-align: left; border-left: 1px solid var(--border); }
+  .fb-table th:last-child { border-right: 1px solid var(--border); }
   .fb-table td {
-    padding: 10px 12px;
-    text-align: right;
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text);
-    background: var(--card);
-    border-top: 1px solid var(--border);
+    padding: 8px 12px; text-align: right; font-size: 15px; font-weight: 600;
+    color: var(--text); background: var(--card);
     border-bottom: 1px solid var(--border);
   }
-  .fb-table td:first-child {
-    text-align: left;
-    border-left: 1px solid var(--border);
-    border-radius: 8px 0 0 8px;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--amber);
-    max-width: 180px;
-  }
-  .fb-table td:last-child {
-    border-right: 1px solid var(--border);
-    border-radius: 0 8px 8px 0;
-  }
+  .fb-table td:first-child { text-align: left; border-left: 1px solid var(--border); font-size: 13px; font-weight: 400; color: var(--text); padding-left: 20px; }
+  .fb-table td:last-child { border-right: 1px solid var(--border); }
+  .fb-table tr:last-child td:first-child { border-radius: 0 0 0 8px; }
+  .fb-table tr:last-child td:last-child { border-radius: 0 0 8px 0; }
+
+  /* Campaign rows */
   .fb-table tr.fb-campaign-row td { cursor: pointer; transition: color 0.2s; }
   .fb-table tr.fb-campaign-row td:hover { color: var(--amber); }
   .fb-table tr.fb-campaign-row td:first-child { cursor: default; }
-  .fb-table tr.fb-campaign-row td:first-child:hover { color: var(--amber); }
-  .fb-table tr.fb-totals-row td {
-    background: transparent;
-    border: none;
-    border-top: 1px solid var(--border);
-    font-weight: 700;
-    color: var(--muted);
-    font-size: 14px;
+  .fb-table .fb-camp-remove {
+    background: none; border: none; color: var(--muted); cursor: pointer;
+    font-size: 13px; padding: 0 2px; opacity: 0; transition: opacity 0.2s;
   }
-  .fb-table tr.fb-totals-row td:first-child {
-    color: var(--muted);
-    border-radius: 0;
+  .fb-table tr:hover .fb-camp-remove { opacity: 1; }
+  .fb-table .fb-camp-remove:hover { color: #ef4444; }
+
+  /* Subtotal + grand total rows */
+  .fb-table tr.fb-subtotal-row td {
+    font-weight: 700; font-size: 14px; color: var(--text);
+    border-bottom: 1px solid var(--border); background: rgba(245,158,11,0.04);
   }
-  .fb-table tr.fb-totals-row td:last-child { border-radius: 0; }
-  .fb-table .fb-spacer { height: 6px; }
-  .fb-table .fb-spacer td { background: transparent; border: none; padding: 0; }
-  .fb-table .auto-badge {
-    font-size: 9px;
-    color: var(--amber);
-    font-weight: 400;
+  .fb-table tr.fb-subtotal-row td:first-child { font-weight: 600; color: var(--amber); padding-left: 20px; }
+  .fb-grand-total {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 12px; margin-top: 8px; border-top: 2px solid var(--border);
   }
+  .fb-grand-total .fb-gt-label { font-size: 13px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+  .fb-grand-total .fb-gt-metrics { display: flex; gap: 24px; }
+  .fb-grand-total .fb-gt-item { text-align: right; }
+  .fb-grand-total .fb-gt-value { font-size: 18px; font-weight: 700; color: var(--text); }
+  .fb-grand-total .fb-gt-lbl { font-size: 10px; color: var(--muted); text-transform: uppercase; }
+
+  .auto-badge { font-size: 9px; color: var(--amber); font-weight: 400; }
   .fb-table input.fb-cell-input {
-    width: 80px;
-    background: var(--bg);
-    border: 1px solid var(--amber);
-    border-radius: 4px;
-    color: var(--text);
-    font-size: 16px;
-    font-weight: 600;
-    text-align: right;
-    padding: 2px 6px;
-    outline: none;
-    box-sizing: border-box;
+    width: 80px; background: var(--bg); border: 1px solid var(--amber); border-radius: 4px;
+    color: var(--text); font-size: 15px; font-weight: 600; text-align: right;
+    padding: 2px 6px; outline: none; box-sizing: border-box;
   }
-  .fb-table .fb-remove-btn {
-    background: none;
-    border: none;
-    color: var(--muted);
-    cursor: pointer;
-    font-size: 14px;
-    padding: 0 4px;
-    opacity: 0;
-    transition: opacity 0.2s;
-  }
-  .fb-table tr:hover .fb-remove-btn { opacity: 1; }
-  .fb-table .fb-remove-btn:hover { color: #ef4444; }
   .fb-campaign-picker {
-    position: absolute;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 4px;
-    z-index: 100;
-    min-width: 200px;
+    position: absolute; background: var(--card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 4px; z-index: 100; min-width: 200px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   }
   .fb-campaign-picker button {
-    display: block;
-    width: 100%;
-    background: transparent;
-    border: none;
-    color: var(--text);
-    padding: 8px 12px;
-    text-align: left;
-    cursor: pointer;
-    font-size: 13px;
-    border-radius: 4px;
+    display: block; width: 100%; background: transparent; border: none;
+    color: var(--text); padding: 8px 12px; text-align: left; cursor: pointer;
+    font-size: 13px; border-radius: 4px;
   }
   .fb-campaign-picker button:hover { background: rgba(245,158,11,0.15); color: var(--amber); }
+  .fb-campaign-picker input {
+    width: calc(100% - 16px); margin: 8px; padding: 6px 8px; background: var(--bg);
+    border: 1px solid var(--border); border-radius: 4px; color: var(--text); font-size: 13px; outline: none;
+  }
+  .fb-campaign-picker input:focus { border-color: var(--amber); }
   .fb-empty-state {
-    background: var(--card);
-    border: 1px dashed var(--border);
-    border-radius: 8px;
-    padding: 24px;
-    text-align: center;
-    color: var(--muted);
-    font-size: 13px;
+    background: var(--card); border: 1px dashed var(--border); border-radius: 8px;
+    padding: 24px; text-align: center; color: var(--muted); font-size: 13px;
   }
 
   /* ===== INSTRUCTIONS ===== */
@@ -1117,90 +1067,148 @@ function render(data) {
   renderFbAds(data);
 }
 
+// ===== FACEBOOK ADS: PROJECT > CAMPAIGN HIERARCHY =====
+
 function renderFbAds(data) {
   var container = document.getElementById('fbAdsSection');
   var weeks = data.metrics.weeks;
   var latest = weeks[weeks.length - 1];
   if (!latest.fbAds) latest.fbAds = [];
 
-  // Sync totals to top-level fields for goal bar
-  var totals = calcFbTotals(latest.fbAds);
-  latest.adSpend = totals.adSpend;
-  latest.leads = totals.leads;
-  latest.costPerLead = totals.costPerLead;
+  // Migrate old flat format: [{campaign, adSpend, leads, ctr}] → [{project, campaigns:[]}]
+  if (latest.fbAds.length > 0 && latest.fbAds[0].campaign && !latest.fbAds[0].project) {
+    latest.fbAds = latest.fbAds.map(function(old) {
+      return { project: old.campaign, campaigns: [{ name: 'Campaign 1', adSpend: old.adSpend || 0, leads: old.leads || 0, ctr: old.ctr || 0 }] };
+    });
+  }
 
-  // Build header
+  // Calc grand totals
+  var grand = calcGrandTotals(latest.fbAds);
+  latest.adSpend = grand.adSpend;
+  latest.leads = grand.leads;
+  latest.costPerLead = grand.costPerLead;
+
+  // Header
   var html = '<div class="fb-ads-header">' +
     '<div><span class="fb-title">Facebook Ads</span><span class="fb-hint">(click values to edit)</span></div>' +
-    '<button class="fb-add-btn" id="fbAddCampaign">+ Add Campaign</button>' +
+    '<button class="fb-add-btn" id="fbAddProject">+ Add Project</button>' +
     '</div>';
 
   if (latest.fbAds.length === 0) {
-    html += '<div class="fb-empty-state">No campaigns yet. Click "+ Add Campaign" to start tracking.</div>';
+    html += '<div class="fb-empty-state">No projects yet. Click "+ Add Project" to start tracking ad campaigns.</div>';
   } else {
-    html += '<table class="fb-table"><thead><tr>' +
-      '<th>Campaign</th><th>Ad Spend</th><th>Leads</th><th>CPL</th><th>CTR</th><th></th>' +
-      '</tr></thead><tbody>';
+    // Render each project group
+    latest.fbAds.forEach(function(proj, pi) {
+      var projLabel = getProjectLabel(proj.project, data);
+      var projTotals = calcCampaignTotals(proj.campaigns);
 
-    latest.fbAds.forEach(function(camp, i) {
-      var cpl = camp.leads > 0 ? camp.adSpend / camp.leads : 0;
-      cpl = Math.round(cpl * 100) / 100;
-      var label = getCampaignLabel(camp.campaign, data);
-      html += '<tr class="fb-campaign-row" data-idx="' + i + '">' +
-        '<td>' + label + '</td>' +
-        '<td data-field="adSpend">$' + camp.adSpend.toLocaleString() + '</td>' +
-        '<td data-field="leads">' + camp.leads.toLocaleString() + '</td>' +
-        '<td>$' + cpl.toFixed(2) + ' <span class="auto-badge">(auto)</span></td>' +
-        '<td data-field="ctr">' + camp.ctr.toFixed(2) + '%</td>' +
-        '<td><button class="fb-remove-btn" data-idx="' + i + '" title="Remove campaign">&times;</button></td>' +
-        '</tr>';
-      if (i < latest.fbAds.length - 1) {
-        html += '<tr class="fb-spacer"><td colspan="6"></td></tr>';
+      html += '<div class="fb-project-group" data-pi="' + pi + '">';
+      html += '<div class="fb-project-header">' +
+        '<span class="fb-project-name">' + projLabel + '</span>' +
+        '<div class="fb-project-actions">' +
+        '<button class="fb-add-btn small fb-add-camp-btn" data-pi="' + pi + '">+ Campaign</button>' +
+        '<button class="fb-project-remove" data-pi="' + pi + '" title="Remove project">&times;</button>' +
+        '</div></div>';
+
+      html += '<table class="fb-table"><thead><tr>' +
+        '<th>Campaign</th><th>Ad Spend</th><th>Leads</th><th>CPL</th><th>CTR</th><th></th>' +
+        '</tr></thead><tbody>';
+
+      proj.campaigns.forEach(function(camp, ci) {
+        var cpl = camp.leads > 0 ? camp.adSpend / camp.leads : 0;
+        cpl = Math.round(cpl * 100) / 100;
+        html += '<tr class="fb-campaign-row" data-pi="' + pi + '" data-ci="' + ci + '">' +
+          '<td>' + camp.name + '</td>' +
+          '<td data-field="adSpend">$' + camp.adSpend.toLocaleString() + '</td>' +
+          '<td data-field="leads">' + camp.leads.toLocaleString() + '</td>' +
+          '<td>$' + cpl.toFixed(2) + ' <span class="auto-badge">(auto)</span></td>' +
+          '<td data-field="ctr">' + camp.ctr.toFixed(2) + '%</td>' +
+          '<td><button class="fb-camp-remove" data-pi="' + pi + '" data-ci="' + ci + '" title="Remove">&times;</button></td>' +
+          '</tr>';
+      });
+
+      // Subtotal row (always show for context, even with 1 campaign)
+      if (proj.campaigns.length > 0) {
+        html += '<tr class="fb-subtotal-row">' +
+          '<td>Subtotal</td>' +
+          '<td>$' + projTotals.adSpend.toLocaleString() + '</td>' +
+          '<td>' + projTotals.leads.toLocaleString() + '</td>' +
+          '<td>$' + projTotals.costPerLead.toFixed(2) + '</td>' +
+          '<td>' + projTotals.ctr.toFixed(2) + '%</td>' +
+          '<td></td></tr>';
       }
+
+      html += '</tbody></table></div>';
     });
 
+    // Grand total (when 2+ projects)
     if (latest.fbAds.length > 1) {
-      html += '<tr class="fb-totals-row">' +
-        '<td>Totals</td>' +
-        '<td>$' + totals.adSpend.toLocaleString() + '</td>' +
-        '<td>' + totals.leads.toLocaleString() + '</td>' +
-        '<td>$' + totals.costPerLead.toFixed(2) + '</td>' +
-        '<td>' + totals.ctr.toFixed(2) + '%</td>' +
-        '<td></td></tr>';
+      html += '<div class="fb-grand-total">' +
+        '<span class="fb-gt-label">All Projects Total</span>' +
+        '<div class="fb-gt-metrics">' +
+        '<div class="fb-gt-item"><div class="fb-gt-value">$' + grand.adSpend.toLocaleString() + '</div><div class="fb-gt-lbl">Ad Spend</div></div>' +
+        '<div class="fb-gt-item"><div class="fb-gt-value">' + grand.leads.toLocaleString() + '</div><div class="fb-gt-lbl">Leads</div></div>' +
+        '<div class="fb-gt-item"><div class="fb-gt-value">$' + grand.costPerLead.toFixed(2) + '</div><div class="fb-gt-lbl">CPL</div></div>' +
+        '<div class="fb-gt-item"><div class="fb-gt-value">' + grand.ctr.toFixed(2) + '%</div><div class="fb-gt-lbl">CTR</div></div>' +
+        '</div></div>';
     }
-
-    html += '</tbody></table>';
   }
 
   container.innerHTML = html;
 
   // Update CPL goal bar
-  setGoalBarInverse('goalCPL', 'goalCPLBar', totals.costPerLead, data.goals.costPerLeadTarget, true);
+  setGoalBarInverse('goalCPL', 'goalCPLBar', grand.costPerLead, data.goals.costPerLeadTarget, true);
 
-  // Bind add campaign button
-  document.getElementById('fbAddCampaign').addEventListener('click', function(e) {
+  // --- Event Bindings ---
+
+  // Add Project button
+  document.getElementById('fbAddProject').addEventListener('click', function(e) {
     e.stopPropagation();
-    showCampaignPicker(e.target, data);
+    showProjectPicker(e.target, data);
   });
 
-  // Bind remove buttons
-  container.querySelectorAll('.fb-remove-btn').forEach(function(btn) {
+  // Add Campaign buttons (per project)
+  container.querySelectorAll('.fb-add-camp-btn').forEach(function(btn) {
     btn.addEventListener('click', function(e) {
       e.stopPropagation();
-      var idx = parseInt(btn.dataset.idx);
-      latest.fbAds.splice(idx, 1);
+      var pi = parseInt(btn.dataset.pi);
+      showCampaignNameInput(btn, data, pi);
+    });
+  });
+
+  // Remove Project buttons
+  container.querySelectorAll('.fb-project-remove').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var pi = parseInt(btn.dataset.pi);
+      latest.fbAds.splice(pi, 1);
       renderFbAds(data);
       saveToLocalStorage();
     });
   });
 
-  // Bind editable cells
+  // Remove Campaign buttons
+  container.querySelectorAll('.fb-camp-remove').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var pi = parseInt(btn.dataset.pi);
+      var ci = parseInt(btn.dataset.ci);
+      latest.fbAds[pi].campaigns.splice(ci, 1);
+      if (latest.fbAds[pi].campaigns.length === 0) latest.fbAds.splice(pi, 1);
+      renderFbAds(data);
+      saveToLocalStorage();
+    });
+  });
+
+  // Editable cells
   container.querySelectorAll('.fb-campaign-row td[data-field]').forEach(function(td) {
     td.addEventListener('click', function() {
       if (td.querySelector('input')) return;
-      var idx = parseInt(td.closest('tr').dataset.idx);
+      var tr = td.closest('tr');
+      var pi = parseInt(tr.dataset.pi);
+      var ci = parseInt(tr.dataset.ci);
       var field = td.dataset.field;
-      var camp = latest.fbAds[idx];
+      var camp = latest.fbAds[pi].campaigns[ci];
       var rawVal = camp[field] || 0;
 
       var input = document.createElement('input');
@@ -1221,22 +1229,18 @@ function renderFbAds(data) {
         renderFbAds(data);
         saveToLocalStorage();
       }
-
       input.addEventListener('blur', commit);
       input.addEventListener('keydown', function(ke) {
         if (ke.key === 'Enter') { input.blur(); }
-        if (ke.key === 'Escape') {
-          input.removeEventListener('blur', commit);
-          renderFbAds(data);
-        }
+        if (ke.key === 'Escape') { input.removeEventListener('blur', commit); renderFbAds(data); }
       });
     });
   });
 }
 
-function calcFbTotals(fbAds) {
+function calcCampaignTotals(campaigns) {
   var adSpend = 0, leads = 0, weightedCtr = 0;
-  fbAds.forEach(function(c) {
+  campaigns.forEach(function(c) {
     adSpend += c.adSpend || 0;
     leads += c.leads || 0;
     weightedCtr += (c.ctr || 0) * (c.adSpend || 0);
@@ -1246,12 +1250,26 @@ function calcFbTotals(fbAds) {
   return { adSpend: adSpend, leads: leads, costPerLead: costPerLead, ctr: ctr };
 }
 
-function getCampaignLabel(key, data) {
+function calcGrandTotals(fbAds) {
+  var adSpend = 0, leads = 0, weightedCtr = 0;
+  fbAds.forEach(function(proj) {
+    (proj.campaigns || []).forEach(function(c) {
+      adSpend += c.adSpend || 0;
+      leads += c.leads || 0;
+      weightedCtr += (c.ctr || 0) * (c.adSpend || 0);
+    });
+  });
+  var costPerLead = leads > 0 ? Math.round((adSpend / leads) * 100) / 100 : 0;
+  var ctr = adSpend > 0 ? Math.round((weightedCtr / adSpend) * 100) / 100 : 0;
+  return { adSpend: adSpend, leads: leads, costPerLead: costPerLead, ctr: ctr };
+}
+
+function getProjectLabel(key, data) {
   if (data.projects[key]) return data.projects[key].name;
   return key;
 }
 
-function showCampaignPicker(anchor, data) {
+function showProjectPicker(anchor, data) {
   var existing = document.querySelector('.fb-campaign-picker');
   if (existing) { existing.remove(); return; }
 
@@ -1259,7 +1277,7 @@ function showCampaignPicker(anchor, data) {
   var latest = weeks[weeks.length - 1];
   if (!latest.fbAds) latest.fbAds = [];
   var usedKeys = {};
-  latest.fbAds.forEach(function(c) { usedKeys[c.campaign] = true; });
+  latest.fbAds.forEach(function(p) { usedKeys[p.project] = true; });
 
   var available = [];
   Object.keys(data.projects).forEach(function(key) {
@@ -1268,9 +1286,10 @@ function showCampaignPicker(anchor, data) {
     }
   });
 
+  var picker = document.createElement('div');
+  picker.className = 'fb-campaign-picker';
+
   if (available.length === 0) {
-    var picker = document.createElement('div');
-    picker.className = 'fb-campaign-picker';
     picker.innerHTML = '<div style="padding:8px 12px;color:var(--muted);font-size:13px;">All projects already added</div>';
     anchor.parentElement.style.position = 'relative';
     anchor.parentElement.appendChild(picker);
@@ -1278,13 +1297,11 @@ function showCampaignPicker(anchor, data) {
     return;
   }
 
-  var picker = document.createElement('div');
-  picker.className = 'fb-campaign-picker';
   available.forEach(function(proj) {
     var btn = document.createElement('button');
     btn.textContent = proj.name;
     btn.addEventListener('click', function() {
-      latest.fbAds.push({ campaign: proj.key, adSpend: 0, leads: 0, ctr: 0 });
+      latest.fbAds.push({ project: proj.key, campaigns: [{ name: 'Campaign 1', adSpend: 0, leads: 0, ctr: 0 }] });
       picker.remove();
       renderFbAds(data);
       saveToLocalStorage();
@@ -1294,13 +1311,57 @@ function showCampaignPicker(anchor, data) {
 
   anchor.parentElement.style.position = 'relative';
   anchor.parentElement.appendChild(picker);
+  closeFbPickerOnOutsideClick(picker, anchor);
+}
 
-  // Close on outside click
+function showCampaignNameInput(anchor, data, projectIdx) {
+  var existing = document.querySelector('.fb-campaign-picker');
+  if (existing) { existing.remove(); return; }
+
+  var weeks = data.metrics.weeks;
+  var latest = weeks[weeks.length - 1];
+  var proj = latest.fbAds[projectIdx];
+  var nextNum = proj.campaigns.length + 1;
+
+  var picker = document.createElement('div');
+  picker.className = 'fb-campaign-picker';
+  picker.innerHTML = '<div style="padding:6px 12px 2px;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:0.5px;">Campaign Name</div>';
+
+  var input = document.createElement('input');
+  input.type = 'text';
+  input.placeholder = 'e.g., Retargeting, Lookalike...';
+  input.value = 'Campaign ' + nextNum;
+  picker.appendChild(input);
+
+  var addBtn = document.createElement('button');
+  addBtn.textContent = 'Add Campaign';
+  addBtn.style.color = 'var(--amber)';
+  addBtn.style.fontWeight = '600';
+  picker.appendChild(addBtn);
+
+  function doAdd() {
+    var name = input.value.trim() || ('Campaign ' + nextNum);
+    proj.campaigns.push({ name: name, adSpend: 0, leads: 0, ctr: 0 });
+    picker.remove();
+    renderFbAds(data);
+    saveToLocalStorage();
+  }
+  addBtn.addEventListener('click', doAdd);
+  input.addEventListener('keydown', function(ke) { if (ke.key === 'Enter') doAdd(); });
+
+  anchor.parentElement.style.position = 'relative';
+  anchor.parentElement.appendChild(picker);
+  input.focus();
+  input.select();
+  closeFbPickerOnOutsideClick(picker, anchor);
+}
+
+function closeFbPickerOnOutsideClick(picker, anchor) {
   setTimeout(function() {
-    document.addEventListener('click', function closePicker(e) {
+    document.addEventListener('click', function close(e) {
       if (!picker.contains(e.target) && e.target !== anchor) {
         picker.remove();
-        document.removeEventListener('click', closePicker);
+        document.removeEventListener('click', close);
       }
     });
   }, 0);
