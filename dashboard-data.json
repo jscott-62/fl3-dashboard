@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-02-19",
+  "lastUpdated": "2026-02-20",
   "projects": {
     "wrong-asset-manifesto": {
       "name": "The Wrong Asset Manifesto",
@@ -146,7 +146,7 @@
               "steps": {
                 "research": true,
                 "write": true,
-                "edit": false,
+                "edit": true,
                 "publish": false
               },
               "dueDate": null,
@@ -387,6 +387,6 @@
     "emailListTarget": 5000,
     "revenueTarget": 10000,
     "courseSalesTarget": 20,
-    "costPerLeadTarget": 5.0
+    "costPerLeadTarget": 5
   }
 }
