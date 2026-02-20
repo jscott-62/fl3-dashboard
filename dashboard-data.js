@@ -148,7 +148,7 @@ window.FL3_DASHBOARD_DATA = {
                 "research": true,
                 "write": true,
                 "edit": true,
-                "publish": false
+                "publish": true
               },
               "dueDate": null,
               "path": null
