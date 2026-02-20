@@ -10,27 +10,27 @@
         "leadMagnet": {
           "status": "complete",
           "label": "Wrong Asset Manifesto (PDF)",
-          "path": null
+          "path": "00-ZenithPro - FL3/Projects/Wrong-Asset-Manifesto/Lead-Magnet-Content/The Wrong Asset Manifesto - Cold Traffic Lead Magnet.md"
         },
         "landingPage": {
           "status": "complete",
           "label": "Landing Page",
-          "path": null
+          "path": "00-ZenithPro - FL3/Projects/Wrong-Asset-Manifesto/Landing-Pages/wrong-asset-manifesto-landing.html"
         },
         "facebookAdsStandard": {
           "status": "complete",
           "label": "Facebook Ads (Standard)",
-          "path": null
+          "path": "00-ZenithPro - FL3/Projects/Wrong-Asset-Manifesto/Facebook-Ads/Wrong Asset Manifesto - Facebook Ads + Landing Page.md"
         },
         "facebookAdsCompliant": {
           "status": "complete",
           "label": "Facebook Ads (Compliant)",
-          "path": null
+          "path": "00-ZenithPro - FL3/Projects/Wrong-Asset-Manifesto/Facebook-Ads/Wrong Asset Manifesto - Facebook Ads COMPLIANT.md"
         },
         "emailSequence": {
           "status": "complete",
           "label": "Email Nurture Sequence (6)",
-          "path": null
+          "path": "00-ZenithPro - FL3/Projects/Wrong-Asset-Manifesto/Email-Sequences/Wrong Asset Manifesto - Email Sequence.md"
         },
         "socialMedia": {
           "status": "not_started",
@@ -48,12 +48,12 @@
         "courseCurriculum": {
           "status": "complete",
           "label": "Course Curriculum",
-          "path": null
+          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up/Course-Content/The Great Catch Up Course.md"
         },
         "frameworkOutputs": {
           "status": "complete",
           "label": "Framework Forge Outputs",
-          "path": null
+          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up/Course-Content/Framework Forge Output - The Great Catch Up Course.md"
         },
         "salesPage": {
           "status": "review",
@@ -91,12 +91,12 @@
         "slidesScript": {
           "status": "in_progress",
           "label": "Webinar Slides/Script",
-          "path": null
+          "path": "00-ZenithPro - FL3/Projects/Webinar/Slides-Scripts/Catch Up With The Freedom 3.0 Investing System - Slides..md"
         },
         "registrationPage": {
           "status": "in_progress",
           "label": "Registration Page",
-          "path": null
+          "path": "00-ZenithPro - FL3/Projects/Webinar/Registration-Pages/freedom-3-landing-page.html"
         },
         "facebookAds": {
           "status": "not_started",
@@ -357,10 +357,75 @@
       "description": "Authority builder and lead generation",
       "folder": "Projects/Book/",
       "assets": {
-        "manuscript": {
+        "chapter1": {
           "status": "complete",
-          "label": "Manuscript (14 Chapters + Epilogue)",
-          "path": null
+          "label": "Ch 1: The 2 AM Reckoning",
+          "path": "00-ZenithPro - FL3/Projects/Book/Drafts/Chapter_1_The_2_AM_reckoning.md"
+        },
+        "chapter2": {
+          "status": "complete",
+          "label": "Ch 2: The Cost of Someday Soon",
+          "path": "00-ZenithPro - FL3/Projects/Book/Drafts/Chapter_2_The_Cost_of_Someday_Soon.md"
+        },
+        "chapter3": {
+          "status": "complete",
+          "label": "Ch 3: Building Your Financial Life Plan",
+          "path": "00-ZenithPro - FL3/Projects/Book/Drafts/Chapter_3_Building_Your_Financial_Life_Plan.md"
+        },
+        "chapter4": {
+          "status": "complete",
+          "label": "Ch 4: What Crypto Assets Actually Are",
+          "path": "00-ZenithPro - FL3/Projects/Book/Drafts/Chapter_4_What_Crypto_Assets_Actually_Are.md"
+        },
+        "chapter5": {
+          "status": "complete",
+          "label": "Ch 5: Why Crypto Will Grow in Value",
+          "path": "00-ZenithPro - FL3/Projects/Book/Drafts/Chapter_5_Why_Crypto_Will_Grow_in_Value.md"
+        },
+        "chapter6": {
+          "status": "complete",
+          "label": "Ch 6: Understanding the Crypto Market Cycle",
+          "path": "00-ZenithPro - FL3/Projects/Book/Drafts/Chapter_6_Understanding_the_Crypto_Market_Cycle.md"
+        },
+        "chapter7": {
+          "status": "complete",
+          "label": "Ch 7: Opening an Exchange Account",
+          "path": "00-ZenithPro - FL3/Projects/Book/Drafts/Chapter_7_Your_First_Steps_Opening_an_Exchange_Account.md"
+        },
+        "chapter8": {
+          "status": "complete",
+          "label": "Ch 8: Buying Your First Bitcoin",
+          "path": "00-ZenithPro - FL3/Projects/Book/Drafts/Chapter 8 - The First Step Toward Freedom (Buying Your First Bitcoin).md"
+        },
+        "chapter9": {
+          "status": "complete",
+          "label": "Ch 9: Building Your Crypto Investment Strategy",
+          "path": "00-ZenithPro - FL3/Projects/Book/Drafts/Chapter 9 - Building Your Crypto Investment Strategy (Planning the Quest).md"
+        },
+        "chapter10": {
+          "status": "complete",
+          "label": "Ch 10: Selecting Your Blue Chip Altcoins",
+          "path": "00-ZenithPro - FL3/Projects/Book/Drafts/Chapter 10 - Selecting Your Blue Chip Altcoins (Choosing Your Core Team).md"
+        },
+        "chapter11": {
+          "status": "complete",
+          "label": "Ch 11: Building Your Crypto Fellowship",
+          "path": "00-ZenithPro - FL3/Projects/Book/Drafts/Chapter 11 - Building Your Crypto Fellowship.md"
+        },
+        "chapter12": {
+          "status": "complete",
+          "label": "Ch 12: Taking Profits",
+          "path": "00-ZenithPro - FL3/Projects/Book/Drafts/Chapter 12 - Taking Profits.md"
+        },
+        "chapter13": {
+          "status": "complete",
+          "label": "Ch 13: Your Annual Portfolio Review",
+          "path": "00-ZenithPro - FL3/Projects/Book/Drafts/Chapter_13_Your_Annual_Portfolio_Review.md"
+        },
+        "chapter14": {
+          "status": "complete",
+          "label": "Ch 14: The Hero's Return",
+          "path": "00-ZenithPro - FL3/Projects/Book/Drafts/Chapter_14_The_Heros_Return.md"
         }
       }
     }

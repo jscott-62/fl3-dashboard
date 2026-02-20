@@ -34,7 +34,7 @@ The Freedom Life 3.0 (FL3) Business Dashboard is a single-page HTML app hosted o
 2. **Goals Progress**: 2x2 grid of progress bars (Email List, Revenue, Course Sales, Cost Per Lead)
 3. **Weekly Metrics**: 4-card row (New Emails This Week, Email Open Rate, YouTube Views, Webinar Registrations)
 4. **Facebook Ads**: Project groups with nested campaigns, click-to-edit metrics, subtotals per project, grand total
-5. **Project Tabs**: Tabbed views for each project (Wrong Asset Manifesto, The Great Catch Up, Webinar, Weekly Content, Book)
+5. **Project Tabs**: Content Hub (first, active by default) + tabbed views for each project (Wrong Asset Manifesto, The Great Catch Up, Webinar, Weekly Content, Book)
 6. **Instructions**: How-to text for updating the dashboard
 7. **Save Bar**: Fixed bottom bar showing sync status
 8. **Modals**: Token setup overlay, Markdown preview overlay
@@ -173,6 +173,30 @@ Tracks Facebook ad metrics in a two-level hierarchy: **Projects > Campaigns**.
 **Top-level sync:** The `adSpend`, `leads`, `costPerLead` fields at the week level are auto-synced from grand totals, keeping the Cost Per Lead goal bar working.
 
 **Future automation:** When Facebook Marketing API integration is added, a script can populate the `fbAds` array in `dashboard-data.json` directly. The same UI will display without changes.
+
+## Content Hub Tab
+
+A unified view of all content across all projects. This is the first tab (active by default) in the Project Tabs section.
+
+**Features:**
+- **Stats bar**: 4 cards showing Total Content, Completed, Linked Files, Progress %
+- **Collapsible project sections**: Each project shows its content items grouped together
+- **Type badges**: Color-coded badges (YouTube=red, Blog=blue, Social=purple, Newsletter=teal, Asset=gray, Chapter=amber)
+- **Step dots**: Weekly content items show production step progress as colored dots (green=done, gray=pending)
+- **Status badges**: Complete, In Progress, Not Started, Review
+- **Preview button**: Opens markdown files in the existing markdown preview modal (works locally only)
+- **Open in Obsidian button**: Uses `obsidian://open` URI scheme to open files directly in Obsidian
+- **Book collapsed by default**: 14 chapter items are collapsed to avoid dominating the view
+
+**Architecture:**
+- Virtual tab, not in `PROJECT_ORDER`. Hardcoded as first tab in `renderProjectTabs()`.
+- Read-only aggregate view. No editing in the hub; users edit in project tabs or Obsidian.
+- Key functions: `buildContentHubView(data)`, `buildObsidianLink(path)`, `getContentTypeConfig(type)`
+- Reuses existing functions: `getStepDefs()`, `getStatusFromSteps()`, `escapeHtml()`, `escapeAttr()`, `openMdPreview()`
+
+**File paths**: Asset `path` fields in `dashboard-data.json` store vault-relative paths (e.g., `00-ZenithPro - FL3/Projects/Book/Drafts/Chapter_1_The_2_AM_reckoning.md`). These are used for both Obsidian URI links and markdown preview.
+
+**Book project**: Expanded from single "manuscript" asset to 14 individual chapter assets, each with a path to its draft file.
 
 ## How to Deploy Changes
 

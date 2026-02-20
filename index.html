@@ -765,6 +765,84 @@
     color: var(--red);
   }
 
+  /* ===== CONTENT HUB ===== */
+  .content-hub { padding: 0; }
+  .hub-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px;
+  }
+  .hub-stat-card {
+    background: var(--card); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px;
+    padding: 14px 16px; text-align: center;
+  }
+  .hub-stat-card .stat-value { font-size: 24px; font-weight: 700; color: var(--amber); }
+  .hub-stat-card .stat-label { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .hub-project-section {
+    background: var(--card); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px;
+    margin-bottom: 12px; overflow: hidden;
+  }
+  .hub-project-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 18px; cursor: pointer; user-select: none;
+    background: rgba(255,255,255,0.02); transition: background 0.15s;
+  }
+  .hub-project-header:hover { background: rgba(255,255,255,0.04); }
+  .hub-project-header .hub-proj-left { display: flex; align-items: center; gap: 10px; }
+  .hub-project-header .hub-proj-name { font-weight: 600; font-size: 15px; }
+  .hub-project-header .hub-proj-count {
+    font-size: 12px; color: var(--muted); background: rgba(255,255,255,0.06);
+    padding: 2px 8px; border-radius: 10px;
+  }
+  .hub-project-header .hub-proj-status {
+    font-size: 11px; padding: 2px 8px; border-radius: 4px; font-weight: 600; text-transform: uppercase;
+  }
+  .hub-project-header .hub-chevron {
+    font-size: 14px; color: var(--muted); transition: transform 0.2s;
+  }
+  .hub-project-section.collapsed .hub-chevron { transform: rotate(-90deg); }
+  .hub-project-section.collapsed .hub-content-list { display: none; }
+  .hub-content-list { padding: 0 18px 14px; }
+  .hub-content-item {
+    display: flex; align-items: center; gap: 12px; padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .hub-content-item:last-child { border-bottom: none; }
+  .hub-type-badge {
+    font-size: 10px; font-weight: 700; text-transform: uppercase; padding: 3px 8px;
+    border-radius: 4px; white-space: nowrap; min-width: 60px; text-align: center;
+  }
+  .hub-type-badge.youtube { background: #dc2626; color: #fff; }
+  .hub-type-badge.blog { background: #2563eb; color: #fff; }
+  .hub-type-badge.social { background: #7c3aed; color: #fff; }
+  .hub-type-badge.newsletter { background: #0d9488; color: #fff; }
+  .hub-type-badge.asset { background: #475569; color: #e2e8f0; }
+  .hub-type-badge.chapter { background: #92400e; color: #fbbf24; }
+  .hub-item-info { flex: 1; min-width: 0; }
+  .hub-item-title { font-size: 14px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .hub-item-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .hub-steps-inline { display: flex; gap: 4px; align-items: center; }
+  .hub-step-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(255,255,255,0.1); flex-shrink: 0;
+  }
+  .hub-step-dot.done { background: var(--green); }
+  .hub-step-dot[title] { cursor: help; }
+  .hub-status-badge {
+    font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 4px;
+    text-transform: uppercase; white-space: nowrap;
+  }
+  .hub-status-badge.complete { background: rgba(34,197,94,0.15); color: var(--green); }
+  .hub-status-badge.in_progress { background: rgba(59,130,246,0.15); color: var(--blue); }
+  .hub-status-badge.not_started { background: rgba(255,255,255,0.06); color: var(--muted); }
+  .hub-status-badge.review { background: rgba(168,85,247,0.15); color: #a855f7; }
+  .hub-actions { display: flex; gap: 6px; flex-shrink: 0; }
+  .hub-btn {
+    font-size: 11px; padding: 4px 10px; border-radius: 4px; border: none; cursor: pointer;
+    font-weight: 600; transition: opacity 0.15s; white-space: nowrap;
+  }
+  .hub-btn:hover { opacity: 0.85; }
+  .hub-btn-preview { background: rgba(59,130,246,0.2); color: var(--blue); }
+  .hub-btn-obsidian { background: rgba(168,85,247,0.2); color: #a855f7; }
+
   /* ===== RESPONSIVE ===== */
   @media (max-width: 1200px) {
     .kanban-board {
@@ -782,9 +860,13 @@
     .goals-bars { grid-template-columns: 1fr; }
     .project-tabs { gap: 0; }
     .project-tab { padding: 10px 14px; font-size: 13px; }
+    .hub-stats { grid-template-columns: repeat(2, 1fr); }
+    .hub-content-item { flex-wrap: wrap; }
+    .hub-actions { width: 100%; justify-content: flex-end; }
   }
   @media (max-width: 480px) {
     .metrics-grid { grid-template-columns: 1fr; }
+    .hub-stats { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -1394,6 +1476,181 @@ function setGoalBarInverse(labelId, barId, current, target, isMoney) {
 }
 
 // =====================================================================
+// CONTENT HUB
+// =====================================================================
+
+function buildObsidianLink(path) {
+  if (!path) return '';
+  return 'obsidian://open?vault=' + encodeURIComponent('Obsidian Vault') + '&file=' + encodeURIComponent(path.replace(/\.md$/, ''));
+}
+
+function getContentTypeConfig(type) {
+  var configs = {
+    youtube:     { label: 'YouTube',     cssClass: 'youtube' },
+    blog:        { label: 'Blog',        cssClass: 'blog' },
+    social:      { label: 'Social',      cssClass: 'social' },
+    newsletter:  { label: 'Newsletter',  cssClass: 'newsletter' },
+    asset:       { label: 'Asset',       cssClass: 'asset' },
+    chapter:     { label: 'Chapter',     cssClass: 'chapter' }
+  };
+  return configs[type] || { label: type, cssClass: 'asset' };
+}
+
+function getProjectStatusClass(status) {
+  var map = { live: 'complete', active: 'in_progress', in_development: 'review', planned: 'not_started', in_progress: 'in_progress' };
+  return map[status] || 'not_started';
+}
+
+function buildContentHubView(data) {
+  var container = document.createElement('div');
+  container.className = 'content-hub';
+
+  // Gather all content items across projects
+  var allItems = [];
+  var totalCount = 0, completedCount = 0, linkedCount = 0;
+
+  PROJECT_ORDER.forEach(function(key) {
+    var project = data.projects[key];
+    if (!project) return;
+
+    if (key === 'weekly-content' && project.contentSchedule) {
+      project.contentSchedule.forEach(function(week) {
+        week.items.forEach(function(item) {
+          if (!item.title) return; // skip untitled placeholders
+          totalCount++;
+          var stepDefs = getStepDefs(item.type);
+          var allDone = stepDefs.every(function(s) { return item.steps && item.steps[s.key]; });
+          if (allDone) completedCount++;
+          if (item.path) linkedCount++;
+          allItems.push({ projectKey: key, projectName: project.name, projectStatus: project.status,
+            type: item.type, label: item.title, status: allDone ? 'complete' : (item.steps && item.steps.research ? 'in_progress' : 'not_started'),
+            path: item.path, steps: item.steps, itemType: item.type, weekLabel: week.weekLabel });
+        });
+      });
+    } else if (project.assets) {
+      for (var aKey in project.assets) {
+        var asset = project.assets[aKey];
+        totalCount++;
+        if (asset.status === 'complete') completedCount++;
+        if (asset.path) linkedCount++;
+        var typeTag = (key === 'book') ? 'chapter' : 'asset';
+        allItems.push({ projectKey: key, projectName: project.name, projectStatus: project.status,
+          type: typeTag, label: asset.label, status: asset.status,
+          path: asset.path, steps: null, itemType: typeTag, weekLabel: null });
+      }
+    }
+  });
+
+  var progressPct = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
+
+  // Stats bar
+  var statsHtml = '<div class="hub-stats">' +
+    '<div class="hub-stat-card"><div class="stat-value">' + totalCount + '</div><div class="stat-label">Total Content</div></div>' +
+    '<div class="hub-stat-card"><div class="stat-value">' + completedCount + '</div><div class="stat-label">Completed</div></div>' +
+    '<div class="hub-stat-card"><div class="stat-value">' + linkedCount + '</div><div class="stat-label">Linked Files</div></div>' +
+    '<div class="hub-stat-card"><div class="stat-value">' + progressPct + '%</div><div class="stat-label">Progress</div></div>' +
+    '</div>';
+  container.innerHTML = statsHtml;
+
+  // Group items by project
+  var projectGroups = {};
+  PROJECT_ORDER.forEach(function(key) { projectGroups[key] = []; });
+  allItems.forEach(function(item) {
+    if (projectGroups[item.projectKey]) projectGroups[item.projectKey].push(item);
+  });
+
+  // Render each project section
+  PROJECT_ORDER.forEach(function(key) {
+    var items = projectGroups[key];
+    var project = data.projects[key];
+    if (!project || items.length === 0) return;
+
+    var section = document.createElement('div');
+    section.className = 'hub-project-section' + (key === 'book' ? ' collapsed' : '');
+
+    var statusBadgeClass = getProjectStatusClass(project.status);
+    var statusLabel = project.status.replace(/_/g, ' ');
+
+    section.innerHTML =
+      '<div class="hub-project-header">' +
+        '<div class="hub-proj-left">' +
+          '<span class="hub-proj-name">' + escapeHtml(project.name) + '</span>' +
+          '<span class="hub-proj-count">' + items.length + ' items</span>' +
+          '<span class="hub-status-badge ' + statusBadgeClass + '">' + statusLabel + '</span>' +
+        '</div>' +
+        '<span class="hub-chevron">&#9660;</span>' +
+      '</div>' +
+      '<div class="hub-content-list"></div>';
+
+    // Toggle collapse
+    section.querySelector('.hub-project-header').addEventListener('click', function() {
+      section.classList.toggle('collapsed');
+    });
+
+    var listEl = section.querySelector('.hub-content-list');
+
+    items.forEach(function(item) {
+      var typeConfig = getContentTypeConfig(item.type);
+
+      // Step dots (for weekly content only)
+      var stepsHtml = '';
+      if (item.steps) {
+        var stepDefs = getStepDefs(item.itemType);
+        stepsHtml = '<div class="hub-steps-inline">';
+        stepDefs.forEach(function(s) {
+          var done = item.steps[s.key] ? ' done' : '';
+          stepsHtml += '<span class="hub-step-dot' + done + '" title="' + s.label + (item.steps[s.key] ? ' ✓' : '') + '"></span>';
+        });
+        stepsHtml += '</div>';
+      }
+
+      // Sub-info line
+      var subParts = [];
+      if (item.weekLabel) subParts.push(item.weekLabel);
+      if (item.steps) {
+        var statusText = getStatusFromSteps(item.itemType, item.steps);
+        subParts.push(statusText);
+      }
+      var subHtml = subParts.length > 0 ? '<div class="hub-item-sub">' + escapeHtml(subParts.join(' · ')) + '</div>' : '';
+
+      // Action buttons
+      var actionsHtml = '';
+      if (item.path && item.path.match(/\.md$/)) {
+        actionsHtml += '<button class="hub-btn hub-btn-preview" data-path="' + escapeAttr(item.path) + '" data-title="' + escapeAttr(item.label) + '">Preview</button>';
+      }
+      if (item.path) {
+        actionsHtml += '<a class="hub-btn hub-btn-obsidian" href="' + escapeAttr(buildObsidianLink(item.path)) + '" title="Open in Obsidian">Obsidian</a>';
+      }
+
+      var statusBadge = '<span class="hub-status-badge ' + item.status + '">' + item.status.replace(/_/g, ' ') + '</span>';
+
+      var row = document.createElement('div');
+      row.className = 'hub-content-item';
+      row.innerHTML =
+        '<span class="hub-type-badge ' + typeConfig.cssClass + '">' + typeConfig.label + '</span>' +
+        '<div class="hub-item-info"><div class="hub-item-title">' + escapeHtml(item.label) + '</div>' + subHtml + '</div>' +
+        stepsHtml +
+        statusBadge +
+        '<div class="hub-actions">' + actionsHtml + '</div>';
+
+      // Bind preview button
+      var previewBtn = row.querySelector('.hub-btn-preview');
+      if (previewBtn) {
+        previewBtn.addEventListener('click', function() {
+          openMdPreview(this.dataset.path, this.dataset.title);
+        });
+      }
+
+      listEl.appendChild(row);
+    });
+
+    container.appendChild(section);
+  });
+
+  return container;
+}
+
+// =====================================================================
 // PROJECT TABS
 // =====================================================================
 
@@ -1403,13 +1660,33 @@ function renderProjectTabs(data) {
   tabsEl.innerHTML = '';
   viewsEl.innerHTML = '';
 
-  PROJECT_ORDER.forEach(function(key, idx) {
+  // --- Content Hub tab (first, active by default) ---
+  var hubTab = document.createElement('button');
+  hubTab.className = 'project-tab active';
+  hubTab.dataset.project = 'content-hub';
+  hubTab.innerHTML = '<span class="tab-dot active"></span>Content Hub';
+  hubTab.addEventListener('click', function() {
+    document.querySelectorAll('.project-tab').forEach(function(t) { t.classList.remove('active'); });
+    document.querySelectorAll('.project-view').forEach(function(v) { v.classList.remove('active'); });
+    hubTab.classList.add('active');
+    document.getElementById('view-content-hub').classList.add('active');
+  });
+  tabsEl.appendChild(hubTab);
+
+  var hubView = document.createElement('div');
+  hubView.className = 'project-view active';
+  hubView.id = 'view-content-hub';
+  hubView.appendChild(buildContentHubView(data));
+  viewsEl.appendChild(hubView);
+
+  // --- Project tabs (none active by default) ---
+  PROJECT_ORDER.forEach(function(key) {
     var project = data.projects[key];
     if (!project) return;
 
     // Tab button
     var tab = document.createElement('button');
-    tab.className = 'project-tab' + (idx === 0 ? ' active' : '');
+    tab.className = 'project-tab';
     tab.dataset.project = key;
     tab.innerHTML = '<span class="tab-dot ' + project.status + '"></span>' + project.name;
     tab.addEventListener('click', function() {
@@ -1422,7 +1699,7 @@ function renderProjectTabs(data) {
 
     // View container
     var view = document.createElement('div');
-    view.className = 'project-view' + (idx === 0 ? ' active' : '');
+    view.className = 'project-view';
     view.id = 'view-' + key;
 
     if (key === 'weekly-content') {
@@ -1473,8 +1750,14 @@ function buildAssetProjectView(project) {
       nameHtml = '<span class="no-link">' + asset.label + '</span>';
     }
 
+    var obsidianHtml = '';
+    if (asset.path) {
+      obsidianHtml = ' <a class="hub-btn hub-btn-obsidian" href="' + escapeAttr(buildObsidianLink(asset.path)) + '" title="Open in Obsidian" style="font-size:10px;padding:2px 6px;vertical-align:middle;">Obsidian</a>';
+    }
+
     li.innerHTML = '<span class="asset-name">' + nameHtml + '</span>' +
-      '<span class="status-badge status-' + asset.status + '">' + asset.status.replace(/_/g, ' ') + '</span>';
+      '<span class="status-badge status-' + asset.status + '">' + asset.status.replace(/_/g, ' ') + '</span>' +
+      obsidianHtml;
 
     var mdLink = li.querySelector('.md-preview-link');
     if (mdLink) {
