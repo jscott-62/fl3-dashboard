@@ -382,7 +382,14 @@ window.FL3_DASHBOARD_DATA = {
         "revenue": 0,
         "webinarRegistrations": 0,
         "webinarAttendance": 0,
-        "fbAds": []
+        "fbAds": [
+          {
+            "campaign": "wrong-asset-manifesto",
+            "adSpend": 0,
+            "leads": 0,
+            "ctr": 0
+          }
+        ]
       }
     ]
   },
