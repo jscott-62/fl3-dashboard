@@ -384,10 +384,21 @@ window.FL3_DASHBOARD_DATA = {
         "webinarAttendance": 0,
         "fbAds": [
           {
-            "campaign": "wrong-asset-manifesto",
-            "adSpend": 34.87,
-            "leads": 4,
-            "ctr": 2.86
+            "project": "wrong-asset-manifesto",
+            "campaigns": [
+              {
+                "name": "Campaign 1",
+                "adSpend": 34.87,
+                "leads": 4,
+                "ctr": 2.86
+              },
+              {
+                "name": "Campaign 2",
+                "adSpend": 0,
+                "leads": 0,
+                "ctr": 0
+              }
+            ]
           }
         ]
       }
