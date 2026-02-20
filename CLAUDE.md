@@ -32,11 +32,12 @@ The Freedom Life 3.0 (FL3) Business Dashboard is a single-page HTML app hosted o
 
 1. **Header**: Title + last updated date + GitHub sync status
 2. **Goals Progress**: 2x2 grid of progress bars (Email List, Revenue, Course Sales, Cost Per Lead)
-3. **Weekly Metrics**: 6-card row (New Emails This Week, Ad Spend, Leads, Email Open Rate, YouTube Views, Webinar Registrations)
-4. **Project Tabs**: Tabbed views for each project (Wrong Asset Manifesto, The Great Catch Up, Webinar, Weekly Content, Book)
-5. **Instructions**: How-to text for updating the dashboard
-6. **Save Bar**: Fixed bottom bar showing sync status
-7. **Modals**: Token setup overlay, Markdown preview overlay
+3. **Weekly Metrics**: 4-card row (New Emails This Week, Email Open Rate, YouTube Views, Webinar Registrations)
+4. **Facebook Ads**: 4-card row with click-to-edit (Ad Spend, Leads, Cost Per Lead (auto-calc), CTR)
+5. **Project Tabs**: Tabbed views for each project (Wrong Asset Manifesto, The Great Catch Up, Webinar, Weekly Content, Book)
+6. **Instructions**: How-to text for updating the dashboard
+7. **Save Bar**: Fixed bottom bar showing sync status
+8. **Modals**: Token setup overlay, Markdown preview overlay
 
 ## Data Structure (dashboard-data.json)
 
@@ -65,6 +66,7 @@ The Freedom Life 3.0 (FL3) Business Dashboard is a single-page HTML app hosted o
         "youtubeViews": 0,
         "adSpend": 0,
         "costPerLead": 0,
+        "ctr": 0,
         "leads": 0,
         "courseSales": 0,
         "revenue": 0,
@@ -143,6 +145,19 @@ This fetches the count from GHL, updates `dashboard-data.json` and `dashboard-da
 4. Updating `emailList` in `dashboard-data.json` (new week entry or update in place)
 5. Regenerating `dashboard-data.js`
 6. Committing and pushing to GitHub
+
+## Facebook Ads Section
+
+The Facebook Ads section provides click-to-edit metric cards for tracking ad performance. Users click a value, type the new number, and press Enter (or click away) to save.
+
+**Editable fields:** Ad Spend (currency), Leads (integer), CTR (percentage)
+**Auto-calculated:** Cost Per Lead = Ad Spend / Leads (displays "$0.00" when leads = 0)
+
+Data is stored in the same `metrics.weeks` entries as all other weekly metrics. The `ctr` field stores the click-through rate as a plain number (e.g., `2.5` for 2.50%).
+
+Changes auto-save to localStorage and sync to GitHub via the same debounced mechanism as content checkboxes. Editing a metric also updates the Cost Per Lead goal bar.
+
+**Future automation:** When Facebook Marketing API integration is added, a script can populate `adSpend`, `leads`, `ctr` in `dashboard-data.json` directly. The same fields will display without needing UI changes.
 
 ## How to Deploy Changes
 

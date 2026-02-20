@@ -387,7 +387,7 @@
   /* ===== WEEKLY METRICS ===== */
   .metrics-grid {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 16px;
     margin-bottom: 32px;
   }
@@ -407,6 +407,76 @@
     font-size: 12px;
     color: var(--muted);
     margin-top: 4px;
+  }
+
+  /* ===== FACEBOOK ADS SECTION ===== */
+  .fb-ads-section {
+    margin-bottom: 32px;
+  }
+  .fb-ads-header {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--amber);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .fb-ads-header span {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 400;
+  }
+  .fb-ads-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .fb-metric-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+  }
+  .fb-metric-card.editable {
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .fb-metric-card.editable:hover {
+    border-color: var(--amber);
+  }
+  .fb-metric-card .metric-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .fb-metric-card .metric-label {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .fb-metric-card .auto-badge {
+    font-size: 10px;
+    color: var(--amber);
+    font-weight: 400;
+    margin-left: 4px;
+  }
+  .fb-metric-card input.metric-input {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--amber);
+    border-radius: 6px;
+    color: var(--text);
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+    padding: 4px;
+    outline: none;
+    box-sizing: border-box;
+  }
+  @media (max-width: 700px) {
+    .fb-ads-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
   /* ===== INSTRUCTIONS ===== */
@@ -752,14 +822,6 @@
     <div class="metric-label">New Emails This Week</div>
   </div>
   <div class="metric-card">
-    <div class="metric-value" id="metricAdSpend">$0</div>
-    <div class="metric-label">Ad Spend</div>
-  </div>
-  <div class="metric-card">
-    <div class="metric-value" id="metricLeads">0</div>
-    <div class="metric-label">Leads Generated</div>
-  </div>
-  <div class="metric-card">
     <div class="metric-value" id="metricOpenRate">0%</div>
     <div class="metric-label">Email Open Rate</div>
   </div>
@@ -770,6 +832,29 @@
   <div class="metric-card">
     <div class="metric-value" id="metricWebReg">0</div>
     <div class="metric-label">Webinar Registrations</div>
+  </div>
+</div>
+
+<!-- ===== FACEBOOK ADS ===== -->
+<div class="fb-ads-section">
+  <div class="fb-ads-header">Facebook Ads <span>(click values to edit)</span></div>
+  <div class="fb-ads-grid">
+    <div class="fb-metric-card editable" data-field="adSpend" data-format="currency">
+      <div class="metric-value" id="fbAdSpend">$0</div>
+      <div class="metric-label">Ad Spend</div>
+    </div>
+    <div class="fb-metric-card editable" data-field="leads" data-format="number">
+      <div class="metric-value" id="fbLeads">0</div>
+      <div class="metric-label">Leads</div>
+    </div>
+    <div class="fb-metric-card" data-field="costPerLead" data-format="currency2">
+      <div class="metric-value" id="fbCPL">$0.00 <span class="auto-badge">(auto)</span></div>
+      <div class="metric-label">Cost Per Lead</div>
+    </div>
+    <div class="fb-metric-card editable" data-field="ctr" data-format="percent">
+      <div class="metric-value" id="fbCTR">0.00%</div>
+      <div class="metric-label">CTR</div>
+    </div>
   </div>
 </div>
 
@@ -962,11 +1047,72 @@ function render(data) {
   newEmailsEl.textContent = (newEmails >= 0 ? '+' : '') + newEmails.toLocaleString();
   newEmailsEl.style.color = newEmails > 0 ? 'var(--green)' : 'var(--text)';
 
-  document.getElementById('metricAdSpend').textContent = '$' + latest.adSpend.toLocaleString();
-  document.getElementById('metricLeads').textContent = latest.leads.toLocaleString();
   document.getElementById('metricOpenRate').textContent = (latest.emailOpenRate * 100).toFixed(1) + '%';
   document.getElementById('metricYTViews').textContent = latest.youtubeViews.toLocaleString();
   document.getElementById('metricWebReg').textContent = latest.webinarRegistrations.toLocaleString();
+
+  // Facebook Ads metrics
+  renderFbAds(latest);
+  setupFbAdsEditing();
+}
+
+function renderFbAds(latest) {
+  if (!latest.ctr && latest.ctr !== 0) latest.ctr = 0;
+  var cpl = latest.leads > 0 ? latest.adSpend / latest.leads : 0;
+  latest.costPerLead = Math.round(cpl * 100) / 100;
+
+  document.getElementById('fbAdSpend').textContent = '$' + latest.adSpend.toLocaleString();
+  document.getElementById('fbLeads').textContent = latest.leads.toLocaleString();
+  document.getElementById('fbCPL').innerHTML = '$' + latest.costPerLead.toFixed(2) + ' <span class="auto-badge">(auto)</span>';
+  document.getElementById('fbCTR').textContent = latest.ctr.toFixed(2) + '%';
+}
+
+function setupFbAdsEditing() {
+  document.querySelectorAll('.fb-metric-card.editable').forEach(function(card) {
+    if (card._fbEditBound) return;
+    card._fbEditBound = true;
+    card.addEventListener('click', function(e) {
+      if (e.target.tagName === 'INPUT') return;
+      var valueEl = card.querySelector('.metric-value');
+      var field = card.dataset.field;
+      var fmt = card.dataset.format;
+      var weeks = _dashboardData.metrics.weeks;
+      var latest = weeks[weeks.length - 1];
+      var rawVal = latest[field] || 0;
+
+      var input = document.createElement('input');
+      input.type = 'number';
+      input.step = fmt === 'percent' ? '0.01' : (fmt === 'currency' ? '0.01' : '1');
+      input.min = '0';
+      input.className = 'metric-input';
+      input.value = rawVal;
+      valueEl.textContent = '';
+      valueEl.appendChild(input);
+      input.focus();
+      input.select();
+
+      function commit() {
+        var val = parseFloat(input.value) || 0;
+        if (val < 0) val = 0;
+        latest[field] = Math.round(val * 100) / 100;
+        renderFbAds(latest);
+        saveToLocalStorage();
+        // Update goal bar for CPL
+        if (field === 'adSpend' || field === 'leads') {
+          setGoalBarInverse('goalCPL', 'goalCPLBar', latest.costPerLead, _dashboardData.goals.costPerLeadTarget, true);
+        }
+      }
+
+      input.addEventListener('blur', commit);
+      input.addEventListener('keydown', function(ke) {
+        if (ke.key === 'Enter') { input.blur(); }
+        if (ke.key === 'Escape') {
+          input.removeEventListener('blur', commit);
+          renderFbAds(latest);
+        }
+      });
+    });
+  });
 }
 
 function setGoalBar(labelId, barId, current, target, isMoney) {

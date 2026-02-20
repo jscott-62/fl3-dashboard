@@ -376,6 +376,7 @@ window.FL3_DASHBOARD_DATA = {
         "youtubeViews": 0,
         "adSpend": 0,
         "costPerLead": 0,
+        "ctr": 0,
         "leads": 0,
         "courseSales": 0,
         "revenue": 0,
