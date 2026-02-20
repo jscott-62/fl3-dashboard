@@ -387,7 +387,7 @@ window.FL3_DASHBOARD_DATA = {
             "campaign": "wrong-asset-manifesto",
             "adSpend": 34.87,
             "leads": 4,
-            "ctr": 0
+            "ctr": 2.86
           }
         ]
       }
