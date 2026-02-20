@@ -381,7 +381,8 @@ window.FL3_DASHBOARD_DATA = {
         "courseSales": 0,
         "revenue": 0,
         "webinarRegistrations": 0,
-        "webinarAttendance": 0
+        "webinarAttendance": 0,
+        "fbAds": []
       }
     ]
   },

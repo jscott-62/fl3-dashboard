@@ -414,69 +414,151 @@
     margin-bottom: 32px;
   }
   .fb-ads-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .fb-ads-header .fb-title {
     font-size: 16px;
     font-weight: 700;
     color: var(--amber);
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
   }
-  .fb-ads-header span {
+  .fb-ads-header .fb-hint {
     font-size: 12px;
     color: var(--muted);
+    margin-left: 8px;
     font-weight: 400;
   }
-  .fb-ads-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-  }
-  .fb-metric-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px;
-    text-align: center;
-  }
-  .fb-metric-card.editable {
+  .fb-add-btn {
+    background: transparent;
+    border: 1px dashed var(--amber);
+    color: var(--amber);
+    padding: 4px 12px;
+    border-radius: 6px;
     cursor: pointer;
-    transition: border-color 0.2s;
+    font-size: 13px;
+    transition: background 0.2s;
   }
-  .fb-metric-card.editable:hover {
-    border-color: var(--amber);
+  .fb-add-btn:hover { background: rgba(245,158,11,0.1); }
+  .fb-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
   }
-  .fb-metric-card .metric-value {
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--text);
-  }
-  .fb-metric-card .metric-label {
-    font-size: 12px;
+  .fb-table th {
+    text-align: right;
+    font-size: 11px;
+    font-weight: 600;
     color: var(--muted);
-    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0 12px 8px 0;
   }
-  .fb-metric-card .auto-badge {
-    font-size: 10px;
+  .fb-table th:first-child { text-align: left; }
+  .fb-table td {
+    padding: 10px 12px;
+    text-align: right;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    background: var(--card);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .fb-table td:first-child {
+    text-align: left;
+    border-left: 1px solid var(--border);
+    border-radius: 8px 0 0 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--amber);
+    max-width: 180px;
+  }
+  .fb-table td:last-child {
+    border-right: 1px solid var(--border);
+    border-radius: 0 8px 8px 0;
+  }
+  .fb-table tr.fb-campaign-row td { cursor: pointer; transition: color 0.2s; }
+  .fb-table tr.fb-campaign-row td:hover { color: var(--amber); }
+  .fb-table tr.fb-campaign-row td:first-child { cursor: default; }
+  .fb-table tr.fb-campaign-row td:first-child:hover { color: var(--amber); }
+  .fb-table tr.fb-totals-row td {
+    background: transparent;
+    border: none;
+    border-top: 1px solid var(--border);
+    font-weight: 700;
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .fb-table tr.fb-totals-row td:first-child {
+    color: var(--muted);
+    border-radius: 0;
+  }
+  .fb-table tr.fb-totals-row td:last-child { border-radius: 0; }
+  .fb-table .fb-spacer { height: 6px; }
+  .fb-table .fb-spacer td { background: transparent; border: none; padding: 0; }
+  .fb-table .auto-badge {
+    font-size: 9px;
     color: var(--amber);
     font-weight: 400;
-    margin-left: 4px;
   }
-  .fb-metric-card input.metric-input {
-    width: 100%;
+  .fb-table input.fb-cell-input {
+    width: 80px;
     background: var(--bg);
     border: 1px solid var(--amber);
-    border-radius: 6px;
+    border-radius: 4px;
     color: var(--text);
-    font-size: 24px;
-    font-weight: 700;
-    text-align: center;
-    padding: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: right;
+    padding: 2px 6px;
     outline: none;
     box-sizing: border-box;
   }
-  @media (max-width: 700px) {
-    .fb-ads-grid { grid-template-columns: repeat(2, 1fr); }
+  .fb-table .fb-remove-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 14px;
+    padding: 0 4px;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .fb-table tr:hover .fb-remove-btn { opacity: 1; }
+  .fb-table .fb-remove-btn:hover { color: #ef4444; }
+  .fb-campaign-picker {
+    position: absolute;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 4px;
+    z-index: 100;
+    min-width: 200px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+  .fb-campaign-picker button {
+    display: block;
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: var(--text);
+    padding: 8px 12px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 13px;
+    border-radius: 4px;
+  }
+  .fb-campaign-picker button:hover { background: rgba(245,158,11,0.15); color: var(--amber); }
+  .fb-empty-state {
+    background: var(--card);
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
   }
 
   /* ===== INSTRUCTIONS ===== */
@@ -836,27 +918,7 @@
 </div>
 
 <!-- ===== FACEBOOK ADS ===== -->
-<div class="fb-ads-section">
-  <div class="fb-ads-header">Facebook Ads <span>(click values to edit)</span></div>
-  <div class="fb-ads-grid">
-    <div class="fb-metric-card editable" data-field="adSpend" data-format="currency">
-      <div class="metric-value" id="fbAdSpend">$0</div>
-      <div class="metric-label">Ad Spend</div>
-    </div>
-    <div class="fb-metric-card editable" data-field="leads" data-format="number">
-      <div class="metric-value" id="fbLeads">0</div>
-      <div class="metric-label">Leads</div>
-    </div>
-    <div class="fb-metric-card" data-field="costPerLead" data-format="currency2">
-      <div class="metric-value" id="fbCPL">$0.00 <span class="auto-badge">(auto)</span></div>
-      <div class="metric-label">Cost Per Lead</div>
-    </div>
-    <div class="fb-metric-card editable" data-field="ctr" data-format="percent">
-      <div class="metric-value" id="fbCTR">0.00%</div>
-      <div class="metric-label">CTR</div>
-    </div>
-  </div>
-</div>
+<div class="fb-ads-section" id="fbAdsSection"></div>
 
 <!-- ===== PROJECT TABS ===== -->
 <div class="project-tabs" id="projectTabs"></div>
@@ -1052,55 +1114,112 @@ function render(data) {
   document.getElementById('metricWebReg').textContent = latest.webinarRegistrations.toLocaleString();
 
   // Facebook Ads metrics
-  renderFbAds(latest);
-  setupFbAdsEditing();
+  renderFbAds(data);
 }
 
-function renderFbAds(latest) {
-  if (!latest.ctr && latest.ctr !== 0) latest.ctr = 0;
-  var cpl = latest.leads > 0 ? latest.adSpend / latest.leads : 0;
-  latest.costPerLead = Math.round(cpl * 100) / 100;
+function renderFbAds(data) {
+  var container = document.getElementById('fbAdsSection');
+  var weeks = data.metrics.weeks;
+  var latest = weeks[weeks.length - 1];
+  if (!latest.fbAds) latest.fbAds = [];
 
-  document.getElementById('fbAdSpend').textContent = '$' + latest.adSpend.toLocaleString();
-  document.getElementById('fbLeads').textContent = latest.leads.toLocaleString();
-  document.getElementById('fbCPL').innerHTML = '$' + latest.costPerLead.toFixed(2) + ' <span class="auto-badge">(auto)</span>';
-  document.getElementById('fbCTR').textContent = latest.ctr.toFixed(2) + '%';
-}
+  // Sync totals to top-level fields for goal bar
+  var totals = calcFbTotals(latest.fbAds);
+  latest.adSpend = totals.adSpend;
+  latest.leads = totals.leads;
+  latest.costPerLead = totals.costPerLead;
 
-function setupFbAdsEditing() {
-  document.querySelectorAll('.fb-metric-card.editable').forEach(function(card) {
-    if (card._fbEditBound) return;
-    card._fbEditBound = true;
-    card.addEventListener('click', function(e) {
-      if (e.target.tagName === 'INPUT') return;
-      var valueEl = card.querySelector('.metric-value');
-      var field = card.dataset.field;
-      var fmt = card.dataset.format;
-      var weeks = _dashboardData.metrics.weeks;
-      var latest = weeks[weeks.length - 1];
-      var rawVal = latest[field] || 0;
+  // Build header
+  var html = '<div class="fb-ads-header">' +
+    '<div><span class="fb-title">Facebook Ads</span><span class="fb-hint">(click values to edit)</span></div>' +
+    '<button class="fb-add-btn" id="fbAddCampaign">+ Add Campaign</button>' +
+    '</div>';
+
+  if (latest.fbAds.length === 0) {
+    html += '<div class="fb-empty-state">No campaigns yet. Click "+ Add Campaign" to start tracking.</div>';
+  } else {
+    html += '<table class="fb-table"><thead><tr>' +
+      '<th>Campaign</th><th>Ad Spend</th><th>Leads</th><th>CPL</th><th>CTR</th><th></th>' +
+      '</tr></thead><tbody>';
+
+    latest.fbAds.forEach(function(camp, i) {
+      var cpl = camp.leads > 0 ? camp.adSpend / camp.leads : 0;
+      cpl = Math.round(cpl * 100) / 100;
+      var label = getCampaignLabel(camp.campaign, data);
+      html += '<tr class="fb-campaign-row" data-idx="' + i + '">' +
+        '<td>' + label + '</td>' +
+        '<td data-field="adSpend">$' + camp.adSpend.toLocaleString() + '</td>' +
+        '<td data-field="leads">' + camp.leads.toLocaleString() + '</td>' +
+        '<td>$' + cpl.toFixed(2) + ' <span class="auto-badge">(auto)</span></td>' +
+        '<td data-field="ctr">' + camp.ctr.toFixed(2) + '%</td>' +
+        '<td><button class="fb-remove-btn" data-idx="' + i + '" title="Remove campaign">&times;</button></td>' +
+        '</tr>';
+      if (i < latest.fbAds.length - 1) {
+        html += '<tr class="fb-spacer"><td colspan="6"></td></tr>';
+      }
+    });
+
+    if (latest.fbAds.length > 1) {
+      html += '<tr class="fb-totals-row">' +
+        '<td>Totals</td>' +
+        '<td>$' + totals.adSpend.toLocaleString() + '</td>' +
+        '<td>' + totals.leads.toLocaleString() + '</td>' +
+        '<td>$' + totals.costPerLead.toFixed(2) + '</td>' +
+        '<td>' + totals.ctr.toFixed(2) + '%</td>' +
+        '<td></td></tr>';
+    }
+
+    html += '</tbody></table>';
+  }
+
+  container.innerHTML = html;
+
+  // Update CPL goal bar
+  setGoalBarInverse('goalCPL', 'goalCPLBar', totals.costPerLead, data.goals.costPerLeadTarget, true);
+
+  // Bind add campaign button
+  document.getElementById('fbAddCampaign').addEventListener('click', function(e) {
+    e.stopPropagation();
+    showCampaignPicker(e.target, data);
+  });
+
+  // Bind remove buttons
+  container.querySelectorAll('.fb-remove-btn').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var idx = parseInt(btn.dataset.idx);
+      latest.fbAds.splice(idx, 1);
+      renderFbAds(data);
+      saveToLocalStorage();
+    });
+  });
+
+  // Bind editable cells
+  container.querySelectorAll('.fb-campaign-row td[data-field]').forEach(function(td) {
+    td.addEventListener('click', function() {
+      if (td.querySelector('input')) return;
+      var idx = parseInt(td.closest('tr').dataset.idx);
+      var field = td.dataset.field;
+      var camp = latest.fbAds[idx];
+      var rawVal = camp[field] || 0;
 
       var input = document.createElement('input');
       input.type = 'number';
-      input.step = fmt === 'percent' ? '0.01' : (fmt === 'currency' ? '0.01' : '1');
+      input.step = field === 'ctr' ? '0.01' : (field === 'adSpend' ? '0.01' : '1');
       input.min = '0';
-      input.className = 'metric-input';
+      input.className = 'fb-cell-input';
       input.value = rawVal;
-      valueEl.textContent = '';
-      valueEl.appendChild(input);
+      td.textContent = '';
+      td.appendChild(input);
       input.focus();
       input.select();
 
       function commit() {
         var val = parseFloat(input.value) || 0;
         if (val < 0) val = 0;
-        latest[field] = Math.round(val * 100) / 100;
-        renderFbAds(latest);
+        camp[field] = Math.round(val * 100) / 100;
+        renderFbAds(data);
         saveToLocalStorage();
-        // Update goal bar for CPL
-        if (field === 'adSpend' || field === 'leads') {
-          setGoalBarInverse('goalCPL', 'goalCPLBar', latest.costPerLead, _dashboardData.goals.costPerLeadTarget, true);
-        }
       }
 
       input.addEventListener('blur', commit);
@@ -1108,11 +1227,83 @@ function setupFbAdsEditing() {
         if (ke.key === 'Enter') { input.blur(); }
         if (ke.key === 'Escape') {
           input.removeEventListener('blur', commit);
-          renderFbAds(latest);
+          renderFbAds(data);
         }
       });
     });
   });
+}
+
+function calcFbTotals(fbAds) {
+  var adSpend = 0, leads = 0, weightedCtr = 0;
+  fbAds.forEach(function(c) {
+    adSpend += c.adSpend || 0;
+    leads += c.leads || 0;
+    weightedCtr += (c.ctr || 0) * (c.adSpend || 0);
+  });
+  var costPerLead = leads > 0 ? Math.round((adSpend / leads) * 100) / 100 : 0;
+  var ctr = adSpend > 0 ? Math.round((weightedCtr / adSpend) * 100) / 100 : 0;
+  return { adSpend: adSpend, leads: leads, costPerLead: costPerLead, ctr: ctr };
+}
+
+function getCampaignLabel(key, data) {
+  if (data.projects[key]) return data.projects[key].name;
+  return key;
+}
+
+function showCampaignPicker(anchor, data) {
+  var existing = document.querySelector('.fb-campaign-picker');
+  if (existing) { existing.remove(); return; }
+
+  var weeks = data.metrics.weeks;
+  var latest = weeks[weeks.length - 1];
+  if (!latest.fbAds) latest.fbAds = [];
+  var usedKeys = {};
+  latest.fbAds.forEach(function(c) { usedKeys[c.campaign] = true; });
+
+  var available = [];
+  Object.keys(data.projects).forEach(function(key) {
+    if (key !== 'weekly-content' && key !== 'book' && !usedKeys[key]) {
+      available.push({ key: key, name: data.projects[key].name });
+    }
+  });
+
+  if (available.length === 0) {
+    var picker = document.createElement('div');
+    picker.className = 'fb-campaign-picker';
+    picker.innerHTML = '<div style="padding:8px 12px;color:var(--muted);font-size:13px;">All projects already added</div>';
+    anchor.parentElement.style.position = 'relative';
+    anchor.parentElement.appendChild(picker);
+    setTimeout(function() { picker.remove(); }, 2000);
+    return;
+  }
+
+  var picker = document.createElement('div');
+  picker.className = 'fb-campaign-picker';
+  available.forEach(function(proj) {
+    var btn = document.createElement('button');
+    btn.textContent = proj.name;
+    btn.addEventListener('click', function() {
+      latest.fbAds.push({ campaign: proj.key, adSpend: 0, leads: 0, ctr: 0 });
+      picker.remove();
+      renderFbAds(data);
+      saveToLocalStorage();
+    });
+    picker.appendChild(btn);
+  });
+
+  anchor.parentElement.style.position = 'relative';
+  anchor.parentElement.appendChild(picker);
+
+  // Close on outside click
+  setTimeout(function() {
+    document.addEventListener('click', function closePicker(e) {
+      if (!picker.contains(e.target) && e.target !== anchor) {
+        picker.remove();
+        document.removeEventListener('click', closePicker);
+      }
+    });
+  }, 0);
 }
 
 function setGoalBar(labelId, barId, current, target, isMoney) {

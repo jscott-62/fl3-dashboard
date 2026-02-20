@@ -33,7 +33,7 @@ The Freedom Life 3.0 (FL3) Business Dashboard is a single-page HTML app hosted o
 1. **Header**: Title + last updated date + GitHub sync status
 2. **Goals Progress**: 2x2 grid of progress bars (Email List, Revenue, Course Sales, Cost Per Lead)
 3. **Weekly Metrics**: 4-card row (New Emails This Week, Email Open Rate, YouTube Views, Webinar Registrations)
-4. **Facebook Ads**: 4-card row with click-to-edit (Ad Spend, Leads, Cost Per Lead (auto-calc), CTR)
+4. **Facebook Ads**: Per-campaign rows with click-to-edit (Ad Spend, Leads, CPL auto-calc, CTR) + totals row + Add Campaign button
 5. **Project Tabs**: Tabbed views for each project (Wrong Asset Manifesto, The Great Catch Up, Webinar, Weekly Content, Book)
 6. **Instructions**: How-to text for updating the dashboard
 7. **Save Bar**: Fixed bottom bar showing sync status
@@ -71,7 +71,10 @@ The Freedom Life 3.0 (FL3) Business Dashboard is a single-page HTML app hosted o
         "courseSales": 0,
         "revenue": 0,
         "webinarRegistrations": 0,
-        "webinarAttendance": 0
+        "webinarAttendance": 0,
+        "fbAds": [
+          { "campaign": "wrong-asset-manifesto", "adSpend": 0, "leads": 0, "ctr": 0 }
+        ]
       }
     ]
   },
@@ -148,16 +151,19 @@ This fetches the count from GHL, updates `dashboard-data.json` and `dashboard-da
 
 ## Facebook Ads Section
 
-The Facebook Ads section provides click-to-edit metric cards for tracking ad performance. Users click a value, type the new number, and press Enter (or click away) to save.
+Tracks Facebook ad metrics per campaign, linked to projects. Each campaign gets its own row with click-to-edit values.
 
-**Editable fields:** Ad Spend (currency), Leads (integer), CTR (percentage)
-**Auto-calculated:** Cost Per Lead = Ad Spend / Leads (displays "$0.00" when leads = 0)
+**Per-campaign data:** Each entry in `fbAds[]` has `campaign` (project key), `adSpend`, `leads`, `ctr`. CPL is auto-calculated per row.
 
-Data is stored in the same `metrics.weeks` entries as all other weekly metrics. The `ctr` field stores the click-through rate as a plain number (e.g., `2.5` for 2.50%).
+**Totals row:** When 2+ campaigns exist, a totals row sums Ad Spend and Leads, calculates overall CPL, and shows spend-weighted average CTR.
 
-Changes auto-save to localStorage and sync to GitHub via the same debounced mechanism as content checkboxes. Editing a metric also updates the Cost Per Lead goal bar.
+**Add Campaign:** The "+ Add Campaign" button shows a picker with projects not yet tracked (excludes weekly-content and book). Each campaign persists week to week.
 
-**Future automation:** When Facebook Marketing API integration is added, a script can populate `adSpend`, `leads`, `ctr` in `dashboard-data.json` directly. The same fields will display without needing UI changes.
+**Remove Campaign:** An X button appears on hover for each campaign row.
+
+**Top-level sync:** The `adSpend`, `leads`, `costPerLead` fields at the week level are auto-synced from campaign totals, keeping the Cost Per Lead goal bar working.
+
+**Future automation:** When Facebook Marketing API integration is added, a script can populate the `fbAds` array in `dashboard-data.json` directly. The same UI will display without changes.
 
 ## How to Deploy Changes
 
