@@ -375,9 +375,9 @@ window.FL3_DASHBOARD_DATA = {
         "youtubeSubscribers": 0,
         "youtubeViews": 0,
         "adSpend": 34.87,
-        "costPerLead": 0,
+        "costPerLead": 2.05,
         "ctr": 0,
-        "leads": 0,
+        "leads": 17,
         "courseSales": 0,
         "revenue": 0,
         "webinarRegistrations": 0,
@@ -386,7 +386,7 @@ window.FL3_DASHBOARD_DATA = {
           {
             "campaign": "wrong-asset-manifesto",
             "adSpend": 34.87,
-            "leads": 0,
+            "leads": 17,
             "ctr": 0
           }
         ]
