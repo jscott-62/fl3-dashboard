@@ -121,28 +121,31 @@ window.FL3_DASHBOARD_DATA = {
       "status": "active",
       "description": "Ongoing content production across all platforms",
       "folder": "Projects/Weekly-Content/",
-      "contentSchedule": [
-        {
-          "weekOf": "2026-02-17",
-          "weekLabel": "Week of Feb 17",
-          "pillar": "1: Math",
-          "avatar": "Technophobe",
+      "contentFolders": {
+        "youtube": {
+          "label": "YouTube",
           "items": [
             {
-              "type": "youtube",
               "title": "The Number That's Quietly Destroying Your Retirement",
               "steps": {
                 "research": true,
-                "script": true,
+                "write": true,
                 "film": false,
                 "edit": false,
                 "publish": false
               },
-              "dueDate": "2026-02-20",
               "path": null
-            },
+            }
+          ]
+        },
+        "social-media": {
+          "label": "Social Media",
+          "items": []
+        },
+        "articles": {
+          "label": "Articles",
+          "items": [
             {
-              "type": "blog",
               "title": "The Risk Flip: What's Really Dangerous for Your Retirement",
               "steps": {
                 "research": true,
@@ -150,207 +153,15 @@ window.FL3_DASHBOARD_DATA = {
                 "edit": true,
                 "publish": true
               },
-              "dueDate": null,
-              "path": null
-            },
-            {
-              "type": "social",
-              "title": "",
-              "steps": {
-                "research": false,
-                "write": false,
-                "edit": false,
-                "publish": false
-              },
-              "dueDate": null,
-              "path": null
-            },
-            {
-              "type": "newsletter",
-              "title": "",
-              "steps": {
-                "research": false,
-                "write": false,
-                "edit": false,
-                "publish": false
-              },
-              "dueDate": null,
               "path": null
             }
           ]
         },
-        {
-          "weekOf": "2026-02-24",
-          "weekLabel": "Week of Feb 24",
-          "pillar": "3: Vehicles",
-          "avatar": "Skeptic",
-          "items": [
-            {
-              "type": "youtube",
-              "title": "",
-              "steps": {
-                "research": false,
-                "script": false,
-                "film": false,
-                "edit": false,
-                "publish": false
-              },
-              "dueDate": null,
-              "path": null
-            },
-            {
-              "type": "blog",
-              "title": "",
-              "steps": {
-                "research": false,
-                "write": false,
-                "edit": false,
-                "publish": false
-              },
-              "dueDate": null,
-              "path": null
-            },
-            {
-              "type": "social",
-              "title": "",
-              "steps": {
-                "research": false,
-                "write": false,
-                "edit": false,
-                "publish": false
-              },
-              "dueDate": null,
-              "path": null
-            },
-            {
-              "type": "newsletter",
-              "title": "",
-              "steps": {
-                "research": false,
-                "write": false,
-                "edit": false,
-                "publish": false
-              },
-              "dueDate": null,
-              "path": null
-            }
-          ]
-        },
-        {
-          "weekOf": "2026-03-02",
-          "weekLabel": "Week of Mar 2",
-          "pillar": "2: Trad Advice",
-          "avatar": "Pursuer",
-          "items": [
-            {
-              "type": "youtube",
-              "title": "",
-              "steps": {
-                "research": false,
-                "script": false,
-                "film": false,
-                "edit": false,
-                "publish": false
-              },
-              "dueDate": null,
-              "path": null
-            },
-            {
-              "type": "blog",
-              "title": "",
-              "steps": {
-                "research": false,
-                "write": false,
-                "edit": false,
-                "publish": false
-              },
-              "dueDate": null,
-              "path": null
-            },
-            {
-              "type": "social",
-              "title": "",
-              "steps": {
-                "research": false,
-                "write": false,
-                "edit": false,
-                "publish": false
-              },
-              "dueDate": null,
-              "path": null
-            },
-            {
-              "type": "newsletter",
-              "title": "",
-              "steps": {
-                "research": false,
-                "write": false,
-                "edit": false,
-                "publish": false
-              },
-              "dueDate": null,
-              "path": null
-            }
-          ]
-        },
-        {
-          "weekOf": "2026-03-09",
-          "weekLabel": "Week of Mar 9",
-          "pillar": "4: Risk Flip",
-          "avatar": "All",
-          "items": [
-            {
-              "type": "youtube",
-              "title": "",
-              "steps": {
-                "research": false,
-                "script": false,
-                "film": false,
-                "edit": false,
-                "publish": false
-              },
-              "dueDate": null,
-              "path": null
-            },
-            {
-              "type": "blog",
-              "title": "",
-              "steps": {
-                "research": false,
-                "write": false,
-                "edit": false,
-                "publish": false
-              },
-              "dueDate": null,
-              "path": null
-            },
-            {
-              "type": "social",
-              "title": "",
-              "steps": {
-                "research": false,
-                "write": false,
-                "edit": false,
-                "publish": false
-              },
-              "dueDate": null,
-              "path": null
-            },
-            {
-              "type": "newsletter",
-              "title": "",
-              "steps": {
-                "research": false,
-                "write": false,
-                "edit": false,
-                "publish": false
-              },
-              "dueDate": null,
-              "path": null
-            }
-          ]
+        "email": {
+          "label": "Email",
+          "items": []
         }
-      ]
+      }
     },
     "book": {
       "name": "Be The Hero Of Your Financial Life",
@@ -475,5 +286,4 @@ window.FL3_DASHBOARD_DATA = {
     "courseSalesTarget": 20,
     "costPerLeadTarget": 5
   }
-}
-;
+};

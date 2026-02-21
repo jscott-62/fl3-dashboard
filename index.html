@@ -284,6 +284,8 @@
   .type-blog { background: rgba(168,85,247,0.15); color: var(--purple); }
   .type-social { background: rgba(59,130,246,0.15); color: var(--blue); }
   .type-newsletter { background: rgba(34,197,94,0.15); color: var(--green); }
+  .type-article { background: rgba(168,85,247,0.15); color: var(--purple); }
+  .type-email { background: rgba(34,197,94,0.15); color: var(--green); }
 
   .content-card-title {
     font-size: 13px;
@@ -366,6 +368,182 @@
   .content-card-due { display: flex; align-items: center; gap: 4px; }
   .content-card-due.overdue { color: var(--red); }
   .content-card-due.today { color: var(--accent); }
+
+  /* ===== CONTENT FOLDERS ===== */
+  .content-folder-section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  .content-folder-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+  }
+  .content-folder-header:hover { background: rgba(255,255,255,0.04); }
+  .content-folder-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .content-folder-icon { font-size: 18px; }
+  .content-folder-name { font-weight: 600; font-size: 15px; }
+  .content-folder-count {
+    font-size: 12px;
+    color: var(--muted);
+    background: rgba(255,255,255,0.06);
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+  .content-folder-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .content-folder-chevron {
+    font-size: 14px;
+    color: var(--muted);
+    transition: transform 0.2s;
+  }
+  .content-folder-section.collapsed .content-folder-chevron { transform: rotate(-90deg); }
+  .content-folder-section.collapsed .content-folder-body { display: none; }
+  .content-folder-body { padding: 0 18px 14px; }
+
+  .content-view-toggle {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 16px;
+  }
+  .view-toggle-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .view-toggle-btn.active {
+    background: rgba(245,158,11,0.15);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .view-toggle-btn:hover:not(.active) { color: var(--text); }
+
+  .content-add-btn {
+    background: transparent;
+    border: 1px dashed var(--accent);
+    color: var(--accent);
+    padding: 4px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background 0.2s;
+  }
+  .content-add-btn:hover { background: rgba(245,158,11,0.1); }
+
+  /* List view items */
+  .content-list-view {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .content-list-item {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    transition: border-color 0.2s;
+  }
+  .content-list-item:hover { border-color: rgba(245,158,11,0.3); }
+  .content-list-item-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .content-list-item-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    flex: 1;
+    min-width: 0;
+  }
+  .content-list-item-title a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px dashed transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .content-list-item-title a:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+  .content-list-item-actions {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    flex-shrink: 0;
+    margin-left: 12px;
+  }
+  .content-remove-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 0 4px;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .content-list-item:hover .content-remove-btn { opacity: 0.5; }
+  .content-remove-btn:hover { opacity: 1 !important; color: var(--red); }
+
+  /* Add content input */
+  .content-add-input-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .content-add-input-row input {
+    flex: 1;
+    background: var(--bg);
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    color: var(--text);
+    padding: 8px 12px;
+    font-size: 13px;
+    outline: none;
+  }
+  .content-add-input-row input:focus { border-color: var(--accent); }
+  .content-add-input-row button {
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  /* Empty state for folders */
+  .content-folder-empty {
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    padding: 24px 16px;
+    font-style: italic;
+    opacity: 0.6;
+  }
 
   /* ===== GOALS SECTION ===== */
   .goals-section {
@@ -1488,8 +1666,10 @@ function getContentTypeConfig(type) {
   var configs = {
     youtube:     { label: 'YouTube',     cssClass: 'youtube' },
     blog:        { label: 'Blog',        cssClass: 'blog' },
+    article:     { label: 'Article',     cssClass: 'blog' },
     social:      { label: 'Social',      cssClass: 'social' },
     newsletter:  { label: 'Newsletter',  cssClass: 'newsletter' },
+    email:       { label: 'Email',       cssClass: 'newsletter' },
     asset:       { label: 'Asset',       cssClass: 'asset' },
     chapter:     { label: 'Chapter',     cssClass: 'chapter' }
   };
@@ -1513,18 +1693,21 @@ function buildContentHubView(data) {
     var project = data.projects[key];
     if (!project) return;
 
-    if (key === 'weekly-content' && project.contentSchedule) {
-      project.contentSchedule.forEach(function(week) {
-        week.items.forEach(function(item) {
-          if (!item.title) return; // skip untitled placeholders
+    if (key === 'weekly-content' && project.contentFolders) {
+      FOLDER_ORDER.forEach(function(folderKey) {
+        var folder = project.contentFolders[folderKey];
+        if (!folder || !folder.items) return;
+        folder.items.forEach(function(item) {
+          if (!item.title) return;
           totalCount++;
-          var stepDefs = getStepDefs(item.type);
+          var stepDefs = getFolderStepDefs(folderKey);
           var allDone = stepDefs.every(function(s) { return item.steps && item.steps[s.key]; });
           if (allDone) completedCount++;
           if (item.path) linkedCount++;
+          var typeStr = folderKeyToType(folderKey);
           allItems.push({ projectKey: key, projectName: project.name, projectStatus: project.status,
-            type: item.type, label: item.title, status: allDone ? 'complete' : (item.steps && item.steps.research ? 'in_progress' : 'not_started'),
-            path: item.path, steps: item.steps, itemType: item.type, weekLabel: week.weekLabel });
+            type: typeStr, label: item.title, status: allDone ? 'complete' : (item.steps && item.steps.research ? 'in_progress' : 'not_started'),
+            path: item.path, steps: item.steps, itemType: typeStr, folderKey: folderKey });
         });
       });
     } else if (project.assets) {
@@ -1592,10 +1775,10 @@ function buildContentHubView(data) {
     items.forEach(function(item) {
       var typeConfig = getContentTypeConfig(item.type);
 
-      // Step dots (for weekly content only)
+      // Step dots
       var stepsHtml = '';
       if (item.steps) {
-        var stepDefs = getStepDefs(item.itemType);
+        var stepDefs = item.folderKey ? getFolderStepDefs(item.folderKey) : getStepDefs(item.itemType);
         stepsHtml = '<div class="hub-steps-inline">';
         stepDefs.forEach(function(s) {
           var done = item.steps[s.key] ? ' done' : '';
@@ -1606,9 +1789,9 @@ function buildContentHubView(data) {
 
       // Sub-info line
       var subParts = [];
-      if (item.weekLabel) subParts.push(item.weekLabel);
+      if (item.folderKey) subParts.push(folderKeyToType(item.folderKey));
       if (item.steps) {
-        var statusText = getStatusFromSteps(item.itemType, item.steps);
+        var statusText = getStatusFromSteps(item.folderKey || item.itemType, item.steps);
         subParts.push(statusText);
       }
       var subHtml = subParts.length > 0 ? '<div class="hub-item-sub">' + escapeHtml(subParts.join(' · ')) + '</div>' : '';
@@ -1785,8 +1968,46 @@ function buildAssetProjectView(project) {
 }
 
 // =====================================================================
-// WEEKLY CONTENT VIEW (Kanban)
+// WEEKLY CONTENT VIEW (Folder-based with List/Kanban toggle)
 // =====================================================================
+
+var _weeklyViewMode = 'list';
+var FOLDER_ORDER = ['youtube', 'social-media', 'articles', 'email'];
+var FOLDER_ICONS = { 'youtube': '🎬', 'social-media': '📱', 'articles': '📝', 'email': '📧' };
+
+function getFolderStepDefs(folderKey) {
+  if (folderKey === 'youtube' || folderKey === 'social-media') {
+    return [
+      { key: 'research', label: 'Research' },
+      { key: 'write', label: 'Write' },
+      { key: 'film', label: 'Film' },
+      { key: 'edit', label: 'Edit' },
+      { key: 'publish', label: 'Publish' }
+    ];
+  }
+  return [
+    { key: 'research', label: 'Research' },
+    { key: 'write', label: 'Write' },
+    { key: 'edit', label: 'Edit' },
+    { key: 'publish', label: 'Publish' }
+  ];
+}
+
+function folderKeyToType(key) {
+  var map = { 'youtube': 'youtube', 'social-media': 'social', 'articles': 'article', 'email': 'email' };
+  return map[key] || key;
+}
+
+function getItemColumn(steps, stepDefs) {
+  if (!steps) return 'backlog';
+  var lastDone = 'backlog';
+  for (var i = 0; i < stepDefs.length; i++) {
+    if (steps[stepDefs[i].key]) {
+      lastDone = stepDefs[i].key;
+    }
+  }
+  return lastDone;
+}
 
 function buildWeeklyContentView(project, data) {
   var card = document.createElement('div');
@@ -1799,29 +2020,209 @@ function buildWeeklyContentView(project, data) {
     '<p class="project-description">' + project.description + '</p>';
   card.appendChild(header);
 
-  // Kanban board
-  var board = document.createElement('div');
-  board.className = 'kanban-board';
-  board.id = 'weeklyKanbanBoard';
-
-  var columns = { planned: [], drafted: [], filmed: [], edited: [], published: [] };
-  var schedule = project.contentSchedule || [];
-
-  schedule.forEach(function(week) {
-    (week.items || []).forEach(function(item) {
-      var status = getStatusFromSteps(item.type, item.steps);
-      if (columns[status]) {
-        columns[status].push({ item: item, weekLabel: week.weekLabel });
-      }
+  // View toggle
+  var toggleDiv = document.createElement('div');
+  toggleDiv.className = 'content-view-toggle';
+  toggleDiv.innerHTML =
+    '<button class="view-toggle-btn' + (_weeklyViewMode === 'list' ? ' active' : '') + '" data-mode="list">☰ List</button>' +
+    '<button class="view-toggle-btn' + (_weeklyViewMode === 'kanban' ? ' active' : '') + '" data-mode="kanban">▦ Board</button>';
+  toggleDiv.querySelectorAll('.view-toggle-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      _weeklyViewMode = btn.dataset.mode;
+      reRenderWeeklyContent();
     });
   });
+  card.appendChild(toggleDiv);
 
-  ['planned', 'drafted', 'filmed', 'edited', 'published'].forEach(function(colKey) {
+  // Folder sections
+  var folders = project.contentFolders || {};
+  FOLDER_ORDER.forEach(function(folderKey) {
+    var folder = folders[folderKey];
+    if (!folder) return;
+    card.appendChild(buildFolderSection(folderKey, folder, data));
+  });
+
+  return card;
+}
+
+function buildFolderSection(folderKey, folder, data) {
+  var section = document.createElement('div');
+  section.className = 'content-folder-section';
+
+  var items = folder.items || [];
+  var stepDefs = getFolderStepDefs(folderKey);
+
+  // Count completed
+  var completedCount = items.filter(function(item) {
+    return stepDefs.every(function(s) { return item.steps && item.steps[s.key]; });
+  }).length;
+
+  // Header
+  var headerDiv = document.createElement('div');
+  headerDiv.className = 'content-folder-header';
+  headerDiv.innerHTML =
+    '<div class="content-folder-left">' +
+      '<span class="content-folder-icon">' + (FOLDER_ICONS[folderKey] || '📁') + '</span>' +
+      '<span class="content-folder-name">' + escapeHtml(folder.label) + '</span>' +
+      '<span class="content-folder-count">' + items.length + ' items' + (completedCount > 0 ? ' · ' + completedCount + ' done' : '') + '</span>' +
+    '</div>' +
+    '<div class="content-folder-actions">' +
+      '<button class="content-add-btn" data-folder="' + folderKey + '">+ Add</button>' +
+      '<span class="content-folder-chevron">▼</span>' +
+    '</div>';
+
+  // Toggle collapse
+  headerDiv.addEventListener('click', function(e) {
+    if (e.target.closest('.content-add-btn')) return;
+    section.classList.toggle('collapsed');
+  });
+
+  // Add button handler
+  var addBtn = headerDiv.querySelector('.content-add-btn');
+  addBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    showAddContentInput(folderKey, section, data);
+  });
+
+  section.appendChild(headerDiv);
+
+  // Body
+  var body = document.createElement('div');
+  body.className = 'content-folder-body';
+
+  if (items.length === 0) {
+    body.innerHTML = '<div class="content-folder-empty">No content yet. Click "+ Add" to create your first item.</div>';
+  } else if (_weeklyViewMode === 'list') {
+    body.appendChild(buildFolderListView(folderKey, folder, data));
+  } else {
+    body.appendChild(buildFolderKanbanView(folderKey, folder, data));
+  }
+
+  section.appendChild(body);
+  return section;
+}
+
+function buildFolderListView(folderKey, folder, data) {
+  var container = document.createElement('div');
+  container.className = 'content-list-view';
+
+  var stepDefs = getFolderStepDefs(folderKey);
+
+  (folder.items || []).forEach(function(item, itemIdx) {
+    var itemDiv = document.createElement('div');
+    itemDiv.className = 'content-list-item';
+
+    // Title
+    var titleHtml;
+    if (item.path && item.path.match(/\.md$/)) {
+      titleHtml = '<a href="#" class="md-preview-link" data-path="' + escapeAttr(item.path) + '" data-title="' + escapeAttr(item.title) + '">' + escapeHtml(item.title || 'Untitled') + '</a>';
+    } else {
+      titleHtml = escapeHtml(item.title || 'Untitled');
+    }
+
+    var obsidianBtn = '';
+    if (item.path) {
+      obsidianBtn = '<a class="hub-btn hub-btn-obsidian" href="' + escapeAttr(buildObsidianLink(item.path)) + '" title="Open in Obsidian" style="font-size:10px;padding:2px 6px;">Obsidian</a>';
+    }
+
+    itemDiv.innerHTML =
+      '<div class="content-list-item-header">' +
+        '<div class="content-list-item-title">' + titleHtml + '</div>' +
+        '<div class="content-list-item-actions">' +
+          obsidianBtn +
+          '<button class="content-remove-btn" data-folder="' + folderKey + '" data-idx="' + itemIdx + '" title="Remove">&times;</button>' +
+        '</div>' +
+      '</div>';
+
+    // Step checkboxes
+    var stepsDiv = document.createElement('div');
+    stepsDiv.className = 'content-card-steps';
+    stepDefs.forEach(function(def) {
+      var checked = item.steps && item.steps[def.key];
+      var checkedClass = checked ? ' checked' : '';
+      var checkedAttr = checked ? ' checked' : '';
+      var label = document.createElement('label');
+      label.className = 'step-checkbox' + checkedClass;
+      label.innerHTML = '<input type="checkbox"' + checkedAttr + ' data-step="' + def.key + '" data-folder="' + folderKey + '" data-idx="' + itemIdx + '"><span>' + def.label + '</span>';
+      stepsDiv.appendChild(label);
+    });
+    itemDiv.appendChild(stepsDiv);
+
+    // Checkbox change handlers
+    itemDiv.querySelectorAll('input[type="checkbox"]').forEach(function(cb) {
+      cb.addEventListener('change', function(e) {
+        var stepKey = e.target.dataset.step;
+        var idx = parseInt(e.target.dataset.idx);
+        var fKey = e.target.dataset.folder;
+        var targetItem = _dashboardData.projects['weekly-content'].contentFolders[fKey].items[idx];
+        if (!targetItem.steps) targetItem.steps = {};
+        targetItem.steps[stepKey] = e.target.checked;
+
+        var lbl = e.target.closest('.step-checkbox');
+        if (e.target.checked) { lbl.classList.add('checked'); } else { lbl.classList.remove('checked'); }
+
+        saveToLocalStorage();
+      });
+    });
+
+    // Remove button
+    var removeBtn = itemDiv.querySelector('.content-remove-btn');
+    if (removeBtn) {
+      removeBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var fKey = this.dataset.folder;
+        var idx = parseInt(this.dataset.idx);
+        _dashboardData.projects['weekly-content'].contentFolders[fKey].items.splice(idx, 1);
+        saveToLocalStorage();
+        reRenderWeeklyContent();
+      });
+    }
+
+    // MD preview links
+    itemDiv.querySelectorAll('.md-preview-link').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        openMdPreview(link.dataset.path, link.dataset.title);
+      });
+    });
+
+    container.appendChild(itemDiv);
+  });
+
+  return container;
+}
+
+function buildFolderKanbanView(folderKey, folder, data) {
+  var container = document.createElement('div');
+  var stepDefs = getFolderStepDefs(folderKey);
+
+  // Columns: Backlog + each step
+  var columnKeys = ['backlog'];
+  stepDefs.forEach(function(s) { columnKeys.push(s.key); });
+
+  var columnLabels = { backlog: 'Backlog' };
+  stepDefs.forEach(function(s) { columnLabels[s.key] = s.label; });
+
+  // Distribute items
+  var columns = {};
+  columnKeys.forEach(function(k) { columns[k] = []; });
+
+  (folder.items || []).forEach(function(item, itemIdx) {
+    var col = getItemColumn(item.steps, stepDefs);
+    if (columns[col]) {
+      columns[col].push({ item: item, idx: itemIdx });
+    }
+  });
+
+  // Build kanban grid
+  var board = document.createElement('div');
+  board.className = 'kanban-board';
+  board.style.gridTemplateColumns = 'repeat(' + columnKeys.length + ', 1fr)';
+
+  columnKeys.forEach(function(colKey) {
     var col = document.createElement('div');
     col.className = 'kanban-column';
-
-    var colTitle = colKey.charAt(0).toUpperCase() + colKey.slice(1);
-    col.innerHTML = '<div class="kanban-header"><span class="kanban-title">' + colTitle + '</span><span class="kanban-count">' + columns[colKey].length + '</span></div>';
+    col.innerHTML = '<div class="kanban-header"><span class="kanban-title">' + columnLabels[colKey] + '</span><span class="kanban-count">' + columns[colKey].length + '</span></div>';
 
     var cardsDiv = document.createElement('div');
     cardsDiv.className = 'kanban-cards';
@@ -1830,7 +2231,7 @@ function buildWeeklyContentView(project, data) {
       cardsDiv.innerHTML = '<div class="kanban-empty">No items</div>';
     } else {
       columns[colKey].forEach(function(entry) {
-        cardsDiv.appendChild(createContentCard(entry.item, entry.weekLabel, data));
+        cardsDiv.appendChild(createFolderContentCard(entry.item, folderKey, entry.idx, data));
       });
     }
 
@@ -1838,12 +2239,125 @@ function buildWeeklyContentView(project, data) {
     board.appendChild(col);
   });
 
-  card.appendChild(board);
+  container.appendChild(board);
+  return container;
+}
+
+function createFolderContentCard(item, folderKey, itemIdx, data) {
+  var card = document.createElement('div');
+  card.className = 'content-card';
+
+  var titleHtml;
+  if (!item.title) {
+    titleHtml = '<span class="untitled">Untitled</span>';
+  } else if (item.path && item.path.match(/\.md$/)) {
+    titleHtml = '<a href="#" class="md-preview-link" data-path="' + escapeAttr(item.path) + '" data-title="' + escapeAttr(item.title) + '">' + escapeHtml(item.title) + '</a>';
+  } else {
+    titleHtml = escapeHtml(item.title);
+  }
+
+  var stepDefs = getFolderStepDefs(folderKey);
+  var steps = item.steps || {};
+  var stepsHtml = '<div class="content-card-steps">';
+  stepDefs.forEach(function(def) {
+    var checked = steps[def.key] ? true : false;
+    var checkedClass = checked ? ' checked' : '';
+    var checkedAttr = checked ? ' checked' : '';
+    stepsHtml += '<label class="step-checkbox' + checkedClass + '">' +
+      '<input type="checkbox"' + checkedAttr + ' data-step="' + def.key + '" data-folder="' + folderKey + '" data-idx="' + itemIdx + '">' +
+      '<span>' + def.label + '</span></label>';
+  });
+  stepsHtml += '</div>';
+
+  card.innerHTML =
+    '<div class="content-card-title">' + titleHtml + '</div>' +
+    stepsHtml;
+
+  // Checkbox change handlers
+  card.querySelectorAll('input[type="checkbox"]').forEach(function(cb) {
+    cb.addEventListener('change', function(e) {
+      var stepKey = e.target.dataset.step;
+      var idx = parseInt(e.target.dataset.idx);
+      var fKey = e.target.dataset.folder;
+      var targetItem = _dashboardData.projects['weekly-content'].contentFolders[fKey].items[idx];
+      if (!targetItem.steps) targetItem.steps = {};
+      targetItem.steps[stepKey] = e.target.checked;
+
+      saveToLocalStorage();
+      reRenderWeeklyContent();
+    });
+  });
+
+  // MD preview link handlers
+  card.querySelectorAll('.md-preview-link').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      openMdPreview(link.dataset.path, link.dataset.title);
+    });
+  });
+
   return card;
 }
 
+function showAddContentInput(folderKey, sectionEl, data) {
+  var body = sectionEl.querySelector('.content-folder-body');
+  if (!body) return;
+
+  var existing = body.querySelector('.content-add-input-row');
+  if (existing) { existing.remove(); return; }
+
+  sectionEl.classList.remove('collapsed');
+
+  var inputRow = document.createElement('div');
+  inputRow.className = 'content-add-input-row';
+  inputRow.innerHTML = '<input type="text" placeholder="Enter content title..." autofocus>' +
+    '<button>Add</button>';
+
+  function doAdd() {
+    var input = inputRow.querySelector('input');
+    var title = input.value.trim();
+    if (!title) return;
+
+    var folder = _dashboardData.projects['weekly-content'].contentFolders[folderKey];
+    if (!folder.items) folder.items = [];
+    var stepDefs = getFolderStepDefs(folderKey);
+    var newSteps = {};
+    stepDefs.forEach(function(s) { newSteps[s.key] = false; });
+    folder.items.push({ title: title, steps: newSteps, path: null });
+
+    saveToLocalStorage();
+    reRenderWeeklyContent();
+  }
+
+  inputRow.querySelector('button').addEventListener('click', doAdd);
+  inputRow.querySelector('input').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') doAdd();
+    if (e.key === 'Escape') inputRow.remove();
+  });
+
+  body.appendChild(inputRow);
+  inputRow.querySelector('input').focus();
+}
+
+function reRenderWeeklyContent() {
+  var weeklyView = document.getElementById('view-weekly-content');
+  if (weeklyView && _dashboardData) {
+    var weeklyProject = _dashboardData.projects['weekly-content'];
+    if (weeklyProject) {
+      weeklyView.innerHTML = '';
+      weeklyView.appendChild(buildWeeklyContentView(weeklyProject, _dashboardData));
+    }
+  }
+  // Also re-render content hub if it exists
+  var hubView = document.getElementById('view-content-hub');
+  if (hubView && _dashboardData) {
+    hubView.innerHTML = '';
+    hubView.appendChild(buildContentHubView(_dashboardData));
+  }
+}
+
 // =====================================================================
-// CONTENT CARDS + KANBAN LOGIC
+// CONTENT STEP LOGIC
 // =====================================================================
 
 function getStepDefs(type) {
@@ -1866,101 +2380,10 @@ function getStatusFromSteps(type, steps) {
   if (!steps) return 'planned';
   if (steps.publish) return 'published';
   if (steps.edit) return 'edited';
-  if (type === 'youtube' && steps.film) return 'filmed';
+  if ((type === 'youtube' || type === 'social-media' || type === 'social') && steps.film) return 'filmed';
   if (steps.script || steps.write) return 'drafted';
   if (steps.research) return 'planned';
   return 'planned';
-}
-
-function createContentCard(item, weekLabel, data) {
-  var card = document.createElement('div');
-  card.className = 'content-card';
-
-  var typeLabel = item.type.replace(/-/g, ' ');
-  var typeClass = 'type-' + item.type;
-
-  var titleHtml;
-  if (!item.title) {
-    titleHtml = '<span class="untitled">Untitled</span>';
-  } else if (item.path && item.path.match(/\.md$/)) {
-    titleHtml = '<a href="#" class="md-preview-link" data-path="' + escapeAttr(item.path) + '" data-title="' + escapeAttr(item.title) + '">' + escapeHtml(item.title) + '</a>';
-  } else if (item.path) {
-    titleHtml = '<a href="' + escapeAttr(item.path) + '" title="Open ' + escapeAttr(item.title) + '">' + escapeHtml(item.title) + '</a>';
-  } else {
-    titleHtml = escapeHtml(item.title);
-  }
-
-  // Checkboxes
-  var stepDefs = getStepDefs(item.type);
-  var steps = item.steps || {};
-  var stepsHtml = '<div class="content-card-steps">';
-  stepDefs.forEach(function(def) {
-    var checked = steps[def.key] ? true : false;
-    var checkedClass = checked ? ' checked' : '';
-    var checkedAttr = checked ? ' checked' : '';
-    stepsHtml += '<label class="step-checkbox' + checkedClass + '">' +
-      '<input type="checkbox"' + checkedAttr + ' data-step="' + def.key + '">' +
-      '<span>' + def.label + '</span></label>';
-  });
-  stepsHtml += '</div>';
-
-  // Meta
-  var metaParts = [];
-  if (weekLabel) {
-    metaParts.push('<span class="content-card-week">' + weekLabel + '</span>');
-  }
-  if (item.dueDate) {
-    var dueClass = getDueDateClass(item.dueDate);
-    metaParts.push('<span class="content-card-due ' + dueClass + '">&#x1F4C5; ' + formatShortDate(item.dueDate) + '</span>');
-  }
-
-  card.innerHTML =
-    '<div class="content-card-header">' +
-      '<span class="content-type-badge ' + typeClass + '">' + typeLabel + '</span>' +
-    '</div>' +
-    '<div class="content-card-title">' + titleHtml + '</div>' +
-    stepsHtml +
-    (metaParts.length ? '<div class="content-card-meta">' + metaParts.join('') + '</div>' : '');
-
-  // Checkbox change handlers
-  card.querySelectorAll('input[type="checkbox"]').forEach(function(cb) {
-    cb.addEventListener('change', function(e) {
-      var stepKey = e.target.dataset.step;
-      if (!item.steps) item.steps = {};
-      item.steps[stepKey] = e.target.checked;
-
-      // Update label styling
-      var label = e.target.closest('.step-checkbox');
-      if (e.target.checked) {
-        label.classList.add('checked');
-      } else {
-        label.classList.remove('checked');
-      }
-
-      // Save + debounced sync
-      saveToLocalStorage();
-
-      // Re-render the weekly content kanban to move cards between columns
-      var weeklyView = document.getElementById('view-weekly-content');
-      if (weeklyView && _dashboardData) {
-        var weeklyProject = _dashboardData.projects['weekly-content'];
-        if (weeklyProject) {
-          weeklyView.innerHTML = '';
-          weeklyView.appendChild(buildWeeklyContentView(weeklyProject, _dashboardData));
-        }
-      }
-    });
-  });
-
-  // Markdown preview link handlers
-  card.querySelectorAll('.md-preview-link').forEach(function(link) {
-    link.addEventListener('click', function(e) {
-      e.preventDefault();
-      openMdPreview(link.dataset.path, link.dataset.title);
-    });
-  });
-
-  return card;
 }
 
 function getDueDateClass(dueDate) {
