@@ -177,6 +177,16 @@ window.FL3_DASHBOARD_DATA = {
                 "publish": true
               },
               "path": "00-ZenithPro - FL3/Projects/Weekly-Content/Articles/The Risk Flip What's Really Dangerous for Your Retirement.md"
+            },
+            {
+              "title": "Why Your Savings Account Is A Trap",
+              "steps": {
+                "research": false,
+                "write": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/Articles/Why Your Savings Account Is A Trap.md"
             }
           ]
         },
