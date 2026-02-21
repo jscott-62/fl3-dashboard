@@ -135,6 +135,17 @@ window.FL3_DASHBOARD_DATA = {
                 "publish": true
               },
               "path": null
+            },
+            {
+              "title": "Pillar #2 Vide",
+              "steps": {
+                "research": false,
+                "write": false,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": null
             }
           ]
         },
