@@ -155,8 +155,8 @@ window.FL3_DASHBOARD_DATA = {
             {
               "title": "Power Content HeyGen Vid",
               "steps": {
-                "research": false,
-                "write": false,
+                "research": true,
+                "write": true,
                 "film": false,
                 "edit": false,
                 "publish": false
