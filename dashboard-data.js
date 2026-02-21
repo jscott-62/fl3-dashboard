@@ -137,7 +137,7 @@ window.FL3_DASHBOARD_DATA = {
               "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/Pillar #1 Vid.md"
             },
             {
-              "title": "Pillar #2 Vide",
+              "title": "Pillar #2 Vid",
               "steps": {
                 "research": true,
                 "write": true,
