@@ -134,10 +134,10 @@ window.FL3_DASHBOARD_DATA = {
                 "edit": true,
                 "publish": true
               },
-              "path": null
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/Pillar #1 Vid.md"
             },
             {
-              "title": "Pillar #2 Vide",
+              "title": "Pillar #2 Vid",
               "steps": {
                 "research": true,
                 "write": true,
@@ -145,7 +145,7 @@ window.FL3_DASHBOARD_DATA = {
                 "edit": false,
                 "publish": false
               },
-              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/The Number That's Quietly Destroying Your Retirement.md"
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/Pillar #2 Vid.md"
             }
           ]
         },
@@ -161,7 +161,7 @@ window.FL3_DASHBOARD_DATA = {
                 "edit": false,
                 "publish": false
               },
-              "path": null
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/Social Media/Power Content HeyGen Vid.md"
             }
           ]
         },
