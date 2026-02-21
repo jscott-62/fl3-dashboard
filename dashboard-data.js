@@ -151,7 +151,19 @@ window.FL3_DASHBOARD_DATA = {
         },
         "social-media": {
           "label": "Social Media",
-          "items": []
+          "items": [
+            {
+              "title": "Power Content HeyGen Vid",
+              "steps": {
+                "research": false,
+                "write": false,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": null
+            }
+          ]
         },
         "articles": {
           "label": "Articles",
