@@ -128,11 +128,11 @@ window.FL3_DASHBOARD_DATA = {
             {
               "title": "Pillar #1 Vid",
               "steps": {
-                "research": false,
-                "write": false,
-                "film": false,
-                "edit": false,
-                "publish": false
+                "research": true,
+                "write": true,
+                "film": true,
+                "edit": true,
+                "publish": true
               },
               "path": null
             }
