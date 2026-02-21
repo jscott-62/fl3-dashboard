@@ -2380,7 +2380,16 @@ function showAddContentInput(folderKey, sectionEl, data) {
     var stepDefs = getFolderStepDefs(folderKey);
     var newSteps = {};
     stepDefs.forEach(function(s) { newSteps[s.key] = false; });
-    folder.items.push({ title: title, steps: newSteps, path: generateContentPath(folderKey, title) });
+    var newPath = generateContentPath(folderKey, title);
+    folder.items.push({ title: title, steps: newSteps, path: newPath });
+
+    // Auto-create the .md file in Obsidian via URI
+    var typeLabel = FOLDER_NAMES[folderKey] || folderKey;
+    var fileContent = '# ' + title + '\n\n**Type:** ' + typeLabel + '\n\n---\n\n';
+    var obsidianUrl = 'obsidian://new?vault=' + encodeURIComponent('Obsidian Vault') +
+      '&file=' + encodeURIComponent(newPath.replace(/\.md$/, '')) +
+      '&content=' + encodeURIComponent(fileContent);
+    window.location.assign(obsidianUrl);
 
     saveToLocalStorage();
     reRenderWeeklyContent();
