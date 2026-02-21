@@ -124,7 +124,19 @@ window.FL3_DASHBOARD_DATA = {
       "contentFolders": {
         "youtube": {
           "label": "YouTube",
-          "items": []
+          "items": [
+            {
+              "title": "Pillar #1 Vid",
+              "steps": {
+                "research": false,
+                "write": false,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": null
+            }
+          ]
         },
         "social-media": {
           "label": "Social Media",
