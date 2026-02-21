@@ -145,7 +145,7 @@ window.FL3_DASHBOARD_DATA = {
                 "edit": false,
                 "publish": false
               },
-              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/Pillar #2 Vide.md"
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/Pillar #2 Vid.md"
             }
           ]
         },
