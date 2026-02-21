@@ -154,8 +154,8 @@
             {
               "title": "Power Content HeyGen Vid",
               "steps": {
-                "research": false,
-                "write": false,
+                "research": true,
+                "write": true,
                 "film": false,
                 "edit": false,
                 "publish": false
