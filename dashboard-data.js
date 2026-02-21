@@ -124,19 +124,7 @@ window.FL3_DASHBOARD_DATA = {
       "contentFolders": {
         "youtube": {
           "label": "YouTube",
-          "items": [
-            {
-              "title": "The Number That's Quietly Destroying Your Retirement",
-              "steps": {
-                "research": false,
-                "write": false,
-                "film": false,
-                "edit": false,
-                "publish": false
-              },
-              "path": null
-            }
-          ]
+          "items": []
         },
         "social-media": {
           "label": "Social Media",
