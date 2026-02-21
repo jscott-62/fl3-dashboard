@@ -369,6 +369,28 @@
   .content-card-due.overdue { color: var(--red); }
   .content-card-due.today { color: var(--accent); }
 
+  /* ===== EDITABLE TITLE ===== */
+  .content-title-editable {
+    cursor: pointer;
+    border-bottom: 1px dashed transparent;
+    transition: border-color 0.2s;
+  }
+  .content-title-editable:hover {
+    border-bottom-color: var(--accent);
+  }
+  .content-title-input {
+    background: var(--bg);
+    border: 1px solid var(--accent);
+    border-radius: 4px;
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 600;
+    padding: 4px 8px;
+    width: 100%;
+    outline: none;
+    font-family: inherit;
+  }
+
   /* ===== CONTENT FOLDERS ===== */
   .content-folder-section {
     background: var(--card);
@@ -1975,6 +1997,51 @@ var _weeklyViewMode = 'list';
 var FOLDER_ORDER = ['youtube', 'social-media', 'articles', 'email'];
 var FOLDER_ICONS = { 'youtube': '🎬', 'social-media': '📱', 'articles': '📝', 'email': '📧' };
 
+var FOLDER_NAMES = { 'youtube': 'YouTube', 'social-media': 'Social Media', 'articles': 'Articles', 'email': 'Email' };
+
+function generateContentPath(folderKey, title) {
+  var folderName = FOLDER_NAMES[folderKey] || folderKey;
+  var safeName = (title || 'Untitled').replace(/[/\\:*?"<>|]/g, '').replace(/\s+/g, ' ').trim();
+  return '00-ZenithPro - FL3/Projects/Weekly-Content/' + folderName + '/' + safeName + '.md';
+}
+
+function makeEditableTitle(titleEl, folderKey, itemIdx) {
+  titleEl.classList.add('content-title-editable');
+  titleEl.title = 'Click to edit title';
+  titleEl.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    var item = _dashboardData.projects['weekly-content'].contentFolders[folderKey].items[itemIdx];
+    var currentTitle = item.title || '';
+
+    var input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'content-title-input';
+    input.value = currentTitle;
+
+    var parent = titleEl.parentNode;
+    parent.replaceChild(input, titleEl);
+    input.focus();
+    input.select();
+
+    function commit() {
+      var newTitle = input.value.trim();
+      if (!newTitle) newTitle = currentTitle; // revert if empty
+      if (newTitle !== currentTitle) {
+        item.title = newTitle;
+        item.path = generateContentPath(folderKey, newTitle);
+        saveToLocalStorage();
+      }
+      reRenderWeeklyContent();
+    }
+    input.addEventListener('blur', commit);
+    input.addEventListener('keydown', function(ke) {
+      if (ke.key === 'Enter') { input.removeEventListener('blur', commit); commit(); }
+      if (ke.key === 'Escape') { input.removeEventListener('blur', commit); reRenderWeeklyContent(); }
+    });
+  });
+}
+
 function getFolderStepDefs(folderKey) {
   if (folderKey === 'youtube' || folderKey === 'social-media') {
     return [
@@ -2112,24 +2179,20 @@ function buildFolderListView(folderKey, folder, data) {
     var itemDiv = document.createElement('div');
     itemDiv.className = 'content-list-item';
 
-    // Title
-    var titleHtml;
-    if (item.path && item.path.match(/\.md$/)) {
-      titleHtml = '<a href="#" class="md-preview-link" data-path="' + escapeAttr(item.path) + '" data-title="' + escapeAttr(item.title) + '">' + escapeHtml(item.title || 'Untitled') + '</a>';
-    } else {
-      titleHtml = escapeHtml(item.title || 'Untitled');
+    // Auto-generate path if missing
+    if (!item.path) {
+      item.path = generateContentPath(folderKey, item.title);
     }
 
-    var obsidianBtn = '';
-    if (item.path) {
-      obsidianBtn = '<a class="hub-btn hub-btn-obsidian" href="' + escapeAttr(buildObsidianLink(item.path)) + '" title="Open in Obsidian" style="font-size:10px;padding:2px 6px;">Obsidian</a>';
-    }
+    // Title (click-to-edit)
+    var titleText = escapeHtml(item.title || 'Untitled');
+    var obsidianLink = buildObsidianLink(item.path);
 
     itemDiv.innerHTML =
       '<div class="content-list-item-header">' +
-        '<div class="content-list-item-title">' + titleHtml + '</div>' +
+        '<div class="content-list-item-title"><span class="content-title-editable" data-folder="' + folderKey + '" data-idx="' + itemIdx + '">' + titleText + '</span></div>' +
         '<div class="content-list-item-actions">' +
-          obsidianBtn +
+          '<a class="hub-btn hub-btn-obsidian" href="' + escapeAttr(obsidianLink) + '" title="Open in Obsidian" style="font-size:10px;padding:2px 6px;">Obsidian</a>' +
           '<button class="content-remove-btn" data-folder="' + folderKey + '" data-idx="' + itemIdx + '" title="Remove">&times;</button>' +
         '</div>' +
       '</div>';
@@ -2178,13 +2241,11 @@ function buildFolderListView(folderKey, folder, data) {
       });
     }
 
-    // MD preview links
-    itemDiv.querySelectorAll('.md-preview-link').forEach(function(link) {
-      link.addEventListener('click', function(e) {
-        e.preventDefault();
-        openMdPreview(link.dataset.path, link.dataset.title);
-      });
-    });
+    // Editable title
+    var editableEl = itemDiv.querySelector('.content-title-editable');
+    if (editableEl) {
+      makeEditableTitle(editableEl, folderKey, itemIdx);
+    }
 
     container.appendChild(itemDiv);
   });
@@ -2247,14 +2308,12 @@ function createFolderContentCard(item, folderKey, itemIdx, data) {
   var card = document.createElement('div');
   card.className = 'content-card';
 
-  var titleHtml;
-  if (!item.title) {
-    titleHtml = '<span class="untitled">Untitled</span>';
-  } else if (item.path && item.path.match(/\.md$/)) {
-    titleHtml = '<a href="#" class="md-preview-link" data-path="' + escapeAttr(item.path) + '" data-title="' + escapeAttr(item.title) + '">' + escapeHtml(item.title) + '</a>';
-  } else {
-    titleHtml = escapeHtml(item.title);
+  // Auto-generate path if missing
+  if (!item.path) {
+    item.path = generateContentPath(folderKey, item.title);
   }
+
+  var titleHtml = '<span class="content-title-editable" data-folder="' + folderKey + '" data-idx="' + itemIdx + '">' + escapeHtml(item.title || 'Untitled') + '</span>';
 
   var stepDefs = getFolderStepDefs(folderKey);
   var steps = item.steps || {};
@@ -2288,13 +2347,11 @@ function createFolderContentCard(item, folderKey, itemIdx, data) {
     });
   });
 
-  // MD preview link handlers
-  card.querySelectorAll('.md-preview-link').forEach(function(link) {
-    link.addEventListener('click', function(e) {
-      e.preventDefault();
-      openMdPreview(link.dataset.path, link.dataset.title);
-    });
-  });
+  // Editable title
+  var editableEl = card.querySelector('.content-title-editable');
+  if (editableEl) {
+    makeEditableTitle(editableEl, folderKey, itemIdx);
+  }
 
   return card;
 }
@@ -2323,7 +2380,7 @@ function showAddContentInput(folderKey, sectionEl, data) {
     var stepDefs = getFolderStepDefs(folderKey);
     var newSteps = {};
     stepDefs.forEach(function(s) { newSteps[s.key] = false; });
-    folder.items.push({ title: title, steps: newSteps, path: null });
+    folder.items.push({ title: title, steps: newSteps, path: generateContentPath(folderKey, title) });
 
     saveToLocalStorage();
     reRenderWeeklyContent();

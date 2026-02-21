@@ -145,7 +145,7 @@ window.FL3_DASHBOARD_DATA = {
                 "edit": false,
                 "publish": false
               },
-              "path": null
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/The Number That's Quietly Destroying Your Retirement.md"
             }
           ]
         },
@@ -176,7 +176,7 @@ window.FL3_DASHBOARD_DATA = {
                 "edit": true,
                 "publish": true
               },
-              "path": null
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/Articles/The Risk Flip What's Really Dangerous for Your Retirement.md"
             }
           ]
         },
