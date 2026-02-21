@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-02-20",
+  "lastUpdated": "2026-02-21",
   "projects": {
     "wrong-asset-manifesto": {
       "name": "The Wrong Asset Manifesto",
@@ -127,8 +127,8 @@
             {
               "title": "The Number That's Quietly Destroying Your Retirement",
               "steps": {
-                "research": true,
-                "write": true,
+                "research": false,
+                "write": false,
                 "film": false,
                 "edit": false,
                 "publish": false
