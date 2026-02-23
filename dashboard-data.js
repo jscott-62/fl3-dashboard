@@ -192,7 +192,7 @@ window.FL3_DASHBOARD_DATA = {
               "title": "Crypto Is Crashing - Here Is What Smart Money Actually Sees",
               "steps": {
                 "research": true,
-                "write": false,
+                "write": true,
                 "edit": false,
                 "publish": false
               },
