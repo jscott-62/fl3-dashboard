@@ -283,8 +283,8 @@ window.FL3_DASHBOARD_DATA = {
         "emailOpenRate": 0,
         "youtubeSubscribers": 0,
         "youtubeViews": 0,
-        "adSpend": 191.39000000000001,
-        "costPerLead": 14.72,
+        "adSpend": 265.89,
+        "costPerLead": 20.45,
         "ctr": 0,
         "leads": 13,
         "courseSales": 0,
@@ -297,7 +297,7 @@ window.FL3_DASHBOARD_DATA = {
             "campaigns": [
               {
                 "name": "Campaign 1",
-                "adSpend": 34.87,
+                "adSpend": 109.37,
                 "leads": 4,
                 "ctr": 2.86
               },
