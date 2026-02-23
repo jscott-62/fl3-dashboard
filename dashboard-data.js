@@ -187,6 +187,16 @@ window.FL3_DASHBOARD_DATA = {
                 "publish": true
               },
               "path": "00-ZenithPro - FL3/Projects/Weekly-Content/Articles/Why Your Savings Account Is A Trap.md"
+            },
+            {
+              "title": "Crypto Is Crashing - Here Is What Smart Money Actually Sees",
+              "steps": {
+                "research": false,
+                "write": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/Articles/Crypto Is Crashing - Here Is What Smart Money Actually Sees.md"
             }
           ]
         },
