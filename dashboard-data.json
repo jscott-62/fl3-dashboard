@@ -186,6 +186,26 @@
                 "publish": true
               },
               "path": "00-ZenithPro - FL3/Projects/Weekly-Content/Articles/Why Your Savings Account Is A Trap.md"
+            },
+            {
+              "title": "1. 60-Second Explainer Script (Plain English, Camera-Ready)",
+              "steps": {
+                "research": false,
+                "write": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/Articles/Jeff Booth\u2019s 5 Fundamental Arguments About Inflation.md"
+            },
+            {
+              "title": "Why Everything Costs More When Technology Makes It Cheaper",
+              "steps": {
+                "research": false,
+                "write": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/Articles/Why Everything Costs More When Technology Makes It Cheaper.md"
             }
           ]
         },
