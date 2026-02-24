@@ -145,6 +145,17 @@
                 "publish": false
               },
               "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/Pillar #2 Vid.md"
+            },
+            {
+              "title": "Why Everything Costs More When Technology Makes It Cheaper",
+              "steps": {
+                "research": true,
+                "write": true,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/Why Everything Costs More When Technology Makes It Cheaper.md"
             }
           ]
         },
