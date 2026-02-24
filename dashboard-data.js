@@ -134,7 +134,7 @@ window.FL3_DASHBOARD_DATA = {
                 "edit": true,
                 "publish": true
               },
-              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/Pillar #1 Vid.md"
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/Pillar #1 Vid PUB (2026-02-23).md"
             },
             {
               "title": "Pillar #2 Vid",
@@ -187,7 +187,7 @@ window.FL3_DASHBOARD_DATA = {
                 "edit": true,
                 "publish": true
               },
-              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/Articles/The Risk Flip What's Really Dangerous for Your Retirement.md"
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/Articles/The Risk Flip What's Really Dangerous for Your Retirement PUB (2026-02-23).md"
             },
             {
               "title": "Why Your Savings Account Is A Trap",
@@ -197,7 +197,7 @@ window.FL3_DASHBOARD_DATA = {
                 "edit": true,
                 "publish": true
               },
-              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/Articles/Why Your Savings Account Is A Trap.md"
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/Articles/Why Your Savings Account Is A Trap PUB (2026-02-23).md"
             },
             {
               "title": "Why Everything Costs More When Technology Makes It Cheaper",
