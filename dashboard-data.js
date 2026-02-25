@@ -164,15 +164,15 @@ window.FL3_DASHBOARD_DATA = {
           "label": "Social Media",
           "items": [
             {
-              "title": "Power Content HeyGen Vid -",
+              "title": "Power Content HeyGen Vid - The HiddenRules Of Money",
               "steps": {
                 "research": true,
                 "write": true,
-                "film": false,
-                "edit": false,
-                "publish": false
+                "film": true,
+                "edit": true,
+                "publish": true
               },
-              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/Social Media/Power Content HeyGen Vid -.md"
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/Social Media/Power Content HeyGen Vid - The HiddenRules Of Money.md"
             }
           ]
         },
