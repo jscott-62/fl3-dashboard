@@ -207,6 +207,16 @@
                 "publish": true
               },
               "path": "00-ZenithPro - FL3/Projects/Weekly-Content/Articles/Why Everything Costs More When Technology Makes It Cheaper.md"
+            },
+            {
+              "title": "Is Bitcoin in Its \"iPhone 3\" Moment? Why the Best is Yet to Come",
+              "steps": {
+                "research": true,
+                "write": true,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/Articles/Is Bitcoin in Its \"iPhone 3\" Moment? Why the Best is Yet to Come.md"
             }
           ]
         },
