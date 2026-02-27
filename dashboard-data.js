@@ -162,7 +162,7 @@ window.FL3_DASHBOARD_DATA = {
               "title": "The Jane Street Allegations and the Paper Bitcoin Trap: Is the Game Rigged?",
               "steps": {
                 "research": true,
-                "write": false,
+                "write": true,
                 "film": false,
                 "edit": false,
                 "publish": false
