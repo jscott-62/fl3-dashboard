@@ -159,7 +159,7 @@ window.FL3_DASHBOARD_DATA = {
               "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/Why Everything Costs More When Technology Makes It Cheaper.md"
             },
             {
-              "title": "The Bitcoin Thief",
+              "title": "The Jane Street Allegations and the Paper Bitcoin Trap: Is the Game Rigged?",
               "steps": {
                 "research": false,
                 "write": false,
@@ -167,7 +167,7 @@ window.FL3_DASHBOARD_DATA = {
                 "edit": false,
                 "publish": false
               },
-              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/The Bitcoin Thief.md"
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/The Jane Street Allegations and the Paper Bitcoin Trap Is the Game Rigged.md"
             }
           ]
         },
