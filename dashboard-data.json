@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-02-26",
+  "lastUpdated": "2026-02-27",
   "projects": {
     "wrong-asset-manifesto": {
       "name": "The Wrong Asset Manifesto",
@@ -156,6 +156,17 @@
                 "publish": false
               },
               "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/Why Everything Costs More When Technology Makes It Cheaper.md"
+            },
+            {
+              "title": "The Bitcoin Thief",
+              "steps": {
+                "research": false,
+                "write": false,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/The Bitcoin Thief.md"
             }
           ]
         },
