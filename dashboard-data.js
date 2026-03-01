@@ -347,7 +347,7 @@ window.FL3_DASHBOARD_DATA = {
                 "name": "Campaign 2",
                 "adSpend": 272.89,
                 "leads": 32,
-                "ctr": 2.83
+                "ctr": 2.44
               }
             ]
           }
