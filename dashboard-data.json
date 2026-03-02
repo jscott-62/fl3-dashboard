@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-01",
+  "lastUpdated": "2026-03-02",
   "projects": {
     "wrong-asset-manifesto": {
       "name": "The Wrong Asset Manifesto",
@@ -167,6 +167,17 @@
                 "publish": false
               },
               "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/The Jane Street Allegations and the Paper Bitcoin Trap Is the Game Rigged.md"
+            },
+            {
+              "title": "Missles Vs. Money",
+              "steps": {
+                "research": false,
+                "write": false,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/Missles Vs. Money.md"
             }
           ]
         },
