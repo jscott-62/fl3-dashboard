@@ -172,11 +172,11 @@ window.FL3_DASHBOARD_DATA = {
             {
               "title": "Missles Vs. Money",
               "steps": {
-                "research": false,
-                "write": false,
-                "film": false,
-                "edit": false,
-                "publish": false
+                "research": true,
+                "write": true,
+                "film": true,
+                "edit": true,
+                "publish": true
               },
               "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/Missles Vs. Money.md"
             }
