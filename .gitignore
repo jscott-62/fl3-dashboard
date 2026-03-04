@@ -1,2 +1,11 @@
 # Never commit credentials
-.env
+scripts/.env
+
+# Claude Code config
+.claude/
+
+# OS files
+.DS_Store
+
+# Obsidian
+.obsidian/

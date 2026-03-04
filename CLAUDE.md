@@ -1,235 +1,239 @@
-# FL3 Business Dashboard
+# FL3 Business Agent Suite
 
-## What This Is
+The complete agent and skill system for running Freedom Life 3.0 as a business. 18 skills, 5 agents, and a live business dashboard covering content production, launch infrastructure, business operations, and quality control.
 
-The Freedom Life 3.0 (FL3) Business Dashboard is a single-page HTML app hosted on GitHub Pages. It tracks project status, company goals, weekly metrics, and content production for the FL3 business.
+## What This System Is
+
+- **18 skills** for creating FL3 content across all platforms
+- **5 agents** for autonomous multi-step workflows
+- **Live business dashboard** deployed on GitHub Pages
+- **Full Obsidian vault integration** with structured output folders
+- **Integration with Copy Arsenal** and **Webinar Arena** for maximum quality when needed
+- **Git-backed**: entire system is version-controlled and deploys the dashboard automatically
+
+All content produced by this system must sound like J. Scott MacMillan, target the right avatar, respect the Reveal Sequence, and pass compliance checks.
+
+## Quick Commands
+
+### Content Production
+| Command | What It Does |
+|---------|-------------|
+| `/fl3-weekly` | Full weekly content: YouTube + blog + social + newsletter |
+| `/fl3-youtube` | Standalone YouTube script |
+| `/fl3-blog` | SEO-optimized blog post |
+| `/fl3-social` | Batch of platform-specific social posts |
+| `/fl3-newsletter` | Beehiiv newsletter |
+| `/fl3-email-sequence` | Multi-email nurture/launch sequence |
+| `/fl3-ads` | Facebook/Instagram ad copy |
+| `/fl3-lead-magnet` | Complete lead magnet package |
+
+### Launch Infrastructure
+| Command | What It Does |
+|---------|-------------|
+| `/fl3-sales-page` | Sales page for The Great Catch-Up |
+| `/fl3-webinar` | Webinar brief for the Webinar Arena |
+| `/fl3-launch` | Complete launch sequence (all assets) |
+| `/fl3-funnel-audit` | Audit entire funnel |
+
+### Business Operations
+| Command | What It Does |
+|---------|-------------|
+| `/fl3-calendar` | Content calendar management |
+| `/fl3-metrics` | Business metrics report |
+| `/fl3-competitors` | Competitive intelligence |
+| `/fl3-dashboard` | Update dashboard data (metrics, projects, goals, content) |
+| `/fl3-dashboard metrics` | Update only weekly metrics |
+| `/fl3-dashboard launch` | Update only project asset statuses |
+| `/fl3-dashboard goals` | Update only target goals |
+| `/fl3-dashboard content` | Update only the content creation pipeline |
+| `/fl3-dashboard status [project] [asset] [status]` | Quick-update a single asset |
+| `/fl3-dashboard content-status [weekOf] [type] [status]` | Quick-update a single content item |
+
+### Quality Control
+| Command | What It Does |
+|---------|-------------|
+| `/fl3-voice-check` | Voice consistency validation |
+| `/fl3-compliance` | Financial compliance check |
+| `/fl3-review` | Full brand review (voice + compliance + avatar) |
+| `/fl3-review-batch` | Review all current drafts |
+
+### Autonomous Workflows
+| Command | What It Does |
+|---------|-------------|
+| `/fl3-content-week` | Content Director: full weekly production |
+| `/fl3-launch-plan` | Launch Director: plan the launch |
+| `/fl3-launch-go` | Launch Director: execute the launch |
+| `/fl3-digest` | Digest Processor: process weekly YouTube digest |
+| `/fl3-strategy` | Strategy Advisor: strategic analysis |
+| `/fl3-quarterly-review` | Strategy Advisor: quarterly planning |
+
+## Folder Structure
+
+```
+Business-Suite/                    <-- Git repo root (deploys to GitHub Pages)
+  .git/                            <-- Version control + deployment
+  .gitignore                       <-- Protects .env, .claude/, .DS_Store
+  CLAUDE.md                        <-- You are here
+
+  docs/                            <-- GitHub Pages serves from here
+    index.html                     <-- Dashboard app (single-file HTML/CSS/JS)
+    content-dashboard.html         <-- Content Command Center
+    dashboard-data.json            <-- Source of truth for all dashboard data
+    dashboard-data.js              <-- Auto-generated JS wrapper
+
+  scripts/
+    update-metrics.sh              <-- GHL API integration (email list)
+    sync-weekly-content.sh         <-- Scans Weekly-Content, syncs to dashboard
+    .env                           <-- GHL API credentials (git-ignored)
+
+  skills/                          <-- 18 skill definitions
+    fl3-dashboard/                 <-- Dashboard data updater
+    fl3-voice-check/               <-- Quality gate for all content
+    fl3-compliance-check/          <-- Financial compliance validator
+    fl3-sales-page/                <-- Sales page generator
+    fl3-email-sequence/            <-- Email sequence builder
+    fl3-ad-copy/                   <-- Ad copy generator
+    fl3-webinar-brief/             <-- Webinar brief for arena
+    fl3-launch-sequence/           <-- Launch orchestration
+    fl3-funnel-audit/              <-- Funnel auditor
+    fl3-youtube-script/            <-- YouTube script generator
+    fl3-blog-post/                 <-- Blog post generator
+    fl3-social-batch/              <-- Social media batch generator
+    fl3-newsletter/                <-- Beehiiv newsletter creator
+    fl3-weekly-content/            <-- Weekly content orchestrator
+    fl3-content-calendar/          <-- Content calendar manager
+    fl3-metrics-report/            <-- Metrics tracker
+    fl3-competitor-intel/          <-- Competitive intelligence
+    fl3-lead-magnet/               <-- Lead magnet creator
+
+  agents/                          <-- 5 autonomous agents
+    fl3-brand-guardian/            <-- Quality control agent
+    fl3-launch-director/           <-- Launch operations manager
+    fl3-content-director/          <-- Weekly content orchestrator
+    fl3-strategy-advisor/          <-- Strategic planning agent
+    fl3-digest-processor/          <-- Digest intake agent
+
+  calendar/                        <-- Operational planning
+    content-calendar.md            <-- Content calendar + rotation
+    idea-bank.md                   <-- Content idea repository
+
+  reports/                         <-- Business intelligence
+    weekly-reports/                <-- Detailed metric reports from /fl3-metrics
+
+  archive/                         <-- Old v1 dashboard files (reference only)
+```
+
+### Content Output Locations
+
+All content is saved to vault project folders (NOT inside Business-Suite):
+
+| Content Type | Save Location |
+|-------------|---------------|
+| YouTube scripts | `Projects/Weekly-Content/YouTube/` |
+| Blog articles | `Projects/Weekly-Content/Articles/` |
+| Social media | `Projects/Weekly-Content/Social Media/` |
+| Email/newsletters | `Projects/Weekly-Content/Email/` |
+| Sales page | `Projects/The-Great-Catch-Up/Sales-Page/` |
+| Email sequences | `Projects/The-Great-Catch-Up/Email-Sequences/` |
+| Facebook ads | `Projects/Wrong-Asset-Manifesto/Facebook-Ads/` |
+| Webinar assets | `Projects/Webinar/` |
+
+## Dashboard
 
 **Live URL:** https://jscott-62.github.io/fl3-dashboard/
 **GitHub Repo:** https://github.com/jscott-62/fl3-dashboard
-**Branch:** main (GitHub Pages deploys from main)
 
-## Key Files
+### Architecture
+- **Single-file app**: All HTML, CSS, JS in `docs/index.html`. No framework, no build step.
+- **Data loading priority**: GitHub API > bundled `dashboard-data.js` > fetch JSON > localStorage
+- **Persistence**: Checkbox changes save to localStorage, then auto-sync to GitHub (2s debounce)
+- **GitHub token**: Stored in `localStorage` as `fl3-github-token`
 
-| File | Purpose |
-|------|---------|
-| `index.html` | The entire dashboard app (HTML + CSS + JS, single file) |
-| `dashboard-data.json` | Canonical data source: projects, goals, metrics, content schedule |
-| `dashboard-data.js` | JS wrapper around the JSON data (loaded via `<script src>` for fast page load) |
-| `content-dashboard.html` | Content Command Center (separate tool for tracking content production steps) |
-| `update-metrics.sh` | Pulls email list count from GHL API, updates data files, pushes to GitHub |
-| `.env` | GHL API credentials (never committed to git) |
-| `.gitignore` | Keeps `.env` out of the repo |
-| `archive/` | Old v1 dashboard files for reference only |
+### Data Structure (v2)
 
-## Architecture
+The dashboard tracks 5 projects, weekly metrics with Facebook Ads breakdown, and business goals. See `skills/fl3-dashboard/SKILL.md` for the complete schema.
 
-- **Single-file app**: All HTML, CSS, and JS live in `index.html`. No build step, no framework.
-- **Data loading priority**: GitHub API (if token configured) > bundled `dashboard-data.js` > fetch `dashboard-data.json` > localStorage fallback
-- **Persistence**: Checkbox changes save to localStorage immediately, then auto-sync to GitHub via the Contents API after a 2-second debounce. Both `dashboard-data.json` and `dashboard-data.js` are updated on each sync.
-- **GitHub token**: Stored in `localStorage` as `fl3-github-token`. Users set this up once via the sync status indicator in the header.
+### GHL API Integration
 
-## Page Layout (top to bottom)
-
-1. **Header**: Title + last updated date + GitHub sync status
-2. **Goals Progress**: 2x2 grid of progress bars (Email List, Revenue, Course Sales, Cost Per Lead)
-3. **Weekly Metrics**: 4-card row (New Emails This Week, Email Open Rate, YouTube Views, Webinar Registrations)
-4. **Facebook Ads**: Project groups with nested campaigns, click-to-edit metrics, subtotals per project, grand total
-5. **Project Tabs**: Content Hub (first, active by default) + tabbed views for each project (Wrong Asset Manifesto, The Great Catch Up, Webinar, Weekly Content, Book)
-6. **Instructions**: How-to text for updating the dashboard
-7. **Save Bar**: Fixed bottom bar showing sync status
-8. **Modals**: Token setup overlay, Markdown preview overlay
-
-## Data Structure (dashboard-data.json)
-
-```
-{
-  "lastUpdated": "YYYY-MM-DD",
-  "projects": {
-    "<project-key>": {
-      "name": "Display Name",
-      "status": "live|in_development|planned|active|in_progress",
-      "description": "Short description",
-      "folder": "Projects/Folder-Name/",
-      "assets": {                    // For asset-based projects
-        "<assetKey>": { "status": "complete|in_progress|not_started|review", "label": "Display Label", "path": null }
-      },
-      "contentSchedule": [...]       // For weekly-content project only
-    }
-  },
-  "metrics": {
-    "weeks": [
-      {
-        "date": "YYYY-MM-DD",
-        "emailList": 2510,
-        "emailOpenRate": 0,
-        "youtubeSubscribers": 0,
-        "youtubeViews": 0,
-        "adSpend": 0,
-        "costPerLead": 0,
-        "ctr": 0,
-        "leads": 0,
-        "courseSales": 0,
-        "revenue": 0,
-        "webinarRegistrations": 0,
-        "webinarAttendance": 0,
-        "fbAds": [
-          {
-            "project": "wrong-asset-manifesto",
-            "campaigns": [
-              { "name": "Standard Ads", "adSpend": 0, "leads": 0, "ctr": 0 },
-              { "name": "Retargeting", "adSpend": 0, "leads": 0, "ctr": 0 }
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  "goals": {
-    "emailListTarget": 5000,
-    "revenueTarget": 10000,
-    "courseSalesTarget": 20,
-    "costPerLeadTarget": 5.00
-  }
-}
-```
-
-## Content Schedule Structure (weekly-content project)
-
-Each week in `contentSchedule` has:
-```
-{
-  "weekOf": "YYYY-MM-DD",
-  "weekLabel": "Week of Mon DD",
-  "pillar": "Content pillar name",
-  "avatar": "Target avatar",
-  "items": [
-    {
-      "type": "youtube|blog|social|newsletter",
-      "title": "Content title",
-      "steps": { "research": bool, "script|write": bool, "film": bool, "edit": bool, "publish": bool },
-      "dueDate": "YYYY-MM-DD" or null,
-      "path": "relative/path/to/file.md" or null
-    }
-  ]
-}
-```
-
-## Content Command Center (content-dashboard.html)
-
-A separate tool for tracking individual content piece production. Uses localStorage (key: `contentCommandCenter`). Supports:
-- Card view and Pipeline view
-- Content types: Blog Post, YouTube Video, Short Video, FB Post
-- Each type has defined production steps
-- Blog posts track publish status across Medium, LinkedIn, Website
-
-## GHL API Integration
-
-The dashboard pulls the email list count from GoHighLevel via their REST API.
-
-**API Endpoint:** `GET https://services.leadconnectorhq.com/contacts/?locationId={id}&limit=1`
-**Auth Header:** `Authorization: Bearer {token}`
-**Version Header:** `Version: 2021-07-28`
-**Response:** `meta.total` contains the total contact count.
-
-**Credentials** are stored in `.env` (git-ignored, never committed):
-```
-GHL_API_TOKEN=pit-...
-GHL_LOCATION_ID=AIb...
-```
-
-**To update the email list count:**
-```bash
-./update-metrics.sh
-```
-This fetches the count from GHL, updates `dashboard-data.json` and `dashboard-data.js`, commits, and pushes to GitHub.
-
-**Automatic weekly snapshots:** The script checks the date of the latest week entry in `metrics.weeks`. If it is 7 or more days old, it freezes the current week as a historical snapshot and creates a new week entry with fresh data. If less than 7 days old, it updates the current week in place. This is what powers the "New Emails This Week" metric card, which computes the difference between the two most recent week entries.
-
-**"New Emails This Week" metric:** Calculated in `index.html` render function as `latest.emailList - previous.emailList`. Displays in green when positive. Shows `+0` when there is only one week of data.
-
-**Claude can also update directly** by:
-1. Reading credentials from `.env` at `Projects/fl3-dashboard/.env`
-2. Calling the GHL API with curl
-3. Checking if a new week entry is needed (latest week date 7+ days old)
-4. Updating `emailList` in `dashboard-data.json` (new week entry or update in place)
-5. Regenerating `dashboard-data.js`
-6. Committing and pushing to GitHub
-
-## Facebook Ads Section
-
-Tracks Facebook ad metrics in a two-level hierarchy: **Projects > Campaigns**.
-
-**Data structure:** `fbAds[]` contains project entries. Each has `project` (project key) and `campaigns[]`. Each campaign has `name`, `adSpend`, `leads`, `ctr`. CPL is auto-calculated per campaign, per project subtotal, and grand total.
-
-**UI layout:**
-- **"+ Add Project"** button in header shows picker (excludes weekly-content and book)
-- Each project group has a header bar with the project name, "+ Campaign" button, and remove X
-- Campaigns listed in a table with click-to-edit Ad Spend, Leads, CTR
-- **Subtotal row** per project sums all campaigns
-- **Grand total** shown when 2+ projects exist (spend-weighted average CTR)
-
-**Migration:** Old flat format (`{campaign, adSpend, leads, ctr}`) is auto-migrated to the new nested format on first render.
-
-**Top-level sync:** The `adSpend`, `leads`, `costPerLead` fields at the week level are auto-synced from grand totals, keeping the Cost Per Lead goal bar working.
-
-**Future automation:** When Facebook Marketing API integration is added, a script can populate the `fbAds` array in `dashboard-data.json` directly. The same UI will display without changes.
-
-## Content Hub Tab
-
-A unified view of all content across all projects. This is the first tab (active by default) in the Project Tabs section.
-
-**Features:**
-- **Stats bar**: 4 cards showing Total Content, Completed, Linked Files, Progress %
-- **Collapsible project sections**: Each project shows its content items grouped together
-- **Type badges**: Color-coded badges (YouTube=red, Blog=blue, Social=purple, Newsletter=teal, Asset=gray, Chapter=amber)
-- **Step dots**: Weekly content items show production step progress as colored dots (green=done, gray=pending)
-- **Status badges**: Complete, In Progress, Not Started, Review
-- **Preview button**: Opens markdown files in the existing markdown preview modal (works locally only)
-- **Open in Obsidian button**: Uses `obsidian://open` URI scheme to open files directly in Obsidian
-- **Book collapsed by default**: 14 chapter items are collapsed to avoid dominating the view
-
-**Architecture:**
-- Virtual tab, not in `PROJECT_ORDER`. Hardcoded as first tab in `renderProjectTabs()`.
-- Read-only aggregate view. No editing in the hub; users edit in project tabs or Obsidian.
-- Key functions: `buildContentHubView(data)`, `buildObsidianLink(path)`, `getContentTypeConfig(type)`
-- Reuses existing functions: `getStepDefs()`, `getStatusFromSteps()`, `escapeHtml()`, `escapeAttr()`, `openMdPreview()`
-
-**File paths**: Asset `path` fields in `dashboard-data.json` store vault-relative paths (e.g., `00-ZenithPro - FL3/Projects/Book/Drafts/Chapter_1_The_2_AM_reckoning.md`). These are used for both Obsidian URI links and markdown preview.
-
-**Book project**: Expanded from single "manuscript" asset to 14 individual chapter assets, each with a path to its draft file.
-
-## How to Deploy Changes
-
-All changes must be pushed to the `main` branch of `jscott-62/fl3-dashboard` on GitHub. GitHub Pages auto-deploys from main. After pushing, changes go live within 1 to 2 minutes.
+Pulls email list count from GoHighLevel. Credentials in `scripts/.env` (git-ignored).
 
 ```bash
-cd <this-directory>
-git add <files>
-git commit -m "Description of changes"
+# Update email list count
+./scripts/update-metrics.sh
+
+# Sync new content files to dashboard
+./scripts/sync-weekly-content.sh
+```
+
+Both scripts auto-commit and push to GitHub, deploying the update.
+
+### Deployment
+
+Push to `main` branch. GitHub Pages serves from the `docs/` folder. Changes go live in 1 to 2 minutes.
+
+```bash
+cd <Business-Suite root>
+git add docs/dashboard-data.json docs/dashboard-data.js
+git commit -m "Dashboard update"
 git push
 ```
 
-## Design System
+### Design System
+- **Dark theme**: `#0f172a` background, `#1e293b` cards, `#e2e8f0` text
+- **Accent**: Amber `#f59e0b`
+- **Status colors**: Green (complete), Blue (in_progress), Amber (in_development), Red (errors), Purple (review), Gray (not_started)
+- **No external dependencies**
 
-- **Dark theme**: Background `#0f172a`, cards `#1e293b`, text `#e2e8f0`
-- **Accent color**: Amber `#f59e0b` (used for headers, highlights, active states)
-- **Status colors**: Green (complete/live), Blue (in progress/active), Amber (in development), Red (errors/overdue), Purple (review), Gray (not started/planned)
-- **Font**: System fonts (-apple-system, BlinkMacSystemFont, Segoe UI)
-- **No external dependencies**: No frameworks, no build tools, no CDN resources
+## Integration with Existing Systems
 
-## Business Context
+### Copy Arsenal
+For maximum quality on critical assets, delegate to the Copy Arsenal:
+- Sales page: `/arena sales-page 3` (4 competing copywriters)
+- Ad hooks: `/carlton-hooks` (maximum stopping power)
+- Email sequences: `/clayton-email` (emotional trigger mastery)
+- VSL scripts: `/evaldo` (video sales letter specialist)
 
-FL3 (Freedom Life 3.0) targets people aged 40 to 65 who are behind on retirement savings. The marketing funnel is:
+### Webinar Arena
+Create a webinar brief with `/fl3-webinar`, then run `/webinar-arena` to have 6 competing experts draft the webinar.
 
-```
-Facebook Ads > Wrong Asset Manifesto (lead magnet) > Email Capture
-  > Email Nurture Sequence > Webinar Registration > Webinar
-  > The Great Catch Up (6-week program, $495)
-```
+## Key Business Concepts
 
-Projects tracked:
-1. **Wrong Asset Manifesto** (lead magnet, LIVE)
-2. **The Great Catch Up** (core revenue product, in development)
-3. **Webinar** (conversion event, planned)
-4. **Weekly Content** (ongoing content production)
-5. **Book: Be The Hero Of Your Financial Life** (authority builder)
+| Concept | Description |
+|---------|-------------|
+| **The 4 Pillars** | Math Doesn't Work, Traditional Advice Fails, Better Vehicles Exist, Risk Flipped |
+| **3 Avatars** | Silent Technophobe (52-58), Paralyzed Pursuer (48-56), Awakened Skeptic (50-60) |
+| **Reveal Sequence** | Bitcoin withheld in cold traffic. Teased in education. Named in reveal email. Open post-reveal. |
+| **The Hero Investing Method** | Proprietary framework: FREEDOM acronym, 6-week program |
+| **Freedom Number** | Personalized calculation of exact retirement target |
+| **Risk Inversion** | "The real risk is staying in 7% assets, not being in Bitcoin" |
+
+## Writing Rules
+
+All content MUST follow these rules (from vault CLAUDE.md):
+- **No em dashes** (use periods, commas, colons, parentheses instead)
+- Direct, conversational tone
+- Short sentences for impact
+- Address reader as "you"
+- Validate struggles without condescending
+- 85% toward language / 15% strategic away language
+- Education, not financial advice
+
+## Reference Document Locations
+
+| Document | Path | Used By |
+|----------|------|---------|
+| Voice DNA | `Main/Scott MacMillan Voice DNA/Voice DNA/` | All skills |
+| Business Summary | `Main/FL3 ZenithPro Data/Freedom Life 3.0 - Complete Business Summary.md` | All skills |
+| Business Brief | `Main/FL3 ZenithPro Data/FL3 Business Brief.md` | Content + launch skills |
+| Value Prop Stack | `Main/FL3 ZenithPro Data/FREEDOM LIFE 3.0_ VALUE PROPOSITION STACK.md` | Sales page, launch |
+| Course Content | `Main/The Great Catch Up Course.md` | Sales page, email sequences |
+| Avatars | `Main/Zenith Avatars/` | All content skills |
+| Existing Ads | `Main/FL3 ZenithPro Data/Ads.md` | Ad copy skill |
+| Headlines | `Main/FL3 ZenithPro Data/HEADLINES.md` | Sales page, ads |
+| Lead Magnet | `Main/FL3 ZenithPro Data/The Wrong Asset Manifesto/` | Email sequence, lead magnet |
+| Content Architecture | `Main/FL3 ZenithPro Data/SILENT TECHNOPHOBE - Content Ecosystem Architecture v2.0.md` | Content strategy |
+
+---
+
+*FL3 Business Agent Suite v2.0.0*
+*Last Updated: March 4, 2026*

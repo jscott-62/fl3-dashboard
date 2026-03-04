@@ -13,8 +13,9 @@
 # ============================================================
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-JSON_FILE="$SCRIPT_DIR/dashboard-data.json"
-JS_FILE="$SCRIPT_DIR/dashboard-data.js"
+REPO_ROOT="$SCRIPT_DIR/.."
+JSON_FILE="$REPO_ROOT/docs/dashboard-data.json"
+JS_FILE="$REPO_ROOT/docs/dashboard-data.js"
 ENV_FILE="$SCRIPT_DIR/.env"
 
 # ── Load credentials ──
@@ -127,8 +128,8 @@ print('Regenerated dashboard-data.js')
 
 # ── Git commit and push ──
 echo "Pushing to GitHub..."
-cd "$SCRIPT_DIR"
-git add dashboard-data.json dashboard-data.js
+cd "$REPO_ROOT"
+git add docs/dashboard-data.json docs/dashboard-data.js
 git commit -m "Update email list count to $TOTAL (via GHL API)"
 git push
 
