@@ -1,0 +1,454 @@
+{
+  "lastUpdated": "2026-03-05",
+  "projects": {
+    "wrong-asset-manifesto": {
+      "name": "The Wrong Asset Manifesto",
+      "status": "live",
+      "description": "Lead magnet funnel: Facebook ads to landing page to email capture",
+      "folder": "Projects/Wrong-Asset-Manifesto/",
+      "assets": {
+        "leadMagnet": {
+          "status": "complete",
+          "label": "Wrong Asset Manifesto (PDF)",
+          "path": "00-ZenithPro - FL3/Projects/Wrong-Asset-Manifesto/Lead-Magnet-Content/The Wrong Asset Manifesto - Cold Traffic Lead Magnet.md"
+        },
+        "landingPage": {
+          "status": "complete",
+          "label": "Landing Page",
+          "path": "00-ZenithPro - FL3/Projects/Wrong-Asset-Manifesto/Landing-Pages/wrong-asset-manifesto-landing.html"
+        },
+        "facebookAdsStandard": {
+          "status": "complete",
+          "label": "Facebook Ads (Standard)",
+          "path": "00-ZenithPro - FL3/Projects/Wrong-Asset-Manifesto/Facebook-Ads/Wrong Asset Manifesto - Facebook Ads + Landing Page.md"
+        },
+        "facebookAdsCompliant": {
+          "status": "complete",
+          "label": "Facebook Ads (Compliant)",
+          "path": "00-ZenithPro - FL3/Projects/Wrong-Asset-Manifesto/Facebook-Ads/Wrong Asset Manifesto - Facebook Ads COMPLIANT.md"
+        },
+        "emailSequence": {
+          "status": "complete",
+          "label": "Email Nurture Sequence (6)",
+          "path": "00-ZenithPro - FL3/Projects/Wrong-Asset-Manifesto/Email-Sequences/Wrong Asset Manifesto - Email Sequence.md"
+        },
+        "socialMedia": {
+          "status": "not_started",
+          "label": "Social Media Posts",
+          "path": null
+        }
+      }
+    },
+    "the-great-catch-up": {
+      "name": "The Great Catch Up",
+      "status": "in_development",
+      "description": "6-week program ($495): core revenue product",
+      "folder": "Projects/The-Great-Catch-Up/",
+      "assets": {
+        "courseCurriculum": {
+          "status": "complete",
+          "label": "Course Curriculum",
+          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up/Course-Content/The Great Catch Up Course.md"
+        },
+        "frameworkOutputs": {
+          "status": "complete",
+          "label": "Framework Forge Outputs",
+          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up/Course-Content/Framework Forge Output - The Great Catch Up Course.md"
+        },
+        "salesPage": {
+          "status": "review",
+          "label": "Sales Page",
+          "path": null
+        },
+        "emailSequences": {
+          "status": "not_started",
+          "label": "Email Sequences",
+          "path": null
+        },
+        "facebookAds": {
+          "status": "not_started",
+          "label": "Facebook Ads",
+          "path": null
+        },
+        "socialMedia": {
+          "status": "not_started",
+          "label": "Social Media Campaign",
+          "path": null
+        },
+        "pricingStrategy": {
+          "status": "not_started",
+          "label": "Pricing Strategy",
+          "path": null
+        }
+      }
+    },
+    "webinar": {
+      "name": "Webinar",
+      "status": "planned",
+      "description": "Conversion event to sell The Great Catch Up",
+      "folder": "Projects/Webinar/",
+      "assets": {
+        "slidesScript": {
+          "status": "in_progress",
+          "label": "Webinar Slides/Script",
+          "path": "00-ZenithPro - FL3/Projects/Webinar/Slides-Scripts/Catch Up With The Freedom 3.0 Investing System - Slides..md"
+        },
+        "registrationPage": {
+          "status": "in_progress",
+          "label": "Registration Page",
+          "path": "00-ZenithPro - FL3/Projects/Webinar/Registration-Pages/freedom-3-landing-page.html"
+        },
+        "facebookAds": {
+          "status": "not_started",
+          "label": "Facebook Ads",
+          "path": null
+        },
+        "emailSequences": {
+          "status": "not_started",
+          "label": "Email Sequences (Pre/Post)",
+          "path": null
+        },
+        "socialMedia": {
+          "status": "not_started",
+          "label": "Social Media Promotion",
+          "path": null
+        }
+      }
+    },
+    "weekly-content": {
+      "name": "Weekly Content",
+      "status": "active",
+      "description": "Ongoing content production across all platforms",
+      "folder": "Projects/Weekly-Content/",
+      "calendar": [
+        {
+          "weekOf": "2026-02-17",
+          "weekLabel": "Week of Feb 17",
+          "pillar": "1: Math",
+          "avatar": "Technophobe",
+          "topic": "The Invisible Inflation Theft"
+        },
+        {
+          "weekOf": "2026-02-24",
+          "weekLabel": "Week of Feb 24",
+          "pillar": "1: Math",
+          "avatar": "All",
+          "topic": "Pillar #1: The 12% Theft"
+        },
+        {
+          "weekOf": "2026-03-03",
+          "weekLabel": "Week of Mar 3",
+          "pillar": "2: Trad Advice",
+          "avatar": "Pursuer",
+          "topic": "The Playbook Against Your Retirement"
+        },
+        {
+          "weekOf": "2026-03-10",
+          "weekLabel": "Week of Mar 10",
+          "pillar": "4: Risk Flip",
+          "avatar": "All",
+          "topic": "The Paper Bitcoin Trap"
+        },
+        {
+          "weekOf": "2026-03-17",
+          "weekLabel": "Week of Mar 17",
+          "pillar": "3: Vehicles",
+          "avatar": "Skeptic",
+          "topic": "Bitcoin's iPhone Moment"
+        },
+        {
+          "weekOf": "2026-03-24",
+          "weekLabel": "Week of Mar 24",
+          "pillar": "1: Math",
+          "avatar": "Technophobe",
+          "topic": "Why Everything Costs More"
+        },
+        {
+          "weekOf": "2026-03-31",
+          "weekLabel": "Week of Mar 31",
+          "pillar": "2: Trad Advice",
+          "avatar": "Skeptic",
+          "topic": ""
+        },
+        {
+          "weekOf": "2026-04-07",
+          "weekLabel": "Week of Apr 7",
+          "pillar": "4: Risk Flip",
+          "avatar": "Pursuer",
+          "topic": ""
+        },
+        {
+          "weekOf": "2026-04-14",
+          "weekLabel": "Week of Apr 14",
+          "pillar": "3: Vehicles",
+          "avatar": "All",
+          "topic": ""
+        },
+        {
+          "weekOf": "2026-04-21",
+          "weekLabel": "Week of Apr 21",
+          "pillar": "1: Math",
+          "avatar": "Pursuer",
+          "topic": ""
+        }
+      ],
+      "contentFolders": {
+        "youtube": {
+          "label": "YouTube",
+          "items": [
+            {
+              "title": "Pillar #1 Vid",
+              "steps": {
+                "research": true,
+                "write": true,
+                "film": true,
+                "edit": true,
+                "publish": true
+              },
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/Pillar #1 Vid PUB (2026-02-23).md",
+              "weekOf": "2026-02-24"
+            },
+            {
+              "title": "Pillar #2 Vid",
+              "steps": {
+                "research": true,
+                "write": true,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/Pillar #2 Vid.md",
+              "weekOf": "2026-03-03"
+            },
+            {
+              "title": "Why Everything Costs More When Technology Makes It Cheaper",
+              "steps": {
+                "research": true,
+                "write": true,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/Why Everything Costs More When Technology Makes It Cheaper.md",
+              "weekOf": "2026-03-24"
+            },
+            {
+              "title": "The Jane Street Allegations and the Paper Bitcoin Trap: Is the Game Rigged?",
+              "steps": {
+                "research": true,
+                "write": true,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/The Jane Street Allegations and the Paper Bitcoin Trap Is the Game Rigged.md",
+              "weekOf": "2026-03-10"
+            },
+            {
+              "title": "Missles Vs. Money",
+              "steps": {
+                "research": true,
+                "write": true,
+                "film": true,
+                "edit": true,
+                "publish": true
+              },
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/Missles Vs. Money.md"
+            }
+          ]
+        },
+        "social-media": {
+          "label": "Social Media",
+          "items": [
+            {
+              "title": "Power Content HeyGen Vid - The HiddenRules Of Money",
+              "steps": {
+                "research": true,
+                "write": true,
+                "film": true,
+                "edit": true,
+                "publish": true
+              },
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/Social Media/Power Content HeyGen Vid - The HiddenRules Of Money.md"
+            }
+          ]
+        },
+        "articles": {
+          "label": "Articles",
+          "items": [
+            {
+              "title": "The Risk Flip: What's Really Dangerous for Your Retirement",
+              "steps": {
+                "research": true,
+                "write": true,
+                "edit": true,
+                "publish": true
+              },
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/Articles/The Risk Flip What's Really Dangerous for Your Retirement PUB (2026-02-23).md",
+              "weekOf": "2026-02-24"
+            },
+            {
+              "title": "Why Your Savings Account Is A Trap",
+              "steps": {
+                "research": true,
+                "write": true,
+                "edit": true,
+                "publish": true
+              },
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/Articles/Why Your Savings Account Is A Trap PUB (2026-02-23).md",
+              "weekOf": "2026-02-24"
+            },
+            {
+              "title": "Why Everything Costs More When Technology Makes It Cheaper",
+              "steps": {
+                "research": true,
+                "write": true,
+                "edit": true,
+                "publish": true
+              },
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/Articles/Why Everything Costs More When Technology Makes It Cheaper PUB (2026-02-26).md",
+              "weekOf": "2026-02-24"
+            },
+            {
+              "title": "Is Bitcoin in Its \"iPhone 3\" Moment? Why the Best is Yet to Come",
+              "steps": {
+                "research": true,
+                "write": true,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/Articles/Is Bitcoin in Its \"iPhone 3\" Moment? Why the Best is Yet to Come.md",
+              "weekOf": "2026-03-17"
+            }
+          ]
+        },
+        "email": {
+          "label": "Email",
+          "items": []
+        }
+      }
+    },
+    "book": {
+      "name": "Be The Hero Of Your Financial Life",
+      "status": "in_progress",
+      "description": "Authority builder and lead generation",
+      "folder": "Projects/Book/",
+      "assets": {
+        "chapter1": {
+          "status": "complete",
+          "label": "Ch 1: The 2 AM Reckoning",
+          "path": "00-ZenithPro - FL3/Projects/Book/Drafts/Chapter_1_The_2_AM_reckoning.md"
+        },
+        "chapter2": {
+          "status": "complete",
+          "label": "Ch 2: The Cost of Someday Soon",
+          "path": "00-ZenithPro - FL3/Projects/Book/Drafts/Chapter_2_The_Cost_of_Someday_Soon.md"
+        },
+        "chapter3": {
+          "status": "complete",
+          "label": "Ch 3: Building Your Financial Life Plan",
+          "path": "00-ZenithPro - FL3/Projects/Book/Drafts/Chapter_3_Building_Your_Financial_Life_Plan.md"
+        },
+        "chapter4": {
+          "status": "complete",
+          "label": "Ch 4: What Crypto Assets Actually Are",
+          "path": "00-ZenithPro - FL3/Projects/Book/Drafts/Chapter_4_What_Crypto_Assets_Actually_Are.md"
+        },
+        "chapter5": {
+          "status": "complete",
+          "label": "Ch 5: Why Crypto Will Grow in Value",
+          "path": "00-ZenithPro - FL3/Projects/Book/Drafts/Chapter_5_Why_Crypto_Will_Grow_in_Value.md"
+        },
+        "chapter6": {
+          "status": "complete",
+          "label": "Ch 6: Understanding the Crypto Market Cycle",
+          "path": "00-ZenithPro - FL3/Projects/Book/Drafts/Chapter_6_Understanding_the_Crypto_Market_Cycle.md"
+        },
+        "chapter7": {
+          "status": "complete",
+          "label": "Ch 7: Opening an Exchange Account",
+          "path": "00-ZenithPro - FL3/Projects/Book/Drafts/Chapter_7_Your_First_Steps_Opening_an_Exchange_Account.md"
+        },
+        "chapter8": {
+          "status": "complete",
+          "label": "Ch 8: Buying Your First Bitcoin",
+          "path": "00-ZenithPro - FL3/Projects/Book/Drafts/Chapter 8 - The First Step Toward Freedom (Buying Your First Bitcoin).md"
+        },
+        "chapter9": {
+          "status": "complete",
+          "label": "Ch 9: Building Your Crypto Investment Strategy",
+          "path": "00-ZenithPro - FL3/Projects/Book/Drafts/Chapter 9 - Building Your Crypto Investment Strategy (Planning the Quest).md"
+        },
+        "chapter10": {
+          "status": "complete",
+          "label": "Ch 10: Selecting Your Blue Chip Altcoins",
+          "path": "00-ZenithPro - FL3/Projects/Book/Drafts/Chapter 10 - Selecting Your Blue Chip Altcoins (Choosing Your Core Team).md"
+        },
+        "chapter11": {
+          "status": "complete",
+          "label": "Ch 11: Building Your Crypto Fellowship",
+          "path": "00-ZenithPro - FL3/Projects/Book/Drafts/Chapter 11 - Building Your Crypto Fellowship.md"
+        },
+        "chapter12": {
+          "status": "complete",
+          "label": "Ch 12: Taking Profits",
+          "path": "00-ZenithPro - FL3/Projects/Book/Drafts/Chapter 12 - Taking Profits.md"
+        },
+        "chapter13": {
+          "status": "complete",
+          "label": "Ch 13: Your Annual Portfolio Review",
+          "path": "00-ZenithPro - FL3/Projects/Book/Drafts/Chapter_13_Your_Annual_Portfolio_Review.md"
+        },
+        "chapter14": {
+          "status": "complete",
+          "label": "Ch 14: The Hero's Return",
+          "path": "00-ZenithPro - FL3/Projects/Book/Drafts/Chapter_14_The_Heros_Return.md"
+        }
+      }
+    }
+  },
+  "metrics": {
+    "weeks": [
+      {
+        "date": "2026-02-13",
+        "emailList": 2510,
+        "emailOpenRate": 0,
+        "youtubeSubscribers": 0,
+        "youtubeViews": 0,
+        "adSpend": 382.26,
+        "costPerLead": 7.96,
+        "ctr": 0,
+        "leads": 48,
+        "courseSales": 0,
+        "revenue": 0,
+        "webinarRegistrations": 0,
+        "webinarAttendance": 0,
+        "fbAds": [
+          {
+            "project": "wrong-asset-manifesto",
+            "campaigns": [
+              {
+                "name": "Campaign 1",
+                "adSpend": 109.37,
+                "leads": 16,
+                "ctr": 2.33
+              },
+              {
+                "name": "Campaign 2",
+                "adSpend": 272.89,
+                "leads": 32,
+                "ctr": 2.44
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "goals": {
+    "emailListTarget": 5000,
+    "revenueTarget": 10000,
+    "courseSalesTarget": 20,
+    "costPerLeadTarget": 5
+  }
+}
