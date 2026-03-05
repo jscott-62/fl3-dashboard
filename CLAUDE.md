@@ -214,7 +214,13 @@ All scripts auto-commit and push to GitHub, deploying the update.
 
 ### Archive on Publish
 
-When a content item's "Publish" checkbox is clicked in the dashboard, the item's path is updated to point to `Weekly-Content/Archive/` with the publish date appended. The original path is saved in `originalPath` for unpublishing. Run `./scripts/archive-published.sh` locally to move the actual files from their content folder to Archive/.
+When a content item's "Publish" checkbox is clicked in the dashboard, two things happen:
+1. **Data update**: The item's path changes to `Weekly-Content/Archive/{title} PUB ({date}).md`, with the original path saved for unpublishing
+2. **File move**: The dashboard calls the Obsidian Local REST API (port 27123) to move the actual `.md` file on disk
+
+**Requirements**: Obsidian must be running with the Local REST API plugin enabled. On first use, the dashboard prompts for the API key (stored in localStorage as `fl3-obsidian-api-key`). Find the key in Obsidian → Settings → Community Plugins → Local REST API.
+
+**Fallback**: `./scripts/archive-published.sh` can be run manually if Obsidian is not available.
 
 ### Deployment
 

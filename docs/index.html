@@ -2245,17 +2245,103 @@ function handlePublishToggle(item, folderKey, isPublished) {
 
   if (isPublished) {
     var today = new Date().toISOString().slice(0, 10);
+    var fromPath = item.path;
     item.publishedDate = today;
     item.originalPath = item.path;
     item.path = generateArchivePath(item.title, today);
+    // Move file on disk via Obsidian REST API
+    moveFileViaObsidian(fromPath, item.path);
   } else {
-    // Unpublish: revert to original path
+    // Unpublish: move file back to original folder
     if (item.originalPath) {
+      var fromPath = item.path;
+      var toPath = item.originalPath;
       item.path = item.originalPath;
+      moveFileViaObsidian(fromPath, toPath);
     }
     delete item.publishedDate;
     delete item.originalPath;
   }
+}
+
+// ── Obsidian Local REST API Integration ──
+// Moves files on disk by talking to Obsidian's Local REST API (port 27123)
+function moveFileViaObsidian(fromPath, toPath) {
+  var apiKey = localStorage.getItem('fl3-obsidian-api-key');
+  if (!apiKey) {
+    apiKey = prompt('Enter your Obsidian Local REST API key to enable automatic file archiving.\n\nFind it in Obsidian → Settings → Community Plugins → Local REST API → API Key');
+    if (!apiKey) {
+      showArchiveNotice('Obsidian API key not set. File not moved on disk.', 'warning');
+      return;
+    }
+    localStorage.setItem('fl3-obsidian-api-key', apiKey);
+  }
+
+  var baseUrl = 'http://127.0.0.1:27123';
+
+  function encodePath(p) {
+    return p.split('/').map(function(s) { return encodeURIComponent(s); }).join('/');
+  }
+
+  var fromUrl = baseUrl + '/vault/' + encodePath(fromPath);
+  var toUrl = baseUrl + '/vault/' + encodePath(toPath);
+  var headers = { 'Authorization': 'Bearer ' + apiKey };
+
+  // Read original → Write to new location → Delete original
+  fetch(fromUrl, { headers: headers })
+    .then(function(res) {
+      if (res.status === 404) return null; // File doesn't exist, skip
+      if (!res.ok) throw new Error('Read failed (' + res.status + ')');
+      return res.text();
+    })
+    .then(function(content) {
+      if (content === null) return null;
+      return fetch(toUrl, {
+        method: 'PUT',
+        headers: { 'Authorization': 'Bearer ' + apiKey, 'Content-Type': 'text/markdown' },
+        body: content
+      });
+    })
+    .then(function(res) {
+      if (res === null) return null;
+      if (!res.ok) throw new Error('Write failed (' + res.status + ')');
+      return fetch(fromUrl, { method: 'DELETE', headers: headers });
+    })
+    .then(function(res) {
+      if (res === null) return;
+      if (!res.ok) throw new Error('Delete failed (' + res.status + ')');
+      var dest = toPath.indexOf('/Archive/') > -1 ? 'Archive' : 'original folder';
+      showArchiveNotice('File moved to ' + dest, 'success');
+    })
+    .catch(function(err) {
+      console.error('Obsidian file move error:', err);
+      if (err.message && err.message.indexOf('Failed to fetch') > -1) {
+        showArchiveNotice('Cannot connect to Obsidian. Is it running?', 'error');
+      } else if (err.message && err.message.indexOf('401') > -1) {
+        localStorage.removeItem('fl3-obsidian-api-key');
+        showArchiveNotice('Invalid Obsidian API key. Click Publish again to re-enter.', 'error');
+      } else {
+        showArchiveNotice('File move failed: ' + err.message, 'error');
+      }
+    });
+}
+
+function showArchiveNotice(message, type) {
+  var existing = document.getElementById('archive-notice');
+  if (existing) existing.remove();
+
+  var colors = { success: '#22c55e', error: '#ef4444', warning: '#f59e0b' };
+  var div = document.createElement('div');
+  div.id = 'archive-notice';
+  div.style.cssText = 'position:fixed;bottom:20px;right:20px;padding:12px 20px;border-radius:8px;color:#fff;font-size:14px;z-index:10000;max-width:400px;box-shadow:0 4px 12px rgba(0,0,0,0.3);transition:opacity 0.3s;';
+  div.style.background = colors[type] || colors.warning;
+  div.textContent = message;
+  document.body.appendChild(div);
+
+  setTimeout(function() {
+    div.style.opacity = '0';
+    setTimeout(function() { div.remove(); }, 300);
+  }, 4000);
 }
 
 function makeEditableTitle(titleEl, folderKey, itemIdx) {
