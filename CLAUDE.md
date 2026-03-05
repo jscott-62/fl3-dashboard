@@ -84,6 +84,7 @@ Business-Suite/                    <-- Git repo root (deploys to GitHub Pages)
   scripts/
     update-metrics.sh              <-- GHL API integration (email list)
     sync-weekly-content.sh         <-- Scans Weekly-Content, syncs to dashboard
+    archive-published.sh           <-- Moves published content to Archive/
     .env                           <-- GHL API credentials (git-ignored)
 
   skills/                          <-- 18 skill definitions
@@ -120,6 +121,7 @@ Business-Suite/                    <-- Git repo root (deploys to GitHub Pages)
     Articles/                      <-- Blog articles and written content
     Social Media/                  <-- Social media posts
     Email/                         <-- Email campaigns and newsletters
+    Archive/                       <-- Published content (moved here on publish)
 
   calendar/                        <-- Operational planning
     content-calendar.md            <-- Content calendar + rotation
@@ -142,6 +144,7 @@ Weekly content lives inside Business Suite. Other content in vault project folde
 | Social media | `Weekly-Content/Social Media/` (in Business Suite) |
 | Email/newsletters | `Weekly-Content/Email/` (in Business Suite) |
 | Weekly briefs | `Weekly-Content/Briefs/` (in Business Suite) |
+| Published content | `Weekly-Content/Archive/` (moved here on publish) |
 | Sales page | `Projects/The-Great-Catch-Up/Sales-Page/` |
 | Email sequences | `Projects/The-Great-Catch-Up/Email-Sequences/` |
 | Facebook ads | `Projects/Wrong-Asset-Manifesto/Facebook-Ads/` |
@@ -202,9 +205,16 @@ Pulls email list count from GoHighLevel. Credentials in `scripts/.env` (git-igno
 
 # Sync new content files to dashboard
 ./scripts/sync-weekly-content.sh
+
+# Move published content to Archive/ folder
+./scripts/archive-published.sh
 ```
 
-Both scripts auto-commit and push to GitHub, deploying the update.
+All scripts auto-commit and push to GitHub, deploying the update.
+
+### Archive on Publish
+
+When a content item's "Publish" checkbox is clicked in the dashboard, the item's path is updated to point to `Weekly-Content/Archive/` with the publish date appended. The original path is saved in `originalPath` for unpublishing. Run `./scripts/archive-published.sh` locally to move the actual files from their content folder to Archive/.
 
 ### Deployment
 

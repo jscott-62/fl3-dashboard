@@ -2226,12 +2226,36 @@ var _weeklyViewMode = 'calendar';
 var FOLDER_ORDER = ['youtube', 'social-media', 'articles', 'email'];
 var FOLDER_ICONS = { 'youtube': '🎬', 'social-media': '📱', 'articles': '📝', 'email': '📧' };
 
-var FOLDER_NAMES = { 'youtube': 'YouTube', 'social-media': 'Social Media', 'articles': 'Articles', 'email': 'Email' };
+var FOLDER_NAMES = { 'youtube': 'YouTube', 'social-media': 'Social Media', 'articles': 'Articles', 'email': 'Email', 'briefs': 'Briefs', 'archive': 'Archive' };
 
 function generateContentPath(folderKey, title) {
   var folderName = FOLDER_NAMES[folderKey] || folderKey;
   var safeName = (title || 'Untitled').replace(/[/\\:*?"<>|]/g, '').replace(/\s+/g, ' ').trim();
   return '00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/' + folderName + '/' + safeName + '.md';
+}
+
+function generateArchivePath(title, date) {
+  var safeName = (title || 'Untitled').replace(/[/\\:*?"<>|]/g, '').replace(/\s+/g, ' ').trim();
+  return '00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Archive/' + safeName + ' PUB (' + date + ').md';
+}
+
+function handlePublishToggle(item, folderKey, isPublished) {
+  // Briefs are control documents, not publishable content
+  if (folderKey === 'briefs') return;
+
+  if (isPublished) {
+    var today = new Date().toISOString().slice(0, 10);
+    item.publishedDate = today;
+    item.originalPath = item.path;
+    item.path = generateArchivePath(item.title, today);
+  } else {
+    // Unpublish: revert to original path
+    if (item.originalPath) {
+      item.path = item.originalPath;
+    }
+    delete item.publishedDate;
+    delete item.originalPath;
+  }
 }
 
 function makeEditableTitle(titleEl, folderKey, itemIdx) {
@@ -2578,6 +2602,9 @@ function buildCalendarContentRow(entry, folderKey) {
       var stepKey = stepDefs[si].key;
       if (!entry.item.steps) entry.item.steps = {};
       entry.item.steps[stepKey] = !entry.item.steps[stepKey];
+      if (stepKey === 'publish') {
+        handlePublishToggle(entry.item, entry.folderKey, entry.item.steps[stepKey]);
+      }
       saveToLocalStorage();
       reRenderWeeklyContent();
     });
@@ -2786,10 +2813,15 @@ function buildFolderListView(folderKey, folder, data) {
         if (!targetItem.steps) targetItem.steps = {};
         targetItem.steps[stepKey] = e.target.checked;
 
+        if (stepKey === 'publish') {
+          handlePublishToggle(targetItem, fKey, e.target.checked);
+        }
+
         var lbl = e.target.closest('.step-checkbox');
         if (e.target.checked) { lbl.classList.add('checked'); } else { lbl.classList.remove('checked'); }
 
         saveToLocalStorage();
+        if (stepKey === 'publish') { reRenderWeeklyContent(); }
       });
     });
 
@@ -2906,7 +2938,9 @@ function createFolderContentCard(item, folderKey, itemIdx, data) {
       var targetItem = _dashboardData.projects['weekly-content'].contentFolders[fKey].items[idx];
       if (!targetItem.steps) targetItem.steps = {};
       targetItem.steps[stepKey] = e.target.checked;
-
+      if (stepKey === 'publish') {
+        handlePublishToggle(targetItem, fKey, e.target.checked);
+      }
       saveToLocalStorage();
       reRenderWeeklyContent();
     });
