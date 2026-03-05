@@ -1210,6 +1210,42 @@
   .calendar-row-step-dot:hover { background: rgba(255,255,255,0.25); }
   .calendar-row-step-dot.done:hover { background: #16a34a; }
   .calendar-row-step-dot[title] { cursor: pointer; }
+
+  /* Archive button in week header */
+  .calendar-archive-btn {
+    font-size: 11px;
+    padding: 2px 10px;
+    border-radius: 4px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .calendar-archive-btn:hover {
+    border-color: var(--amber);
+    color: var(--amber);
+  }
+  .calendar-archive-btn.is-archived {
+    color: var(--green);
+    border: none;
+    cursor: default;
+    font-size: 11px;
+    padding: 2px 10px;
+  }
+
+  /* Archived content rows */
+  .calendar-content-row.archived {
+    opacity: 0.5;
+  }
+  .calendar-row-archived-label {
+    color: var(--green);
+    font-size: 11px;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
   .calendar-unscheduled {
     margin-top: 16px;
     padding-top: 16px;
@@ -2234,34 +2270,51 @@ function generateContentPath(folderKey, title) {
   return '00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/' + folderName + '/' + safeName + '.md';
 }
 
-function generateArchivePath(title, date) {
-  var safeName = (title || 'Untitled').replace(/[/\\:*?"<>|]/g, '').replace(/\s+/g, ' ').trim();
-  return '00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Archive/' + safeName + ' PUB (' + date + ').md';
-}
+// ── Week Archive ──
+// Archives all content for a week: moves files to Archive/ via Obsidian REST API
+function archiveWeek(weekOf, project) {
+  var itemsByFolder = getItemsForWeek(project, weekOf);
+  var toArchive = [];
 
-function handlePublishToggle(item, folderKey, isPublished) {
-  // Briefs are control documents, not publishable content
-  if (folderKey === 'briefs') return;
+  FOLDER_ORDER.forEach(function(fk) {
+    (itemsByFolder[fk] || []).forEach(function(entry) {
+      if (entry.item.archived) return; // Already archived
+      if (entry.folderKey === 'briefs') return; // Skip briefs
+      toArchive.push(entry);
+    });
+  });
 
-  if (isPublished) {
-    var today = new Date().toISOString().slice(0, 10);
-    var fromPath = item.path;
-    item.publishedDate = today;
-    item.originalPath = item.path;
-    item.path = generateArchivePath(item.title, today);
-    // Move file on disk via Obsidian REST API
-    moveFileViaObsidian(fromPath, item.path);
-  } else {
-    // Unpublish: move file back to original folder
-    if (item.originalPath) {
-      var fromPath = item.path;
-      var toPath = item.originalPath;
-      item.path = item.originalPath;
-      moveFileViaObsidian(fromPath, toPath);
-    }
-    delete item.publishedDate;
-    delete item.originalPath;
+  if (toArchive.length === 0) {
+    showArchiveNotice('No files to archive for this week.', 'warning');
+    return;
   }
+
+  var weekLabel = '';
+  (project.calendar || []).forEach(function(w) {
+    if (w.weekOf === weekOf) weekLabel = w.weekLabel || weekOf;
+  });
+
+  if (!confirm('Archive ' + toArchive.length + ' file' + (toArchive.length > 1 ? 's' : '') + ' for ' + weekLabel + '?')) return;
+
+  var today = new Date().toISOString().slice(0, 10);
+
+  toArchive.forEach(function(entry) {
+    var item = entry.item;
+    var fromPath = item.path;
+    var safeName = (item.title || 'Untitled').replace(/[/\\:*?"<>|]/g, '').replace(/\s+/g, ' ').trim();
+    var archivePath = '00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Archive/' + safeName + ' PUB (' + today + ').md';
+
+    item.archived = true;
+    item.archivedDate = today;
+    item.originalPath = fromPath;
+    item.path = archivePath;
+
+    moveFileViaObsidian(fromPath, archivePath);
+  });
+
+  saveToLocalStorage();
+  reRenderWeeklyContent();
+  showArchiveNotice(toArchive.length + ' file' + (toArchive.length > 1 ? 's' : '') + ' archived.', 'success');
 }
 
 // ── Obsidian Local REST API Integration ──
@@ -2578,12 +2631,30 @@ function buildWeekCard(week, weekIdx, itemsByFolder, project, data) {
     });
   });
 
+  // Check archive state
+  var archivedCount = 0;
+  FOLDER_ORDER.forEach(function(fk) {
+    (itemsByFolder[fk] || []).forEach(function(entry) {
+      if (entry.item.archived) archivedCount++;
+    });
+  });
+  var allArchived = itemCount > 0 && archivedCount === itemCount;
+
   // Header
   var header = document.createElement('div');
   header.className = 'calendar-week-header';
   var pillarClass = getPillarClass(week.pillar);
   var topicDisplay = week.topic || 'Click to set topic';
   var topicClass = week.topic ? ' has-topic' : '';
+
+  var archiveBtnHtml = '';
+  if (itemCount > 0) {
+    if (allArchived) {
+      archiveBtnHtml = '<span class="calendar-archive-btn is-archived">&#128230; Archived</span>';
+    } else {
+      archiveBtnHtml = '<button class="calendar-archive-btn" data-week-of="' + escapeAttr(week.weekOf) + '">&#128230; Archive</button>';
+    }
+  }
 
   header.innerHTML =
     '<span class="calendar-week-label">' + escapeHtml(week.weekLabel) + '</span>' +
@@ -2593,11 +2664,21 @@ function buildWeekCard(week, weekIdx, itemsByFolder, project, data) {
     '<span class="calendar-week-status">' +
       (itemCount > 0 ? completedItems + '/' + itemCount : 'empty') +
     '</span>' +
+    archiveBtnHtml +
     '<span class="calendar-chevron">&#9660;</span>';
+
+  // Archive button click handler
+  var archiveBtn = header.querySelector('.calendar-archive-btn[data-week-of]');
+  if (archiveBtn) {
+    archiveBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      archiveWeek(week.weekOf, project);
+    });
+  }
 
   // Toggle collapse on header click (but not on editable elements)
   header.addEventListener('click', function(e) {
-    if (e.target.closest('.pillar-badge') || e.target.closest('.avatar-badge') || e.target.closest('.calendar-week-topic')) return;
+    if (e.target.closest('.pillar-badge') || e.target.closest('.avatar-badge') || e.target.closest('.calendar-week-topic') || e.target.closest('.calendar-archive-btn')) return;
     card.classList.toggle('collapsed');
   });
 
@@ -2662,39 +2743,48 @@ function buildWeekCard(week, weekIdx, itemsByFolder, project, data) {
 
 function buildCalendarContentRow(entry, folderKey) {
   var row = document.createElement('div');
-  row.className = 'calendar-content-row';
-
-  var stepDefs = getFolderStepDefs(entry.folderKey);
-  var stepsHtml = '<div class="calendar-row-steps">';
-  stepDefs.forEach(function(s) {
-    var done = entry.item.steps && entry.item.steps[s.key];
-    stepsHtml += '<span class="calendar-row-step-dot' + (done ? ' done' : '') + '" title="' + s.label + (done ? ' \u2713' : '') + '"></span>';
-  });
-  stepsHtml += '</div>';
+  var isArchived = entry.item.archived === true;
+  row.className = 'calendar-content-row' + (isArchived ? ' archived' : '');
 
   var titleText = escapeHtml(entry.item.title || 'Untitled');
   var obsidianLink = entry.item.path ? buildObsidianLink(entry.item.path) : '';
+
+  var trailingHtml;
+  if (isArchived) {
+    // Show archived label instead of step dots
+    var dateLabel = entry.item.archivedDate || '';
+    trailingHtml = '<span class="calendar-row-archived-label">&#128230; Archived ' + escapeHtml(dateLabel) + '</span>';
+  } else {
+    // Show step dots
+    var stepDefs = getFolderStepDefs(entry.folderKey);
+    trailingHtml = '<div class="calendar-row-steps">';
+    stepDefs.forEach(function(s) {
+      var done = entry.item.steps && entry.item.steps[s.key];
+      trailingHtml += '<span class="calendar-row-step-dot' + (done ? ' done' : '') + '" title="' + s.label + (done ? ' \u2713' : '') + '"></span>';
+    });
+    trailingHtml += '</div>';
+  }
 
   row.innerHTML =
     '<span class="calendar-row-icon">' + (FOLDER_ICONS[folderKey] || '') + '</span>' +
     '<span class="calendar-row-type">' + (FOLDER_NAMES[folderKey] || folderKey) + '</span>' +
     '<span class="calendar-row-title">' + (obsidianLink ? '<a href="' + escapeAttr(obsidianLink) + '" title="Open in Obsidian">' + titleText + '</a>' : titleText) + '</span>' +
-    stepsHtml;
+    trailingHtml;
 
-  // Click step dots to toggle completion
-  row.querySelectorAll('.calendar-row-step-dot').forEach(function(dot, si) {
-    dot.addEventListener('click', function(e) {
-      e.stopPropagation();
-      var stepKey = stepDefs[si].key;
-      if (!entry.item.steps) entry.item.steps = {};
-      entry.item.steps[stepKey] = !entry.item.steps[stepKey];
-      if (stepKey === 'publish') {
-        handlePublishToggle(entry.item, entry.folderKey, entry.item.steps[stepKey]);
-      }
-      saveToLocalStorage();
-      reRenderWeeklyContent();
+  // Click step dots to toggle completion (only if not archived)
+  if (!isArchived) {
+    var stepDefs = getFolderStepDefs(entry.folderKey);
+    row.querySelectorAll('.calendar-row-step-dot').forEach(function(dot, si) {
+      dot.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var stepKey = stepDefs[si].key;
+        if (!entry.item.steps) entry.item.steps = {};
+        entry.item.steps[stepKey] = !entry.item.steps[stepKey];
+        saveToLocalStorage();
+        reRenderWeeklyContent();
+      });
     });
-  });
+  }
 
   return row;
 }
@@ -2899,15 +2989,10 @@ function buildFolderListView(folderKey, folder, data) {
         if (!targetItem.steps) targetItem.steps = {};
         targetItem.steps[stepKey] = e.target.checked;
 
-        if (stepKey === 'publish') {
-          handlePublishToggle(targetItem, fKey, e.target.checked);
-        }
-
         var lbl = e.target.closest('.step-checkbox');
         if (e.target.checked) { lbl.classList.add('checked'); } else { lbl.classList.remove('checked'); }
 
         saveToLocalStorage();
-        if (stepKey === 'publish') { reRenderWeeklyContent(); }
       });
     });
 
@@ -3024,9 +3109,6 @@ function createFolderContentCard(item, folderKey, itemIdx, data) {
       var targetItem = _dashboardData.projects['weekly-content'].contentFolders[fKey].items[idx];
       if (!targetItem.steps) targetItem.steps = {};
       targetItem.steps[stepKey] = e.target.checked;
-      if (stepKey === 'publish') {
-        handlePublishToggle(targetItem, fKey, e.target.checked);
-      }
       saveToLocalStorage();
       reRenderWeeklyContent();
     });

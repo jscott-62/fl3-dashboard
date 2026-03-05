@@ -212,11 +212,16 @@ Pulls email list count from GoHighLevel. Credentials in `scripts/.env` (git-igno
 
 All scripts auto-commit and push to GitHub, deploying the update.
 
-### Archive on Publish
+### Archive Week
 
-When a content item's "Publish" checkbox is clicked in the dashboard, two things happen:
-1. **Data update**: The item's path changes to `Weekly-Content/Archive/{title} PUB ({date}).md`, with the original path saved for unpublishing
-2. **File move**: The dashboard calls the Obsidian Local REST API (port 27123) to move the actual `.md` file on disk
+Each week in the calendar view has an **Archive** button. Clicking it moves all content files for that week to `Weekly-Content/Archive/` with the date appended. The Publish checkbox is a normal step tracker and does not move files.
+
+**How it works:**
+1. Click the **📦 Archive** button on a week card header
+2. Confirm the dialog (shows file count)
+3. Files are moved on disk via Obsidian Local REST API (port 27123)
+4. Calendar rows show "📦 Archived {date}" instead of step dots
+5. The button changes to "📦 Archived" (green, non-clickable)
 
 **Requirements**: Obsidian must be running with the Local REST API plugin enabled. On first use, the dashboard prompts for the API key (stored in localStorage as `fl3-obsidian-api-key`). Find the key in Obsidian → Settings → Community Plugins → Local REST API.
 
