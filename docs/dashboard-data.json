@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-04",
+  "lastUpdated": "2026-03-05",
   "projects": {
     "wrong-asset-manifesto": {
       "name": "The Wrong Asset Manifesto",
@@ -337,8 +337,8 @@
               "steps": {
                 "research": true,
                 "write": true,
-                "edit": false,
-                "publish": false
+                "edit": true,
+                "publish": true
               },
               "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Articles/The Playbook Against Your Retirement.md",
               "weekOf": "2026-03-03"
@@ -357,33 +357,6 @@
                 "publish": false
               },
               "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Email/The Playbook Against Your Retirement - Newsletter.md",
-              "weekOf": "2026-03-03"
-            },
-            {
-              "title": "The Playbook Against Your Retirement - Lead Magnet Tie-In",
-              "steps": {
-                "research": true,
-                "write": true,
-                "edit": false,
-                "publish": false
-              },
-              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Email/The Playbook Against Your Retirement - Lead Magnet Tie-In.md",
-              "weekOf": "2026-03-03"
-            }
-          ]
-        },
-        "briefs": {
-          "label": "Briefs",
-          "items": [
-            {
-              "title": "Brief: The Playbook Against Your Retirement",
-              "steps": {
-                "research": true,
-                "write": true,
-                "edit": false,
-                "publish": false
-              },
-              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Briefs/2026-03-03 - The Playbook Against Your Retirement.md",
               "weekOf": "2026-03-03"
             }
           ]
