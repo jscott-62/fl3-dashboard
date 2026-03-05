@@ -354,8 +354,8 @@ window.FL3_DASHBOARD_DATA = {
               "steps": {
                 "research": true,
                 "write": true,
-                "edit": false,
-                "publish": false
+                "edit": true,
+                "publish": true
               },
               "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Email/The Playbook Against Your Retirement - Newsletter.md",
               "weekOf": "2026-03-03"
