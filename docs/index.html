@@ -2298,11 +2298,14 @@ function archiveWeek(weekOf, project) {
 
   var today = new Date().toISOString().slice(0, 10);
 
+  // Use week label as subfolder name (e.g., "Week of Mar 3")
+  var archiveFolder = '00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Archive/' + weekLabel + '/';
+
   toArchive.forEach(function(entry) {
     var item = entry.item;
     var fromPath = item.path;
     var safeName = (item.title || 'Untitled').replace(/[/\\:*?"<>|]/g, '').replace(/\s+/g, ' ').trim();
-    var archivePath = '00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Archive/' + safeName + ' PUB (' + today + ').md';
+    var archivePath = archiveFolder + safeName + ' PUB (' + today + ').md';
 
     item.archived = true;
     item.archivedDate = today;
