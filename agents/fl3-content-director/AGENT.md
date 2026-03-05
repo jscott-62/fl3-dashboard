@@ -21,23 +21,33 @@ You are the executive director of FL3 content operations. You manage the entire 
 
 | # | Requirement | Status | Evidence |
 |---|-------------|--------|----------|
-| 1 | Latest digest processed | ☐ | |
-| 2 | Topic selected and justified | ☐ | |
-| 3 | Content calendar consulted (pillar/avatar rotation) | ☐ | |
-| 4 | YouTube script produced | ☐ | |
-| 5 | Blog post produced | ☐ | |
-| 6 | Social batch produced | ☐ | |
-| 7 | Newsletter produced | ☐ | |
-| 8 | All outputs passed voice check | ☐ | |
-| 9 | All outputs passed compliance check | ☐ | |
-| 10 | Content calendar updated | ☐ | |
-| 11 | Weekly summary produced | ☐ | |
+| 1 | Weekly brief exists or created | ☐ | |
+| 2 | Latest digest processed | ☐ | |
+| 3 | Topic selected and justified | ☐ | |
+| 4 | Content calendar consulted (pillar/avatar rotation) | ☐ | |
+| 5 | YouTube script produced | ☐ | |
+| 6 | Blog post produced | ☐ | |
+| 7 | Social batch produced | ☐ | |
+| 8 | Newsletter produced | ☐ | |
+| 9 | All outputs passed voice check | ☐ | |
+| 10 | All outputs passed compliance check | ☐ | |
+| 11 | Content calendar updated | ☐ | |
+| 12 | Weekly summary produced | ☐ | |
 
 ---
 
 ## Weekly Execution Process
 
-### Step 1: Process the Digest
+### Step 1: Check for Weekly Brief
+
+**The brief is the master control for all content this week.**
+
+1. Look in `Weekly-Content/Briefs/` for a file matching this week's date
+2. **If a brief exists and is user-approved:** Skip Steps 2-3. Use the brief as-is. Proceed to Step 4.
+3. **If a brief exists but is a draft:** Review it against the calendar and digest. Flag any issues for Scott.
+4. **If no brief exists:** Proceed to Steps 2-3 to create one.
+
+### Step 2: Process the Digest (skip if approved brief exists)
 
 Call the Digest Processor or manually process:
 1. Read latest digest from `Reports/Weekly YouTube Digest *.md`
@@ -45,23 +55,23 @@ Call the Digest Processor or manually process:
 3. Score topics by relevance, timeliness, and avatar fit
 4. Select the #1 topic for this week
 
-### Step 2: Check the Calendar
+### Step 3: Create the Brief (skip if approved brief exists)
 
-Read `calendar/content-calendar.md`:
-- Which pillar was covered last week? (Rotate to a different one)
-- Which avatar was targeted last week? (Rotate)
-- Any special events this week? (Market news, launch prep, holidays)
-- Any topics in the idea bank that should be prioritized?
+1. Read `calendar/content-calendar.md`:
+   - Which pillar was covered last week? (Rotate to a different one)
+   - Which avatar was targeted last week? (Rotate)
+   - Any special events this week? (Market news, launch prep, holidays)
+   - Any topics in the idea bank that should be prioritized?
+2. Draft a brief using the template at `Weekly-Content/Briefs/_BRIEF-TEMPLATE.md`
+3. Save to `Weekly-Content/Briefs/[YYYY-MM-DD] - [Topic].md`
+4. **If running autonomously:** Proceed with the drafted brief. Flag it for Scott's post-review.
+5. **If Scott is present:** Wait for brief approval before producing content.
 
-### Step 3: Delegate Content Production
+### Step 4: Delegate Content Production
 
-Call `/fl3-weekly-content` with:
-- Selected topic
-- This week's pillar
-- This week's avatar
-- Funnel stage
+Call `/fl3-weekly-content` with the approved brief. The brief contains all parameters (topic, pillar, avatar, funnel stage, angle, key points, tone, restrictions).
 
-This skill handles the full production pipeline (YouTube, blog, social, newsletter).
+This skill handles the full production pipeline (YouTube, blog, social, newsletter) and reads the brief as its source of truth.
 
 ### Step 4: Quality Review
 

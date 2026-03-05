@@ -36,15 +36,22 @@ Creates long-form blog posts (1,200-2,000 words) for freedomlife3.com in Scott's
 2. `Main/FL3 ZenithPro Data/Freedom Life 3.0 - Complete Business Summary.md`
 3. `Main/FL3 ZenithPro Data/FL3 Business Brief.md`
 
-### Phase 2: Accept Post Parameters
+### Phase 2: Check for Weekly Brief
 
-1. **Source:** YouTube script to convert, topic, digest excerpt, or idea bank
-2. **Target avatar:** Technophobe, Pursuer, Skeptic, or All
-3. **FL3 Pillar:** Which pillar does this reinforce?
+**Always check for a brief first.** Look in `Weekly-Content/Briefs/` for a file matching this week's date.
+
+- **If a brief exists:** Use its angle, key points, avatar hook, stats, CTA, tone, and "Do NOT say" as the master control for this article. The brief overrides any conflicting parameters passed in.
+- **If no brief exists:** Accept parameters as below and proceed normally.
+
+### Phase 3: Accept Post Parameters
+
+1. **Source:** Weekly brief, YouTube script to convert, topic, digest excerpt, or idea bank
+2. **Target avatar:** Technophobe, Pursuer, Skeptic, or All (brief overrides if present)
+3. **FL3 Pillar:** Which pillar does this reinforce? (brief overrides if present)
 4. **Primary keyword:** The main search term to target
-5. **Funnel stage:** Awareness, Education, or Implementation
+5. **Funnel stage:** Awareness, Education, or Implementation (brief overrides if present)
 
-### Phase 3: Write the Post
+### Phase 4: Write the Post
 
 ```markdown
 # [H1: Post Title (with primary keyword)]
@@ -88,7 +95,7 @@ Creates long-form blog posts (1,200-2,000 words) for freedomlife3.com in Scott's
 **Disclaimer:** *This content is for educational purposes only and does not constitute financial advice.*
 ```
 
-### Phase 4: Quality Gates
+### Phase 5: Quality Gates
 
 1. Run `fl3-voice-check`
 2. Run `fl3-compliance-check`

@@ -35,15 +35,22 @@ Creates 5-10 platform-specific social posts from a single content source. Adapts
 1. `Main/Scott MacMillan Voice DNA/Voice DNA/01-VOICE-AND-TONE.md` (platform voice variations)
 2. `Main/FL3 ZenithPro Data/Freedom Life 3.0 - Complete Business Summary.md`
 
-### Phase 2: Accept Parameters
+### Phase 2: Check for Weekly Brief
 
-1. **Content source:** YouTube script, blog post, topic, or free-standing
-2. **Target avatar:** Technophobe, Pursuer, Skeptic, or All
+**Always check for a brief first.** Look in `Weekly-Content/Briefs/` for a file matching this week's date.
+
+- **If a brief exists:** Use its angle, key points, avatar hook, stats, CTA, tone, and "Do NOT say" as the master control for all social posts. The brief overrides any conflicting parameters passed in.
+- **If no brief exists:** Accept parameters as below and proceed normally.
+
+### Phase 3: Accept Parameters
+
+1. **Content source:** Weekly brief, YouTube script, blog post, topic, or free-standing
+2. **Target avatar:** Technophobe, Pursuer, Skeptic, or All (brief overrides if present)
 3. **Platforms:** Instagram, LinkedIn, Facebook, or All
 4. **Post count:** How many per platform (default: 2-3 per platform)
 5. **Purpose:** Awareness, engagement, lead gen, launch promotion
 
-### Phase 3: Generate Platform Posts
+### Phase 4: Generate Platform Posts
 
 **Instagram Format:**
 ```markdown
@@ -92,7 +99,7 @@ Creates 5-10 platform-specific social posts from a single content source. Adapts
 [Optional: Link to blog/YouTube]
 ```
 
-### Phase 4: Quality Gates
+### Phase 5: Quality Gates
 
 1. Run `fl3-voice-check` on all posts
 2. Verify platform-specific formatting

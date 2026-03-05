@@ -42,7 +42,15 @@ This orchestrator calls these skills in sequence:
 
 ## Complete Workflow
 
-### Phase 1: Intake
+### Phase 1: Check for Weekly Brief
+
+**Always check for a brief first.** The brief is the single source of truth for the week's content.
+
+1. Look for a brief at `Weekly-Content/Briefs/[YYYY-MM-DD] - [Topic].md` matching this week's date
+2. **If a brief exists:** Read it completely. Use its angle, key points, avatar hook, stats, CTA, tone notes, and "Do NOT say" list as the master control for ALL content produced. Skip Phase 2 (Topic Selection) entirely.
+3. **If no brief exists:** Draft one from the digest/calendar/topic, save it to `Weekly-Content/Briefs/`, then proceed. The brief template is at `Weekly-Content/Briefs/_BRIEF-TEMPLATE.md`.
+
+### Phase 2: Intake (only if no brief exists)
 
 1. Read latest YouTube digest from `Reports/Weekly YouTube Digest *.md`
    (Or accept a specific topic if not using the digest)
@@ -52,7 +60,7 @@ This orchestrator calls these skills in sequence:
    - Any special events or launch activities
 3. Load Voice DNA and business context
 
-### Phase 2: Topic Selection
+### Phase 3: Topic Selection (only if no brief exists)
 
 1. If using the digest, identify the 1-2 strongest topics that:
    - Align with this week's pillar focus
@@ -61,10 +69,11 @@ This orchestrator calls these skills in sequence:
    - Build toward course purchase (if in pre-launch or launch window)
 2. Select primary topic and framing angle
 3. Determine funnel stage (awareness, education, implementation)
+4. **Create the brief** from this selection and save to `Weekly-Content/Briefs/`
 
-### Phase 3: Content Production Pipeline
+### Phase 4: Content Production Pipeline
 
-Execute in this order (each output feeds the next):
+Execute in this order (each output feeds the next). **Pass the brief to each skill.**
 
 **Step 1:** Call `/fl3-youtube-script` with:
 - Selected topic
@@ -88,14 +97,14 @@ Execute in this order (each output feeds the next):
 - YouTube video and blog post links
 - Same avatar focus
 
-### Phase 4: Quality Review
+### Phase 5: Quality Review
 
 1. Run `/fl3-voice-check` on all 4 outputs
 2. Run `/fl3-compliance-check` on all 4 outputs
 3. If any piece scores below 56/70 on voice check, revise before delivery
 4. If any CRITICAL compliance issue, fix immediately
 
-### Phase 5: Delivery and Calendar Update
+### Phase 6: Delivery and Calendar Update
 
 1. Save all outputs to their respective directories:
    - YouTube script: `Weekly-Content/YouTube/[date]-[title].md`

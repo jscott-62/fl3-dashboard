@@ -36,13 +36,20 @@ Produces a story-driven weekly newsletter for the Freedom Life 3.0 Beehiiv audie
 2. `Main/FL3 ZenithPro Data/Freedom Life 3.0 - Complete Business Summary.md`
 3. This week's YouTube script and blog post (if available)
 
-### Phase 2: Accept Parameters
+### Phase 2: Check for Weekly Brief
 
-1. **Content context:** This week's topic, YouTube video link, blog post link
+**Always check for a brief first.** Look in `Weekly-Content/Briefs/` for a file matching this week's date.
+
+- **If a brief exists:** Use its angle, key points, avatar hook, stats, CTA, tone, and "Do NOT say" as the master control for this newsletter. The brief overrides any conflicting parameters passed in.
+- **If no brief exists:** Accept parameters as below and proceed normally.
+
+### Phase 3: Accept Parameters
+
+1. **Content context:** Weekly brief, this week's topic, YouTube video link, blog post link
 2. **Newsletter type:** Weekly regular, launch announcement, special broadcast
-3. **Target avatar:** Primary avatar for this week (or All)
+3. **Target avatar:** Primary avatar for this week (or All) (brief overrides if present)
 
-### Phase 3: Write the Newsletter
+### Phase 4: Write the Newsletter
 
 ```markdown
 ## FL3 NEWSLETTER: [Date]
@@ -83,7 +90,7 @@ J. Scott
 *This is an educational newsletter. Nothing here is financial advice. Past performance does not guarantee future results.*
 ```
 
-### Phase 4: Quality Gates
+### Phase 5: Quality Gates
 
 1. Run `fl3-voice-check`
 2. Run `fl3-compliance-check`

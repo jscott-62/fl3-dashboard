@@ -39,16 +39,23 @@ Produces full, camera-ready YouTube scripts in Scott MacMillan's voice. Each scr
 3. `Main/FL3 ZenithPro Data/FL3 Business Brief.md` (4 Pillars)
 4. `Main/FL3 ZenithPro Data/SILENT TECHNOPHOBE - Content Ecosystem Architecture v2.0.md` (epiphany units)
 
-### Phase 2: Accept Video Parameters
+### Phase 2: Check for Weekly Brief
 
-1. **Topic:** The main subject of the video
-2. **Source:** YouTube digest insight, blog post conversion, standalone topic, or idea bank
-3. **Target avatar:** Technophobe, Pursuer, Skeptic, or All
-4. **FL3 Pillar:** Which of the 4 Pillars does this reinforce?
-5. **Funnel stage:** Awareness (no Bitcoin), Education (Bitcoin named), Implementation
+**Always check for a brief first.** Look in `Weekly-Content/Briefs/` for a file matching this week's date.
+
+- **If a brief exists:** Use its angle, key points, avatar hook, stats, CTA, tone, and "Do NOT say" as the master control for this script. The brief overrides any conflicting parameters passed in.
+- **If no brief exists:** Accept parameters as below and proceed normally.
+
+### Phase 3: Accept Video Parameters
+
+1. **Topic:** The main subject of the video (brief overrides if present)
+2. **Source:** Weekly brief, YouTube digest insight, blog post conversion, standalone topic, or idea bank
+3. **Target avatar:** Technophobe, Pursuer, Skeptic, or All (brief overrides if present)
+4. **FL3 Pillar:** Which of the 4 Pillars does this reinforce? (brief overrides if present)
+5. **Funnel stage:** Awareness (no Bitcoin), Education (Bitcoin named), Implementation (brief overrides if present)
 6. **Target length:** Short (8-10 min), Standard (14-18 min), Long (20-25 min)
 
-### Phase 3: Write the Script
+### Phase 4: Write the Script
 
 Follow this structure:
 
@@ -135,7 +142,7 @@ X:XX - [Section 1 title]
 **Tags:** [10-15 relevant tags]
 ```
 
-### Phase 4: Quality Gates
+### Phase 5: Quality Gates
 
 1. Run `fl3-voice-check` on the script
 2. Run `fl3-compliance-check` on the script

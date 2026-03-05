@@ -114,6 +114,8 @@ Business-Suite/                    <-- Git repo root (deploys to GitHub Pages)
     fl3-digest-processor/          <-- Digest intake agent
 
   Weekly-Content/                  <-- All weekly content (scripts, articles, posts)
+    Briefs/                        <-- Weekly content briefs (master control per week)
+      _BRIEF-TEMPLATE.md           <-- Template for new briefs
     YouTube/                       <-- YouTube scripts and video content
     Articles/                      <-- Blog articles and written content
     Social Media/                  <-- Social media posts
@@ -139,10 +141,41 @@ Weekly content lives inside Business Suite. Other content in vault project folde
 | Blog articles | `Weekly-Content/Articles/` (in Business Suite) |
 | Social media | `Weekly-Content/Social Media/` (in Business Suite) |
 | Email/newsletters | `Weekly-Content/Email/` (in Business Suite) |
+| Weekly briefs | `Weekly-Content/Briefs/` (in Business Suite) |
 | Sales page | `Projects/The-Great-Catch-Up/Sales-Page/` |
 | Email sequences | `Projects/The-Great-Catch-Up/Email-Sequences/` |
 | Facebook ads | `Projects/Wrong-Asset-Manifesto/Facebook-Ads/` |
 | Webinar assets | `Projects/Webinar/` |
+
+## Weekly Content Brief Workflow
+
+Every week's content is controlled by a **Weekly Content Brief**, a single document that defines the angle, key points, avatar hook, data, CTA, tone, and restrictions for all content produced that week. Edit the brief, regenerate the content.
+
+### How It Works
+
+1. **Brief is created first.** Either drafted by Claude from the calendar/digest and reviewed by Scott, or written directly by Scott.
+2. **Brief lives at** `Weekly-Content/Briefs/[YYYY-MM-DD] - [Topic].md`
+3. **All content skills read the brief first.** The blog, social, newsletter, and YouTube skills all check for a brief before generating content. The brief overrides any other parameters.
+4. **Edit one file, regenerate everything.** If Scott wants to change the angle, add a stat, or kill a point, he edits the brief in Obsidian and says "regenerate from the brief."
+
+### Brief Template
+
+The template is at `Weekly-Content/Briefs/_BRIEF-TEMPLATE.md` and contains:
+- **The Angle:** The specific take (not just the pillar, but the argument)
+- **Key Points (3-5):** Arguments every piece of content should make
+- **Avatar Hook:** How you're speaking to this avatar, what pain, what language
+- **Key Stats / Data:** Numbers to cite consistently
+- **CTA:** What you're driving to
+- **Tone Notes:** Any voice adjustments
+- **Do NOT Say:** Words, phrases, or claims to avoid
+- **Content Pieces to Generate:** Checkboxes for what to produce
+- **Notes:** Stories, competitors, news events, previous content to reference
+
+### Naming Convention
+
+`[YYYY-MM-DD] - [Topic].md` where the date matches the `weekOf` field in the calendar.
+
+Example: `2026-03-03 - The Playbook Against Your Retirement.md`
 
 ## Dashboard
 

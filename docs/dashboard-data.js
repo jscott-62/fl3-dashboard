@@ -361,6 +361,22 @@ window.FL3_DASHBOARD_DATA = {
               "weekOf": "2026-03-03"
             }
           ]
+        },
+        "briefs": {
+          "label": "Briefs",
+          "items": [
+            {
+              "title": "Brief: The Playbook Against Your Retirement",
+              "steps": {
+                "research": true,
+                "write": true,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Briefs/2026-03-03 - The Playbook Against Your Retirement.md",
+              "weekOf": "2026-03-03"
+            }
+          ]
         }
       }
     },
