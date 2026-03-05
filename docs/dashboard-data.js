@@ -359,6 +359,17 @@ window.FL3_DASHBOARD_DATA = {
               },
               "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Email/The Playbook Against Your Retirement - Newsletter.md",
               "weekOf": "2026-03-03"
+            },
+            {
+              "title": "The Playbook Against Your Retirement - Lead Magnet Tie-In",
+              "steps": {
+                "research": true,
+                "write": true,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Email/The Playbook Against Your Retirement - Lead Magnet Tie-In.md",
+              "weekOf": "2026-03-03"
             }
           ]
         },
