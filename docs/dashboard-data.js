@@ -206,8 +206,11 @@ window.FL3_DASHBOARD_DATA = {
                 "edit": true,
                 "publish": true
               },
-              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/YouTube/Pillar #1 Vid PUB (2026-02-23).md",
-              "weekOf": "2026-02-24"
+              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Archive/Pillar #1 Vid PUB (2026-03-05).md",
+              "weekOf": "2026-02-24",
+              "archived": true,
+              "archivedDate": "2026-03-05",
+              "originalPath": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/YouTube/Pillar #1 Vid PUB (2026-02-23).md"
             },
             {
               "title": "Pillar #2 Vid",
@@ -297,8 +300,11 @@ window.FL3_DASHBOARD_DATA = {
                 "edit": true,
                 "publish": true
               },
-              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Articles/The Risk Flip What's Really Dangerous for Your Retirement PUB (2026-02-23).md",
-              "weekOf": "2026-02-24"
+              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Archive/The Risk Flip What's Really Dangerous for Your Retirement PUB (2026-03-05).md",
+              "weekOf": "2026-02-24",
+              "archived": true,
+              "archivedDate": "2026-03-05",
+              "originalPath": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Articles/The Risk Flip What's Really Dangerous for Your Retirement PUB (2026-02-23).md"
             },
             {
               "title": "Why Your Savings Account Is A Trap",
@@ -308,8 +314,11 @@ window.FL3_DASHBOARD_DATA = {
                 "edit": true,
                 "publish": true
               },
-              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Articles/Why Your Savings Account Is A Trap PUB (2026-02-23).md",
-              "weekOf": "2026-02-24"
+              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Archive/Why Your Savings Account Is A Trap PUB (2026-03-05).md",
+              "weekOf": "2026-02-24",
+              "archived": true,
+              "archivedDate": "2026-03-05",
+              "originalPath": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Articles/Why Your Savings Account Is A Trap PUB (2026-02-23).md"
             },
             {
               "title": "Why Everything Costs More When Technology Makes It Cheaper",
@@ -319,8 +328,11 @@ window.FL3_DASHBOARD_DATA = {
                 "edit": true,
                 "publish": true
               },
-              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Articles/Why Everything Costs More When Technology Makes It Cheaper PUB (2026-02-26).md",
-              "weekOf": "2026-02-24"
+              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Archive/Why Everything Costs More When Technology Makes It Cheaper PUB (2026-03-05).md",
+              "weekOf": "2026-02-24",
+              "archived": true,
+              "archivedDate": "2026-03-05",
+              "originalPath": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Articles/Why Everything Costs More When Technology Makes It Cheaper PUB (2026-02-26).md"
             },
             {
               "title": "Is Bitcoin in Its \"iPhone 3\" Moment? Why the Best is Yet to Come",
