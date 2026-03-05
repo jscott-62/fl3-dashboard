@@ -21,6 +21,7 @@ The traditional financial advice industry isn't just giving bad advice. It's run
 3. **The real math on purchasing power.** At 7% returns minus 1.5% fees minus 8% real inflation, your purchasing power shrinks by ~2.5% every year. The quarterly statement still looks green, but you're losing ground.
 4. **Caution weaponized.** For the Pursuer (someone who researches thoroughly before acting), the industry exploits that instinct by feeding them just enough complexity to keep researching forever without ever looking elsewhere.
 5. **The question that changes everything.** "What are the incentives behind this recommendation?" Ask your advisor that at the next meeting. Their response tells you everything.
+6. Financial advisors aren't bad people, they are just playing from an old playbook
 
 ---
 
@@ -65,11 +66,11 @@ System-blame framing. Angry on their behalf, not preachy. More "let me show you 
 
 ## Content Pieces to Generate
 
-- [ ] YouTube script
+- [x] YouTube script
 - [x] Blog article
 - [x] Social media batch (5 posts: 2 Facebook, 1 Instagram carousel, 1 LinkedIn, 1 short video script)
 - [x] Email / Newsletter
-- [ ] Lead magnet tie-in
+- [x] Lead magnet tie-in
 
 ---
 

@@ -19,7 +19,7 @@
 
 **Preview Text:** They're not bad people. It's a bad playbook.
 
-**From:** Scott MacMillan
+**From:** J. Scott MacMillan
 
 ---
 

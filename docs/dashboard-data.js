@@ -221,7 +221,7 @@ window.FL3_DASHBOARD_DATA = {
                 "edit": false,
                 "publish": false
               },
-              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/YouTube/Pillar #2 Vid.md",
+              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Week of Mar 3/Pillar #2 Vid.md",
               "weekOf": "2026-03-03"
             },
             {
@@ -233,7 +233,7 @@ window.FL3_DASHBOARD_DATA = {
                 "edit": false,
                 "publish": false
               },
-              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/YouTube/Why Everything Costs More When Technology Makes It Cheaper.md",
+              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Week of Mar 24/Why Everything Costs More When Technology Makes It Cheaper.md",
               "weekOf": "2026-03-24"
             },
             {
@@ -245,7 +245,7 @@ window.FL3_DASHBOARD_DATA = {
                 "edit": false,
                 "publish": false
               },
-              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/YouTube/The Jane Street Allegations and the Paper Bitcoin Trap Is the Game Rigged.md",
+              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Week of Mar 10/The Jane Street Allegations and the Paper Bitcoin Trap - Is the Game Rigged?.md",
               "weekOf": "2026-03-10"
             },
             {
@@ -257,7 +257,7 @@ window.FL3_DASHBOARD_DATA = {
                 "edit": true,
                 "publish": true
               },
-              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/YouTube/Missles Vs. Money.md"
+              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Unscheduled/Missiles Vs. Money.md"
             }
           ]
         },
@@ -273,7 +273,7 @@ window.FL3_DASHBOARD_DATA = {
                 "edit": true,
                 "publish": true
               },
-              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Social Media/Power Content HeyGen Vid - The HiddenRules Of Money.md"
+              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Unscheduled/Power Content HeyGen Vid.md"
             },
             {
               "title": "The Playbook Against Your Retirement - Social Batch",
@@ -284,7 +284,7 @@ window.FL3_DASHBOARD_DATA = {
                 "edit": false,
                 "publish": false
               },
-              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Social Media/The Playbook Against Your Retirement - Social Batch.md",
+              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Week of Mar 3/The Playbook Against Your Retirement - Social Batch.md",
               "weekOf": "2026-03-03"
             }
           ]
@@ -342,7 +342,7 @@ window.FL3_DASHBOARD_DATA = {
                 "edit": false,
                 "publish": false
               },
-              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Articles/Is Bitcoin in Its \"iPhone 3\" Moment? Why the Best is Yet to Come.md",
+              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Week of Mar 17/Is Bitcoin in Its \"iPhone 3\" Moment? Why the Best is Yet to Come.md",
               "weekOf": "2026-03-17"
             },
             {
@@ -353,7 +353,7 @@ window.FL3_DASHBOARD_DATA = {
                 "edit": true,
                 "publish": true
               },
-              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Articles/The Playbook Against Your Retirement.md",
+              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Week of Mar 3/The Playbook Against Your Retirement.md",
               "weekOf": "2026-03-03"
             }
           ]
@@ -369,7 +369,7 @@ window.FL3_DASHBOARD_DATA = {
                 "edit": true,
                 "publish": true
               },
-              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Email/The Playbook Against Your Retirement - Newsletter.md",
+              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Week of Mar 3/The Playbook Against Your Retirement - Newsletter.md",
               "weekOf": "2026-03-03"
             }
           ]

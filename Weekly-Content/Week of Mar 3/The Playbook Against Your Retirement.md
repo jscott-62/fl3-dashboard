@@ -1,4 +1,6 @@
-# The Playbook They're Running Against Your Retirement
+https://medium.com/freedom-life-3-0/the-playbook-theyre-running-against-your-retirement-21bad9392d2c
+
+The Playbook They're Running Against Your Retirement
 
 You've done the right things.
 

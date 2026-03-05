@@ -2264,10 +2264,16 @@ var FOLDER_ICONS = { 'youtube': '🎬', 'social-media': '📱', 'articles': '�
 
 var FOLDER_NAMES = { 'youtube': 'YouTube', 'social-media': 'Social Media', 'articles': 'Articles', 'email': 'Email', 'briefs': 'Briefs', 'archive': 'Archive' };
 
-function generateContentPath(folderKey, title) {
-  var folderName = FOLDER_NAMES[folderKey] || folderKey;
+function generateContentPath(folderKey, title, weekOf) {
   var safeName = (title || 'Untitled').replace(/[/\\:*?"<>|]/g, '').replace(/\s+/g, ' ').trim();
-  return '00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/' + folderName + '/' + safeName + '.md';
+  var weekFolder = 'Unscheduled';
+  if (weekOf) {
+    var calendar = (_dashboardData.projects['weekly-content'] || {}).calendar || [];
+    calendar.forEach(function(w) {
+      if (w.weekOf === weekOf) weekFolder = w.weekLabel;
+    });
+  }
+  return '00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/' + weekFolder + '/' + safeName + '.md';
 }
 
 // ── Week Archive ──
@@ -2424,7 +2430,7 @@ function makeEditableTitle(titleEl, folderKey, itemIdx) {
       if (!newTitle) newTitle = currentTitle; // revert if empty
       if (newTitle !== currentTitle) {
         item.title = newTitle;
-        item.path = generateContentPath(folderKey, newTitle);
+        item.path = generateContentPath(folderKey, newTitle, item.weekOf);
         saveToLocalStorage();
       }
       reRenderWeeklyContent();
@@ -2952,7 +2958,7 @@ function buildFolderListView(folderKey, folder, data) {
 
     // Auto-generate path if missing
     if (!item.path) {
-      item.path = generateContentPath(folderKey, item.title);
+      item.path = generateContentPath(folderKey, item.title, item.weekOf);
     }
 
     // Title (click-to-edit)
@@ -3081,7 +3087,7 @@ function createFolderContentCard(item, folderKey, itemIdx, data) {
 
   // Auto-generate path if missing
   if (!item.path) {
-    item.path = generateContentPath(folderKey, item.title);
+    item.path = generateContentPath(folderKey, item.title, item.weekOf);
   }
 
   var titleHtml = '<span class="content-title-editable" data-folder="' + folderKey + '" data-idx="' + itemIdx + '">' + escapeHtml(item.title || 'Untitled') + '</span>';

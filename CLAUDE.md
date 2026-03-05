@@ -114,14 +114,14 @@ Business-Suite/                    <-- Git repo root (deploys to GitHub Pages)
     fl3-strategy-advisor/          <-- Strategic planning agent
     fl3-digest-processor/          <-- Digest intake agent
 
-  Weekly-Content/                  <-- All weekly content (scripts, articles, posts)
+  Weekly-Content/                  <-- All weekly content, organized by week
     Briefs/                        <-- Weekly content briefs (master control per week)
       _BRIEF-TEMPLATE.md           <-- Template for new briefs
-    YouTube/                       <-- YouTube scripts and video content
-    Articles/                      <-- Blog articles and written content
-    Social Media/                  <-- Social media posts
-    Email/                         <-- Email campaigns and newsletters
-    Archive/                       <-- Published content (moved here on publish)
+    Week of Mar 3/                 <-- Content for a specific week (all types together)
+    Week of Mar 10/                <-- Matches dashboard calendar view
+    Unscheduled/                   <-- Content not assigned to a week
+    Archive/                       <-- Archived content, grouped by week
+      Week of Feb 24/              <-- Archived week subfolder
 
   calendar/                        <-- Operational planning
     content-calendar.md            <-- Content calendar + rotation
@@ -135,16 +135,14 @@ Business-Suite/                    <-- Git repo root (deploys to GitHub Pages)
 
 ### Content Output Locations
 
-Weekly content lives inside Business Suite. Other content in vault project folders:
+Weekly content is organized by week (matching the dashboard calendar view). Other content in vault project folders:
 
 | Content Type | Save Location |
 |-------------|---------------|
-| YouTube scripts | `Weekly-Content/YouTube/` (in Business Suite) |
-| Blog articles | `Weekly-Content/Articles/` (in Business Suite) |
-| Social media | `Weekly-Content/Social Media/` (in Business Suite) |
-| Email/newsletters | `Weekly-Content/Email/` (in Business Suite) |
-| Weekly briefs | `Weekly-Content/Briefs/` (in Business Suite) |
-| Published content | `Weekly-Content/Archive/` (moved here on publish) |
+| All weekly content | `Weekly-Content/Week of {date}/` (one folder per week) |
+| Weekly briefs | `Weekly-Content/Briefs/` |
+| Unscheduled content | `Weekly-Content/Unscheduled/` |
+| Archived content | `Weekly-Content/Archive/Week of {date}/` |
 | Sales page | `Projects/The-Great-Catch-Up/Sales-Page/` |
 | Email sequences | `Projects/The-Great-Catch-Up/Email-Sequences/` |
 | Facebook ads | `Projects/Wrong-Asset-Manifesto/Facebook-Ads/` |
