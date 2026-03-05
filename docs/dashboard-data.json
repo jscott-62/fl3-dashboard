@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-02",
+  "lastUpdated": "2026-03-04",
   "projects": {
     "wrong-asset-manifesto": {
       "name": "The Wrong Asset Manifesto",
@@ -270,6 +270,18 @@
                 "publish": true
               },
               "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Social Media/Power Content HeyGen Vid - The HiddenRules Of Money.md"
+            },
+            {
+              "title": "The Playbook Against Your Retirement - Social Batch",
+              "steps": {
+                "research": true,
+                "write": true,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Social Media/The Playbook Against Your Retirement - Social Batch.md",
+              "weekOf": "2026-03-03"
             }
           ]
         },
@@ -319,12 +331,35 @@
               },
               "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Articles/Is Bitcoin in Its \"iPhone 3\" Moment? Why the Best is Yet to Come.md",
               "weekOf": "2026-03-17"
+            },
+            {
+              "title": "The Playbook They're Running Against Your Retirement",
+              "steps": {
+                "research": true,
+                "write": true,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Articles/The Playbook Against Your Retirement.md",
+              "weekOf": "2026-03-03"
             }
           ]
         },
         "email": {
           "label": "Email",
-          "items": []
+          "items": [
+            {
+              "title": "The Playbook Against Your Retirement - Newsletter",
+              "steps": {
+                "research": true,
+                "write": true,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Email/The Playbook Against Your Retirement - Newsletter.md",
+              "weekOf": "2026-03-03"
+            }
+          ]
         }
       }
     },
