@@ -120,6 +120,78 @@
       "status": "active",
       "description": "Ongoing content production across all platforms",
       "folder": "Projects/Weekly-Content/",
+      "calendar": [
+        {
+          "weekOf": "2026-02-17",
+          "weekLabel": "Week of Feb 17",
+          "pillar": "1: Math",
+          "avatar": "Technophobe",
+          "topic": "The Invisible Inflation Theft"
+        },
+        {
+          "weekOf": "2026-02-24",
+          "weekLabel": "Week of Feb 24",
+          "pillar": "1: Math",
+          "avatar": "All",
+          "topic": "Pillar #1: The 12% Theft"
+        },
+        {
+          "weekOf": "2026-03-03",
+          "weekLabel": "Week of Mar 3",
+          "pillar": "2: Trad Advice",
+          "avatar": "Pursuer",
+          "topic": "The Playbook Against Your Retirement"
+        },
+        {
+          "weekOf": "2026-03-10",
+          "weekLabel": "Week of Mar 10",
+          "pillar": "4: Risk Flip",
+          "avatar": "All",
+          "topic": "The Paper Bitcoin Trap"
+        },
+        {
+          "weekOf": "2026-03-17",
+          "weekLabel": "Week of Mar 17",
+          "pillar": "3: Vehicles",
+          "avatar": "Skeptic",
+          "topic": "Bitcoin's iPhone Moment"
+        },
+        {
+          "weekOf": "2026-03-24",
+          "weekLabel": "Week of Mar 24",
+          "pillar": "1: Math",
+          "avatar": "Technophobe",
+          "topic": "Why Everything Costs More"
+        },
+        {
+          "weekOf": "2026-03-31",
+          "weekLabel": "Week of Mar 31",
+          "pillar": "2: Trad Advice",
+          "avatar": "Skeptic",
+          "topic": ""
+        },
+        {
+          "weekOf": "2026-04-07",
+          "weekLabel": "Week of Apr 7",
+          "pillar": "4: Risk Flip",
+          "avatar": "Pursuer",
+          "topic": ""
+        },
+        {
+          "weekOf": "2026-04-14",
+          "weekLabel": "Week of Apr 14",
+          "pillar": "3: Vehicles",
+          "avatar": "All",
+          "topic": ""
+        },
+        {
+          "weekOf": "2026-04-21",
+          "weekLabel": "Week of Apr 21",
+          "pillar": "1: Math",
+          "avatar": "Pursuer",
+          "topic": ""
+        }
+      ],
       "contentFolders": {
         "youtube": {
           "label": "YouTube",
@@ -133,7 +205,8 @@
                 "edit": true,
                 "publish": true
               },
-              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/Pillar #1 Vid PUB (2026-02-23).md"
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/Pillar #1 Vid PUB (2026-02-23).md",
+              "weekOf": "2026-02-24"
             },
             {
               "title": "Pillar #2 Vid",
@@ -144,7 +217,8 @@
                 "edit": false,
                 "publish": false
               },
-              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/Pillar #2 Vid.md"
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/Pillar #2 Vid.md",
+              "weekOf": "2026-03-03"
             },
             {
               "title": "Why Everything Costs More When Technology Makes It Cheaper",
@@ -155,7 +229,8 @@
                 "edit": false,
                 "publish": false
               },
-              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/Why Everything Costs More When Technology Makes It Cheaper.md"
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/Why Everything Costs More When Technology Makes It Cheaper.md",
+              "weekOf": "2026-03-24"
             },
             {
               "title": "The Jane Street Allegations and the Paper Bitcoin Trap: Is the Game Rigged?",
@@ -166,7 +241,8 @@
                 "edit": false,
                 "publish": false
               },
-              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/The Jane Street Allegations and the Paper Bitcoin Trap Is the Game Rigged.md"
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/The Jane Street Allegations and the Paper Bitcoin Trap Is the Game Rigged.md",
+              "weekOf": "2026-03-10"
             },
             {
               "title": "Missles Vs. Money",
@@ -208,7 +284,8 @@
                 "edit": true,
                 "publish": true
               },
-              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/Articles/The Risk Flip What's Really Dangerous for Your Retirement PUB (2026-02-23).md"
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/Articles/The Risk Flip What's Really Dangerous for Your Retirement PUB (2026-02-23).md",
+              "weekOf": "2026-02-24"
             },
             {
               "title": "Why Your Savings Account Is A Trap",
@@ -218,7 +295,8 @@
                 "edit": true,
                 "publish": true
               },
-              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/Articles/Why Your Savings Account Is A Trap PUB (2026-02-23).md"
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/Articles/Why Your Savings Account Is A Trap PUB (2026-02-23).md",
+              "weekOf": "2026-02-24"
             },
             {
               "title": "Why Everything Costs More When Technology Makes It Cheaper",
@@ -228,7 +306,8 @@
                 "edit": true,
                 "publish": true
               },
-              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/Articles/Why Everything Costs More When Technology Makes It Cheaper PUB (2026-02-26).md"
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/Articles/Why Everything Costs More When Technology Makes It Cheaper PUB (2026-02-26).md",
+              "weekOf": "2026-02-24"
             },
             {
               "title": "Is Bitcoin in Its \"iPhone 3\" Moment? Why the Best is Yet to Come",
@@ -238,7 +317,8 @@
                 "edit": false,
                 "publish": false
               },
-              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/Articles/Is Bitcoin in Its \"iPhone 3\" Moment? Why the Best is Yet to Come.md"
+              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/Articles/Is Bitcoin in Its \"iPhone 3\" Moment? Why the Best is Yet to Come.md",
+              "weekOf": "2026-03-17"
             }
           ]
         },

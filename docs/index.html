@@ -1043,6 +1043,229 @@
   .hub-btn-preview { background: rgba(59,130,246,0.2); color: var(--blue); }
   .hub-btn-obsidian { background: rgba(168,85,247,0.2); color: #a855f7; }
 
+  /* ===== CALENDAR VIEW ===== */
+  .calendar-view {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .calendar-week-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .calendar-week-card:hover {
+    border-color: rgba(255,255,255,0.12);
+  }
+  .calendar-week-card.past {
+    opacity: 0.65;
+  }
+  .calendar-week-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 18px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+  }
+  .calendar-week-header:hover {
+    background: rgba(255,255,255,0.03);
+  }
+  .calendar-week-label {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--text);
+    min-width: 120px;
+    flex-shrink: 0;
+  }
+  .pillar-badge {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .pillar-badge.pillar-math { background: rgba(59,130,246,0.15); color: #3b82f6; }
+  .pillar-badge.pillar-trad { background: rgba(245,158,11,0.15); color: #f59e0b; }
+  .pillar-badge.pillar-vehicles { background: rgba(34,197,94,0.15); color: #22c55e; }
+  .pillar-badge.pillar-risk { background: rgba(239,68,68,0.15); color: #ef4444; }
+  .avatar-badge {
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    background: rgba(148,163,184,0.12);
+    color: var(--muted);
+    white-space: nowrap;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .calendar-week-topic {
+    flex: 1;
+    font-size: 14px;
+    color: var(--muted);
+    font-style: italic;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+  }
+  .calendar-week-topic.has-topic {
+    color: var(--text);
+    font-style: normal;
+  }
+  .calendar-week-status {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .calendar-chevron {
+    font-size: 14px;
+    color: var(--muted);
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+  .calendar-week-card.collapsed .calendar-chevron {
+    transform: rotate(-90deg);
+  }
+  .calendar-week-card.collapsed .calendar-week-body {
+    display: none;
+  }
+  .calendar-week-body {
+    padding: 0 18px 14px;
+  }
+  .calendar-content-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .calendar-content-row:last-child {
+    border-bottom: none;
+  }
+  .calendar-row-icon {
+    font-size: 16px;
+    width: 24px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .calendar-row-type {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    min-width: 80px;
+    flex-shrink: 0;
+  }
+  .calendar-row-title {
+    flex: 1;
+    font-size: 13px;
+    color: var(--text);
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .calendar-row-title a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px dashed transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .calendar-row-title a:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+  .calendar-row-title.empty {
+    color: var(--muted);
+    font-style: italic;
+    opacity: 0.5;
+  }
+  .calendar-row-steps {
+    display: flex;
+    gap: 3px;
+    flex-shrink: 0;
+    align-items: center;
+  }
+  .calendar-row-step-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .calendar-row-step-dot.done { background: var(--green); }
+  .calendar-row-step-dot:hover { background: rgba(255,255,255,0.25); }
+  .calendar-row-step-dot.done:hover { background: #16a34a; }
+  .calendar-row-step-dot[title] { cursor: pointer; }
+  .calendar-unscheduled {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--border);
+  }
+  .calendar-unscheduled-header {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+  .calendar-add-week-btn {
+    background: transparent;
+    border: 1px dashed var(--accent);
+    color: var(--accent);
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    width: 100%;
+    margin-top: 8px;
+    transition: background 0.2s;
+  }
+  .calendar-add-week-btn:hover {
+    background: rgba(245,158,11,0.08);
+  }
+  .calendar-current-week {
+    border-color: var(--accent) !important;
+    border-width: 2px;
+  }
+  .calendar-inline-input {
+    background: var(--card);
+    border: 1px solid var(--accent);
+    border-radius: 4px;
+    color: var(--text);
+    font-size: inherit;
+    font-weight: inherit;
+    font-family: inherit;
+    padding: 2px 6px;
+    outline: none;
+    min-width: 100px;
+  }
+  .calendar-inline-select {
+    background: var(--card);
+    border: 1px solid var(--accent);
+    border-radius: 4px;
+    color: var(--text);
+    font-size: 11px;
+    padding: 2px 4px;
+    outline: none;
+    cursor: pointer;
+  }
+
   /* ===== RESPONSIVE ===== */
   @media (max-width: 1200px) {
     .kanban-board {
@@ -1727,9 +1950,14 @@ function buildContentHubView(data) {
           if (allDone) completedCount++;
           if (item.path) linkedCount++;
           var typeStr = folderKeyToType(folderKey);
+          var weekLabel = null;
+          if (item.weekOf && project.calendar) {
+            var calEntry = project.calendar.filter(function(w) { return w.weekOf === item.weekOf; })[0];
+            if (calEntry) weekLabel = calEntry.weekLabel + ' \u00B7 ' + calEntry.pillar;
+          }
           allItems.push({ projectKey: key, projectName: project.name, projectStatus: project.status,
             type: typeStr, label: item.title, status: allDone ? 'complete' : (item.steps && item.steps.research ? 'in_progress' : 'not_started'),
-            path: item.path, steps: item.steps, itemType: typeStr, folderKey: folderKey });
+            path: item.path, steps: item.steps, itemType: typeStr, folderKey: folderKey, weekLabel: weekLabel });
         });
       });
     } else if (project.assets) {
@@ -1811,6 +2039,7 @@ function buildContentHubView(data) {
 
       // Sub-info line
       var subParts = [];
+      if (item.weekLabel) subParts.push(item.weekLabel);
       if (item.folderKey) subParts.push(folderKeyToType(item.folderKey));
       if (item.steps) {
         var statusText = getStatusFromSteps(item.folderKey || item.itemType, item.steps);
@@ -1993,7 +2222,7 @@ function buildAssetProjectView(project) {
 // WEEKLY CONTENT VIEW (Folder-based with List/Kanban toggle)
 // =====================================================================
 
-var _weeklyViewMode = 'list';
+var _weeklyViewMode = 'calendar';
 var FOLDER_ORDER = ['youtube', 'social-media', 'articles', 'email'];
 var FOLDER_ICONS = { 'youtube': '🎬', 'social-media': '📱', 'articles': '📝', 'email': '📧' };
 
@@ -2091,6 +2320,7 @@ function buildWeeklyContentView(project, data) {
   var toggleDiv = document.createElement('div');
   toggleDiv.className = 'content-view-toggle';
   toggleDiv.innerHTML =
+    '<button class="view-toggle-btn' + (_weeklyViewMode === 'calendar' ? ' active' : '') + '" data-mode="calendar">📅 Calendar</button>' +
     '<button class="view-toggle-btn' + (_weeklyViewMode === 'list' ? ' active' : '') + '" data-mode="list">☰ List</button>' +
     '<button class="view-toggle-btn' + (_weeklyViewMode === 'kanban' ? ' active' : '') + '" data-mode="kanban">▦ Board</button>';
   toggleDiv.querySelectorAll('.view-toggle-btn').forEach(function(btn) {
@@ -2101,16 +2331,351 @@ function buildWeeklyContentView(project, data) {
   });
   card.appendChild(toggleDiv);
 
-  // Folder sections
-  var folders = project.contentFolders || {};
-  FOLDER_ORDER.forEach(function(folderKey) {
-    var folder = folders[folderKey];
-    if (!folder) return;
-    card.appendChild(buildFolderSection(folderKey, folder, data));
-  });
+  if (_weeklyViewMode === 'calendar') {
+    // Calendar view: week cards with grouped content
+    card.appendChild(buildCalendarView(project, data));
+  } else {
+    // Folder sections (list or kanban)
+    var folders = project.contentFolders || {};
+    FOLDER_ORDER.forEach(function(folderKey) {
+      var folder = folders[folderKey];
+      if (!folder) return;
+      card.appendChild(buildFolderSection(folderKey, folder, data));
+    });
+  }
 
   return card;
 }
+
+// =====================================================================
+// CALENDAR VIEW
+// =====================================================================
+
+var PILLAR_OPTIONS = ['1: Math', '2: Trad Advice', '3: Vehicles', '4: Risk Flip'];
+var AVATAR_OPTIONS = ['Technophobe', 'Skeptic', 'Pursuer', 'All'];
+
+function getPillarClass(pillar) {
+  if (!pillar) return 'pillar-math';
+  if (pillar.indexOf('1') === 0 || pillar.toLowerCase().indexOf('math') !== -1) return 'pillar-math';
+  if (pillar.indexOf('2') === 0 || pillar.toLowerCase().indexOf('trad') !== -1) return 'pillar-trad';
+  if (pillar.indexOf('3') === 0 || pillar.toLowerCase().indexOf('vehicle') !== -1) return 'pillar-vehicles';
+  if (pillar.indexOf('4') === 0 || pillar.toLowerCase().indexOf('risk') !== -1) return 'pillar-risk';
+  return 'pillar-math';
+}
+
+function getItemsForWeek(project, weekOf) {
+  var result = {};
+  FOLDER_ORDER.forEach(function(folderKey) { result[folderKey] = []; });
+  var folders = project.contentFolders || {};
+  FOLDER_ORDER.forEach(function(folderKey) {
+    var folder = folders[folderKey];
+    if (!folder || !folder.items) return;
+    folder.items.forEach(function(item, idx) {
+      if (item.weekOf === weekOf) {
+        result[folderKey].push({ item: item, idx: idx, folderKey: folderKey });
+      }
+    });
+  });
+  return result;
+}
+
+function getUnscheduledItems(project) {
+  var result = {};
+  FOLDER_ORDER.forEach(function(folderKey) { result[folderKey] = []; });
+  var folders = project.contentFolders || {};
+  FOLDER_ORDER.forEach(function(folderKey) {
+    var folder = folders[folderKey];
+    if (!folder || !folder.items) return;
+    folder.items.forEach(function(item, idx) {
+      if (!item.weekOf) {
+        result[folderKey].push({ item: item, idx: idx, folderKey: folderKey });
+      }
+    });
+  });
+  return result;
+}
+
+function isCurrentWeek(weekOf) {
+  var now = new Date();
+  var weekStart = new Date(weekOf + 'T00:00:00');
+  var weekEnd = new Date(weekStart);
+  weekEnd.setDate(weekEnd.getDate() + 6);
+  return now >= weekStart && now <= weekEnd;
+}
+
+function isPastWeek(weekOf) {
+  var now = new Date();
+  now.setHours(0,0,0,0);
+  var weekEnd = new Date(weekOf + 'T00:00:00');
+  weekEnd.setDate(weekEnd.getDate() + 6);
+  return weekEnd < now;
+}
+
+function buildCalendarView(project, data) {
+  var container = document.createElement('div');
+  container.className = 'calendar-view';
+
+  var calendar = project.calendar || [];
+  calendar.forEach(function(week, weekIdx) {
+    var itemsByFolder = getItemsForWeek(project, week.weekOf);
+    var card = buildWeekCard(week, weekIdx, itemsByFolder, project, data);
+    container.appendChild(card);
+  });
+
+  // Unscheduled section
+  var unscheduled = getUnscheduledItems(project);
+  var hasUnscheduled = FOLDER_ORDER.some(function(fk) { return unscheduled[fk].length > 0; });
+  if (hasUnscheduled) {
+    var unsDiv = document.createElement('div');
+    unsDiv.className = 'calendar-unscheduled';
+    unsDiv.innerHTML = '<div class="calendar-unscheduled-header">Unscheduled</div>';
+    FOLDER_ORDER.forEach(function(folderKey) {
+      var entries = unscheduled[folderKey];
+      entries.forEach(function(entry) {
+        unsDiv.appendChild(buildCalendarContentRow(entry, folderKey));
+      });
+    });
+    container.appendChild(unsDiv);
+  }
+
+  // Add Week button
+  var addBtn = document.createElement('button');
+  addBtn.className = 'calendar-add-week-btn';
+  addBtn.textContent = '+ Add Week';
+  addBtn.addEventListener('click', function() {
+    addNewCalendarWeek(project);
+  });
+  container.appendChild(addBtn);
+
+  return container;
+}
+
+function buildWeekCard(week, weekIdx, itemsByFolder, project, data) {
+  var card = document.createElement('div');
+  var current = isCurrentWeek(week.weekOf);
+  var past = isPastWeek(week.weekOf);
+  card.className = 'calendar-week-card' + (current ? ' calendar-current-week' : '') + (past ? ' past collapsed' : '');
+
+  // Count items and completion
+  var itemCount = 0;
+  var completedItems = 0;
+  FOLDER_ORDER.forEach(function(fk) {
+    (itemsByFolder[fk] || []).forEach(function(entry) {
+      itemCount++;
+      var stepDefs = getFolderStepDefs(entry.folderKey);
+      var doneCount = stepDefs.filter(function(s) { return entry.item.steps && entry.item.steps[s.key]; }).length;
+      if (doneCount === stepDefs.length) completedItems++;
+    });
+  });
+
+  // Header
+  var header = document.createElement('div');
+  header.className = 'calendar-week-header';
+  var pillarClass = getPillarClass(week.pillar);
+  var topicDisplay = week.topic || 'Click to set topic';
+  var topicClass = week.topic ? ' has-topic' : '';
+
+  header.innerHTML =
+    '<span class="calendar-week-label">' + escapeHtml(week.weekLabel) + '</span>' +
+    '<span class="pillar-badge ' + pillarClass + '" data-week-idx="' + weekIdx + '">' + escapeHtml(week.pillar || 'No pillar') + '</span>' +
+    '<span class="avatar-badge" data-week-idx="' + weekIdx + '">' + escapeHtml(week.avatar || 'All') + '</span>' +
+    '<span class="calendar-week-topic' + topicClass + '" data-week-idx="' + weekIdx + '">' + escapeHtml(topicDisplay) + '</span>' +
+    '<span class="calendar-week-status">' +
+      (itemCount > 0 ? completedItems + '/' + itemCount : 'empty') +
+    '</span>' +
+    '<span class="calendar-chevron">&#9660;</span>';
+
+  // Toggle collapse on header click (but not on editable elements)
+  header.addEventListener('click', function(e) {
+    if (e.target.closest('.pillar-badge') || e.target.closest('.avatar-badge') || e.target.closest('.calendar-week-topic')) return;
+    card.classList.toggle('collapsed');
+  });
+
+  // Inline editing: pillar
+  header.querySelector('.pillar-badge').addEventListener('click', function(e) {
+    e.stopPropagation();
+    inlineSelectEdit(this, PILLAR_OPTIONS, week.pillar, function(val) {
+      week.pillar = val;
+      saveToLocalStorage();
+      reRenderWeeklyContent();
+    });
+  });
+
+  // Inline editing: avatar
+  header.querySelector('.avatar-badge').addEventListener('click', function(e) {
+    e.stopPropagation();
+    inlineSelectEdit(this, AVATAR_OPTIONS, week.avatar, function(val) {
+      week.avatar = val;
+      saveToLocalStorage();
+      reRenderWeeklyContent();
+    });
+  });
+
+  // Inline editing: topic
+  header.querySelector('.calendar-week-topic').addEventListener('click', function(e) {
+    e.stopPropagation();
+    inlineTextEdit(this, week.topic || '', function(val) {
+      week.topic = val;
+      saveToLocalStorage();
+      reRenderWeeklyContent();
+    });
+  });
+
+  card.appendChild(header);
+
+  // Body: content rows by folder type
+  var body = document.createElement('div');
+  body.className = 'calendar-week-body';
+
+  FOLDER_ORDER.forEach(function(folderKey) {
+    var entries = itemsByFolder[folderKey] || [];
+    if (entries.length === 0) {
+      // Empty row for this content type
+      var row = document.createElement('div');
+      row.className = 'calendar-content-row';
+      row.innerHTML =
+        '<span class="calendar-row-icon">' + (FOLDER_ICONS[folderKey] || '') + '</span>' +
+        '<span class="calendar-row-type">' + (FOLDER_NAMES[folderKey] || folderKey) + '</span>' +
+        '<span class="calendar-row-title empty">No content</span>' +
+        '<span class="calendar-row-steps" style="color:var(--muted);font-size:11px;">\u2014</span>';
+      body.appendChild(row);
+    } else {
+      entries.forEach(function(entry) {
+        body.appendChild(buildCalendarContentRow(entry, folderKey));
+      });
+    }
+  });
+
+  card.appendChild(body);
+  return card;
+}
+
+function buildCalendarContentRow(entry, folderKey) {
+  var row = document.createElement('div');
+  row.className = 'calendar-content-row';
+
+  var stepDefs = getFolderStepDefs(entry.folderKey);
+  var stepsHtml = '<div class="calendar-row-steps">';
+  stepDefs.forEach(function(s) {
+    var done = entry.item.steps && entry.item.steps[s.key];
+    stepsHtml += '<span class="calendar-row-step-dot' + (done ? ' done' : '') + '" title="' + s.label + (done ? ' \u2713' : '') + '"></span>';
+  });
+  stepsHtml += '</div>';
+
+  var titleText = escapeHtml(entry.item.title || 'Untitled');
+  var obsidianLink = entry.item.path ? buildObsidianLink(entry.item.path) : '';
+
+  row.innerHTML =
+    '<span class="calendar-row-icon">' + (FOLDER_ICONS[folderKey] || '') + '</span>' +
+    '<span class="calendar-row-type">' + (FOLDER_NAMES[folderKey] || folderKey) + '</span>' +
+    '<span class="calendar-row-title">' + (obsidianLink ? '<a href="' + escapeAttr(obsidianLink) + '" title="Open in Obsidian">' + titleText + '</a>' : titleText) + '</span>' +
+    stepsHtml;
+
+  // Click step dots to toggle completion
+  row.querySelectorAll('.calendar-row-step-dot').forEach(function(dot, si) {
+    dot.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var stepKey = stepDefs[si].key;
+      if (!entry.item.steps) entry.item.steps = {};
+      entry.item.steps[stepKey] = !entry.item.steps[stepKey];
+      saveToLocalStorage();
+      reRenderWeeklyContent();
+    });
+  });
+
+  return row;
+}
+
+function inlineSelectEdit(el, options, currentVal, onSave) {
+  var select = document.createElement('select');
+  select.className = 'calendar-inline-select';
+  options.forEach(function(opt) {
+    var option = document.createElement('option');
+    option.value = opt;
+    option.textContent = opt;
+    if (opt === currentVal) option.selected = true;
+    select.appendChild(option);
+  });
+
+  var parent = el.parentNode;
+  parent.replaceChild(select, el);
+  select.focus();
+
+  function commit() {
+    onSave(select.value);
+  }
+  select.addEventListener('change', commit);
+  select.addEventListener('blur', function() {
+    reRenderWeeklyContent();
+  });
+}
+
+function inlineTextEdit(el, currentVal, onSave) {
+  var input = document.createElement('input');
+  input.type = 'text';
+  input.className = 'calendar-inline-input';
+  input.value = currentVal;
+  input.style.width = Math.max(200, el.offsetWidth) + 'px';
+
+  var parent = el.parentNode;
+  parent.replaceChild(input, el);
+  input.focus();
+  input.select();
+
+  function commit() {
+    var val = input.value.trim();
+    onSave(val);
+  }
+  input.addEventListener('blur', commit);
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') { input.removeEventListener('blur', commit); commit(); }
+    if (e.key === 'Escape') { input.removeEventListener('blur', commit); reRenderWeeklyContent(); }
+  });
+}
+
+function addNewCalendarWeek(project) {
+  if (!project.calendar) project.calendar = [];
+  var cal = project.calendar;
+
+  // Find the next week date after the last entry
+  var lastWeekOf = cal.length > 0 ? cal[cal.length - 1].weekOf : new Date().toISOString().split('T')[0];
+  var lastDate = new Date(lastWeekOf + 'T00:00:00');
+  lastDate.setDate(lastDate.getDate() + 7);
+
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var weekLabel = 'Week of ' + months[lastDate.getMonth()] + ' ' + lastDate.getDate();
+
+  // Rotate pillar based on last entry
+  var pillarIdx = 0;
+  if (cal.length > 0) {
+    var lastPillar = cal[cal.length - 1].pillar || '';
+    var lastNum = parseInt(lastPillar) || 0;
+    pillarIdx = lastNum % 4;
+  }
+
+  // Rotate avatar
+  var avatarIdx = 0;
+  if (cal.length > 0) {
+    var lastAvatar = cal[cal.length - 1].avatar || 'All';
+    avatarIdx = (AVATAR_OPTIONS.indexOf(lastAvatar) + 1) % AVATAR_OPTIONS.length;
+  }
+
+  var weekOf = lastDate.toISOString().split('T')[0];
+  cal.push({
+    weekOf: weekOf,
+    weekLabel: weekLabel,
+    pillar: PILLAR_OPTIONS[pillarIdx],
+    avatar: AVATAR_OPTIONS[avatarIdx],
+    topic: ''
+  });
+
+  saveToLocalStorage();
+  reRenderWeeklyContent();
+}
+
+// =====================================================================
+// FOLDER SECTION VIEW (List/Kanban)
+// =====================================================================
 
 function buildFolderSection(folderKey, folder, data) {
   var section = document.createElement('div');
