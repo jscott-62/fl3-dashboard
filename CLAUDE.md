@@ -113,6 +113,12 @@ Business-Suite/                    <-- Git repo root (deploys to GitHub Pages)
     fl3-strategy-advisor/          <-- Strategic planning agent
     fl3-digest-processor/          <-- Digest intake agent
 
+  Weekly-Content/                  <-- All weekly content (scripts, articles, posts)
+    YouTube/                       <-- YouTube scripts and video content
+    Articles/                      <-- Blog articles and written content
+    Social Media/                  <-- Social media posts
+    Email/                         <-- Email campaigns and newsletters
+
   calendar/                        <-- Operational planning
     content-calendar.md            <-- Content calendar + rotation
     idea-bank.md                   <-- Content idea repository
@@ -125,14 +131,14 @@ Business-Suite/                    <-- Git repo root (deploys to GitHub Pages)
 
 ### Content Output Locations
 
-All content is saved to vault project folders (NOT inside Business-Suite):
+Weekly content lives inside Business Suite. Other content in vault project folders:
 
 | Content Type | Save Location |
 |-------------|---------------|
-| YouTube scripts | `Projects/Weekly-Content/YouTube/` |
-| Blog articles | `Projects/Weekly-Content/Articles/` |
-| Social media | `Projects/Weekly-Content/Social Media/` |
-| Email/newsletters | `Projects/Weekly-Content/Email/` |
+| YouTube scripts | `Weekly-Content/YouTube/` (in Business Suite) |
+| Blog articles | `Weekly-Content/Articles/` (in Business Suite) |
+| Social media | `Weekly-Content/Social Media/` (in Business Suite) |
+| Email/newsletters | `Weekly-Content/Email/` (in Business Suite) |
 | Sales page | `Projects/The-Great-Catch-Up/Sales-Page/` |
 | Email sequences | `Projects/The-Great-Catch-Up/Email-Sequences/` |
 | Facebook ads | `Projects/Wrong-Asset-Manifesto/Facebook-Ads/` |

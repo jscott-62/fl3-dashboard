@@ -129,7 +129,7 @@ The `weekly-content` project uses `contentFolders` instead of `assets`:
       {
         "title": "Content Title",
         "steps": { "research": false, "write": false, "film": false, "edit": false, "publish": false },
-        "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/filename.md"
+        "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/YouTube/filename.md"
       }
     ]
   },
@@ -247,7 +247,7 @@ GitHub Pages serves from the `docs/` folder on the `main` branch. Changes go liv
 - Commits and pushes to GitHub
 
 **To sync new content:** Run `scripts/sync-weekly-content.sh`
-- Scans `Projects/Weekly-Content/` folders for new .md files
+- Scans `Weekly-Content/` folders for new .md files
 - Adds them to the dashboard content schedule
 - Commits and pushes to GitHub
 

@@ -2231,7 +2231,7 @@ var FOLDER_NAMES = { 'youtube': 'YouTube', 'social-media': 'Social Media', 'arti
 function generateContentPath(folderKey, title) {
   var folderName = FOLDER_NAMES[folderKey] || folderKey;
   var safeName = (title || 'Untitled').replace(/[/\\:*?"<>|]/g, '').replace(/\s+/g, ' ').trim();
-  return '00-ZenithPro - FL3/Projects/Weekly-Content/' + folderName + '/' + safeName + '.md';
+  return '00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/' + folderName + '/' + safeName + '.md';
 }
 
 function makeEditableTitle(titleEl, folderKey, itemIdx) {

@@ -19,7 +19,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_ROOT="$SCRIPT_DIR/.."
 JSON_FILE="$REPO_ROOT/docs/dashboard-data.json"
 JS_FILE="$REPO_ROOT/docs/dashboard-data.js"
-WEEKLY_DIR="$REPO_ROOT/../../Projects/Weekly-Content"
+WEEKLY_DIR="$REPO_ROOT/Weekly-Content"
 
 if [ ! -d "$WEEKLY_DIR" ]; then
   echo "Error: Weekly-Content folder not found at $WEEKLY_DIR"
@@ -40,7 +40,7 @@ import json, os, re
 SCRIPT_DIR = os.environ.get("SCRIPT_DIR", ".")
 REPO_ROOT = os.path.join(SCRIPT_DIR, "..")
 JSON_FILE = os.path.join(REPO_ROOT, "docs", "dashboard-data.json")
-WEEKLY_DIR = os.path.join(REPO_ROOT, "..", "..", "Projects", "Weekly-Content")
+WEEKLY_DIR = os.path.join(REPO_ROOT, "Weekly-Content")
 
 # Map disk folder names to dashboard content folder keys
 FOLDER_MAP = {
@@ -88,7 +88,7 @@ for disk_name, folder_key in FOLDER_MAP.items():
         if not fname.endswith(".md"):
             continue
 
-        vault_path = "00-ZenithPro - FL3/Projects/Weekly-Content/" + disk_name + "/" + fname
+        vault_path = "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/" + disk_name + "/" + fname
 
         if vault_path in existing_paths:
             continue

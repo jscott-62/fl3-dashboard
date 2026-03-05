@@ -91,7 +91,7 @@ J. Scott
 4. Verify one clear CTA
 5. Verify links to YouTube/blog are included
 6. Verify disclaimer is present
-7. Save to `Projects/Weekly-Content/Email/`
+7. Save to `Weekly-Content/Email/`
 
 ## Quality Standards
 

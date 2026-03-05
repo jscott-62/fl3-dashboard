@@ -119,7 +119,7 @@
       "name": "Weekly Content",
       "status": "active",
       "description": "Ongoing content production across all platforms",
-      "folder": "Projects/Weekly-Content/",
+      "folder": "Systems/Business-Suite/Weekly-Content/",
       "calendar": [
         {
           "weekOf": "2026-02-17",
@@ -205,7 +205,7 @@
                 "edit": true,
                 "publish": true
               },
-              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/Pillar #1 Vid PUB (2026-02-23).md",
+              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/YouTube/Pillar #1 Vid PUB (2026-02-23).md",
               "weekOf": "2026-02-24"
             },
             {
@@ -217,7 +217,7 @@
                 "edit": false,
                 "publish": false
               },
-              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/Pillar #2 Vid.md",
+              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/YouTube/Pillar #2 Vid.md",
               "weekOf": "2026-03-03"
             },
             {
@@ -229,7 +229,7 @@
                 "edit": false,
                 "publish": false
               },
-              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/Why Everything Costs More When Technology Makes It Cheaper.md",
+              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/YouTube/Why Everything Costs More When Technology Makes It Cheaper.md",
               "weekOf": "2026-03-24"
             },
             {
@@ -241,7 +241,7 @@
                 "edit": false,
                 "publish": false
               },
-              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/The Jane Street Allegations and the Paper Bitcoin Trap Is the Game Rigged.md",
+              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/YouTube/The Jane Street Allegations and the Paper Bitcoin Trap Is the Game Rigged.md",
               "weekOf": "2026-03-10"
             },
             {
@@ -253,7 +253,7 @@
                 "edit": true,
                 "publish": true
               },
-              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/YouTube/Missles Vs. Money.md"
+              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/YouTube/Missles Vs. Money.md"
             }
           ]
         },
@@ -269,7 +269,7 @@
                 "edit": true,
                 "publish": true
               },
-              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/Social Media/Power Content HeyGen Vid - The HiddenRules Of Money.md"
+              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Social Media/Power Content HeyGen Vid - The HiddenRules Of Money.md"
             }
           ]
         },
@@ -284,7 +284,7 @@
                 "edit": true,
                 "publish": true
               },
-              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/Articles/The Risk Flip What's Really Dangerous for Your Retirement PUB (2026-02-23).md",
+              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Articles/The Risk Flip What's Really Dangerous for Your Retirement PUB (2026-02-23).md",
               "weekOf": "2026-02-24"
             },
             {
@@ -295,7 +295,7 @@
                 "edit": true,
                 "publish": true
               },
-              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/Articles/Why Your Savings Account Is A Trap PUB (2026-02-23).md",
+              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Articles/Why Your Savings Account Is A Trap PUB (2026-02-23).md",
               "weekOf": "2026-02-24"
             },
             {
@@ -306,7 +306,7 @@
                 "edit": true,
                 "publish": true
               },
-              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/Articles/Why Everything Costs More When Technology Makes It Cheaper PUB (2026-02-26).md",
+              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Articles/Why Everything Costs More When Technology Makes It Cheaper PUB (2026-02-26).md",
               "weekOf": "2026-02-24"
             },
             {
@@ -317,7 +317,7 @@
                 "edit": false,
                 "publish": false
               },
-              "path": "00-ZenithPro - FL3/Projects/Weekly-Content/Articles/Is Bitcoin in Its \"iPhone 3\" Moment? Why the Best is Yet to Come.md",
+              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Articles/Is Bitcoin in Its \"iPhone 3\" Moment? Why the Best is Yet to Come.md",
               "weekOf": "2026-03-17"
             }
           ]

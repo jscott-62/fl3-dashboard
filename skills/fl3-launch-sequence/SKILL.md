@@ -126,7 +126,7 @@ Verify that all assets tell the same story:
 | Pre-launch emails | 5 | Projects/The-Great-Catch-Up/Email-Sequences/pre-launch/ | Ready |
 | Launch emails | 8 | Projects/The-Great-Catch-Up/Email-Sequences/launch/ | Ready |
 | Post-purchase emails | 5 | Projects/The-Great-Catch-Up/Email-Sequences/post-purchase/ | Ready |
-| Social posts | [N] | Projects/Weekly-Content/Social Media/ | Ready |
+| Social posts | [N] | Weekly-Content/Social Media/ | Ready |
 | Ad variations | [N] | Projects/Wrong-Asset-Manifesto/Facebook-Ads/ | Ready |
 | Webinar brief | 1 | Projects/Webinar/ | Ready for arena |
 

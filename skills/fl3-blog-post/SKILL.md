@@ -96,7 +96,7 @@ Creates long-form blog posts (1,200-2,000 words) for freedomlife3.com in Scott's
 4. Verify H2/H3 structure for SEO
 5. Verify meta description under 155 characters
 6. Verify one clear CTA
-7. Save to `Projects/Weekly-Content/Articles/`
+7. Save to `Weekly-Content/Articles/`
 
 ## Quality Standards
 

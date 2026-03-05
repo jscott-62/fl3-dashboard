@@ -98,7 +98,7 @@ Creates 5-10 platform-specific social posts from a single content source. Adapts
 2. Verify platform-specific formatting
 3. Verify hashtag usage matches platform norms
 4. Verify Reveal Sequence compliance
-5. Save to `Projects/Weekly-Content/Social Media/`
+5. Save to `Weekly-Content/Social Media/`
 
 ## Quality Standards
 

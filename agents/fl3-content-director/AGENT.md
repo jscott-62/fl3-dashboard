@@ -93,7 +93,7 @@ Score each topic and select the highest.
 ## Output Format
 
 The weekly delivery includes:
-1. All content files saved to `Projects/Weekly-Content/` directories
+1. All content files saved to `Weekly-Content/` directories (inside Business Suite)
 2. Updated content calendar
 3. Weekly content summary with publishing schedule
 4. Scott's action items (record, review, schedule, send)

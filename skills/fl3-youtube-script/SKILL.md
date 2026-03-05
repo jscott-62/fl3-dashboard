@@ -143,7 +143,7 @@ X:XX - [Section 1 title]
 4. Verify at least 3 [GRAPHIC:] cues for visual editors
 5. Verify disclaimer is in description
 6. Verify Reveal Sequence is respected for the video's funnel stage
-7. Save to `Projects/Weekly-Content/YouTube/`
+7. Save to `Weekly-Content/YouTube/`
 
 ## Quality Standards
 

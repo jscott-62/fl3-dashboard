@@ -98,10 +98,10 @@ Execute in this order (each output feeds the next):
 ### Phase 5: Delivery and Calendar Update
 
 1. Save all outputs to their respective directories:
-   - YouTube script: `Projects/Weekly-Content/YouTube/[date]-[title].md`
-   - Blog post: `Projects/Weekly-Content/Articles/[date]-[title].md`
-   - Social batch: `Projects/Weekly-Content/Social Media/[date]-batch.md`
-   - Newsletter: `Projects/Weekly-Content/Email/[date]-newsletter.md`
+   - YouTube script: `Weekly-Content/YouTube/[date]-[title].md`
+   - Blog post: `Weekly-Content/Articles/[date]-[title].md`
+   - Social batch: `Weekly-Content/Social Media/[date]-batch.md`
+   - Newsletter: `Weekly-Content/Email/[date]-newsletter.md`
 2. Update `calendar/content-calendar.md` with new entries
 3. Produce weekly content summary:
 
