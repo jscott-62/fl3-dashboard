@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-05",
+  "lastUpdated": "2026-03-06",
   "projects": {
     "wrong-asset-manifesto": {
       "name": "The Wrong Asset Manifesto",
@@ -257,6 +257,18 @@
                 "publish": true
               },
               "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/YouTube/Missles Vs. Money.md"
+            },
+            {
+              "title": "Why Wall Street's Smartest Money Thinks Bitcoin Is on Sale - YouTube Script",
+              "steps": {
+                "research": true,
+                "write": true,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Week of Mar 10/Why Wall Streets Smartest Money Thinks Bitcoin Is on Sale - YouTube Script.md",
+              "weekOf": "2026-03-10"
             }
           ]
         },
@@ -354,6 +366,17 @@
               },
               "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Articles/The Playbook Against Your Retirement.md",
               "weekOf": "2026-03-03"
+            },
+            {
+              "title": "Why Wall Street's Smartest Money Thinks Bitcoin Is on Sale",
+              "steps": {
+                "research": true,
+                "write": true,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Week of Mar 10/Why Wall Streets Smartest Money Thinks Bitcoin Is on Sale.md",
+              "weekOf": "2026-03-10"
             }
           ]
         },
