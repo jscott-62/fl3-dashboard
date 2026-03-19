@@ -119,7 +119,7 @@
       "name": "Weekly Content",
       "status": "active",
       "description": "Ongoing content production across all platforms",
-      "folder": "Systems/Business-Suite/Weekly-Content/",
+      "folder": "Projects/fl3-dashboard/Weekly-Content/",
       "calendar": [
         {
           "weekOf": "2026-02-17",
@@ -147,7 +147,7 @@
           "weekLabel": "Week of Mar 10",
           "pillar": "4: Risk Flip",
           "avatar": "All",
-          "topic": "The Paper Bitcoin Trap"
+          "topic": "20 Million Gone / Wall Street's Smart Money"
         },
         {
           "weekOf": "2026-03-17",
@@ -205,11 +205,10 @@
                 "edit": true,
                 "publish": true
               },
-              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Archive/Pillar #1 Vid PUB (2026-03-05).md",
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Archive/Week of Feb 24/Pillar #1 Vid PUB (2026-03-05).md",
               "weekOf": "2026-02-24",
               "archived": true,
-              "archivedDate": "2026-03-05",
-              "originalPath": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/YouTube/Pillar #1 Vid PUB (2026-02-23).md"
+              "archivedDate": "2026-03-05"
             },
             {
               "title": "Pillar #2 Vid",
@@ -220,35 +219,11 @@
                 "edit": false,
                 "publish": false
               },
-              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/YouTube/Pillar #2 Vid.md",
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Mar 3/Pillar #2 Vid.md",
               "weekOf": "2026-03-03"
             },
             {
-              "title": "Why Everything Costs More When Technology Makes It Cheaper",
-              "steps": {
-                "research": true,
-                "write": true,
-                "film": false,
-                "edit": false,
-                "publish": false
-              },
-              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/YouTube/Why Everything Costs More When Technology Makes It Cheaper.md",
-              "weekOf": "2026-03-24"
-            },
-            {
-              "title": "The Jane Street Allegations and the Paper Bitcoin Trap: Is the Game Rigged?",
-              "steps": {
-                "research": true,
-                "write": true,
-                "film": false,
-                "edit": false,
-                "publish": false
-              },
-              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/YouTube/The Jane Street Allegations and the Paper Bitcoin Trap Is the Game Rigged.md",
-              "weekOf": "2026-03-10"
-            },
-            {
-              "title": "Missles Vs. Money",
+              "title": "Missiles Vs. Money",
               "steps": {
                 "research": true,
                 "write": true,
@@ -256,7 +231,7 @@
                 "edit": true,
                 "publish": true
               },
-              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/YouTube/Missles Vs. Money.md"
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/Missiles Vs. Money.md"
             },
             {
               "title": "Why Wall Street's Smartest Money Thinks Bitcoin Is on Sale - YouTube Script",
@@ -267,8 +242,98 @@
                 "edit": false,
                 "publish": false
               },
-              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Week of Mar 10/Why Wall Streets Smartest Money Thinks Bitcoin Is on Sale - YouTube Script.md",
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Mar 10/Why Wall Streets Smartest Money Thinks Bitcoin Is on Sale - YouTube Script.md",
               "weekOf": "2026-03-10"
+            },
+            {
+              "title": "20 Million Gone - YouTube Script",
+              "steps": {
+                "research": true,
+                "write": true,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Mar 10/20 Million Gone - YouTube Script.md",
+              "weekOf": "2026-03-10"
+            },
+            {
+              "title": "The Invisible Inflation Theft",
+              "steps": {
+                "research": true,
+                "write": true,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/2026-02-17-the-invisible-inflation-theft.md"
+            },
+            {
+              "title": "Pillar #1: The 12% Theft",
+              "steps": {
+                "research": true,
+                "write": true,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/pillar-1-the-12-percent-theft.md"
+            },
+            {
+              "title": "Pillar #2: It's Math, Not Tech",
+              "steps": {
+                "research": true,
+                "write": true,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/pillar-2-its-math-not-tech.md"
+            },
+            {
+              "title": "Pillar #3: The Quiet Rebellion",
+              "steps": {
+                "research": true,
+                "write": true,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/pillar-3-the-quiet-rebellion.md"
+            },
+            {
+              "title": "Pillar #4: The Late Bloomer's Advantage",
+              "steps": {
+                "research": true,
+                "write": true,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/pillar-4-the-late-bloomers-advantage.md"
+            },
+            {
+              "title": "Pillar #5: The Freedom Number Calculator",
+              "steps": {
+                "research": true,
+                "write": true,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/pillar-5-the-freedom-number-calculator.md"
+            },
+            {
+              "title": "Why Everything Costs More When Technology Makes It Cheaper",
+              "steps": {
+                "research": true,
+                "write": true,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Mar 24/Why Everything Costs More When Technology Makes It Cheaper.md",
+              "weekOf": "2026-03-24"
             }
           ]
         },
@@ -276,7 +341,7 @@
           "label": "Social Media",
           "items": [
             {
-              "title": "Power Content HeyGen Vid - The HiddenRules Of Money",
+              "title": "Power Content HeyGen Vid",
               "steps": {
                 "research": true,
                 "write": true,
@@ -284,7 +349,7 @@
                 "edit": true,
                 "publish": true
               },
-              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Social Media/Power Content HeyGen Vid - The HiddenRules Of Money.md"
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/Power Content HeyGen Vid.md"
             },
             {
               "title": "The Playbook Against Your Retirement - Social Batch",
@@ -295,8 +360,20 @@
                 "edit": true,
                 "publish": true
               },
-              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Social Media/The Playbook Against Your Retirement - Social Batch.md",
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Mar 3/The Playbook Against Your Retirement - Social Batch.md",
               "weekOf": "2026-03-03"
+            },
+            {
+              "title": "20 Million Gone - Social Batch",
+              "steps": {
+                "research": true,
+                "write": true,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Mar 10/20 Million Gone - Social Batch.md",
+              "weekOf": "2026-03-10"
             }
           ]
         },
@@ -311,11 +388,10 @@
                 "edit": true,
                 "publish": true
               },
-              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Archive/The Risk Flip What's Really Dangerous for Your Retirement PUB (2026-03-05).md",
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Archive/Week of Feb 24/The Risk Flip What's Really Dangerous for Your Retirement PUB (2026-03-05).md",
               "weekOf": "2026-02-24",
               "archived": true,
-              "archivedDate": "2026-03-05",
-              "originalPath": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Articles/The Risk Flip What's Really Dangerous for Your Retirement PUB (2026-02-23).md"
+              "archivedDate": "2026-03-05"
             },
             {
               "title": "Why Your Savings Account Is A Trap",
@@ -325,25 +401,23 @@
                 "edit": true,
                 "publish": true
               },
-              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Archive/Why Your Savings Account Is A Trap PUB (2026-03-05).md",
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Archive/Week of Feb 24/Why Your Savings Account Is A Trap PUB (2026-03-05).md",
               "weekOf": "2026-02-24",
               "archived": true,
-              "archivedDate": "2026-03-05",
-              "originalPath": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Articles/Why Your Savings Account Is A Trap PUB (2026-02-23).md"
+              "archivedDate": "2026-03-05"
             },
             {
-              "title": "Why Everything Costs More When Technology Makes It Cheaper",
+              "title": "Why Everything Costs More When Technology Makes It Cheaper (Published)",
               "steps": {
                 "research": true,
                 "write": true,
                 "edit": true,
                 "publish": true
               },
-              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Archive/Why Everything Costs More When Technology Makes It Cheaper PUB (2026-03-05).md",
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Archive/Week of Feb 24/Why Everything Costs More When Technology Makes It Cheaper PUB (2026-03-05).md",
               "weekOf": "2026-02-24",
               "archived": true,
-              "archivedDate": "2026-03-05",
-              "originalPath": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Articles/Why Everything Costs More When Technology Makes It Cheaper PUB (2026-02-26).md"
+              "archivedDate": "2026-03-05"
             },
             {
               "title": "Is Bitcoin in Its \"iPhone 3\" Moment? Why the Best is Yet to Come",
@@ -353,18 +427,18 @@
                 "edit": false,
                 "publish": false
               },
-              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Articles/Is Bitcoin in Its \"iPhone 3\" Moment? Why the Best is Yet to Come.md",
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Mar 17/Is Bitcoin in Its \"iPhone 3\" Moment? Why the Best is Yet to Come.md",
               "weekOf": "2026-03-17"
             },
             {
-              "title": "The Playbook They're Running Against Your Retirement",
+              "title": "The Playbook Against Your Retirement",
               "steps": {
                 "research": true,
                 "write": true,
                 "edit": true,
                 "publish": true
               },
-              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Articles/The Playbook Against Your Retirement.md",
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Mar 3/The Playbook Against Your Retirement.md",
               "weekOf": "2026-03-03"
             },
             {
@@ -375,8 +449,51 @@
                 "edit": false,
                 "publish": false
               },
-              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Week of Mar 10/Why Wall Streets Smartest Money Thinks Bitcoin Is on Sale.md",
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Mar 10/Why Wall Streets Smartest Money Thinks Bitcoin Is on Sale.md",
               "weekOf": "2026-03-10"
+            },
+            {
+              "title": "20 Million Gone, Less Than a Million Left",
+              "steps": {
+                "research": true,
+                "write": true,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Mar 10/20 Million Gone, Less Than a Million Left. Why Bitcoin's Scarcity Clock Just Changed Everything.md",
+              "weekOf": "2026-03-10"
+            },
+            {
+              "title": "AI Agents Are Coming For The Financial System And Crypto Is Their Money",
+              "steps": {
+                "research": true,
+                "write": true,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Mar 17/Article - AI Agents Are Coming For The Financial System And Crypto Is Their Money.md",
+              "weekOf": "2026-03-17"
+            },
+            {
+              "title": "Redefine Your Future - Why It's Never Too Late to Catch Up",
+              "steps": {
+                "research": true,
+                "write": true,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Mar 17/Redefine Your Future - Why Its Never Too Late to Catch Up.md",
+              "weekOf": "2026-03-17"
+            },
+            {
+              "title": "The Petrodollar Shift Nobody Is Explaining to You",
+              "steps": {
+                "research": true,
+                "write": true,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/The Petrodollar Shift Nobody Is Explaining to You (2026-03-01).md"
             }
           ]
         },
@@ -391,7 +508,7 @@
                 "edit": true,
                 "publish": true
               },
-              "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Email/The Playbook Against Your Retirement - Newsletter.md",
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Mar 3/The Playbook Against Your Retirement - Newsletter.md",
               "weekOf": "2026-03-03"
             }
           ]
