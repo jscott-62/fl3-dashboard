@@ -3212,6 +3212,23 @@ function buildFolderListView(folderKey, folder, data) {
       label.innerHTML = '<input type="checkbox"' + checkedAttr + ' data-step="' + def.key + '" data-folder="' + folderKey + '" data-idx="' + itemIdx + '"><span>' + def.label + '</span>';
       stepsDiv.appendChild(label);
     });
+
+    // Medium clipboard button (for articles and email items)
+    if (folderKey === 'articles' || folderKey === 'email') {
+      var medBtn = document.createElement('button');
+      medBtn.className = 'medium-draft-btn';
+      medBtn.dataset.folder = folderKey;
+      medBtn.dataset.idx = itemIdx;
+      medBtn.title = 'Copy article and open Medium editor';
+      medBtn.textContent = '📋 Medium';
+      medBtn.addEventListener('click', function(e) {
+        var fk = e.target.dataset.folder;
+        var ix = parseInt(e.target.dataset.idx);
+        copyForMedium(fk, ix);
+      });
+      stepsDiv.appendChild(medBtn);
+    }
+
     itemDiv.appendChild(stepsDiv);
 
     // Checkbox change handlers
