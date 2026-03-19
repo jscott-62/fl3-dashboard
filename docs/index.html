@@ -467,6 +467,41 @@
   }
   @keyframes spin-icon { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
+  /* Medium Draft Button */
+  .medium-draft-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-left: 6px;
+    white-space: nowrap;
+  }
+  .medium-draft-btn:hover {
+    border-color: #00ab6c;
+    color: #00ab6c;
+  }
+  .medium-draft-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .medium-draft-btn.sending {
+    color: #f59e0b;
+    border-color: #f59e0b;
+  }
+  .medium-draft-btn.sent {
+    color: #22c55e;
+    border-color: #22c55e;
+    cursor: pointer;
+  }
+  .medium-draft-btn.sent:hover {
+    color: #4ade80;
+    border-color: #4ade80;
+  }
+
   .view-toggle-btn {
     background: transparent;
     border: 1px solid var(--border);
@@ -3296,9 +3331,34 @@ function createFolderContentCard(item, folderKey, itemIdx, data) {
   });
   stepsHtml += '</div>';
 
+  // Medium draft button (show for articles and email/newsletter content)
+  var mediumBtnHtml = '';
+  if (folderKey === 'articles' || folderKey === 'email') {
+    if (item.mediumDraftUrl) {
+      mediumBtnHtml = '<button class="medium-draft-btn sent" data-folder="' + folderKey + '" data-idx="' + itemIdx + '" title="Click to open draft: ' + escapeHtml(item.mediumDraftUrl) + '">✓ Draft on Medium</button>';
+    } else {
+      mediumBtnHtml = '<button class="medium-draft-btn" data-folder="' + folderKey + '" data-idx="' + itemIdx + '" title="Push as draft to Medium">📤 Medium</button>';
+    }
+  }
+
   card.innerHTML =
     '<div class="content-card-title">' + titleHtml + '</div>' +
-    stepsHtml;
+    '<div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;">' + stepsHtml + mediumBtnHtml + '</div>';
+
+  // Medium button handler
+  var mediumBtn = card.querySelector('.medium-draft-btn');
+  if (mediumBtn) {
+    mediumBtn.addEventListener('click', function(e) {
+      var fk = e.target.dataset.folder;
+      var ix = parseInt(e.target.dataset.idx);
+      var itm = _dashboardData.projects['weekly-content'].contentFolders[fk].items[ix];
+      if (itm.mediumDraftUrl) {
+        window.open(itm.mediumDraftUrl, '_blank');
+      } else {
+        pushDraftToMedium(fk, ix);
+      }
+    });
+  }
 
   // Checkbox change handlers
   card.querySelectorAll('input[type="checkbox"]').forEach(function(cb) {
@@ -3431,6 +3491,193 @@ function getDueDateClass(dueDate) {
 function formatShortDate(dateStr) {
   var d = new Date(dateStr + 'T00:00:00');
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+
+// =====================================================================
+// MEDIUM DRAFT INTEGRATION
+// =====================================================================
+
+function getMediumToken() {
+  try { return localStorage.getItem('fl3-medium-token') || ''; } catch(e) { return ''; }
+}
+
+function hasMediumToken() { return getMediumToken().length > 5; }
+
+var _mediumUserId = null;
+
+async function getMediumUserId() {
+  if (_mediumUserId) return _mediumUserId;
+  var token = getMediumToken();
+  if (!token) return null;
+  try {
+    var resp = await fetch('https://api.medium.com/v1/me', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    if (!resp.ok) throw new Error('Medium auth failed');
+    var data = await resp.json();
+    _mediumUserId = data.data.id;
+    return _mediumUserId;
+  } catch(e) {
+    console.error('Medium user fetch failed:', e);
+    return null;
+  }
+}
+
+function promptMediumToken() {
+  var token = prompt(
+    'Enter your Medium Integration Token to push drafts.\n\n' +
+    'Find it in Medium: Settings → Security and apps → Integration tokens\n\n' +
+    'The token starts with something like "2..."'
+  );
+  if (!token) return null;
+  localStorage.setItem('fl3-medium-token', token.trim());
+  _mediumUserId = null; // Reset cached user ID
+  return token.trim();
+}
+
+async function readFileFromObsidian(vaultPath) {
+  var apiKey = localStorage.getItem('fl3-obsidian-api-key');
+  if (!apiKey) {
+    apiKey = prompt('Enter your Obsidian Local REST API key.\n\nFind it in Obsidian → Settings → Community Plugins → Local REST API → API Key');
+    if (!apiKey) return null;
+    localStorage.setItem('fl3-obsidian-api-key', apiKey);
+  }
+
+  var baseUrl = 'http://127.0.0.1:27123';
+  var encodedPath = vaultPath.split('/').map(function(s) { return encodeURIComponent(s); }).join('/');
+  var url = baseUrl + '/vault/' + encodedPath;
+
+  try {
+    var resp = await fetch(url, {
+      headers: { 'Authorization': 'Bearer ' + apiKey, 'Accept': 'text/markdown' }
+    });
+    if (!resp.ok) throw new Error('Failed to read file: ' + resp.status);
+    return await resp.text();
+  } catch(e) {
+    console.error('Obsidian read failed:', e);
+    return null;
+  }
+}
+
+function stripFrontmatter(markdown) {
+  // Remove YAML frontmatter and metadata lines like **Type:** etc.
+  var lines = markdown.split('\n');
+  var output = [];
+  var inFrontmatter = false;
+  var pastMeta = false;
+
+  for (var i = 0; i < lines.length; i++) {
+    var line = lines[i];
+    // Skip YAML frontmatter
+    if (i === 0 && line.trim() === '---') { inFrontmatter = true; continue; }
+    if (inFrontmatter) {
+      if (line.trim() === '---') { inFrontmatter = false; continue; }
+      continue;
+    }
+    // Skip metadata lines at top (bold key-value pairs)
+    if (!pastMeta && /^\*\*\w[^*]*:\*\*/.test(line.trim())) continue;
+    if (!pastMeta && line.trim() === '') continue;
+    pastMeta = true;
+    output.push(line);
+  }
+  return output.join('\n').trim();
+}
+
+async function pushDraftToMedium(folderKey, itemIdx) {
+  var item = _dashboardData.projects['weekly-content'].contentFolders[folderKey].items[itemIdx];
+  if (!item) { showArchiveNotice('Content item not found.', 'error'); return; }
+
+  // Check for Medium token
+  var token = getMediumToken();
+  if (!token) {
+    token = promptMediumToken();
+    if (!token) return;
+  }
+
+  // Get the button and show sending state
+  var btn = document.querySelector('.medium-draft-btn[data-folder="' + folderKey + '"][data-idx="' + itemIdx + '"]');
+  if (btn) {
+    btn.classList.add('sending');
+    btn.textContent = '⏳ Sending...';
+    btn.disabled = true;
+  }
+
+  try {
+    // Get Medium user ID
+    var userId = await getMediumUserId();
+    if (!userId) {
+      localStorage.removeItem('fl3-medium-token');
+      _mediumUserId = null;
+      throw new Error('Could not authenticate with Medium. Token may be invalid. Please try again.');
+    }
+
+    // Read content from Obsidian
+    if (!item.path) throw new Error('No file path for this item. Edit it in Obsidian first.');
+    var markdown = await readFileFromObsidian(item.path);
+    if (!markdown) throw new Error('Could not read file from Obsidian. Make sure Obsidian is running with the Local REST API plugin enabled.');
+
+    // Clean up the markdown
+    var cleanContent = stripFrontmatter(markdown);
+
+    // Build tags from folder type
+    var tags = ['Freedom Life 3.0', 'retirement', 'bitcoin'];
+    if (folderKey === 'youtube') tags.push('cryptocurrency');
+    if (folderKey === 'email') tags.push('newsletter');
+
+    // Push to Medium as draft
+    var resp = await fetch('https://api.medium.com/v1/users/' + userId + '/posts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+      body: JSON.stringify({
+        title: item.title,
+        contentFormat: 'markdown',
+        content: cleanContent,
+        publishStatus: 'draft',
+        tags: tags.slice(0, 5) // Medium allows max 5 tags
+      })
+    });
+
+    if (!resp.ok) {
+      var errData = await resp.json().catch(function() { return {}; });
+      if (resp.status === 401) {
+        localStorage.removeItem('fl3-medium-token');
+        _mediumUserId = null;
+        throw new Error('Medium token is invalid or expired. Please enter a new one.');
+      }
+      throw new Error(errData.errors ? errData.errors[0].message : 'Medium API error: ' + resp.status);
+    }
+
+    var result = await resp.json();
+    var postUrl = result.data.url;
+
+    // Save the Medium URL to the item
+    item.mediumDraftUrl = postUrl;
+    item.mediumDraftDate = new Date().toISOString().slice(0, 10);
+    saveToLocalStorage();
+
+    // Update button to show success
+    if (btn) {
+      btn.classList.remove('sending');
+      btn.classList.add('sent');
+      btn.textContent = '✓ Draft on Medium';
+      btn.disabled = false;
+      btn.title = 'Click to open draft: ' + postUrl;
+      btn.onclick = function() { window.open(postUrl, '_blank'); };
+    }
+
+    showArchiveNotice('Draft pushed to Medium! Click the button to open it.', 'success');
+
+  } catch(e) {
+    if (btn) {
+      btn.classList.remove('sending');
+      btn.textContent = '📤 Medium';
+      btn.disabled = false;
+    }
+    showArchiveNotice('Medium: ' + e.message, 'error');
+  }
 }
 
 // =====================================================================
