@@ -492,7 +492,7 @@ window.FL3_DASHBOARD_DATA = {
                 "research": true,
                 "write": true,
                 "edit": true,
-                "publish": false
+                "publish": true
               },
               "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/The Petrodollar Shift Nobody Is Explaining to You (2026-03-01).md"
             }
