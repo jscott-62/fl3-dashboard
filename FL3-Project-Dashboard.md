@@ -65,7 +65,7 @@
 ### 4. Weekly Content Production
 **Status:** ACTIVE (Week 1 Complete)
 **Goal:** Consistent authority-building content across all platforms
-**Folder:** [[Systems/Business-Suite/Weekly-Content/]]
+**Folder:** [[Projects/fl3-dashboard/Weekly-Content/]]
 **System:** Content Engine v1.0 (in Systems/)
 
 | Week | Pillar | Status | Outputs |

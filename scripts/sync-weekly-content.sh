@@ -5,11 +5,13 @@
 # detects new .md files not yet tracked in dashboard-data.json,
 # and adds them to the appropriate content folder section.
 #
-# Folder mapping:
-#   Articles/     → articles    (steps: research, write, edit, publish)
-#   YouTube/      → youtube     (steps: research, write, film, edit, publish)
-#   Social Media/ → social-media (steps: research, write, film, edit, publish)
-#   Email/        → email       (steps: research, write, edit, publish)
+# Content is organized by WEEK folders (not by type):
+#   Weekly-Content/Week of Mar 3/   <- all types for that week
+#   Weekly-Content/Week of Mar 10/
+#   Weekly-Content/Unscheduled/     <- content not yet assigned to a week
+#
+# Type detection uses **Type:** tag in file or filename inference.
+# Skips: Archive/, Briefs/, non-.md files
 #
 # Usage: ./sync-weekly-content.sh
 # Requires: python3, git
@@ -34,29 +36,62 @@ fi
 echo "Scanning Weekly-Content folders for new files..."
 
 # ── Scan folders and update dashboard-data.json ──
-ADDED=$(python3 << 'PYEOF'
+ADDED=$(WEEKLY_DIR="$WEEKLY_DIR" JSON_FILE="$JSON_FILE" python3 << 'PYEOF'
 import json, os, re
 
-SCRIPT_DIR = os.environ.get("SCRIPT_DIR", ".")
-REPO_ROOT = os.path.join(SCRIPT_DIR, "..")
-JSON_FILE = os.path.join(REPO_ROOT, "docs", "dashboard-data.json")
-WEEKLY_DIR = os.path.join(REPO_ROOT, "Weekly-Content")
+WEEKLY_DIR = os.environ["WEEKLY_DIR"]
+JSON_FILE = os.environ["JSON_FILE"]
 
-# Map disk folder names to dashboard content folder keys
-FOLDER_MAP = {
-    "Articles": "articles",
-    "YouTube": "youtube",
-    "Social Media": "social-media",
-    "Email": "email",
-}
+# Vault-relative path prefix
+VAULT_PREFIX = "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/"
 
-# Steps per folder type
+# Steps per content type
 STEPS = {
-    "articles": ["research", "write", "edit", "publish"],
-    "email":    ["research", "write", "edit", "publish"],
-    "youtube":  ["research", "write", "film", "edit", "publish"],
+    "youtube":      ["research", "write", "film", "edit", "publish"],
     "social-media": ["research", "write", "film", "edit", "publish"],
+    "articles":     ["research", "write", "edit", "publish"],
+    "email":        ["research", "write", "edit", "publish"],
 }
+
+# Folders to skip
+SKIP_FOLDERS = {"Archive", "Briefs", ".git"}
+
+def detect_type(filepath, filename):
+    """Detect content type from file metadata or filename."""
+    try:
+        with open(filepath, "r", encoding="utf-8") as f:
+            # Read first 20 lines looking for Type tag
+            for i, line in enumerate(f):
+                if i > 20:
+                    break
+                line = line.strip()
+                # Check for **Type:** tag
+                m = re.match(r'\*\*Type:\*\*\s*(.+)', line, re.IGNORECASE)
+                if m:
+                    t = m.group(1).strip().lower()
+                    if "youtube" in t:
+                        return "youtube"
+                    elif "social" in t:
+                        return "social-media"
+                    elif "email" in t or "newsletter" in t:
+                        return "email"
+                    elif "article" in t:
+                        return "articles"
+    except Exception:
+        pass
+
+    # Fallback: infer from filename
+    fn = filename.lower()
+    if "youtube" in fn or "script" in fn:
+        return "youtube"
+    elif "social" in fn or "batch" in fn:
+        return "social-media"
+    elif "newsletter" in fn or "email" in fn:
+        return "email"
+    elif "pillar" in fn and ("vid" in fn or "estimated length" in open(filepath, "r", encoding="utf-8").read(500).lower()):
+        return "youtube"
+    else:
+        return "articles"
 
 with open(JSON_FILE, "r") as f:
     data = json.load(f)
@@ -64,60 +99,91 @@ with open(JSON_FILE, "r") as f:
 wc = data["projects"]["weekly-content"]
 folders = wc.setdefault("contentFolders", {})
 
-added_count = 0
-
-for disk_name, folder_key in FOLDER_MAP.items():
-    disk_path = os.path.join(WEEKLY_DIR, disk_name)
-    if not os.path.isdir(disk_path):
-        continue
-
-    # Ensure folder exists in data
-    if folder_key not in folders:
-        folders[folder_key] = {"label": disk_name, "items": []}
-    folder = folders[folder_key]
-    items = folder.setdefault("items", [])
-
-    # Collect existing paths for dedup (normalize for comparison)
-    existing_paths = set()
-    for item in items:
+# Collect ALL existing paths across all categories for dedup
+existing_paths = set()
+for folder_key, folder_data in folders.items():
+    for item in folder_data.get("items", []):
         if item.get("path"):
             existing_paths.add(item["path"])
 
-    # Scan .md files on disk
-    for fname in sorted(os.listdir(disk_path)):
-        if not fname.endswith(".md"):
-            continue
+added_count = 0
 
-        vault_path = "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/" + disk_name + "/" + fname
+# Walk all week folders and Unscheduled
+for entry in sorted(os.listdir(WEEKLY_DIR)):
+    entry_path = os.path.join(WEEKLY_DIR, entry)
+    if not os.path.isdir(entry_path):
+        continue
+    if entry in SKIP_FOLDERS:
+        continue
 
-        if vault_path in existing_paths:
-            continue
+    # Determine weekOf from folder name (e.g., "Week of Mar 3" -> find matching calendar entry)
+    week_folder = entry  # e.g., "Week of Mar 10" or "Unscheduled"
 
-        # Try to extract title from first # heading in the file
-        title = fname[:-3]  # fallback: filename without .md
-        try:
-            full_path = os.path.join(disk_path, fname)
-            with open(full_path, "r", encoding="utf-8") as mdf:
-                for line in mdf:
-                    line = line.strip()
-                    if line.startswith("# ") and not line.startswith("## "):
-                        title = line[2:].strip()
+    # Scan .md files in this folder (and immediate subfolders)
+    for root, dirs, files in os.walk(entry_path):
+        # Skip nested Archive/Briefs
+        dirs[:] = [d for d in dirs if d not in SKIP_FOLDERS]
+
+        for fname in sorted(files):
+            if not fname.endswith(".md"):
+                continue
+
+            full_path = os.path.join(root, fname)
+            # Build vault-relative path
+            rel_from_wc = os.path.relpath(full_path, WEEKLY_DIR)
+            vault_path = VAULT_PREFIX + rel_from_wc
+
+            if vault_path in existing_paths:
+                continue
+
+            # Detect content type
+            content_type = detect_type(full_path, fname)
+
+            # Ensure category exists
+            if content_type not in folders:
+                label_map = {
+                    "youtube": "YouTube",
+                    "articles": "Articles",
+                    "social-media": "Social Media",
+                    "email": "Email",
+                }
+                folders[content_type] = {"label": label_map.get(content_type, content_type), "items": []}
+
+            # Extract title from first # heading
+            title = fname[:-3]  # fallback
+            try:
+                with open(full_path, "r", encoding="utf-8") as mdf:
+                    for line in mdf:
+                        line = line.strip()
+                        if line.startswith("# ") and not line.startswith("## "):
+                            title = line[2:].strip()
+                            break
+            except Exception:
+                pass
+
+            # Build step dict (research + write = true since file exists)
+            step_keys = STEPS.get(content_type, ["research", "write", "edit", "publish"])
+            steps = {k: (k in ("research", "write")) for k in step_keys}
+
+            item = {
+                "title": title,
+                "steps": steps,
+                "path": vault_path,
+            }
+
+            # Try to match weekOf from calendar
+            if week_folder != "Unscheduled":
+                calendar = wc.get("calendar", [])
+                for cal in calendar:
+                    if cal.get("weekLabel") == week_folder:
+                        item["weekOf"] = cal["weekOf"]
                         break
-        except Exception:
-            pass
 
-        # Build step dict (all false for new items)
-        step_keys = STEPS.get(folder_key, ["research", "write", "edit", "publish"])
-        steps = {k: False for k in step_keys}
+            folders[content_type]["items"].append(item)
+            existing_paths.add(vault_path)
 
-        items.append({
-            "title": title,
-            "steps": steps,
-            "path": vault_path,
-        })
-
-        print(f"  + [{disk_name}] {title}")
-        added_count += 1
+            print(f"  + [{content_type}] {title} ({week_folder})")
+            added_count += 1
 
 # Update timestamp
 from datetime import date

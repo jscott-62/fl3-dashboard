@@ -129,7 +129,7 @@ The `weekly-content` project uses `contentFolders` instead of `assets`:
       {
         "title": "Content Title",
         "steps": { "research": false, "write": false, "film": false, "edit": false, "publish": false },
-        "path": "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/YouTube/filename.md"
+        "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Mar 10/filename.md"
       }
     ]
   },

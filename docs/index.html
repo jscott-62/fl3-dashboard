@@ -2298,7 +2298,7 @@ function generateContentPath(folderKey, title, weekOf) {
       if (w.weekOf === weekOf) weekFolder = w.weekLabel;
     });
   }
-  return '00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/' + weekFolder + '/' + safeName + '.md';
+  return '00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/' + weekFolder + '/' + safeName + '.md';
 }
 
 // ── Week Archive ──
@@ -2330,7 +2330,7 @@ function archiveWeek(weekOf, project) {
   var today = new Date().toISOString().slice(0, 10);
 
   // Use week label as subfolder name (e.g., "Week of Mar 3")
-  var archiveFolder = '00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/Archive/' + weekLabel + '/';
+  var archiveFolder = '00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Archive/' + weekLabel + '/';
 
   toArchive.forEach(function(entry) {
     var item = entry.item;

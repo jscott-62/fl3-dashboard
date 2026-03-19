@@ -41,7 +41,7 @@ ARCHIVE_DIR = os.environ["ARCHIVE_DIR"]
 JSON_FILE = os.path.join(REPO_ROOT, "docs", "dashboard-data.json")
 
 # Vault prefix for path matching
-VAULT_PREFIX = "00-ZenithPro - FL3/Systems/Business-Suite/Weekly-Content/"
+VAULT_PREFIX = "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/"
 
 # Map dashboard folder keys to disk folder names
 FOLDER_DISK = {
