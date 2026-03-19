@@ -442,6 +442,31 @@
     gap: 4px;
     margin-bottom: 16px;
   }
+  .sync-content-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-left: 10px;
+    vertical-align: middle;
+  }
+  .sync-content-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .sync-content-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .sync-content-btn.syncing {
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin-icon { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
   .view-toggle-btn {
     background: transparent;
     border: 1px solid var(--border);
@@ -2406,6 +2431,168 @@ function showArchiveNotice(message, type) {
   }, 4000);
 }
 
+// ── Sync Weekly Content via Obsidian Local REST API ──
+// Scans the Weekly-Content folder for .md files not yet tracked in the dashboard
+function syncWeeklyContent() {
+  var apiKey = localStorage.getItem('fl3-obsidian-api-key');
+  if (!apiKey) {
+    apiKey = prompt('Enter your Obsidian Local REST API key to enable syncing.\n\nFind it in Obsidian → Settings → Community Plugins → Local REST API → API Key');
+    if (!apiKey) return;
+    localStorage.setItem('fl3-obsidian-api-key', apiKey);
+  }
+
+  var btn = document.getElementById('sync-content-btn');
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Syncing...'; }
+
+  var baseUrl = 'http://127.0.0.1:27123';
+  var headers = { 'Authorization': 'Bearer ' + apiKey };
+  var CONTENT_PREFIX = '00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/';
+
+  fetch(baseUrl + '/vault/', { headers: headers })
+    .then(function(res) {
+      if (res.status === 401) {
+        localStorage.removeItem('fl3-obsidian-api-key');
+        throw new Error('Invalid API key. Click Sync again to re-enter.');
+      }
+      if (!res.ok) throw new Error('Obsidian API error: ' + res.status);
+      return res.json();
+    })
+    .then(function(data) {
+      var allFiles = data.files || data || [];
+      var contentFiles = allFiles.filter(function(f) {
+        return f.startsWith(CONTENT_PREFIX) && f.endsWith('.md');
+      });
+
+      var added = processNewContentFiles(contentFiles, CONTENT_PREFIX);
+      if (btn) { btn.disabled = false; btn.textContent = '🔄 Sync'; }
+
+      if (added > 0) {
+        saveToLocalStorage();
+        reRenderWeeklyContent();
+        showArchiveNotice(added + ' new file' + (added > 1 ? 's' : '') + ' synced to dashboard.', 'success');
+      } else {
+        showArchiveNotice('Dashboard is up to date. No new files found.', 'success');
+      }
+    })
+    .catch(function(err) {
+      if (btn) { btn.disabled = false; btn.textContent = '🔄 Sync'; }
+      if (err.message && err.message.indexOf('Failed to fetch') > -1) {
+        showArchiveNotice('Cannot connect to Obsidian. Is it running with Local REST API enabled?', 'error');
+      } else {
+        showArchiveNotice(err.message || 'Sync failed.', 'error');
+      }
+    });
+}
+
+function processNewContentFiles(files, prefix) {
+  var project = _dashboardData.projects['weekly-content'];
+  if (!project) return 0;
+
+  var folders = project.contentFolders || {};
+  // Ensure all folder keys exist
+  ['youtube', 'social-media', 'articles', 'email'].forEach(function(key) {
+    if (!folders[key]) folders[key] = { label: FOLDER_NAMES[key] || key, items: [] };
+  });
+  project.contentFolders = folders;
+
+  // Build weekLabel → weekOf map from calendar
+  var weekLabelToDate = {};
+  (project.calendar || []).forEach(function(w) {
+    weekLabelToDate[w.weekLabel] = w.weekOf;
+  });
+
+  // Build set of existing paths (normalized to just the part after Weekly-Content/)
+  var existingRelPaths = new Set();
+  var existingTitles = {};
+  FOLDER_ORDER.forEach(function(fk) {
+    var items = (folders[fk] || {}).items || [];
+    items.forEach(function(item) {
+      // Normalize: extract everything after "Weekly-Content/"
+      var p = item.path || '';
+      var idx = p.indexOf('Weekly-Content/');
+      if (idx !== -1) existingRelPaths.add(p.substring(idx + 15));
+      // Also track by original path if archived
+      var op = item.originalPath || '';
+      idx = op.indexOf('Weekly-Content/');
+      if (idx !== -1) existingRelPaths.add(op.substring(idx + 15));
+      // Track titles per weekOf for fuzzy matching
+      var key = (item.weekOf || '_none_') + '|' + (item.title || '').toLowerCase();
+      existingTitles[key] = true;
+    });
+  });
+
+  var added = 0;
+
+  files.forEach(function(filePath) {
+    var relPath = filePath.substring(prefix.length); // e.g. "Week of Mar 3/Pillar #2 Vid.md"
+
+    // Skip Archive, Briefs, hidden files, subdirectories deeper than expected
+    var firstFolder = relPath.split('/')[0];
+    if (firstFolder === 'Archive' || firstFolder === 'Briefs') return;
+    if (relPath.startsWith('.')) return;
+
+    // Check if already tracked
+    if (existingRelPaths.has(relPath)) return;
+
+    // Parse folder and filename
+    var parts = relPath.split('/');
+    var filename = parts[parts.length - 1];
+    // Skip if file is in a sub-subfolder (e.g. Unscheduled/Conveyer Belt Videos Ad-BRoll/...)
+    // We only sync top-level files within week folders or Unscheduled
+    if (parts.length > 2) return;
+
+    var folderName = parts.length > 1 ? parts[0] : 'Unscheduled';
+    var title = filename.replace(/\.md$/i, '');
+
+    // Determine weekOf
+    var weekOf = null;
+    if (folderName !== 'Unscheduled') {
+      weekOf = weekLabelToDate[folderName] || null;
+    }
+
+    // Check title-based dedup
+    var titleKey = (weekOf || '_none_') + '|' + title.toLowerCase();
+    if (existingTitles[titleKey]) return;
+
+    // Detect content type
+    var folderKey = detectContentType(title);
+
+    // Build steps
+    var stepKeys = (folderKey === 'youtube' || folderKey === 'social-media')
+      ? ['research', 'write', 'film', 'edit', 'publish']
+      : ['research', 'write', 'edit', 'publish'];
+    var steps = {};
+    stepKeys.forEach(function(s) { steps[s] = false; });
+
+    var newItem = {
+      title: title,
+      steps: steps,
+      path: filePath
+    };
+    if (weekOf) newItem.weekOf = weekOf;
+
+    folders[folderKey].items.push(newItem);
+    existingRelPaths.add(relPath);
+    existingTitles[titleKey] = true;
+    added++;
+  });
+
+  if (added > 0) {
+    _dashboardData.lastUpdated = new Date().toISOString().slice(0, 10);
+  }
+
+  return added;
+}
+
+function detectContentType(title) {
+  var lower = title.toLowerCase();
+  if (lower.indexOf('youtube script') !== -1 || lower.indexOf('youtube') !== -1) return 'youtube';
+  if (/\bvid\b/.test(lower) && lower.indexOf('heygen') === -1) return 'youtube';
+  if (lower.indexOf('social batch') !== -1 || lower.indexOf('heygen') !== -1) return 'social-media';
+  if (lower.indexOf('newsletter') !== -1) return 'email';
+  return 'articles';
+}
+
 function makeEditableTitle(titleEl, folderKey, itemIdx) {
   titleEl.classList.add('content-title-editable');
   titleEl.title = 'Click to edit title';
@@ -2484,8 +2671,12 @@ function buildWeeklyContentView(project, data) {
   // Header
   var header = document.createElement('div');
   header.className = 'project-header';
-  header.innerHTML = '<h2>' + project.name + ' <span class="status-badge status-' + project.status + '">' + project.status.replace(/_/g, ' ') + '</span></h2>' +
+  header.innerHTML = '<h2>' + project.name + ' <span class="status-badge status-' + project.status + '">' + project.status.replace(/_/g, ' ') + '</span> ' +
+    '<button id="sync-content-btn" class="sync-content-btn" title="Scan Weekly-Content folder for new files">🔄 Sync</button></h2>' +
     '<p class="project-description">' + project.description + '</p>';
+  header.querySelector('#sync-content-btn').addEventListener('click', function() {
+    syncWeeklyContent();
+  });
   card.appendChild(header);
 
   // View toggle
