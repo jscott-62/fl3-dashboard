@@ -3331,14 +3331,10 @@ function createFolderContentCard(item, folderKey, itemIdx, data) {
   });
   stepsHtml += '</div>';
 
-  // Medium draft button (show for articles and email/newsletter content)
+  // Medium clipboard button (show for articles and email/newsletter content)
   var mediumBtnHtml = '';
   if (folderKey === 'articles' || folderKey === 'email') {
-    if (item.mediumDraftUrl) {
-      mediumBtnHtml = '<button class="medium-draft-btn sent" data-folder="' + folderKey + '" data-idx="' + itemIdx + '" title="Click to open draft: ' + escapeHtml(item.mediumDraftUrl) + '">✓ Draft on Medium</button>';
-    } else {
-      mediumBtnHtml = '<button class="medium-draft-btn" data-folder="' + folderKey + '" data-idx="' + itemIdx + '" title="Push as draft to Medium">📤 Medium</button>';
-    }
+    mediumBtnHtml = '<button class="medium-draft-btn" data-folder="' + folderKey + '" data-idx="' + itemIdx + '" title="Copy article and open Medium editor">📋 Medium</button>';
   }
 
   card.innerHTML =
@@ -3351,12 +3347,7 @@ function createFolderContentCard(item, folderKey, itemIdx, data) {
     mediumBtn.addEventListener('click', function(e) {
       var fk = e.target.dataset.folder;
       var ix = parseInt(e.target.dataset.idx);
-      var itm = _dashboardData.projects['weekly-content'].contentFolders[fk].items[ix];
-      if (itm.mediumDraftUrl) {
-        window.open(itm.mediumDraftUrl, '_blank');
-      } else {
-        pushDraftToMedium(fk, ix);
-      }
+      copyForMedium(fk, ix);
     });
   }
 
@@ -3494,46 +3485,10 @@ function formatShortDate(dateStr) {
 }
 
 // =====================================================================
-// MEDIUM DRAFT INTEGRATION
+// MEDIUM CLIPBOARD INTEGRATION
 // =====================================================================
-
-function getMediumToken() {
-  try { return localStorage.getItem('fl3-medium-token') || ''; } catch(e) { return ''; }
-}
-
-function hasMediumToken() { return getMediumToken().length > 5; }
-
-var _mediumUserId = null;
-
-async function getMediumUserId() {
-  if (_mediumUserId) return _mediumUserId;
-  var token = getMediumToken();
-  if (!token) return null;
-  try {
-    var resp = await fetch('https://api.medium.com/v1/me', {
-      headers: { 'Authorization': 'Bearer ' + token }
-    });
-    if (!resp.ok) throw new Error('Medium auth failed');
-    var data = await resp.json();
-    _mediumUserId = data.data.id;
-    return _mediumUserId;
-  } catch(e) {
-    console.error('Medium user fetch failed:', e);
-    return null;
-  }
-}
-
-function promptMediumToken() {
-  var token = prompt(
-    'Enter your Medium Integration Token to push drafts.\n\n' +
-    'Find it in Medium: Settings → Security and apps → Integration tokens\n\n' +
-    'The token starts with something like "2..."'
-  );
-  if (!token) return null;
-  localStorage.setItem('fl3-medium-token', token.trim());
-  _mediumUserId = null; // Reset cached user ID
-  return token.trim();
-}
+// Reads article from Obsidian, strips frontmatter/metadata,
+// copies clean content to clipboard, and opens Medium's new story editor.
 
 async function readFileFromObsidian(vaultPath) {
   var apiKey = localStorage.getItem('fl3-obsidian-api-key');
@@ -3583,97 +3538,89 @@ function stripFrontmatter(markdown) {
   return output.join('\n').trim();
 }
 
-async function pushDraftToMedium(folderKey, itemIdx) {
+function markdownToHtml(md) {
+  // Simple markdown-to-HTML for clipboard (Medium accepts rich paste)
+  var html = md
+    // Headers
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+    .replace(/^# (.+)$/gm, '<h1>$1</h1>')
+    // Bold and italic
+    .replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    // Blockquotes
+    .replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>')
+    // Horizontal rules
+    .replace(/^---$/gm, '<hr>')
+    // Line breaks into paragraphs
+    .replace(/\n\n+/g, '</p><p>')
+    .replace(/\n/g, '<br>');
+  return '<p>' + html + '</p>';
+}
+
+async function copyForMedium(folderKey, itemIdx) {
   var item = _dashboardData.projects['weekly-content'].contentFolders[folderKey].items[itemIdx];
   if (!item) { showArchiveNotice('Content item not found.', 'error'); return; }
 
-  // Check for Medium token
-  var token = getMediumToken();
-  if (!token) {
-    token = promptMediumToken();
-    if (!token) return;
-  }
-
-  // Get the button and show sending state
+  // Get the button and show loading state
   var btn = document.querySelector('.medium-draft-btn[data-folder="' + folderKey + '"][data-idx="' + itemIdx + '"]');
   if (btn) {
     btn.classList.add('sending');
-    btn.textContent = '⏳ Sending...';
+    btn.textContent = '⏳ Reading...';
     btn.disabled = true;
   }
 
   try {
-    // Get Medium user ID
-    var userId = await getMediumUserId();
-    if (!userId) {
-      localStorage.removeItem('fl3-medium-token');
-      _mediumUserId = null;
-      throw new Error('Could not authenticate with Medium. Token may be invalid. Please try again.');
-    }
-
     // Read content from Obsidian
-    if (!item.path) throw new Error('No file path for this item. Edit it in Obsidian first.');
+    if (!item.path) throw new Error('No file path for this item.');
     var markdown = await readFileFromObsidian(item.path);
     if (!markdown) throw new Error('Could not read file from Obsidian. Make sure Obsidian is running with the Local REST API plugin enabled.');
 
     // Clean up the markdown
-    var cleanContent = stripFrontmatter(markdown);
+    var cleanMarkdown = stripFrontmatter(markdown);
+    var cleanHtml = markdownToHtml(cleanMarkdown);
 
-    // Build tags from folder type
-    var tags = ['Freedom Life 3.0', 'retirement', 'bitcoin'];
-    if (folderKey === 'youtube') tags.push('cryptocurrency');
-    if (folderKey === 'email') tags.push('newsletter');
-
-    // Push to Medium as draft
-    var resp = await fetch('https://api.medium.com/v1/users/' + userId + '/posts', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-      },
-      body: JSON.stringify({
-        title: item.title,
-        contentFormat: 'markdown',
-        content: cleanContent,
-        publishStatus: 'draft',
-        tags: tags.slice(0, 5) // Medium allows max 5 tags
-      })
-    });
-
-    if (!resp.ok) {
-      var errData = await resp.json().catch(function() { return {}; });
-      if (resp.status === 401) {
-        localStorage.removeItem('fl3-medium-token');
-        _mediumUserId = null;
-        throw new Error('Medium token is invalid or expired. Please enter a new one.');
-      }
-      throw new Error(errData.errors ? errData.errors[0].message : 'Medium API error: ' + resp.status);
+    // Copy as rich text (HTML) + plain text fallback to clipboard
+    try {
+      var blob = new Blob([cleanHtml], { type: 'text/html' });
+      var textBlob = new Blob([cleanMarkdown], { type: 'text/plain' });
+      var clipItem = new ClipboardItem({
+        'text/html': blob,
+        'text/plain': textBlob
+      });
+      await navigator.clipboard.write([clipItem]);
+    } catch(clipErr) {
+      // Fallback: copy plain markdown
+      await navigator.clipboard.writeText(cleanMarkdown);
     }
-
-    var result = await resp.json();
-    var postUrl = result.data.url;
-
-    // Save the Medium URL to the item
-    item.mediumDraftUrl = postUrl;
-    item.mediumDraftDate = new Date().toISOString().slice(0, 10);
-    saveToLocalStorage();
 
     // Update button to show success
     if (btn) {
       btn.classList.remove('sending');
       btn.classList.add('sent');
-      btn.textContent = '✓ Draft on Medium';
+      btn.textContent = '✓ Copied!';
       btn.disabled = false;
-      btn.title = 'Click to open draft: ' + postUrl;
-      btn.onclick = function() { window.open(postUrl, '_blank'); };
     }
 
-    showArchiveNotice('Draft pushed to Medium! Click the button to open it.', 'success');
+    // Open Medium's new story editor
+    window.open('https://medium.com/new-story', '_blank');
+
+    showArchiveNotice('Article copied to clipboard! Paste it in the Medium editor that just opened.', 'success');
+
+    // Reset button after 5 seconds
+    setTimeout(function() {
+      if (btn) {
+        btn.classList.remove('sent');
+        btn.textContent = '📋 Medium';
+        btn.title = 'Copy article and open Medium editor';
+      }
+    }, 5000);
 
   } catch(e) {
     if (btn) {
       btn.classList.remove('sending');
-      btn.textContent = '📤 Medium';
+      btn.textContent = '📋 Medium';
       btn.disabled = false;
     }
     showArchiveNotice('Medium: ' + e.message, 'error');
