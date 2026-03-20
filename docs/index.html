@@ -2785,7 +2785,8 @@ function buildWeeklyContentView(project, data) {
   toggleDiv.innerHTML =
     '<button class="view-toggle-btn' + (_weeklyViewMode === 'calendar' ? ' active' : '') + '" data-mode="calendar">📅 Calendar</button>' +
     '<button class="view-toggle-btn' + (_weeklyViewMode === 'list' ? ' active' : '') + '" data-mode="list">☰ List</button>' +
-    '<button class="view-toggle-btn' + (_weeklyViewMode === 'kanban' ? ' active' : '') + '" data-mode="kanban">▦ Board</button>';
+    '<button class="view-toggle-btn' + (_weeklyViewMode === 'kanban' ? ' active' : '') + '" data-mode="kanban">▦ Board</button>' +
+    '<button class="view-toggle-btn' + (_weeklyViewMode === 'archive' ? ' active' : '') + '" data-mode="archive">📦 Archive</button>';
   toggleDiv.querySelectorAll('.view-toggle-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
       _weeklyViewMode = btn.dataset.mode;
@@ -2794,7 +2795,10 @@ function buildWeeklyContentView(project, data) {
   });
   card.appendChild(toggleDiv);
 
-  if (_weeklyViewMode === 'calendar') {
+  if (_weeklyViewMode === 'archive') {
+    // Archive view: only archived items
+    card.appendChild(buildArchiveView(project, data));
+  } else if (_weeklyViewMode === 'calendar') {
     // Calendar view: week cards with grouped content
     card.appendChild(buildCalendarView(project, data));
   } else {
@@ -2834,7 +2838,7 @@ function getItemsForWeek(project, weekOf) {
     var folder = folders[folderKey];
     if (!folder || !folder.items) return;
     folder.items.forEach(function(item, idx) {
-      if (item.weekOf === weekOf) {
+      if (item.weekOf === weekOf && !item.archived) {
         result[folderKey].push({ item: item, idx: idx, folderKey: folderKey });
       }
     });
@@ -2850,7 +2854,7 @@ function getUnscheduledItems(project) {
     var folder = folders[folderKey];
     if (!folder || !folder.items) return;
     folder.items.forEach(function(item, idx) {
-      if (!item.weekOf) {
+      if (!item.weekOf && !item.archived) {
         result[folderKey].push({ item: item, idx: idx, folderKey: folderKey });
       }
     });
@@ -3181,6 +3185,90 @@ function addNewCalendarWeek(project) {
 }
 
 // =====================================================================
+// ARCHIVE VIEW
+// =====================================================================
+
+function buildArchiveView(project, data) {
+  var container = document.createElement('div');
+  container.className = 'archive-view';
+
+  // Collect all archived items across all folders
+  var archivedItems = [];
+  var folders = project.contentFolders || {};
+  FOLDER_ORDER.forEach(function(folderKey) {
+    var folder = folders[folderKey];
+    if (!folder || !folder.items) return;
+    folder.items.forEach(function(item, idx) {
+      if (item.archived) {
+        archivedItems.push({ item: item, idx: idx, folderKey: folderKey, folderLabel: folder.label });
+      }
+    });
+  });
+
+  if (archivedItems.length === 0) {
+    container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted);font-size:16px;">No archived content yet. Items move here when you check the Publish box.</div>';
+    return container;
+  }
+
+  // Group by archive date (most recent first)
+  var byDate = {};
+  archivedItems.forEach(function(entry) {
+    var dateKey = entry.item.archivedDate || 'Unknown';
+    if (!byDate[dateKey]) byDate[dateKey] = [];
+    byDate[dateKey].push(entry);
+  });
+
+  var sortedDates = Object.keys(byDate).sort().reverse();
+
+  // Summary header
+  var summary = document.createElement('div');
+  summary.style.cssText = 'display:flex;gap:16px;margin-bottom:20px;flex-wrap:wrap;';
+  summary.innerHTML =
+    '<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 20px;text-align:center;flex:1;min-width:120px;">' +
+      '<div style="font-size:24px;font-weight:700;color:var(--text);">' + archivedItems.length + '</div>' +
+      '<div style="font-size:12px;color:var(--muted);">Total Archived</div>' +
+    '</div>' +
+    '<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 20px;text-align:center;flex:1;min-width:120px;">' +
+      '<div style="font-size:24px;font-weight:700;color:var(--text);">' + sortedDates.length + '</div>' +
+      '<div style="font-size:12px;color:var(--muted);">Archive Dates</div>' +
+    '</div>';
+  container.appendChild(summary);
+
+  // Render each date group
+  sortedDates.forEach(function(dateKey) {
+    var group = document.createElement('div');
+    group.style.cssText = 'margin-bottom:16px;';
+
+    var groupHeader = document.createElement('div');
+    groupHeader.style.cssText = 'font-size:14px;font-weight:600;color:var(--accent);padding:8px 0;border-bottom:1px solid var(--border);margin-bottom:8px;';
+    groupHeader.textContent = '📦 Archived ' + dateKey + ' (' + byDate[dateKey].length + ' items)';
+    group.appendChild(groupHeader);
+
+    byDate[dateKey].forEach(function(entry) {
+      var row = document.createElement('div');
+      row.style.cssText = 'display:flex;align-items:center;gap:12px;padding:8px 12px;border-radius:6px;margin-bottom:4px;background:rgba(30,41,59,0.5);';
+
+      var folderIcon = FOLDER_ICONS[entry.folderKey] || '📁';
+      var typeBadge = '<span style="background:rgba(100,116,139,0.3);color:var(--muted);padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;text-transform:uppercase;white-space:nowrap;">' + folderIcon + ' ' + escapeHtml(entry.folderLabel) + '</span>';
+
+      var title = escapeHtml(entry.item.title || 'Untitled');
+      var obsidianLink = buildObsidianLink(entry.item.path);
+
+      row.innerHTML =
+        typeBadge +
+        '<span style="flex:1;color:var(--text);font-size:14px;">' + title + '</span>' +
+        '<a class="hub-btn hub-btn-obsidian" href="' + escapeAttr(obsidianLink) + '" title="Open in Obsidian" style="font-size:10px;padding:2px 6px;">Obsidian</a>';
+
+      group.appendChild(row);
+    });
+
+    container.appendChild(group);
+  });
+
+  return container;
+}
+
+// =====================================================================
 // FOLDER SECTION VIEW (List/Kanban)
 // =====================================================================
 
@@ -3188,10 +3276,11 @@ function buildFolderSection(folderKey, folder, data) {
   var section = document.createElement('div');
   section.className = 'content-folder-section';
 
-  var items = folder.items || [];
+  var allItems = folder.items || [];
+  var items = allItems.filter(function(item) { return !item.archived; });
   var stepDefs = getFolderStepDefs(folderKey);
 
-  // Count completed
+  // Count completed (from active items only)
   var completedCount = items.filter(function(item) {
     return stepDefs.every(function(s) { return item.steps && item.steps[s.key]; });
   }).length;
@@ -3248,6 +3337,9 @@ function buildFolderListView(folderKey, folder, data) {
   var stepDefs = getFolderStepDefs(folderKey);
 
   (folder.items || []).forEach(function(item, itemIdx) {
+    // Skip archived items in list view
+    if (item.archived) return;
+
     var itemDiv = document.createElement('div');
     itemDiv.className = 'content-list-item';
 
@@ -3377,6 +3469,7 @@ function buildFolderKanbanView(folderKey, folder, data) {
   columnKeys.forEach(function(k) { columns[k] = []; });
 
   (folder.items || []).forEach(function(item, itemIdx) {
+    if (item.archived) return; // Skip archived items in board view
     var col = getItemColumn(item.steps, stepDefs);
     if (columns[col]) {
       columns[col].push({ item: item, idx: itemIdx });
