@@ -502,6 +502,36 @@
     border-color: #4ade80;
   }
 
+  .ghl-blog-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-left: 6px;
+    white-space: nowrap;
+  }
+  .ghl-blog-btn:hover {
+    border-color: #4285f4;
+    color: #4285f4;
+  }
+  .ghl-blog-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .ghl-blog-btn.sending {
+    color: #f59e0b;
+    border-color: #f59e0b;
+  }
+  .ghl-blog-btn.sent {
+    color: #22c55e;
+    border-color: #22c55e;
+    cursor: default;
+  }
+
   /* Repurpose Button */
   .repurpose-btn {
     background: transparent;
@@ -3389,6 +3419,20 @@ function buildFolderListView(folderKey, folder, data) {
       });
       stepsDiv.appendChild(medBtn);
 
+      // GHL Blog button
+      var ghlBtn = document.createElement('button');
+      ghlBtn.className = 'ghl-blog-btn';
+      ghlBtn.dataset.folder = folderKey;
+      ghlBtn.dataset.idx = itemIdx;
+      ghlBtn.title = 'Push draft to GHL blog';
+      ghlBtn.textContent = '📝 GHL Blog';
+      ghlBtn.addEventListener('click', function(e) {
+        var fk = e.target.dataset.folder;
+        var ix = parseInt(e.target.dataset.idx);
+        pushToGHLBlog(fk, ix);
+      });
+      stepsDiv.appendChild(ghlBtn);
+
       // Repurpose button
       var repBtn = document.createElement('button');
       repBtn.className = 'repurpose-btn';
@@ -3535,6 +3579,12 @@ function createFolderContentCard(item, folderKey, itemIdx, data) {
     mediumBtnHtml = '<button class="medium-draft-btn" data-folder="' + folderKey + '" data-idx="' + itemIdx + '" title="Copy article and open Medium editor">📋 Medium</button>';
   }
 
+  // GHL Blog button (for articles and email)
+  var ghlBtnHtml = '';
+  if (folderKey === 'articles' || folderKey === 'email') {
+    ghlBtnHtml = '<button class="ghl-blog-btn" data-folder="' + folderKey + '" data-idx="' + itemIdx + '" title="Push draft to GHL blog">📝 GHL Blog</button>';
+  }
+
   // Repurpose button (for articles and email)
   var repurposeBtnHtml = '';
   if (folderKey === 'articles' || folderKey === 'email') {
@@ -3543,7 +3593,7 @@ function createFolderContentCard(item, folderKey, itemIdx, data) {
 
   card.innerHTML =
     '<div class="content-card-title">' + titleHtml + '</div>' +
-    '<div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;">' + stepsHtml + mediumBtnHtml + repurposeBtnHtml + '</div>';
+    '<div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;">' + stepsHtml + mediumBtnHtml + ghlBtnHtml + repurposeBtnHtml + '</div>';
 
   // Medium button handler
   var mediumBtn = card.querySelector('.medium-draft-btn');
@@ -3552,6 +3602,16 @@ function createFolderContentCard(item, folderKey, itemIdx, data) {
       var fk = e.target.dataset.folder;
       var ix = parseInt(e.target.dataset.idx);
       copyForMedium(fk, ix);
+    });
+  }
+
+  // GHL Blog button handler
+  var ghlBtn = card.querySelector('.ghl-blog-btn');
+  if (ghlBtn) {
+    ghlBtn.addEventListener('click', function(e) {
+      var fk = e.target.dataset.folder;
+      var ix = parseInt(e.target.dataset.idx);
+      pushToGHLBlog(fk, ix);
     });
   }
 
@@ -3842,6 +3902,133 @@ async function copyForMedium(folderKey, itemIdx) {
       btn.disabled = false;
     }
     showArchiveNotice('Medium: ' + e.message, 'error');
+  }
+}
+
+// =====================================================================
+// GHL BLOG: Push article as draft to GoHighLevel blog
+// =====================================================================
+
+var GHL_BLOG_CONFIG = {
+  apiBase: 'https://services.leadconnectorhq.com',
+  blogId: '8dmhx61aHltbyk8dVjH3',
+  locationId: 'AIbLlefEQIbk2f5YaG2Y',
+  authorId: '67ef6db4160693759c254896',
+  categoryId: '672587ef13554b6ee786fc8d',
+  version: '2021-04-15'
+};
+
+function getGHLToken() {
+  var token = localStorage.getItem('fl3-ghl-api-token');
+  if (!token) {
+    token = prompt('Enter your GHL Private Integration Token (pit-...).\nThis is stored in your browser only.');
+    if (token) localStorage.setItem('fl3-ghl-api-token', token.trim());
+  }
+  return token;
+}
+
+async function pushToGHLBlog(folderKey, itemIdx) {
+  var item = _dashboardData.projects['weekly-content'].contentFolders[folderKey].items[itemIdx];
+  if (!item) { showArchiveNotice('Content item not found.', 'error'); return; }
+
+  var btn = document.querySelector('.ghl-blog-btn[data-folder="' + folderKey + '"][data-idx="' + itemIdx + '"]');
+  if (btn) {
+    btn.classList.add('sending');
+    btn.textContent = '⏳ Reading...';
+    btn.disabled = true;
+  }
+
+  try {
+    // Read content from Obsidian
+    if (!item.path) throw new Error('No file path for this item.');
+    var markdown = await readFileFromObsidian(item.path);
+    if (!markdown) throw new Error('Could not read file from Obsidian. Make sure Obsidian is running with the Local REST API plugin.');
+
+    // Convert markdown to HTML for GHL
+    var cleanMarkdown = stripFrontmatter(markdown);
+    var htmlContent = markdownToHtml(cleanMarkdown);
+
+    // Get GHL token
+    var token = getGHLToken();
+    if (!token) throw new Error('GHL API token is required.');
+
+    if (btn) btn.textContent = '⏳ Posting...';
+
+    // Create draft post via GHL API
+    var response = await fetch(GHL_BLOG_CONFIG.apiBase + '/blogs/posts', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Version': GHL_BLOG_CONFIG.version,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        locationId: GHL_BLOG_CONFIG.locationId,
+        blogId: GHL_BLOG_CONFIG.blogId,
+        title: item.title || 'Untitled',
+        status: 'DRAFT',
+        rawHTML: htmlContent,
+        categories: [GHL_BLOG_CONFIG.categoryId],
+        author: GHL_BLOG_CONFIG.authorId
+      })
+    });
+
+    var result = await response.json();
+
+    if (!response.ok) {
+      // If author field is rejected, retry without it
+      if (result.message && Array.isArray(result.message) && result.message.some(function(m) { return m.indexOf('author') !== -1; })) {
+        var retryResponse = await fetch(GHL_BLOG_CONFIG.apiBase + '/blogs/posts', {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer ' + token,
+            'Version': GHL_BLOG_CONFIG.version,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            locationId: GHL_BLOG_CONFIG.locationId,
+            blogId: GHL_BLOG_CONFIG.blogId,
+            title: item.title || 'Untitled',
+            status: 'DRAFT',
+            rawHTML: htmlContent,
+            categories: [GHL_BLOG_CONFIG.categoryId]
+          })
+        });
+        result = await retryResponse.json();
+        if (!retryResponse.ok) throw new Error(result.error || result.message || 'GHL API error');
+      } else {
+        throw new Error(result.error || (Array.isArray(result.message) ? result.message.join(', ') : result.message) || 'GHL API error');
+      }
+    }
+
+    // Success
+    if (btn) {
+      btn.classList.remove('sending');
+      btn.classList.add('sent');
+      btn.textContent = '✓ Draft Posted';
+      btn.disabled = false;
+    }
+
+    var postSlug = result.blogPost ? result.blogPost.urlSlug : '';
+    showArchiveNotice('Draft posted to GHL blog! Title: "' + (item.title || 'Untitled') + '"' + (postSlug ? ' (slug: ' + postSlug + ')' : ''), 'success');
+
+    // Reset button after 8 seconds
+    setTimeout(function() {
+      if (btn) {
+        btn.classList.remove('sent');
+        btn.textContent = '📝 GHL Blog';
+      }
+    }, 8000);
+
+  } catch(e) {
+    if (btn) {
+      btn.classList.remove('sending');
+      btn.textContent = '📝 GHL Blog';
+      btn.disabled = false;
+    }
+    showArchiveNotice('GHL Blog: ' + e.message, 'error');
   }
 }
 
