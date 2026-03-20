@@ -502,6 +502,36 @@
     border-color: #4ade80;
   }
 
+  /* Repurpose Button */
+  .repurpose-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-left: 6px;
+    white-space: nowrap;
+  }
+  .repurpose-btn:hover {
+    border-color: #8b5cf6;
+    color: #8b5cf6;
+  }
+  .repurpose-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .repurpose-btn.working {
+    color: #f59e0b;
+    border-color: #f59e0b;
+  }
+  .repurpose-btn.done {
+    color: #22c55e;
+    border-color: #22c55e;
+  }
+
   .view-toggle-btn {
     background: transparent;
     border: 1px solid var(--border);
@@ -3227,6 +3257,20 @@ function buildFolderListView(folderKey, folder, data) {
         copyForMedium(fk, ix);
       });
       stepsDiv.appendChild(medBtn);
+
+      // Repurpose button
+      var repBtn = document.createElement('button');
+      repBtn.className = 'repurpose-btn';
+      repBtn.dataset.folder = folderKey;
+      repBtn.dataset.idx = itemIdx;
+      repBtn.title = 'Create YouTube script, short video, and social post from this article';
+      repBtn.textContent = '🔄 Repurpose';
+      repBtn.addEventListener('click', function(e) {
+        var fk = e.target.dataset.folder;
+        var ix = parseInt(e.target.dataset.idx);
+        repurposeArticle(fk, ix);
+      });
+      stepsDiv.appendChild(repBtn);
     }
 
     itemDiv.appendChild(stepsDiv);
@@ -3354,9 +3398,15 @@ function createFolderContentCard(item, folderKey, itemIdx, data) {
     mediumBtnHtml = '<button class="medium-draft-btn" data-folder="' + folderKey + '" data-idx="' + itemIdx + '" title="Copy article and open Medium editor">📋 Medium</button>';
   }
 
+  // Repurpose button (for articles and email)
+  var repurposeBtnHtml = '';
+  if (folderKey === 'articles' || folderKey === 'email') {
+    repurposeBtnHtml = '<button class="repurpose-btn" data-folder="' + folderKey + '" data-idx="' + itemIdx + '" title="Create YouTube script, short video, and social post from this article">🔄 Repurpose</button>';
+  }
+
   card.innerHTML =
     '<div class="content-card-title">' + titleHtml + '</div>' +
-    '<div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;">' + stepsHtml + mediumBtnHtml + '</div>';
+    '<div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap;">' + stepsHtml + mediumBtnHtml + repurposeBtnHtml + '</div>';
 
   // Medium button handler
   var mediumBtn = card.querySelector('.medium-draft-btn');
@@ -3365,6 +3415,16 @@ function createFolderContentCard(item, folderKey, itemIdx, data) {
       var fk = e.target.dataset.folder;
       var ix = parseInt(e.target.dataset.idx);
       copyForMedium(fk, ix);
+    });
+  }
+
+  // Repurpose button handler
+  var repurposeBtn = card.querySelector('.repurpose-btn');
+  if (repurposeBtn) {
+    repurposeBtn.addEventListener('click', function(e) {
+      var fk = e.target.dataset.folder;
+      var ix = parseInt(e.target.dataset.idx);
+      repurposeArticle(fk, ix);
     });
   }
 
@@ -3641,6 +3701,194 @@ async function copyForMedium(folderKey, itemIdx) {
       btn.disabled = false;
     }
     showArchiveNotice('Medium: ' + e.message, 'error');
+  }
+}
+
+// =====================================================================
+// REPURPOSE: Create derivative content from an article
+// =====================================================================
+// Reads the source article from Obsidian, creates 3 new files:
+//   1. Long-form YouTube script
+//   2. Short-form Instagram/Facebook video script
+//   3. Social media post
+// Files are created in the same week folder as the source article.
+// Each file includes the source article as reference material.
+
+async function writeFileToObsidian(vaultPath, content) {
+  var apiKey = localStorage.getItem('fl3-obsidian-api-key');
+  if (!apiKey) {
+    apiKey = prompt('Enter your Obsidian Local REST API key.\n\nFind it in Obsidian → Settings → Community Plugins → Local REST API → API Key');
+    if (!apiKey) return false;
+    localStorage.setItem('fl3-obsidian-api-key', apiKey);
+  }
+
+  var baseUrl = 'http://127.0.0.1:27123';
+  var encodedPath = vaultPath.split('/').map(function(s) { return encodeURIComponent(s); }).join('/');
+  var url = baseUrl + '/vault/' + encodedPath;
+
+  try {
+    var resp = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Authorization': 'Bearer ' + apiKey,
+        'Content-Type': 'text/markdown'
+      },
+      body: content
+    });
+    if (!resp.ok) throw new Error('Write failed: ' + resp.status);
+    return true;
+  } catch(e) {
+    console.error('Obsidian write failed:', e);
+    return false;
+  }
+}
+
+async function repurposeArticle(folderKey, itemIdx) {
+  var project = _dashboardData.projects['weekly-content'];
+  var item = project.contentFolders[folderKey].items[itemIdx];
+  if (!item) { showArchiveNotice('Content item not found.', 'error'); return; }
+
+  // Find ALL repurpose buttons for this item (list + card views)
+  var btns = document.querySelectorAll('.repurpose-btn[data-folder="' + folderKey + '"][data-idx="' + itemIdx + '"]');
+  btns.forEach(function(btn) {
+    btn.classList.add('working');
+    btn.textContent = '⏳ Creating...';
+    btn.disabled = true;
+  });
+
+  try {
+    // 1. Read the source article from Obsidian
+    if (!item.path) throw new Error('No file path for this article.');
+    var markdown = await readFileFromObsidian(item.path);
+    if (!markdown) throw new Error('Could not read article from Obsidian. Make sure Obsidian is running with the Local REST API plugin enabled.');
+
+    var cleanContent = stripFrontmatter(markdown);
+    var articleTitle = item.title || 'Untitled';
+
+    // Determine the week folder from the source article path
+    var pathParts = item.path.split('/');
+    var weekFolder = 'Unscheduled';
+    for (var i = 0; i < pathParts.length; i++) {
+      if (pathParts[i].indexOf('Week of') === 0) {
+        weekFolder = pathParts[i];
+        break;
+      }
+    }
+    if (weekFolder === 'Unscheduled') {
+      for (var i = 0; i < pathParts.length; i++) {
+        if (pathParts[i] === 'Unscheduled') { weekFolder = 'Unscheduled'; break; }
+      }
+    }
+
+    var basePath = '00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/' + weekFolder + '/';
+    var safeName = articleTitle.replace(/[/\\:*?"<>|]/g, '').replace(/\s+/g, ' ').trim();
+    var today = new Date().toISOString().slice(0, 10);
+
+    // 2. Define the 3 derivative files
+    var derivatives = [
+      {
+        suffix: ' - YouTube Script',
+        folder: 'youtube',
+        label: 'YouTube',
+        steps: { research: true, write: false, film: false, edit: false, publish: false },
+        template: '**Type:** YouTube\n**Source Article:** ' + articleTitle + '\n**Created:** ' + today + '\n\n# ' + articleTitle + ' - YouTube Script\n\n> This script is based on the article "' + articleTitle + '". Use the source material below to write a long-form YouTube video script (10-15 minutes).\n\n---\n\n## HOOK (0:00 - 0:30)\n\n[Write a compelling hook that stops the scroll]\n\n## INTRO (0:30 - 1:30)\n\n[Introduce the topic, establish credibility, tell them what they\'ll learn]\n\n## MAIN CONTENT\n\n### Point 1\n\n[Key argument from the article]\n\n### Point 2\n\n[Key argument from the article]\n\n### Point 3\n\n[Key argument from the article]\n\n## THE SHIFT (Paradigm Change)\n\n[The moment where the viewer\'s perspective changes]\n\n## CTA & CLOSE\n\n[Call to action, subscribe, comment prompt]\n\n---\n\n## SOURCE ARTICLE\n\n' + cleanContent
+      },
+      {
+        suffix: ' - Short Video',
+        folder: 'social-media',
+        label: 'Social Media',
+        steps: { research: true, write: false, film: false, edit: false, publish: false },
+        template: '**Type:** Short Video\n**Platform:** Instagram Reels / Facebook Reels\n**Source Article:** ' + articleTitle + '\n**Created:** ' + today + '\n**Target Length:** 60-90 seconds\n\n# ' + articleTitle + ' - Short Video Script\n\n> This is a short-form video script based on the article "' + articleTitle + '". Designed for Instagram Reels and Facebook Reels (60-90 seconds).\n\n---\n\n## HOOK (0:00 - 0:05)\n\n[Pattern interrupt. One punchy line that stops the scroll.]\n\n## TENSION (0:05 - 0:20)\n\n[Set up the problem. Make them feel it.]\n\n## INSIGHT (0:20 - 0:50)\n\n[The key takeaway from the article, simplified for short form.]\n\n## CTA (0:50 - 1:00)\n\n[Follow for more / Link in bio / Comment prompt]\n\n---\n\n## ON-SCREEN TEXT SUGGESTIONS\n\n- Hook text: \n- Key stat: \n- CTA text: \n\n## B-ROLL / VISUAL NOTES\n\n- \n\n---\n\n## SOURCE ARTICLE\n\n' + cleanContent
+      },
+      {
+        suffix: ' - Social Post',
+        folder: 'social-media',
+        label: 'Social Media',
+        steps: { research: true, write: false, edit: false, publish: false },
+        template: '**Type:** Social Post\n**Platforms:** Instagram, Facebook, X\n**Source Article:** ' + articleTitle + '\n**Created:** ' + today + '\n\n# ' + articleTitle + ' - Social Post\n\n> Social media post based on the article "' + articleTitle + '". Create platform-specific versions below.\n\n---\n\n## INSTAGRAM / FACEBOOK\n\n[Write a compelling post. Lead with a hook line. Include 2-3 key points from the article. End with a question or CTA. 150-300 words.]\n\n**Hashtags:**\n\n---\n\n## X (TWITTER) THREAD\n\n**Tweet 1 (Hook):**\n\n**Tweet 2:**\n\n**Tweet 3:**\n\n**Tweet 4:**\n\n**Tweet 5 (CTA):**\n\n---\n\n## SOURCE ARTICLE\n\n' + cleanContent
+      }
+    ];
+
+    // 3. Create files and add dashboard entries
+    var created = [];
+    var failed = [];
+
+    for (var d = 0; d < derivatives.length; d++) {
+      var deriv = derivatives[d];
+      var fileName = safeName + deriv.suffix + '.md';
+      var filePath = basePath + fileName;
+
+      // Check if this item already exists in the dashboard
+      var targetFolder = project.contentFolders[deriv.folder];
+      if (targetFolder) {
+        var alreadyExists = false;
+        for (var e = 0; e < (targetFolder.items || []).length; e++) {
+          if (targetFolder.items[e].path === filePath) { alreadyExists = true; break; }
+        }
+        if (alreadyExists) {
+          failed.push(deriv.suffix.trim() + ' (already exists)');
+          continue;
+        }
+      }
+
+      // Write file to Obsidian
+      var success = await writeFileToObsidian(filePath, deriv.template);
+      if (!success) {
+        failed.push(deriv.suffix.trim() + ' (write failed)');
+        continue;
+      }
+
+      // Add to dashboard data
+      if (!project.contentFolders[deriv.folder]) {
+        project.contentFolders[deriv.folder] = { label: deriv.label, items: [] };
+      }
+
+      var newItem = {
+        title: articleTitle + deriv.suffix,
+        steps: deriv.steps,
+        path: filePath
+      };
+
+      // Copy weekOf from source item if it has one
+      if (item.weekOf) newItem.weekOf = item.weekOf;
+
+      project.contentFolders[deriv.folder].items.push(newItem);
+      created.push(deriv.suffix.trim());
+    }
+
+    // 4. Save and re-render
+    saveToLocalStorage();
+    reRenderWeeklyContent();
+
+    // 5. Update buttons
+    btns.forEach(function(btn) {
+      btn.classList.remove('working');
+      btn.classList.add('done');
+      btn.textContent = '✓ Created!';
+      btn.disabled = false;
+    });
+
+    // Build result message
+    var msg = '';
+    if (created.length > 0) msg += 'Created: ' + created.join(', ') + '. ';
+    if (failed.length > 0) msg += 'Skipped: ' + failed.join(', ') + '.';
+    showArchiveNotice(msg || 'Repurpose complete!', created.length > 0 ? 'success' : 'warning');
+
+    // Reset buttons after 5 seconds
+    setTimeout(function() {
+      btns.forEach(function(btn) {
+        btn.classList.remove('done');
+        btn.textContent = '🔄 Repurpose';
+      });
+    }, 5000);
+
+  } catch(e) {
+    btns.forEach(function(btn) {
+      btn.classList.remove('working');
+      btn.textContent = '🔄 Repurpose';
+      btn.disabled = false;
+    });
+    showArchiveNotice('Repurpose: ' + e.message, 'error');
   }
 }
 
