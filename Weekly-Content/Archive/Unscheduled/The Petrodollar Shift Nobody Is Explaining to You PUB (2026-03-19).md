@@ -94,7 +94,7 @@ If you're behind on retirement savings (and most people over 45 are), this is no
 
 You did what you were told. You saved. You invested in your 401(k). You followed the rules. And yet you feel behind because the very foundation your plan was built on is shifting underneath you.
 
-Here's the good news. You're not too late.
+Here's the good news. You're not too late. There are assets that earn 20% or more on average every year like Bitcoin that can help you catch-up on your retirement.  Bitcoin doesn't lose value every year like dollars do in a savings account, and it's average yearly returns keep you ahead of even the stock market which at 7% won't get you to your Freedom Number in 10-15 years. 
 
 Understanding this shift is the first step. Most people will never see it. They'll keep watching missiles and headlines and wondering why their money buys less every year. They'll keep trusting the same advisors who never explained any of this.
 
@@ -117,3 +117,7 @@ The old playbook assumed a world that's already changing. The question isn't whe
 You've been told to sit still and trust the plan. But the plan was built for a world that no longer exists.
 
 Time to build a new one.
+
+_The Wrong Asset Manifesto breaks down exactly how the traditional system works against you, and what the alternative looks like._ [_Download it free here._](https://go.freedomlife3.com/wrongasset/)
+
+_Disclaimer: This article is for educational purposes only and does not constitute financial advice. All investments carry risk. Past performance does not guarantee future results. Always do your own research and consult with a qualified financial professional before making investment decisions._

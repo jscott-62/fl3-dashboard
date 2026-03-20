@@ -231,7 +231,10 @@
                 "edit": true,
                 "publish": true
               },
-              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/Missiles Vs. Money.md"
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Archive/Unscheduled/Missiles Vs. Money PUB (2026-03-19).md",
+              "originalPath": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/Missiles Vs. Money.md",
+              "archived": true,
+              "archivedDate": "2026-03-19"
             },
             {
               "title": "Why Wall Street's Smartest Money Thinks Bitcoin Is on Sale - YouTube Script",
@@ -360,7 +363,10 @@
                 "edit": true,
                 "publish": true
               },
-              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/Power Content HeyGen Vid.md"
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Archive/Unscheduled/Power Content HeyGen Vid PUB (2026-03-19).md",
+              "originalPath": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/Power Content HeyGen Vid.md",
+              "archived": true,
+              "archivedDate": "2026-03-19"
             },
             {
               "title": "The Playbook Against Your Retirement - Social Batch",
@@ -371,8 +377,11 @@
                 "edit": true,
                 "publish": true
               },
-              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Mar 3/The Playbook Against Your Retirement - Social Batch.md",
-              "weekOf": "2026-03-03"
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Archive/Week of Mar 3/The Playbook Against Your Retirement - Social Batch PUB (2026-03-19).md",
+              "weekOf": "2026-03-03",
+              "originalPath": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Mar 3/The Playbook Against Your Retirement - Social Batch.md",
+              "archived": true,
+              "archivedDate": "2026-03-19"
             },
             {
               "title": "20 Million Gone - Social Batch",
@@ -406,7 +415,10 @@
                 "publish": true,
                 "film": true
               },
-              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/The Petrodollar Shift Nobody Is Explaining to You - Social Post.md"
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Archive/Unscheduled/The Petrodollar Shift Nobody Is Explaining to You - Social Post PUB (2026-03-19).md",
+              "originalPath": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/The Petrodollar Shift Nobody Is Explaining to You - Social Post.md",
+              "archived": true,
+              "archivedDate": "2026-03-19"
             }
           ]
         },
@@ -471,8 +483,11 @@
                 "edit": true,
                 "publish": true
               },
-              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Mar 3/The Playbook Against Your Retirement.md",
-              "weekOf": "2026-03-03"
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Archive/Week of Mar 3/The Playbook Against Your Retirement PUB (2026-03-19).md",
+              "weekOf": "2026-03-03",
+              "originalPath": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Mar 3/The Playbook Against Your Retirement.md",
+              "archived": true,
+              "archivedDate": "2026-03-19"
             },
             {
               "title": "Why Wall Street's Smartest Money Thinks Bitcoin Is on Sale",
@@ -526,7 +541,10 @@
                 "edit": true,
                 "publish": true
               },
-              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/The Petrodollar Shift Nobody Is Explaining to You (2026-03-01).md"
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Archive/Unscheduled/The Petrodollar Shift Nobody Is Explaining to You PUB (2026-03-19).md",
+              "originalPath": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/The Petrodollar Shift Nobody Is Explaining to You (2026-03-01).md",
+              "archived": true,
+              "archivedDate": "2026-03-19"
             }
           ]
         },
@@ -541,8 +559,11 @@
                 "edit": true,
                 "publish": true
               },
-              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Mar 3/The Playbook Against Your Retirement - Newsletter.md",
-              "weekOf": "2026-03-03"
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Archive/Week of Mar 3/The Playbook Against Your Retirement - Newsletter PUB (2026-03-19).md",
+              "weekOf": "2026-03-03",
+              "originalPath": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Mar 3/The Playbook Against Your Retirement - Newsletter.md",
+              "archived": true,
+              "archivedDate": "2026-03-19"
             }
           ]
         }
