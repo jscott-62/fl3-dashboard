@@ -2478,6 +2478,41 @@ function moveFileViaObsidian(fromPath, toPath) {
     });
 }
 
+// Auto-archive a single item when Publish is checked
+function autoArchiveItem(item, folderKey, itemIdx) {
+  var fromPath = item.path;
+  if (!fromPath || fromPath.indexOf('/Archive/') > -1) return; // Already archived or no path
+
+  var today = new Date().toISOString().slice(0, 10);
+
+  // Determine which week folder to use for archive subfolder
+  var weekLabel = 'Unscheduled';
+  if (item.weekOf) {
+    var calendar = (_dashboardData.projects['weekly-content'] || {}).calendar || [];
+    calendar.forEach(function(w) {
+      if (w.weekOf === item.weekOf) weekLabel = w.weekLabel || item.weekOf;
+    });
+  } else {
+    // Try to extract week folder from the current path
+    var pathMatch = fromPath.match(/Weekly-Content\/(Week of [^/]+)\//);
+    if (pathMatch) weekLabel = pathMatch[1];
+  }
+
+  var safeName = (item.title || 'Untitled').replace(/[/\\:*?"<>|]/g, '').replace(/\s+/g, ' ').trim();
+  var archivePath = '00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Archive/' + weekLabel + '/' + safeName + ' PUB (' + today + ').md';
+
+  // Update the item data
+  item.originalPath = fromPath;
+  item.path = archivePath;
+  item.archived = true;
+  item.archivedDate = today;
+
+  // Move the file on disk via Obsidian REST API
+  moveFileViaObsidian(fromPath, archivePath);
+
+  showArchiveNotice('📦 Archived: ' + (item.title || 'Untitled'), 'success');
+}
+
 function showArchiveNotice(message, type) {
   var existing = document.getElementById('archive-notice');
   if (existing) existing.remove();
@@ -3045,6 +3080,10 @@ function buildCalendarContentRow(entry, folderKey) {
         var stepKey = stepDefs[si].key;
         if (!entry.item.steps) entry.item.steps = {};
         entry.item.steps[stepKey] = !entry.item.steps[stepKey];
+        // Auto-archive when Publish is checked
+        if (stepKey === 'publish' && entry.item.steps[stepKey] && entry.item.path && !entry.item.archived) {
+          autoArchiveItem(entry.item, entry.folderKey, entry.idx);
+        }
         saveToLocalStorage();
         reRenderWeeklyContent();
       });
@@ -3288,6 +3327,11 @@ function buildFolderListView(folderKey, folder, data) {
         var lbl = e.target.closest('.step-checkbox');
         if (e.target.checked) { lbl.classList.add('checked'); } else { lbl.classList.remove('checked'); }
 
+        // Auto-archive when Publish is checked
+        if (stepKey === 'publish' && e.target.checked && targetItem.path && !targetItem.archived) {
+          autoArchiveItem(targetItem, fKey, idx);
+        }
+
         saveToLocalStorage();
       });
     });
@@ -3437,6 +3481,10 @@ function createFolderContentCard(item, folderKey, itemIdx, data) {
       var targetItem = _dashboardData.projects['weekly-content'].contentFolders[fKey].items[idx];
       if (!targetItem.steps) targetItem.steps = {};
       targetItem.steps[stepKey] = e.target.checked;
+      // Auto-archive when Publish is checked
+      if (stepKey === 'publish' && e.target.checked && targetItem.path && !targetItem.archived) {
+        autoArchiveItem(targetItem, fKey, idx);
+      }
       saveToLocalStorage();
       reRenderWeeklyContent();
     });
