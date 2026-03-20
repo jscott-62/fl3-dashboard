@@ -501,6 +501,17 @@
     color: #4ade80;
     border-color: #4ade80;
   }
+  .medium-draft-btn.completed {
+    text-decoration: line-through;
+    color: #64748b;
+    border-color: #334155;
+    opacity: 0.7;
+  }
+  .medium-draft-btn.completed:hover {
+    opacity: 1;
+    color: #94a3b8;
+    border-color: #475569;
+  }
 
   .ghl-blog-btn {
     background: transparent;
@@ -531,6 +542,17 @@
     border-color: #22c55e;
     cursor: default;
   }
+  .ghl-blog-btn.completed {
+    text-decoration: line-through;
+    color: #64748b;
+    border-color: #334155;
+    opacity: 0.7;
+  }
+  .ghl-blog-btn.completed:hover {
+    opacity: 1;
+    color: #94a3b8;
+    border-color: #475569;
+  }
 
   /* Repurpose Button */
   .repurpose-btn {
@@ -560,6 +582,17 @@
   .repurpose-btn.done {
     color: #22c55e;
     border-color: #22c55e;
+  }
+  .repurpose-btn.completed {
+    text-decoration: line-through;
+    color: #64748b;
+    border-color: #334155;
+    opacity: 0.7;
+  }
+  .repurpose-btn.completed:hover {
+    opacity: 1;
+    color: #94a3b8;
+    border-color: #475569;
   }
 
   .view-toggle-btn {
@@ -3406,11 +3439,12 @@ function buildFolderListView(folderKey, folder, data) {
 
     // Medium clipboard button (for articles and email items)
     if (folderKey === 'articles' || folderKey === 'email') {
+      var actions = item.actions || {};
       var medBtn = document.createElement('button');
-      medBtn.className = 'medium-draft-btn';
+      medBtn.className = 'medium-draft-btn' + (actions.medium ? ' completed' : '');
       medBtn.dataset.folder = folderKey;
       medBtn.dataset.idx = itemIdx;
-      medBtn.title = 'Copy article and open Medium editor';
+      medBtn.title = actions.medium ? 'Already sent to Medium (click to resend)' : 'Copy article and open Medium editor';
       medBtn.textContent = '📋 Medium';
       medBtn.addEventListener('click', function(e) {
         var fk = e.target.dataset.folder;
@@ -3421,10 +3455,10 @@ function buildFolderListView(folderKey, folder, data) {
 
       // GHL Blog button
       var ghlBtn = document.createElement('button');
-      ghlBtn.className = 'ghl-blog-btn';
+      ghlBtn.className = 'ghl-blog-btn' + (actions.ghlBlog ? ' completed' : '');
       ghlBtn.dataset.folder = folderKey;
       ghlBtn.dataset.idx = itemIdx;
-      ghlBtn.title = 'Push draft to GHL blog';
+      ghlBtn.title = actions.ghlBlog ? 'Already posted to GHL (click to resend)' : 'Push draft to GHL blog';
       ghlBtn.textContent = '📝 GHL Blog';
       ghlBtn.addEventListener('click', function(e) {
         var fk = e.target.dataset.folder;
@@ -3435,10 +3469,10 @@ function buildFolderListView(folderKey, folder, data) {
 
       // Repurpose button
       var repBtn = document.createElement('button');
-      repBtn.className = 'repurpose-btn';
+      repBtn.className = 'repurpose-btn' + (actions.repurpose ? ' completed' : '');
       repBtn.dataset.folder = folderKey;
       repBtn.dataset.idx = itemIdx;
-      repBtn.title = 'Create YouTube script, short video, and social post from this article';
+      repBtn.title = actions.repurpose ? 'Already repurposed (click to run again)' : 'Create YouTube script, short video, and social post from this article';
       repBtn.textContent = '🔄 Repurpose';
       repBtn.addEventListener('click', function(e) {
         var fk = e.target.dataset.folder;
@@ -3575,20 +3609,21 @@ function createFolderContentCard(item, folderKey, itemIdx, data) {
 
   // Medium clipboard button (show for articles and email/newsletter content)
   var mediumBtnHtml = '';
+  var cardActions = item.actions || {};
   if (folderKey === 'articles' || folderKey === 'email') {
-    mediumBtnHtml = '<button class="medium-draft-btn" data-folder="' + folderKey + '" data-idx="' + itemIdx + '" title="Copy article and open Medium editor">📋 Medium</button>';
+    mediumBtnHtml = '<button class="medium-draft-btn' + (cardActions.medium ? ' completed' : '') + '" data-folder="' + folderKey + '" data-idx="' + itemIdx + '" title="' + (cardActions.medium ? 'Already sent to Medium (click to resend)' : 'Copy article and open Medium editor') + '">📋 Medium</button>';
   }
 
   // GHL Blog button (for articles and email)
   var ghlBtnHtml = '';
   if (folderKey === 'articles' || folderKey === 'email') {
-    ghlBtnHtml = '<button class="ghl-blog-btn" data-folder="' + folderKey + '" data-idx="' + itemIdx + '" title="Push draft to GHL blog">📝 GHL Blog</button>';
+    ghlBtnHtml = '<button class="ghl-blog-btn' + (cardActions.ghlBlog ? ' completed' : '') + '" data-folder="' + folderKey + '" data-idx="' + itemIdx + '" title="' + (cardActions.ghlBlog ? 'Already posted to GHL (click to resend)' : 'Push draft to GHL blog') + '">📝 GHL Blog</button>';
   }
 
   // Repurpose button (for articles and email)
   var repurposeBtnHtml = '';
   if (folderKey === 'articles' || folderKey === 'email') {
-    repurposeBtnHtml = '<button class="repurpose-btn" data-folder="' + folderKey + '" data-idx="' + itemIdx + '" title="Create YouTube script, short video, and social post from this article">🔄 Repurpose</button>';
+    repurposeBtnHtml = '<button class="repurpose-btn' + (cardActions.repurpose ? ' completed' : '') + '" data-folder="' + folderKey + '" data-idx="' + itemIdx + '" title="' + (cardActions.repurpose ? 'Already repurposed (click to run again)' : 'Create YouTube script, short video, and social post from this article') + '">🔄 Repurpose</button>';
   }
 
   card.innerHTML =
@@ -3873,11 +3908,16 @@ async function copyForMedium(folderKey, itemIdx) {
       await navigator.clipboard.writeText(cleanMarkdown);
     }
 
-    // Update button to show success
+    // Mark as completed and persist
+    if (!item.actions) item.actions = {};
+    item.actions.medium = true;
+    saveToLocalStorage();
+
+    // Update button to show completed with strikethrough
     if (btn) {
       btn.classList.remove('sending');
-      btn.classList.add('sent');
-      btn.textContent = '✓ Copied!';
+      btn.classList.add('completed');
+      btn.textContent = '📋 Medium';
       btn.disabled = false;
     }
 
@@ -3885,15 +3925,6 @@ async function copyForMedium(folderKey, itemIdx) {
     window.open('https://medium.com/new-story', '_blank');
 
     showArchiveNotice('Article copied to clipboard! Paste it in the Medium editor that just opened.', 'success');
-
-    // Reset button after 5 seconds
-    setTimeout(function() {
-      if (btn) {
-        btn.classList.remove('sent');
-        btn.textContent = '📋 Medium';
-        btn.title = 'Copy article and open Medium editor';
-      }
-    }, 5000);
 
   } catch(e) {
     if (btn) {
@@ -4003,24 +4034,21 @@ async function pushToGHLBlog(folderKey, itemIdx) {
       }
     }
 
-    // Success
+    // Mark as completed and persist
+    if (!item.actions) item.actions = {};
+    item.actions.ghlBlog = true;
+    saveToLocalStorage();
+
+    // Success - show completed with strikethrough
     if (btn) {
       btn.classList.remove('sending');
-      btn.classList.add('sent');
-      btn.textContent = '✓ Draft Posted';
+      btn.classList.add('completed');
+      btn.textContent = '📝 GHL Blog';
       btn.disabled = false;
     }
 
     var postSlug = result.blogPost ? result.blogPost.urlSlug : '';
     showArchiveNotice('Draft posted to GHL blog! Title: "' + (item.title || 'Untitled') + '"' + (postSlug ? ' (slug: ' + postSlug + ')' : ''), 'success');
-
-    // Reset button after 8 seconds
-    setTimeout(function() {
-      if (btn) {
-        btn.classList.remove('sent');
-        btn.textContent = '📝 GHL Blog';
-      }
-    }, 8000);
 
   } catch(e) {
     if (btn) {
@@ -4245,11 +4273,16 @@ async function repurposeArticle(folderKey, itemIdx) {
     saveToLocalStorage();
     reRenderWeeklyContent();
 
-    // 5. Update buttons
+    // 5. Mark as completed and persist
+    if (!item.actions) item.actions = {};
+    item.actions.repurpose = true;
+    saveToLocalStorage();
+
+    // Update buttons with strikethrough
     btns.forEach(function(btn) {
       btn.classList.remove('working');
-      btn.classList.add('done');
-      btn.textContent = '✓ Created!';
+      btn.classList.add('completed');
+      btn.textContent = '🔄 Repurpose';
       btn.disabled = false;
     });
 
@@ -4258,14 +4291,6 @@ async function repurposeArticle(folderKey, itemIdx) {
     if (created.length > 0) msg += 'Created: ' + created.join(', ') + '. ';
     if (failed.length > 0) msg += 'Skipped: ' + failed.join(', ') + '.';
     showArchiveNotice(msg || 'Repurpose complete!', created.length > 0 ? 'success' : 'warning');
-
-    // Reset buttons after 8 seconds
-    setTimeout(function() {
-      btns.forEach(function(btn) {
-        btn.classList.remove('done');
-        btn.textContent = '🔄 Repurpose';
-      });
-    }, 8000);
 
   } catch(e) {
     btns.forEach(function(btn) {
