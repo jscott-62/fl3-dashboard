@@ -569,7 +569,8 @@ window.FL3_DASHBOARD_DATA = {
               "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Mar 17/Redefine Your Future - Why Its Never Too Late to Catch Up.md",
               "weekOf": "2026-03-17",
               "actions": {
-                "ghlBlog": true
+                "ghlBlog": true,
+                "medium": true
               }
             },
             {
