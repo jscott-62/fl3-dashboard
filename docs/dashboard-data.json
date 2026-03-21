@@ -611,9 +611,12 @@
                 "research": true,
                 "write": true,
                 "edit": true,
-                "publish": false
+                "publish": true
               },
-              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/Redefine Your Future - Why It's Never Too Late To Catch Up.md"
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Archive/Unscheduled/Redefine Your Future - Why It's Never Too Late To Catch Up PUB (2026-03-21).md",
+              "originalPath": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/Redefine Your Future - Why It's Never Too Late To Catch Up.md",
+              "archived": true,
+              "archivedDate": "2026-03-21"
             }
           ]
         }
