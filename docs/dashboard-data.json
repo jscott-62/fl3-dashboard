@@ -563,15 +563,18 @@
                 "research": true,
                 "write": true,
                 "edit": true,
-                "publish": false
+                "publish": true
               },
-              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Mar 17/Redefine Your Future - Why Its Never Too Late to Catch Up.md",
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Archive/Week of Mar 17/Redefine Your Future - Why It's Never Too Late to Catch Up PUB (2026-03-21).md",
               "weekOf": "2026-03-17",
               "actions": {
                 "ghlBlog": true,
                 "medium": true,
                 "repurpose": true
-              }
+              },
+              "originalPath": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Mar 17/Redefine Your Future - Why Its Never Too Late to Catch Up.md",
+              "archived": true,
+              "archivedDate": "2026-03-21"
             },
             {
               "title": "The Petrodollar Shift Nobody Is Explaining to You",
