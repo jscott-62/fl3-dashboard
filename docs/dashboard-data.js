@@ -605,6 +605,16 @@ window.FL3_DASHBOARD_DATA = {
               "originalPath": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Mar 3/The Playbook Against Your Retirement - Newsletter.md",
               "archived": true,
               "archivedDate": "2026-03-19"
+            },
+            {
+              "title": "Redefine Your Future - Why It's Never Too Late To Catch Up",
+              "steps": {
+                "research": false,
+                "write": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/Redefine Your Future - Why It's Never Too Late To Catch Up.md"
             }
           ]
         }
