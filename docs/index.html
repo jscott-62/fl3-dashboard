@@ -2750,9 +2750,12 @@ function processNewContentFiles(files, prefix) {
 function detectContentType(title) {
   var lower = title.toLowerCase();
   if (lower.indexOf('youtube script') !== -1 || lower.indexOf('youtube') !== -1) return 'youtube';
+  if (lower.indexOf('yt script') !== -1) return 'youtube';
   if (/\bvid\b/.test(lower) && lower.indexOf('heygen') === -1) return 'youtube';
-  if (lower.indexOf('social batch') !== -1 || lower.indexOf('heygen') !== -1) return 'social-media';
-  if (lower.indexOf('newsletter') !== -1) return 'email';
+  if (lower.indexOf('social batch') !== -1 || lower.indexOf('social post') !== -1) return 'social-media';
+  if (lower.indexOf('short video') !== -1 || lower.indexOf('short form') !== -1) return 'social-media';
+  if (lower.indexOf('heygen') !== -1) return 'social-media';
+  if (lower.indexOf('newsletter') !== -1 || lower.indexOf('email') !== -1) return 'email';
   return 'articles';
 }
 
