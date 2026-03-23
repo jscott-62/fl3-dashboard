@@ -279,11 +279,14 @@
               "steps": {
                 "research": true,
                 "write": true,
-                "film": false,
-                "edit": false,
-                "publish": false
+                "film": true,
+                "edit": true,
+                "publish": true
               },
-              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/pillar-1-the-12-percent-theft.md"
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Archive/Unscheduled/Pillar #1 The 12% Theft PUB (2026-03-23).md",
+              "originalPath": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/pillar-1-the-12-percent-theft.md",
+              "archived": true,
+              "archivedDate": "2026-03-23"
             },
             {
               "title": "Pillar #2: It's Math, Not Tech",
