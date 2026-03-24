@@ -638,7 +638,30 @@
     padding: 12px 16px;
     transition: border-color 0.2s;
   }
-  .content-list-item:hover { border-color: rgba(245,158,11,0.3); }
+  .content-list-item:hover { border-color: rgba(245,158,11,0.3); cursor: pointer; }
+  .content-list-item.active-item {
+    border-color: var(--accent);
+    border-left: 3px solid var(--accent);
+    background: rgba(245,158,11,0.05);
+    position: relative;
+  }
+  .content-list-item.active-item .content-list-item-title,
+  .content-list-item.active-item .content-list-item-title span,
+  .content-list-item.active-item .content-title-editable {
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .content-list-item.active-item::after {
+    content: '';
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: activePulse 2s ease-in-out infinite;
+  }
   .content-list-item-header {
     display: flex;
     align-items: center;
@@ -1327,9 +1350,38 @@
     gap: 10px;
     padding: 8px 0;
     border-bottom: 1px solid rgba(255,255,255,0.04);
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background 0.15s;
+  }
+  .calendar-content-row:hover {
+    background: rgba(255,255,255,0.02);
   }
   .calendar-content-row:last-child {
     border-bottom: none;
+  }
+  .calendar-content-row.active-item {
+    background: rgba(245,158,11,0.08);
+    border-left: 3px solid var(--accent);
+    padding-left: 7px;
+    position: relative;
+  }
+  .calendar-content-row.active-item .calendar-row-title,
+  .calendar-content-row.active-item .calendar-row-title a {
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .calendar-content-row.active-item::after {
+    content: '';
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: activePulse 2s ease-in-out infinite;
   }
   .calendar-row-icon {
     font-size: 16px;
@@ -3953,6 +4005,7 @@ function buildCalendarContentRow(entry, folderKey) {
   var row = document.createElement('div');
   var isArchived = entry.item.archived === true;
   row.className = 'calendar-content-row' + (isArchived ? ' archived' : '');
+  if (isActiveCalendarItem(entry.item.title)) row.className += ' active-item';
 
   var titleText = escapeHtml(entry.item.title || 'Untitled');
   var obsidianLink = entry.item.path ? buildObsidianLink(entry.item.path) : '';
@@ -3997,6 +4050,21 @@ function buildCalendarContentRow(entry, folderKey) {
       });
     });
   }
+
+  // Click row to toggle active/working-on state (skip step dots and obsidian links)
+  (function(itm) {
+    row.addEventListener('click', function(e) {
+      if (e.target.closest('.calendar-row-step-dot, a')) return;
+      var current = getActiveCalendarItem();
+      if (current && current.title === itm.title) {
+        setActiveCalendarItem(null);
+      } else {
+        setActiveCalendarItem({ title: itm.title, icon: '', path: itm.path });
+      }
+      reRenderWeeklyContent();
+      renderCalendarGrid(_dashboardData);
+    });
+  })(entry.item);
 
   return row;
 }
@@ -4246,6 +4314,7 @@ function buildFolderListView(folderKey, folder, data) {
 
     var itemDiv = document.createElement('div');
     itemDiv.className = 'content-list-item';
+    if (isActiveCalendarItem(item.title)) itemDiv.className += ' active-item';
 
     // Auto-generate path if missing
     if (!item.path) {
@@ -4365,6 +4434,21 @@ function buildFolderListView(folderKey, folder, data) {
     if (editableEl) {
       makeEditableTitle(editableEl, folderKey, itemIdx);
     }
+
+    // Click card to toggle active/working-on state (skip checkboxes, buttons, links)
+    (function(itm) {
+      itemDiv.addEventListener('click', function(e) {
+        if (e.target.closest('input, button, a, .step-checkbox, .content-remove-btn, .medium-draft-btn, .ghl-blog-btn, .repurpose-btn')) return;
+        var current = getActiveCalendarItem();
+        if (current && current.title === itm.title) {
+          setActiveCalendarItem(null);
+        } else {
+          setActiveCalendarItem({ title: itm.title, icon: '', path: itm.path });
+        }
+        reRenderWeeklyContent();
+        renderCalendarGrid(_dashboardData);
+      });
+    })(item);
 
     container.appendChild(itemDiv);
   });
