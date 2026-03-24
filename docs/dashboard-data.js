@@ -441,29 +441,6 @@ window.FL3_DASHBOARD_DATA = {
               "originalPath": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/The Petrodollar Shift Nobody Is Explaining to You - Social Post.md",
               "archived": true,
               "archivedDate": "2026-03-19"
-            },
-            {
-              "title": "Redefine Your Future - Why It's Never Too Late to Catch Up - Short Video",
-              "steps": {
-                "research": true,
-                "write": true,
-                "film": false,
-                "edit": false,
-                "publish": false
-              },
-              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Mar 17/Redefine Your Future - Why It's Never Too Late to Catch Up - Short Video.md",
-              "weekOf": "2026-03-17"
-            },
-            {
-              "title": "Redefine Your Future - Why It's Never Too Late to Catch Up - Social Post",
-              "steps": {
-                "research": true,
-                "write": true,
-                "edit": false,
-                "publish": false
-              },
-              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Mar 17/Redefine Your Future - Why It's Never Too Late to Catch Up - Social Post.md",
-              "weekOf": "2026-03-17"
             }
           ]
         },
