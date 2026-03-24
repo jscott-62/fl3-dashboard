@@ -1195,6 +1195,29 @@
   .hub-btn:hover { opacity: 0.85; }
   .hub-btn-preview { background: rgba(59,130,246,0.2); color: var(--blue); }
   .hub-btn-obsidian { background: rgba(168,85,247,0.2); color: #a855f7; }
+  .hub-content-item.active-item {
+    background: rgba(245,158,11,0.08);
+    border-left: 3px solid var(--accent);
+    padding-left: 9px;
+    border-radius: 6px;
+    position: relative;
+  }
+  .hub-content-item.active-item .hub-item-title {
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .hub-content-item.active-item::after {
+    content: '';
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: activePulse 2s ease-in-out infinite;
+  }
 
   /* ===== CALENDAR VIEW ===== */
   .calendar-view {
@@ -3048,6 +3071,7 @@ function buildContentHubView(data) {
 
       var row = document.createElement('div');
       row.className = 'hub-content-item';
+      if (isActiveCalendarItem(item.label)) row.className += ' active-item';
       row.innerHTML =
         '<span class="hub-type-badge ' + typeConfig.cssClass + '">' + typeConfig.label + '</span>' +
         '<div class="hub-item-info"><div class="hub-item-title">' + escapeHtml(item.label) + '</div>' + subHtml + '</div>' +
@@ -3062,6 +3086,21 @@ function buildContentHubView(data) {
           openMdPreview(this.dataset.path, this.dataset.title);
         });
       }
+
+      // Click row to toggle active/working-on state (skip if clicking buttons)
+      (function(itm) {
+        row.addEventListener('click', function(e) {
+          if (e.target.closest('.hub-btn, .hub-btn-preview, .hub-btn-obsidian, .hub-step-dot')) return;
+          var current = getActiveCalendarItem();
+          if (current && current.title === itm.label) {
+            setActiveCalendarItem(null);
+          } else {
+            setActiveCalendarItem({ title: itm.label, icon: '', path: itm.path });
+          }
+          render(_dashboardData);
+        });
+        row.style.cursor = 'pointer';
+      })(item);
 
       listEl.appendChild(row);
     });
