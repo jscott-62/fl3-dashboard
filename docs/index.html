@@ -1752,7 +1752,7 @@
     font-size: 10px;
     color: var(--text);
     text-decoration: none;
-    padding: 1px 4px;
+    padding: 3px 6px;
     border-radius: 3px;
     margin-bottom: 1px;
     overflow: hidden;
@@ -1763,6 +1763,70 @@
   }
   .calendar-day-item-link:hover {
     background: rgba(245,158,11,0.15);
+    color: var(--accent);
+  }
+  .calendar-day-item-link.active-item {
+    background: rgba(245,158,11,0.2);
+    color: var(--accent);
+    font-weight: 700;
+    box-shadow: inset 3px 0 0 var(--accent);
+    position: relative;
+  }
+  .calendar-day-item-link.active-item::before {
+    content: '';
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: activePulse 2s ease-in-out infinite;
+  }
+  @keyframes activePulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(245,158,11,0.4); }
+    50% { opacity: 0.6; box-shadow: 0 0 0 4px rgba(245,158,11,0); }
+  }
+  .calendar-active-banner {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    margin-bottom: 12px;
+    background: rgba(245,158,11,0.08);
+    border: 1px solid rgba(245,158,11,0.2);
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .calendar-active-banner .active-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: activePulse 2s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+  .calendar-active-banner .active-title {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .calendar-active-clear {
+    background: transparent;
+    border: 1px solid rgba(245,158,11,0.3);
+    color: var(--muted);
+    padding: 2px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 11px;
+    transition: all 0.15s;
+  }
+  .calendar-active-clear:hover {
+    border-color: var(--accent);
     color: var(--accent);
   }
 
@@ -2089,6 +2153,21 @@ function render(data) {
 var _calendarGridMonth = null; // { year, month } - null means current month
 var _calendarGridCollapsed = false;
 
+function getActiveCalendarItem() {
+  try { return JSON.parse(localStorage.getItem('fl3-active-item')) || null; } catch(e) { return null; }
+}
+function setActiveCalendarItem(item) {
+  if (item) {
+    localStorage.setItem('fl3-active-item', JSON.stringify(item));
+  } else {
+    localStorage.removeItem('fl3-active-item');
+  }
+}
+function isActiveCalendarItem(title) {
+  var active = getActiveCalendarItem();
+  return active && active.title === title;
+}
+
 function renderCalendarGrid(data) {
   var container = document.getElementById('calendarView');
   if (!container) return;
@@ -2154,6 +2233,18 @@ function renderCalendarGrid(data) {
       '<button class="calendar-grid-nav-btn" id="calGridNext">&#9654;</button>' +
     '</div>';
   card.appendChild(nav);
+
+  // Active item banner
+  var activeItem = getActiveCalendarItem();
+  if (activeItem) {
+    var banner = document.createElement('div');
+    banner.className = 'calendar-active-banner';
+    banner.innerHTML =
+      '<span class="active-dot"></span>' +
+      '<span class="active-title">Working on: ' + escapeHtml(activeItem.icon + ' ' + activeItem.title) + '</span>' +
+      '<button class="calendar-active-clear" id="calGridClearActive">Clear</button>';
+    card.appendChild(banner);
+  }
 
   // Grid
   var grid = document.createElement('div');
@@ -2238,17 +2329,37 @@ function renderCalendarGrid(data) {
       iconsEl.appendChild(countSpan);
       cell.appendChild(iconsEl);
 
-      // Clickable item links (open in Obsidian)
+      // Clickable item links (open in Obsidian + click to mark active)
       if (contentInfo.items.length > 0) {
         var itemsEl = document.createElement('div');
         itemsEl.className = 'calendar-day-items';
         contentInfo.items.forEach(function(it) {
           var link = document.createElement('a');
           link.className = 'calendar-day-item-link';
+          if (isActiveCalendarItem(it.title)) link.className += ' active-item';
           link.textContent = it.icon + ' ' + it.title;
-          link.title = it.title;
+          link.title = 'Click: mark active · Double-click: open in Obsidian';
+          // Single click: toggle active/working-on state
+          link.addEventListener('click', (function(item) {
+            return function(e) {
+              e.preventDefault();
+              var current = getActiveCalendarItem();
+              if (current && current.title === item.title) {
+                setActiveCalendarItem(null);
+              } else {
+                setActiveCalendarItem({ title: item.title, icon: item.icon, path: item.path });
+              }
+              renderCalendarGrid(_dashboardData);
+            };
+          })(it));
+          // Double-click: open in Obsidian
           if (it.path) {
-            link.href = buildObsidianLink(it.path);
+            link.addEventListener('dblclick', (function(path) {
+              return function(e) {
+                e.preventDefault();
+                window.location.href = buildObsidianLink(path);
+              };
+            })(it.path));
           }
           itemsEl.appendChild(link);
         });
@@ -2294,6 +2405,13 @@ function renderCalendarGrid(data) {
     _calendarGridCollapsed = !_calendarGridCollapsed;
     renderCalendarGrid(_dashboardData);
   });
+  var clearBtn = document.getElementById('calGridClearActive');
+  if (clearBtn) {
+    clearBtn.addEventListener('click', function() {
+      setActiveCalendarItem(null);
+      renderCalendarGrid(_dashboardData);
+    });
+  }
 }
 
 // ===== THIS WEEK FOCUS =====
