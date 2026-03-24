@@ -1455,6 +1455,127 @@
     cursor: pointer;
   }
 
+  /* ===== THIS WEEK FOCUS ===== */
+  .this-week-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+  .this-week-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+  }
+  .this-week-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .this-week-label {
+    font-size: 14px;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .this-week-topic {
+    font-size: 14px;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+  .this-week-summary {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+  .this-week-items {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .this-week-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    transition: border-color 0.2s;
+  }
+  .this-week-item:hover {
+    border-color: rgba(245,158,11,0.3);
+  }
+  .this-week-item-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .this-week-item-title {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .this-week-item-title a {
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .this-week-item-title a:hover {
+    color: var(--accent);
+  }
+  .this-week-next-step {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .next-step-research { background: rgba(168,85,247,0.15); color: var(--purple); }
+  .next-step-write { background: rgba(59,130,246,0.15); color: var(--blue); }
+  .next-step-film { background: rgba(239,68,68,0.15); color: var(--red); }
+  .next-step-edit { background: rgba(245,158,11,0.15); color: var(--accent); }
+  .next-step-publish { background: rgba(34,197,94,0.15); color: var(--green); }
+  .this-week-done {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px;
+    color: var(--green);
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .this-week-empty {
+    padding: 16px;
+    color: var(--muted);
+    font-size: 14px;
+    font-style: italic;
+  }
+  .this-week-step-dots {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+  .this-week-step-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+  }
+  .this-week-step-dot.done {
+    background: var(--green);
+  }
+
   /* ===== RESPONSIVE ===== */
   @media (max-width: 1200px) {
     .kanban-board {
@@ -1563,6 +1684,9 @@
 
 <!-- ===== FACEBOOK ADS ===== -->
 <div class="fb-ads-section" id="fbAdsSection"></div>
+
+<!-- ===== THIS WEEK FOCUS ===== -->
+<div id="thisWeekFocus"></div>
 
 <!-- ===== PROJECT TABS ===== -->
 <div class="project-tabs" id="projectTabs"></div>
@@ -1759,6 +1883,155 @@ function render(data) {
 
   // Facebook Ads metrics
   renderFbAds(data);
+
+  // This Week focus card
+  renderThisWeek(data);
+}
+
+// ===== THIS WEEK FOCUS =====
+
+function renderThisWeek(data) {
+  var container = document.getElementById('thisWeekFocus');
+  if (!container) return;
+  container.innerHTML = '';
+
+  var project = data.projects['weekly-content'];
+  if (!project || !project.calendar) {
+    container.innerHTML = '<div class="this-week-card"><div class="this-week-empty">No weekly content calendar configured.</div></div>';
+    return;
+  }
+
+  // Find current week
+  var currentWeek = null;
+  for (var i = 0; i < project.calendar.length; i++) {
+    if (isCurrentWeek(project.calendar[i].weekOf)) {
+      currentWeek = project.calendar[i];
+      break;
+    }
+  }
+
+  if (!currentWeek) {
+    container.innerHTML = '<div class="this-week-card"><div class="this-week-header"><span class="this-week-title">This Week</span></div><div class="this-week-empty">No week scheduled for this date.</div></div>';
+    return;
+  }
+
+  // Get items for this week
+  var itemsByFolder = getItemsForWeek(project, currentWeek.weekOf);
+
+  // Collect all items and separate actionable from complete
+  var allItems = [];
+  var actionItems = [];
+  FOLDER_ORDER.forEach(function(folderKey) {
+    var entries = itemsByFolder[folderKey] || [];
+    entries.forEach(function(entry) {
+      var stepDefs = getFolderStepDefs(entry.folderKey);
+      var doneCount = stepDefs.filter(function(s) { return entry.item.steps && entry.item.steps[s.key]; }).length;
+      var isComplete = doneCount === stepDefs.length;
+      var nextStep = null;
+      for (var j = 0; j < stepDefs.length; j++) {
+        if (!entry.item.steps || !entry.item.steps[stepDefs[j].key]) {
+          nextStep = stepDefs[j];
+          break;
+        }
+      }
+      var itemData = { entry: entry, folderKey: folderKey, stepDefs: stepDefs, doneCount: doneCount, isComplete: isComplete, nextStep: nextStep };
+      allItems.push(itemData);
+      if (!isComplete && !entry.item.archived) {
+        actionItems.push(itemData);
+      }
+    });
+  });
+
+  // Build card
+  var card = document.createElement('div');
+  card.className = 'this-week-card';
+
+  // Header
+  var header = document.createElement('div');
+  header.className = 'this-week-header';
+  var pillarClass = typeof getPillarClass === 'function' ? getPillarClass(currentWeek.pillar) : '';
+  header.innerHTML =
+    '<span class="this-week-title">This Week</span>' +
+    '<span class="this-week-label">' + escapeHtml(currentWeek.weekLabel) + '</span>' +
+    '<span class="pillar-badge ' + pillarClass + '">' + escapeHtml(currentWeek.pillar || '') + '</span>' +
+    '<span class="avatar-badge">' + escapeHtml(currentWeek.avatar || 'All') + '</span>';
+  card.appendChild(header);
+
+  // Topic
+  if (currentWeek.topic) {
+    var topic = document.createElement('div');
+    topic.className = 'this-week-topic';
+    topic.textContent = currentWeek.topic;
+    card.appendChild(topic);
+  }
+
+  // All caught up
+  if (actionItems.length === 0) {
+    var done = document.createElement('div');
+    done.className = 'this-week-done';
+    done.innerHTML = '<span style="font-size:20px">&#10003;</span> All caught up this week!';
+    card.appendChild(done);
+    container.appendChild(card);
+    return;
+  }
+
+  // Summary
+  var summary = document.createElement('div');
+  summary.className = 'this-week-summary';
+  summary.textContent = actionItems.length + ' of ' + allItems.length + ' item' + (allItems.length !== 1 ? 's' : '') + ' need attention';
+  card.appendChild(summary);
+
+  // Action items
+  var itemsContainer = document.createElement('div');
+  itemsContainer.className = 'this-week-items';
+
+  actionItems.forEach(function(itemData) {
+    var row = document.createElement('div');
+    row.className = 'this-week-item';
+
+    // Type icon
+    var icon = document.createElement('span');
+    icon.className = 'this-week-item-icon';
+    icon.textContent = FOLDER_ICONS[itemData.folderKey] || '';
+    row.appendChild(icon);
+
+    // Title (linked to Obsidian if path exists)
+    var titleEl = document.createElement('span');
+    titleEl.className = 'this-week-item-title';
+    if (itemData.entry.item.path) {
+      var a = document.createElement('a');
+      a.href = 'obsidian://open?vault=Obsidian%20Vault&file=' + encodeURIComponent(itemData.entry.item.path);
+      a.textContent = itemData.entry.item.title || 'Untitled';
+      titleEl.appendChild(a);
+    } else {
+      titleEl.textContent = itemData.entry.item.title || 'Untitled';
+    }
+    row.appendChild(titleEl);
+
+    // Step dots
+    var dots = document.createElement('span');
+    dots.className = 'this-week-step-dots';
+    itemData.stepDefs.forEach(function(s) {
+      var dot = document.createElement('span');
+      dot.className = 'this-week-step-dot' + (itemData.entry.item.steps && itemData.entry.item.steps[s.key] ? ' done' : '');
+      dot.title = s.label;
+      dots.appendChild(dot);
+    });
+    row.appendChild(dots);
+
+    // Next step badge
+    if (itemData.nextStep) {
+      var badge = document.createElement('span');
+      badge.className = 'this-week-next-step next-step-' + itemData.nextStep.key;
+      badge.textContent = itemData.nextStep.label;
+      row.appendChild(badge);
+    }
+
+    itemsContainer.appendChild(row);
+  });
+
+  card.appendChild(itemsContainer);
+  container.appendChild(card);
 }
 
 // ===== FACEBOOK ADS: PROJECT > CAMPAIGN HIERARCHY =====
