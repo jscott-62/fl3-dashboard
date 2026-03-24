@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-23",
+  "lastUpdated": "2026-03-24",
   "projects": {
     "wrong-asset-manifesto": {
       "name": "The Wrong Asset Manifesto",
@@ -369,18 +369,6 @@
                 "publish": false
               },
               "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/The Petrodollar Shift Nobody Is Explaining to You - YouTube Script.md"
-            },
-            {
-              "title": "Redefine Your Future - Why It's Never Too Late to Catch Up - YouTube Script",
-              "steps": {
-                "research": true,
-                "write": true,
-                "film": false,
-                "edit": false,
-                "publish": false
-              },
-              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Mar 17/Redefine Your Future - Why It's Never Too Late to Catch Up - YouTube Script.md",
-              "weekOf": "2026-03-17"
             }
           ]
         },
