@@ -50,18 +50,120 @@ window.FL3_DASHBOARD_DATA = {
           "status": "complete",
           "label": "Launch Brief",
           "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Ad Planning/Great-Catch-Up-Webinar-Launch-Brief.md"
-        },
-        "metaAdCopy": {
-          "status": "complete",
-          "label": "Meta Ad Copy (10 variations)",
-          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Ad-Copy/Meta-Ad-Copy.md"
-        },
-        "adCreativeDirection": {
-          "status": "complete",
-          "label": "Ad Creative Direction",
-          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Ad-Creative/Ad-Creative-Direction.md"
         }
-      }
+      },
+      "ads": [
+        {
+          "id": "ad1",
+          "title": "Ad 1: Discipline Wasn't the Problem",
+          "wave": 1,
+          "format": "feed",
+          "headline": "Your Discipline Wasn't the Problem",
+          "hook": "You did everything right.",
+          "imageDirection": "Checklist graphic: 401k, skipped vacations, 30 years discipline all checked. 'Result: still behind' unchecked. Cream bg (#F5F0E8), navy text (#1B365D).",
+          "useScottsPhoto": false,
+          "steps": { "imageCreated": false, "adCreatedInFB": false }
+        },
+        {
+          "id": "ad2",
+          "title": "Ad 2: The Savings of a 30-Year-Old",
+          "wave": 1,
+          "format": "feed",
+          "headline": "Behind on Retirement? See the Math.",
+          "hook": "You're 53 with the retirement savings of a 30-year-old. Now what?",
+          "imageDirection": "Bold white text on dark navy (#1B365D). Hook text as the visual. 'Now what?' in warm gold (#C4982E). No photo, text-only editorial style.",
+          "useScottsPhoto": false,
+          "steps": { "imageCreated": false, "adCreatedInFB": false }
+        },
+        {
+          "id": "ad3",
+          "title": "Ad 3: The Bitcoin I Almost Bought",
+          "wave": 1,
+          "format": "feed",
+          "headline": "You Watched. You Waited. Now What?",
+          "hook": "I've been 'about to buy Bitcoin' since it was $1,000.",
+          "imageDirection": "Price staircase: $1K 'wait for dip', $10K 'too risky', $40K 'too late', $60K 'bubble'. Charcoal bg (#333), gold 'The door isn't closed.' Optional Scott headshot.",
+          "useScottsPhoto": false,
+          "steps": { "imageCreated": false, "adCreatedInFB": false }
+        },
+        {
+          "id": "ad4",
+          "title": "Ad 4: Built for You vs. Built for Everyone",
+          "wave": 1,
+          "format": "feed",
+          "headline": "Crypto Education Built for 50+",
+          "hook": "Every crypto course was built for 25-year-olds. This one wasn't.",
+          "imageDirection": "Split-screen: Left (cool gray) 'Typical Crypto Course' young guy at desk. Right (warm gold) 'The Great Catch-Up' with Scott's photo. Bottom: 'Not for 25-year-olds. For you.'",
+          "useScottsPhoto": true,
+          "steps": { "imageCreated": false, "adCreatedInFB": false }
+        },
+        {
+          "id": "ad5",
+          "title": "Ad 5: The Conversation You've Been Avoiding",
+          "wave": 1,
+          "format": "feed",
+          "headline": "Stop Fighting. Start Planning.",
+          "hook": "Every time you bring up retirement, the conversation turns into blame, fear, or silence.",
+          "imageDirection": "Kitchen table scene: couple 50s-60s, papers/laptop visible, quiet distance (not fighting). Dark overlay: 'Stop Fighting About Retirement.' Gold: 'Start Planning Together.' Choose stock carefully for Meta policy.",
+          "useScottsPhoto": false,
+          "steps": { "imageCreated": false, "adCreatedInFB": false }
+        },
+        {
+          "id": "ad6",
+          "title": "Ad 6: Working Until You Die",
+          "wave": 2,
+          "format": "feed",
+          "headline": "This Doesn't Have to Be Your Future",
+          "hook": "The retirement plan nobody talks about: working until your body gives out.",
+          "imageDirection": "Option A: Bold text on charcoal/navy, '64% fear this more than death' in gold. Option B: Older person in work uniform, shot with dignity. Prepare 'Working until you can't' backup for Meta policy.",
+          "useScottsPhoto": false,
+          "steps": { "imageCreated": false, "adCreatedInFB": false }
+        },
+        {
+          "id": "ad7",
+          "title": "Ad 7: Too Smart to Be This Broke",
+          "wave": 2,
+          "format": "feed",
+          "headline": "Smart Wasn't the Problem. The Vehicle Was.",
+          "hook": "You can explain compound interest. You understand inflation.",
+          "imageDirection": "Knowledge checklist on charcoal: 'compound interest' [check], 'reads financial books' [check], 'follows markets' [check], 'knows more than advisors' [check]. Then: 'Retirement account: not enough.' in gold.",
+          "useScottsPhoto": false,
+          "steps": { "imageCreated": false, "adCreatedInFB": false }
+        },
+        {
+          "id": "ad8",
+          "title": "Ad 8: The Vehicle Was Wrong",
+          "wave": 2,
+          "format": "feed",
+          "headline": "Change the Vehicle. Change the Math.",
+          "hook": "What if you didn't start too late?",
+          "imageDirection": "Two calculators side by side. Left (muted): 'Old Vehicle: $23K/yr x 7% x 15yrs = not enough'. Right (gold): 'New Vehicle: Change one variable. Change everything.' Scott headshot bottom-right.",
+          "useScottsPhoto": true,
+          "steps": { "imageCreated": false, "adCreatedInFB": false }
+        },
+        {
+          "id": "story1",
+          "title": "Story/Reel 1: Savings of a 30-Year-Old",
+          "wave": 1,
+          "format": "story",
+          "headline": "Tap to see the math that changes everything",
+          "hook": "53 with the savings of a 30-year-old? The vehicle is the problem. Not you.",
+          "imageDirection": "1080x1920 vertical. Dark navy bg. Stacked text: '53 with the savings' / 'of a 30-year-old?' (white) / 'The vehicle is the problem. Not you.' (gold). CTA zone clear below y:1500.",
+          "useScottsPhoto": false,
+          "steps": { "imageCreated": false, "adCreatedInFB": false }
+        },
+        {
+          "id": "story2",
+          "title": "Story/Reel 2: Working Until You Can't",
+          "wave": 2,
+          "format": "story",
+          "headline": "Tap to learn what people 50+ are doing instead",
+          "hook": "Working until you die isn't a plan. 64% of Americans over 50 fear this more than death.",
+          "imageDirection": "1080x1920 vertical. Charcoal bg. 'Working until you die' (white bold) / 'isn't a plan.' (gold). '64% fear this more than death' (white smaller). Prep 'Working until you can't' alt for policy.",
+          "useScottsPhoto": false,
+          "steps": { "imageCreated": false, "adCreatedInFB": false }
+        }
+      ]
     },
     "weekly-content": {
       "name": "Weekly Content",
