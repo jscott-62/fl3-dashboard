@@ -46,80 +46,10 @@ window.FL3_DASHBOARD_DATA = {
       "description": "$497 program + webinar funnel: all 17 deliverables complete, ready to launch",
       "folder": "Projects/The-Great-Catch-Up Webinar/",
       "assets": {
-        "courseCurriculum": {
-          "status": "complete",
-          "label": "Course Curriculum (6 weeks)",
-          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Course-Content/The Great Catch Up Course.md"
-        },
-        "frameworkOutputs": {
-          "status": "complete",
-          "label": "Framework Forge Outputs",
-          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Course-Content/Framework Forge Output - The Great Catch Up Course.md"
-        },
-        "salesPage": {
-          "status": "complete",
-          "label": "Sales Page (HTML)",
-          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Sales-Page/the-great-catch-up-sales-page-v1.md"
-        },
-        "cpaCalculator": {
-          "status": "complete",
-          "label": "CPA Calculator (Break-even: $431, Target CPL: $10.78)",
-          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Ad Planning/CPA-Calculator-Summary-Lead.md"
-        },
         "launchBrief": {
           "status": "complete",
           "label": "Launch Brief",
           "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Ad Planning/Great-Catch-Up-Webinar-Launch-Brief.md"
-        },
-        "painHopeInventory": {
-          "status": "complete",
-          "label": "Pain-Hope Inventory (162 pains, 155 hopes)",
-          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Ad Planning/Crypto-Retirement-Pain-Hope-Inventory.md"
-        },
-        "competitiveMatrix": {
-          "status": "complete",
-          "label": "Competitive Coverage Matrix (10 competitors)",
-          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Ad Planning/Crypto-Retirement-Competitive-Coverage-Matrix.md"
-        },
-        "gapAnalysis": {
-          "status": "complete",
-          "label": "Gap Analysis (ranked themes)",
-          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Ad Planning/Crypto-Retirement-Gap-Analysis.md"
-        },
-        "adAngles": {
-          "status": "complete",
-          "label": "Ad Angles & Positioning (35+ angles)",
-          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Ad Planning/Crypto-Retirement-Ad-Angles-And-Positioning.md"
-        },
-        "adPrediction": {
-          "status": "complete",
-          "label": "Ad Prediction Machine (scored + Wave 1-3 test plan)",
-          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Ad Planning/Ad-Prediction-Machine-Output.md"
-        },
-        "preWebinarSystem": {
-          "status": "complete",
-          "label": "Pre-Webinar System (liquidator + indoctrination)",
-          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Webinar/Great-Catch-Up-Webinar-System-Part1.md"
-        },
-        "webinarScript": {
-          "status": "complete",
-          "label": "Webinar Script (5-phase, 75-95 min)",
-          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Webinar/Great-Catch-Up-Webinar-System-Part2.md"
-        },
-        "postWebinarSystem": {
-          "status": "complete",
-          "label": "Post-Webinar System (objection videos + countdown)",
-          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Webinar/Great-Catch-Up-Webinar-System-Part3.md"
-        },
-        "registrationPage": {
-          "status": "complete",
-          "label": "Registration + Thank You Page Copy",
-          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Registration-Page/Registration-Page-Copy.md"
-        },
-        "emailSequences": {
-          "status": "complete",
-          "label": "Email Sequences (16 emails, 4 sequences)",
-          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Webinar-Email-Sequences.md"
         },
         "metaAdCopy": {
           "status": "complete",
@@ -130,11 +60,6 @@ window.FL3_DASHBOARD_DATA = {
           "status": "complete",
           "label": "Ad Creative Direction",
           "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Ad-Creative/Ad-Creative-Direction.md"
-        },
-        "campaignSetupGuide": {
-          "status": "complete",
-          "label": "Meta Campaign Setup Guide",
-          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Campaign-Setup/Meta-Campaign-Setup-Guide.md"
         }
       }
     },
