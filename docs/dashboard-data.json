@@ -40,78 +40,100 @@
       }
     },
     "the-great-catch-up": {
-      "name": "The Great Catch Up",
-      "status": "in_development",
-      "description": "6-week program ($495): core revenue product",
-      "folder": "Projects/The-Great-Catch-Up/",
+      "name": "The Great Catch-Up",
+      "status": "complete",
+      "description": "$497 program + webinar funnel: all 17 deliverables complete, ready to launch",
+      "folder": "Projects/The-Great-Catch-Up Webinar/",
       "assets": {
         "courseCurriculum": {
           "status": "complete",
-          "label": "Course Curriculum",
-          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up/Course-Content/The Great Catch Up Course.md"
+          "label": "Course Curriculum (6 weeks)",
+          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Course-Content/The Great Catch Up Course.md"
         },
         "frameworkOutputs": {
           "status": "complete",
           "label": "Framework Forge Outputs",
-          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up/Course-Content/Framework Forge Output - The Great Catch Up Course.md"
+          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Course-Content/Framework Forge Output - The Great Catch Up Course.md"
         },
         "salesPage": {
-          "status": "review",
-          "label": "Sales Page",
-          "path": null
+          "status": "complete",
+          "label": "Sales Page (HTML)",
+          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Sales-Page/the-great-catch-up-sales-page-v1.md"
         },
-        "emailSequences": {
-          "status": "not_started",
-          "label": "Email Sequences",
-          "path": null
+        "cpaCalculator": {
+          "status": "complete",
+          "label": "CPA Calculator (Break-even: $431, Target CPL: $10.78)",
+          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Ad Planning/CPA-Calculator-Summary-Lead.md"
         },
-        "facebookAds": {
-          "status": "not_started",
-          "label": "Facebook Ads",
-          "path": null
+        "launchBrief": {
+          "status": "complete",
+          "label": "Launch Brief",
+          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Ad Planning/Great-Catch-Up-Webinar-Launch-Brief.md"
         },
-        "socialMedia": {
-          "status": "not_started",
-          "label": "Social Media Campaign",
-          "path": null
+        "painHopeInventory": {
+          "status": "complete",
+          "label": "Pain-Hope Inventory (162 pains, 155 hopes)",
+          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Ad Planning/Crypto-Retirement-Pain-Hope-Inventory.md"
         },
-        "pricingStrategy": {
-          "status": "not_started",
-          "label": "Pricing Strategy",
-          "path": null
-        }
-      }
-    },
-    "webinar": {
-      "name": "Webinar",
-      "status": "planned",
-      "description": "Conversion event to sell The Great Catch Up",
-      "folder": "Projects/Webinar/",
-      "assets": {
-        "slidesScript": {
-          "status": "in_progress",
-          "label": "Webinar Slides/Script",
-          "path": "00-ZenithPro - FL3/Projects/Webinar/Slides-Scripts/Catch Up With The Freedom 3.0 Investing System - Slides..md"
+        "competitiveMatrix": {
+          "status": "complete",
+          "label": "Competitive Coverage Matrix (10 competitors)",
+          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Ad Planning/Crypto-Retirement-Competitive-Coverage-Matrix.md"
+        },
+        "gapAnalysis": {
+          "status": "complete",
+          "label": "Gap Analysis (ranked themes)",
+          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Ad Planning/Crypto-Retirement-Gap-Analysis.md"
+        },
+        "adAngles": {
+          "status": "complete",
+          "label": "Ad Angles & Positioning (35+ angles)",
+          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Ad Planning/Crypto-Retirement-Ad-Angles-And-Positioning.md"
+        },
+        "adPrediction": {
+          "status": "complete",
+          "label": "Ad Prediction Machine (scored + Wave 1-3 test plan)",
+          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Ad Planning/Ad-Prediction-Machine-Output.md"
+        },
+        "preWebinarSystem": {
+          "status": "complete",
+          "label": "Pre-Webinar System (liquidator + indoctrination)",
+          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Webinar/Great-Catch-Up-Webinar-System-Part1.md"
+        },
+        "webinarScript": {
+          "status": "complete",
+          "label": "Webinar Script (5-phase, 75-95 min)",
+          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Webinar/Great-Catch-Up-Webinar-System-Part2.md"
+        },
+        "postWebinarSystem": {
+          "status": "complete",
+          "label": "Post-Webinar System (objection videos + countdown)",
+          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Webinar/Great-Catch-Up-Webinar-System-Part3.md"
         },
         "registrationPage": {
-          "status": "in_progress",
-          "label": "Registration Page",
-          "path": "00-ZenithPro - FL3/Projects/Webinar/Registration-Pages/freedom-3-landing-page.html"
-        },
-        "facebookAds": {
-          "status": "not_started",
-          "label": "Facebook Ads",
-          "path": null
+          "status": "complete",
+          "label": "Registration + Thank You Page Copy",
+          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Registration-Page/Registration-Page-Copy.md"
         },
         "emailSequences": {
-          "status": "not_started",
-          "label": "Email Sequences (Pre/Post)",
-          "path": null
+          "status": "complete",
+          "label": "Email Sequences (16 emails, 4 sequences)",
+          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Webinar-Email-Sequences.md"
         },
-        "socialMedia": {
-          "status": "not_started",
-          "label": "Social Media Promotion",
-          "path": null
+        "metaAdCopy": {
+          "status": "complete",
+          "label": "Meta Ad Copy (10 variations)",
+          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Ad-Copy/Meta-Ad-Copy.md"
+        },
+        "adCreativeDirection": {
+          "status": "complete",
+          "label": "Ad Creative Direction",
+          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Ad-Creative/Ad-Creative-Direction.md"
+        },
+        "campaignSetupGuide": {
+          "status": "complete",
+          "label": "Meta Campaign Setup Guide",
+          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Campaign-Setup/Meta-Campaign-Setup-Guide.md"
         }
       }
     },
