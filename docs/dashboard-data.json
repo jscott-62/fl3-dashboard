@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-24",
+  "lastUpdated": "2026-03-25",
   "projects": {
     "wrong-asset-manifesto": {
       "name": "The Wrong Asset Manifesto",
@@ -440,6 +440,17 @@
               "originalPath": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/The Petrodollar Shift Nobody Is Explaining to You - Social Post.md",
               "archived": true,
               "archivedDate": "2026-03-19"
+            },
+            {
+              "title": "Pillar #1 Vid Opus Short",
+              "steps": {
+                "research": false,
+                "write": false,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/Pillar #1 Vid Opus Short.md"
             }
           ]
         },
