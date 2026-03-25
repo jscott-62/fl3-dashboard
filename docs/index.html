@@ -1264,6 +1264,7 @@
   .hub-type-badge.social { background: #7c3aed; color: #fff; }
   .hub-type-badge.newsletter { background: #0d9488; color: #fff; }
   .hub-type-badge.asset { background: #475569; color: #e2e8f0; }
+  .hub-type-badge.ad { background: rgba(245,158,11,0.2); color: #f59e0b; }
   .hub-type-badge.chapter { background: #92400e; color: #fbbf24; }
   .hub-item-info { flex: 1; min-width: 0; }
   .hub-item-title { font-size: 14px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -3051,7 +3052,8 @@ function getContentTypeConfig(type) {
     newsletter:  { label: 'Newsletter',  cssClass: 'newsletter' },
     email:       { label: 'Email',       cssClass: 'newsletter' },
     asset:       { label: 'Asset',       cssClass: 'asset' },
-    chapter:     { label: 'Chapter',     cssClass: 'chapter' }
+    chapter:     { label: 'Chapter',     cssClass: 'chapter' },
+    ad:          { label: 'Ad',          cssClass: 'ad' }
   };
   return configs[type] || { label: type, cssClass: 'asset' };
 }
@@ -3105,6 +3107,20 @@ function buildContentHubView(data) {
         allItems.push({ projectKey: key, projectName: project.name, projectStatus: project.status,
           type: typeTag, label: asset.label, status: asset.status,
           path: asset.path, steps: null, itemType: typeTag, weekLabel: null });
+      }
+      // Also include ads if present
+      if (project.ads) {
+        project.ads.forEach(function(ad) {
+          totalCount++;
+          var adDone = ad.steps.imageCreated && ad.steps.adCreatedInFB;
+          if (adDone) completedCount++;
+          var adStatus = adDone ? 'complete' : (ad.steps.imageCreated || ad.steps.adCreatedInFB ? 'in_progress' : 'not_started');
+          allItems.push({ projectKey: key, projectName: project.name, projectStatus: project.status,
+            type: 'ad', label: ad.title, status: adStatus,
+            path: null, steps: { imageCreated: ad.steps.imageCreated, adCreatedInFB: ad.steps.adCreatedInFB },
+            itemType: 'ad', weekLabel: 'Wave ' + ad.wave + ' \u00B7 ' + (ad.format === 'story' ? '9:16 Story' : '1:1 Feed'),
+            adId: ad.id, adData: ad });
+        });
       }
     }
   });
@@ -3162,7 +3178,15 @@ function buildContentHubView(data) {
 
       // Step dots
       var stepsHtml = '';
-      if (item.steps) {
+      if (item.itemType === 'ad' && item.steps) {
+        var adStepDefs = [{key:'imageCreated',label:'Image Created'},{key:'adCreatedInFB',label:'Ad in Facebook'}];
+        stepsHtml = '<div class="hub-steps-inline">';
+        adStepDefs.forEach(function(s) {
+          var done = item.steps[s.key] ? ' done' : '';
+          stepsHtml += '<span class="hub-step-dot' + done + '" title="' + s.label + (item.steps[s.key] ? ' \u2713' : '') + '"></span>';
+        });
+        stepsHtml += '</div>';
+      } else if (item.steps) {
         var stepDefs = item.folderKey ? getFolderStepDefs(item.folderKey) : getStepDefs(item.itemType);
         stepsHtml = '<div class="hub-steps-inline">';
         stepDefs.forEach(function(s) {
