@@ -45,6 +45,7 @@ window.FL3_DASHBOARD_DATA = {
       "status": "complete",
       "description": "$497 program + webinar funnel: all 17 deliverables complete, ready to launch",
       "folder": "Projects/The-Great-Catch-Up Webinar/",
+      "adCopyPath": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Ad-Copy/Meta-Ad-Copy.md",
       "assets": {
         "launchBrief": {
           "status": "complete",
@@ -64,7 +65,8 @@ window.FL3_DASHBOARD_DATA = {
           "useScottsPhoto": false,
           "steps": {
             "imageCreated": true,
-            "adCreatedInFB": false
+            "adCreatedInFB": false,
+            "adPublished": false
           }
         },
         {
@@ -78,7 +80,8 @@ window.FL3_DASHBOARD_DATA = {
           "useScottsPhoto": false,
           "steps": {
             "imageCreated": false,
-            "adCreatedInFB": false
+            "adCreatedInFB": false,
+            "adPublished": false
           }
         },
         {
@@ -92,7 +95,8 @@ window.FL3_DASHBOARD_DATA = {
           "useScottsPhoto": false,
           "steps": {
             "imageCreated": false,
-            "adCreatedInFB": false
+            "adCreatedInFB": false,
+            "adPublished": false
           }
         },
         {
@@ -106,7 +110,8 @@ window.FL3_DASHBOARD_DATA = {
           "useScottsPhoto": true,
           "steps": {
             "imageCreated": false,
-            "adCreatedInFB": false
+            "adCreatedInFB": false,
+            "adPublished": false
           }
         },
         {
@@ -120,7 +125,8 @@ window.FL3_DASHBOARD_DATA = {
           "useScottsPhoto": false,
           "steps": {
             "imageCreated": false,
-            "adCreatedInFB": false
+            "adCreatedInFB": false,
+            "adPublished": false
           }
         },
         {
@@ -134,7 +140,8 @@ window.FL3_DASHBOARD_DATA = {
           "useScottsPhoto": false,
           "steps": {
             "imageCreated": false,
-            "adCreatedInFB": false
+            "adCreatedInFB": false,
+            "adPublished": false
           }
         },
         {
@@ -148,7 +155,8 @@ window.FL3_DASHBOARD_DATA = {
           "useScottsPhoto": false,
           "steps": {
             "imageCreated": false,
-            "adCreatedInFB": false
+            "adCreatedInFB": false,
+            "adPublished": false
           }
         },
         {
@@ -162,7 +170,8 @@ window.FL3_DASHBOARD_DATA = {
           "useScottsPhoto": true,
           "steps": {
             "imageCreated": false,
-            "adCreatedInFB": false
+            "adCreatedInFB": false,
+            "adPublished": false
           }
         },
         {
@@ -176,7 +185,8 @@ window.FL3_DASHBOARD_DATA = {
           "useScottsPhoto": false,
           "steps": {
             "imageCreated": false,
-            "adCreatedInFB": false
+            "adCreatedInFB": false,
+            "adPublished": false
           }
         },
         {
@@ -190,7 +200,8 @@ window.FL3_DASHBOARD_DATA = {
           "useScottsPhoto": false,
           "steps": {
             "imageCreated": false,
-            "adCreatedInFB": false
+            "adCreatedInFB": false,
+            "adPublished": false
           }
         }
       ]

@@ -181,7 +181,15 @@
     font-size: 14px;
     font-weight: 600;
     color: var(--text);
+    text-decoration: none;
   }
+  a.promo-card-title {
+    color: var(--accent);
+    border-bottom: 1px dashed rgba(245,158,11,0.4);
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  a.promo-card-title:hover { opacity: 0.8; }
   .wave-badge {
     font-size: 10px;
     padding: 2px 8px;
@@ -3052,9 +3060,14 @@ function buildAdTrackerView(project) {
       var formatBadge = '<span class="wave-badge format-' + ad.format + '">' + (ad.format === 'story' ? '9:16 Story' : '1:1 Feed') + '</span>';
       var photoBadge = ad.useScottsPhoto ? ' <span style="font-size:10px;color:var(--accent);">Scott\'s photo</span>' : '';
 
+      var adCopyPath = project.adCopyPath || '';
+      var titleHtml = adCopyPath
+        ? '<a href="' + escapeAttr(buildObsidianLink(adCopyPath)) + '" class="promo-card-title" title="Open in Obsidian">' + escapeHtml(ad.title) + '</a>'
+        : '<span class="promo-card-title">' + escapeHtml(ad.title) + '</span>';
+
       adCard.innerHTML =
         '<div class="promo-card-header">' +
-          '<span class="promo-card-title">' + escapeHtml(ad.title) + '</span>' +
+          titleHtml +
           formatBadge + photoBadge +
         '</div>' +
         '<div class="promo-card-detail"><strong>Headline:</strong> ' + escapeHtml(ad.headline) + '</div>' +
@@ -3068,6 +3081,10 @@ function buildAdTrackerView(project) {
           '<label class="step-checkbox' + (ad.steps.adCreatedInFB ? ' checked' : '') + '">' +
             '<input type="checkbox"' + (ad.steps.adCreatedInFB ? ' checked' : '') + ' data-promo-id="' + ad.id + '" data-step="adCreatedInFB"> ' +
             '<span>Ad in Facebook</span>' +
+          '</label>' +
+          '<label class="step-checkbox' + (ad.steps.adPublished ? ' checked' : '') + '">' +
+            '<input type="checkbox"' + (ad.steps.adPublished ? ' checked' : '') + ' data-promo-id="' + ad.id + '" data-step="adPublished"> ' +
+            '<span>FB Ad Published</span>' +
           '</label>' +
         '</div>';
 
@@ -3116,11 +3133,12 @@ function updateAdProgress() {
   var el = document.getElementById('promo-tracker-progress');
   if (!el || !_dashboardData) return;
   var ads = (_dashboardData.projects['the-great-catch-up'] || {}).ads || [];
-  var total = ads.length * 2;
+  var total = ads.length * 3;
   var done = 0;
   ads.forEach(function(ad) {
     if (ad.steps.imageCreated) done++;
     if (ad.steps.adCreatedInFB) done++;
+    if (ad.steps.adPublished) done++;
   });
   var pct = total > 0 ? Math.round((done / total) * 100) : 0;
   var barColor = pct === 100 ? 'green' : (pct >= 50 ? 'blue' : 'amber');
