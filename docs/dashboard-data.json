@@ -63,7 +63,7 @@
           "useScottsPhoto": false,
           "steps": {
             "imageCreated": true,
-            "adCreatedInFB": false
+            "adCreatedInFB": true
           }
         },
         {
