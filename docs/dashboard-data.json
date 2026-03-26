@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-25",
+  "lastUpdated": "2026-03-26",
   "projects": {
     "wrong-asset-manifesto": {
       "name": "The Wrong Asset Manifesto",
@@ -61,7 +61,10 @@
           "hook": "You did everything right.",
           "imageDirection": "Checklist graphic: 401k, skipped vacations, 30 years discipline all checked. 'Result: still behind' unchecked. Cream bg (#F5F0E8), navy text (#1B365D).",
           "useScottsPhoto": false,
-          "steps": { "imageCreated": false, "adCreatedInFB": false }
+          "steps": {
+            "imageCreated": true,
+            "adCreatedInFB": false
+          }
         },
         {
           "id": "ad2",
@@ -72,7 +75,10 @@
           "hook": "You're 53 with the retirement savings of a 30-year-old. Now what?",
           "imageDirection": "Bold white text on dark navy (#1B365D). Hook text as the visual. 'Now what?' in warm gold (#C4982E). No photo, text-only editorial style.",
           "useScottsPhoto": false,
-          "steps": { "imageCreated": false, "adCreatedInFB": false }
+          "steps": {
+            "imageCreated": false,
+            "adCreatedInFB": false
+          }
         },
         {
           "id": "ad3",
@@ -83,7 +89,10 @@
           "hook": "I've been 'about to buy Bitcoin' since it was $1,000.",
           "imageDirection": "Price staircase: $1K 'wait for dip', $10K 'too risky', $40K 'too late', $60K 'bubble'. Charcoal bg (#333), gold 'The door isn't closed.' Optional Scott headshot.",
           "useScottsPhoto": false,
-          "steps": { "imageCreated": false, "adCreatedInFB": false }
+          "steps": {
+            "imageCreated": false,
+            "adCreatedInFB": false
+          }
         },
         {
           "id": "ad4",
@@ -94,7 +103,10 @@
           "hook": "Every crypto course was built for 25-year-olds. This one wasn't.",
           "imageDirection": "Split-screen: Left (cool gray) 'Typical Crypto Course' young guy at desk. Right (warm gold) 'The Great Catch-Up' with Scott's photo. Bottom: 'Not for 25-year-olds. For you.'",
           "useScottsPhoto": true,
-          "steps": { "imageCreated": false, "adCreatedInFB": false }
+          "steps": {
+            "imageCreated": false,
+            "adCreatedInFB": false
+          }
         },
         {
           "id": "ad5",
@@ -105,7 +117,10 @@
           "hook": "Every time you bring up retirement, the conversation turns into blame, fear, or silence.",
           "imageDirection": "Kitchen table scene: couple 50s-60s, papers/laptop visible, quiet distance (not fighting). Dark overlay: 'Stop Fighting About Retirement.' Gold: 'Start Planning Together.' Choose stock carefully for Meta policy.",
           "useScottsPhoto": false,
-          "steps": { "imageCreated": false, "adCreatedInFB": false }
+          "steps": {
+            "imageCreated": false,
+            "adCreatedInFB": false
+          }
         },
         {
           "id": "ad6",
@@ -116,7 +131,10 @@
           "hook": "The retirement plan nobody talks about: working until your body gives out.",
           "imageDirection": "Option A: Bold text on charcoal/navy, '64% fear this more than death' in gold. Option B: Older person in work uniform, shot with dignity. Prepare 'Working until you can't' backup for Meta policy.",
           "useScottsPhoto": false,
-          "steps": { "imageCreated": false, "adCreatedInFB": false }
+          "steps": {
+            "imageCreated": false,
+            "adCreatedInFB": false
+          }
         },
         {
           "id": "ad7",
@@ -127,7 +145,10 @@
           "hook": "You can explain compound interest. You understand inflation.",
           "imageDirection": "Knowledge checklist on charcoal: 'compound interest' [check], 'reads financial books' [check], 'follows markets' [check], 'knows more than advisors' [check]. Then: 'Retirement account: not enough.' in gold.",
           "useScottsPhoto": false,
-          "steps": { "imageCreated": false, "adCreatedInFB": false }
+          "steps": {
+            "imageCreated": false,
+            "adCreatedInFB": false
+          }
         },
         {
           "id": "ad8",
@@ -138,7 +159,10 @@
           "hook": "What if you didn't start too late?",
           "imageDirection": "Two calculators side by side. Left (muted): 'Old Vehicle: $23K/yr x 7% x 15yrs = not enough'. Right (gold): 'New Vehicle: Change one variable. Change everything.' Scott headshot bottom-right.",
           "useScottsPhoto": true,
-          "steps": { "imageCreated": false, "adCreatedInFB": false }
+          "steps": {
+            "imageCreated": false,
+            "adCreatedInFB": false
+          }
         },
         {
           "id": "story1",
@@ -149,7 +173,10 @@
           "hook": "53 with the savings of a 30-year-old? The vehicle is the problem. Not you.",
           "imageDirection": "1080x1920 vertical. Dark navy bg. Stacked text: '53 with the savings' / 'of a 30-year-old?' (white) / 'The vehicle is the problem. Not you.' (gold). CTA zone clear below y:1500.",
           "useScottsPhoto": false,
-          "steps": { "imageCreated": false, "adCreatedInFB": false }
+          "steps": {
+            "imageCreated": false,
+            "adCreatedInFB": false
+          }
         },
         {
           "id": "story2",
@@ -160,7 +187,10 @@
           "hook": "Working until you die isn't a plan. 64% of Americans over 50 fear this more than death.",
           "imageDirection": "1080x1920 vertical. Charcoal bg. 'Working until you die' (white bold) / 'isn't a plan.' (gold). '64% fear this more than death' (white smaller). Prep 'Working until you can't' alt for policy.",
           "useScottsPhoto": false,
-          "steps": { "imageCreated": false, "adCreatedInFB": false }
+          "steps": {
+            "imageCreated": false,
+            "adCreatedInFB": false
+          }
         }
       ]
     },
