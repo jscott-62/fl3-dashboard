@@ -157,27 +157,27 @@
   .status-planned { background: rgba(148,163,184,0.15); color: var(--muted); }
 
   /* ===== AD TRACKER ===== */
-  .ad-tracker-list {
+  .promo-tracker-list {
     display: flex;
     flex-direction: column;
     gap: 12px;
     margin-top: 16px;
   }
-  .ad-card {
+  .promo-card {
     background: var(--bg);
     border: 1px solid var(--border);
     border-radius: 8px;
     padding: 14px 16px;
     transition: border-color 0.2s;
   }
-  .ad-card:hover { border-color: rgba(245,158,11,0.3); }
-  .ad-card-header {
+  .promo-card:hover { border-color: rgba(245,158,11,0.3); }
+  .promo-card-header {
     display: flex;
     align-items: center;
     gap: 8px;
     margin-bottom: 6px;
   }
-  .ad-card-title {
+  .promo-card-title {
     font-size: 14px;
     font-weight: 600;
     color: var(--text);
@@ -194,14 +194,14 @@
   .wave-2 { background: rgba(168,85,247,0.15); color: var(--purple); }
   .format-feed { background: rgba(245,158,11,0.12); color: var(--accent); }
   .format-story { background: rgba(34,197,94,0.12); color: var(--green); }
-  .ad-card-detail {
+  .promo-card-detail {
     font-size: 12px;
     color: var(--muted);
     line-height: 1.5;
     margin-bottom: 4px;
   }
-  .ad-card-detail strong { color: var(--text); font-weight: 600; }
-  .ad-card-image-dir {
+  .promo-card-detail strong { color: var(--text); font-weight: 600; }
+  .promo-card-image-dir {
     font-size: 11px;
     color: var(--muted);
     line-height: 1.4;
@@ -211,11 +211,11 @@
     border-radius: 4px;
     border-left: 2px solid var(--border);
   }
-  .ad-card-steps {
+  .promo-card-steps {
     display: flex;
     gap: 16px;
   }
-  .ad-section-header {
+  .promo-section-header {
     font-size: 15px;
     font-weight: 700;
     color: var(--text);
@@ -226,7 +226,7 @@
     align-items: center;
     gap: 8px;
   }
-  .ad-section-header .wave-badge { font-size: 11px; padding: 3px 10px; }
+  .promo-section-header .wave-badge { font-size: 11px; padding: 3px 10px; }
 
   /* ===== ASSET LIST ===== */
   .asset-list { list-style: none; }
@@ -3370,36 +3370,36 @@ function buildAdTrackerView(project) {
   function renderAdGroup(waveAds, waveNum) {
     var section = document.createElement('div');
     var sectionHeader = document.createElement('div');
-    sectionHeader.className = 'ad-section-header';
+    sectionHeader.className = 'promo-section-header';
     sectionHeader.innerHTML = '<span class="wave-badge wave-' + waveNum + '">Wave ' + waveNum + '</span> ' +
       (waveNum === 1 ? 'Days 1-14 (5 Feed + 1 Story)' : 'Days 15-28 (3 Feed + 1 Story)');
     section.appendChild(sectionHeader);
 
     var list = document.createElement('div');
-    list.className = 'ad-tracker-list';
+    list.className = 'promo-tracker-list';
 
     waveAds.forEach(function(ad) {
       var adCard = document.createElement('div');
-      adCard.className = 'ad-card';
+      adCard.className = 'promo-card';
 
       var formatBadge = '<span class="wave-badge format-' + ad.format + '">' + (ad.format === 'story' ? '9:16 Story' : '1:1 Feed') + '</span>';
       var photoBadge = ad.useScottsPhoto ? ' <span style="font-size:10px;color:var(--accent);">Scott\'s photo</span>' : '';
 
       adCard.innerHTML =
-        '<div class="ad-card-header">' +
-          '<span class="ad-card-title">' + escapeHtml(ad.title) + '</span>' +
+        '<div class="promo-card-header">' +
+          '<span class="promo-card-title">' + escapeHtml(ad.title) + '</span>' +
           formatBadge + photoBadge +
         '</div>' +
-        '<div class="ad-card-detail"><strong>Headline:</strong> ' + escapeHtml(ad.headline) + '</div>' +
-        '<div class="ad-card-detail"><strong>Hook:</strong> ' + escapeHtml(ad.hook) + '</div>' +
-        '<div class="ad-card-image-dir">' + escapeHtml(ad.imageDirection) + '</div>' +
-        '<div class="ad-card-steps">' +
+        '<div class="promo-card-detail"><strong>Headline:</strong> ' + escapeHtml(ad.headline) + '</div>' +
+        '<div class="promo-card-detail"><strong>Hook:</strong> ' + escapeHtml(ad.hook) + '</div>' +
+        '<div class="promo-card-image-dir">' + escapeHtml(ad.imageDirection) + '</div>' +
+        '<div class="promo-card-steps">' +
           '<label class="step-checkbox' + (ad.steps.imageCreated ? ' checked' : '') + '">' +
-            '<input type="checkbox"' + (ad.steps.imageCreated ? ' checked' : '') + ' data-ad-id="' + ad.id + '" data-step="imageCreated"> ' +
+            '<input type="checkbox"' + (ad.steps.imageCreated ? ' checked' : '') + ' data-promo-id="' + ad.id + '" data-step="imageCreated"> ' +
             '<span>Image Created</span>' +
           '</label>' +
           '<label class="step-checkbox' + (ad.steps.adCreatedInFB ? ' checked' : '') + '">' +
-            '<input type="checkbox"' + (ad.steps.adCreatedInFB ? ' checked' : '') + ' data-ad-id="' + ad.id + '" data-step="adCreatedInFB"> ' +
+            '<input type="checkbox"' + (ad.steps.adCreatedInFB ? ' checked' : '') + ' data-promo-id="' + ad.id + '" data-step="adCreatedInFB"> ' +
             '<span>Ad in Facebook</span>' +
           '</label>' +
         '</div>';
@@ -3407,7 +3407,7 @@ function buildAdTrackerView(project) {
       // Checkbox handlers
       adCard.querySelectorAll('input[type="checkbox"]').forEach(function(cb) {
         cb.addEventListener('change', function() {
-          var adId = this.dataset.adId;
+          var adId = this.dataset.promoId;
           var step = this.dataset.step;
           var checked = this.checked;
           var lbl = this.closest('.step-checkbox');
@@ -3438,7 +3438,7 @@ function buildAdTrackerView(project) {
 
   // Progress bar
   var progressDiv = document.createElement('div');
-  progressDiv.id = 'ad-tracker-progress';
+  progressDiv.id = 'promo-tracker-progress';
   card.appendChild(progressDiv);
   setTimeout(updateAdProgress, 0);
 
@@ -3446,7 +3446,7 @@ function buildAdTrackerView(project) {
 }
 
 function updateAdProgress() {
-  var el = document.getElementById('ad-tracker-progress');
+  var el = document.getElementById('promo-tracker-progress');
   if (!el || !_dashboardData) return;
   var ads = (_dashboardData.projects['the-great-catch-up'] || {}).ads || [];
   var total = ads.length * 2;
