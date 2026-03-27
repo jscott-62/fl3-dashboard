@@ -549,10 +549,10 @@ window.FL3_DASHBOARD_DATA = {
             {
               "title": "Pillar Vid 1 Short #2",
               "steps": {
-                "research": false,
-                "write": false,
-                "film": false,
-                "edit": false,
+                "research": true,
+                "write": true,
+                "film": true,
+                "edit": true,
                 "publish": false
               },
               "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/Pillar Vid 1 Short #2.md"
