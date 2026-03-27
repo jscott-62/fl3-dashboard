@@ -534,6 +534,17 @@ window.FL3_DASHBOARD_DATA = {
               "originalPath": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/Pillar #1 Vid Opus Short.md",
               "archived": true,
               "archivedDate": "2026-03-25"
+            },
+            {
+              "title": "Episode 1: The Future Of Money - Who Is Satoshi",
+              "steps": {
+                "research": false,
+                "write": false,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/Episode 1 The Future Of Money - Who Is Satoshi.md"
             }
           ]
         },
