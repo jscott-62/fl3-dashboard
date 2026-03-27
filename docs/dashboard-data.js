@@ -538,9 +538,9 @@ window.FL3_DASHBOARD_DATA = {
             {
               "title": "Episode 1: The Future Of Money - Who Is Satoshi",
               "steps": {
-                "research": false,
-                "write": false,
-                "film": false,
+                "research": true,
+                "write": true,
+                "film": true,
                 "edit": false,
                 "publish": false
               },
