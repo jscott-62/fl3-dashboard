@@ -77,7 +77,7 @@ window.FL3_DASHBOARD_DATA = {
           "imageDirection": "Bold white text on dark navy (#1B365D). Hook text as the visual. 'Now what?' in warm gold (#C4982E). No photo, text-only editorial style.",
           "useScottsPhoto": false,
           "steps": {
-            "imageCreated": false,
+            "imageCreated": true,
             "adCreatedInFB": false
           }
         },
