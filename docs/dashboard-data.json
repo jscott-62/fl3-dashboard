@@ -540,10 +540,13 @@
                 "research": true,
                 "write": true,
                 "film": true,
-                "edit": false,
-                "publish": false
+                "edit": true,
+                "publish": true
               },
-              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/Episode 1 The Future Of Money - Who Is Satoshi.md"
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Archive/Unscheduled/Episode 1 The Future Of Money - Who Is Satoshi PUB (2026-03-27).md",
+              "originalPath": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/Episode 1 The Future Of Money - Who Is Satoshi.md",
+              "archived": true,
+              "archivedDate": "2026-03-27"
             },
             {
               "title": "Pillar Vid 1 Short #2",
