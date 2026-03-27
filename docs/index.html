@@ -2227,7 +2227,7 @@ function renderCalendarGrid(data) {
   container.innerHTML = '';
 
   var project = data.projects['weekly-content'];
-  if (!project || !project.calendar) return;
+  if (!project) return;
 
   // Determine display month
   var now = new Date();
@@ -2237,34 +2237,19 @@ function renderCalendarGrid(data) {
   var dispYear = _calendarGridMonth.year;
   var dispMonth = _calendarGridMonth.month;
 
-  // Build lookup: weekOf date string -> calendar week entry
-  var weekLookup = {};
-  project.calendar.forEach(function(w) {
-    weekLookup[w.weekOf] = w;
-  });
-
-  // Build content count lookup: weekOf -> { icons, total, complete, items }
-  var contentLookup = {};
-  project.calendar.forEach(function(w) {
-    var itemsByFolder = getItemsForWeek(project, w.weekOf);
-    var icons = [];
-    var total = 0;
-    var complete = 0;
-    var items = [];
-    FOLDER_ORDER.forEach(function(fk) {
-      var entries = itemsByFolder[fk] || [];
-      if (entries.length > 0) {
-        icons.push({ icon: FOLDER_ICONS[fk] || '', count: entries.length });
-        entries.forEach(function(entry) {
-          total++;
-          var stepDefs = getFolderStepDefs(entry.folderKey);
-          var doneCount = stepDefs.filter(function(s) { return entry.item.steps && entry.item.steps[s.key]; }).length;
-          if (doneCount === stepDefs.length) complete++;
-          items.push({ icon: FOLDER_ICONS[fk] || '', title: entry.item.title, path: entry.item.path });
-        });
-      }
+  // Build lookup: publishDate -> array of published items
+  var publishedByDate = {};
+  var folders = project.contentFolders || {};
+  FOLDER_ORDER.forEach(function(fk) {
+    var folder = folders[fk];
+    if (!folder || !folder.items) return;
+    folder.items.forEach(function(item) {
+      if (!item.steps || !item.steps.publish) return;
+      var pubDate = item.archivedDate || null;
+      if (!pubDate) return;
+      if (!publishedByDate[pubDate]) publishedByDate[pubDate] = [];
+      publishedByDate[pubDate].push({ icon: FOLDER_ICONS[fk] || '', title: item.title, path: item.path, folderKey: fk });
     });
-    contentLookup[w.weekOf] = { icons: icons, total: total, complete: complete, items: items };
   });
 
   // Card
@@ -2287,18 +2272,6 @@ function renderCalendarGrid(data) {
     '</div>';
   card.appendChild(nav);
 
-  // Active item banner
-  var activeItem = getActiveCalendarItem();
-  if (activeItem) {
-    var banner = document.createElement('div');
-    banner.className = 'calendar-active-banner';
-    banner.innerHTML =
-      '<span class="active-dot"></span>' +
-      '<span class="active-title">Working on: ' + escapeHtml(activeItem.icon + ' ' + activeItem.title) + '</span>' +
-      '<button class="calendar-active-clear" id="calGridClearActive">Clear</button>';
-    card.appendChild(banner);
-  }
-
   // Grid
   var grid = document.createElement('div');
   grid.className = 'calendar-grid' + (_calendarGridCollapsed ? ' collapsed' : '');
@@ -2315,15 +2288,11 @@ function renderCalendarGrid(data) {
   // Calculate grid days
   var firstOfMonth = new Date(dispYear, dispMonth, 1);
   var lastOfMonth = new Date(dispYear, dispMonth + 1, 0);
-  // getDay(): 0=Sun, 1=Mon... We want Mon=0
-  var startDow = (firstOfMonth.getDay() + 6) % 7; // Mon=0, Tue=1, ..., Sun=6
-  var daysInMonth = lastOfMonth.getDate();
+  var startDow = (firstOfMonth.getDay() + 6) % 7;
 
-  // Start from the Monday before or on the 1st
   var gridStart = new Date(firstOfMonth);
   gridStart.setDate(gridStart.getDate() - startDow);
 
-  // Always show 6 rows (42 cells) for consistent height
   var totalCells = 42;
   var todayStr = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
 
@@ -2333,20 +2302,17 @@ function renderCalendarGrid(data) {
     var cellYear = cellDate.getFullYear();
     var cellMonth = cellDate.getMonth();
     var cellDay = cellDate.getDate();
-    var cellDow = (cellDate.getDay() + 6) % 7; // Mon=0
 
     var dateStr = cellYear + '-' + String(cellMonth + 1).padStart(2, '0') + '-' + String(cellDay).padStart(2, '0');
     var isOtherMonth = cellMonth !== dispMonth;
     var isToday = dateStr === todayStr;
-    // Check if this date matches any weekOf (content weeks start on varying days)
-    var weekEntry = weekLookup[dateStr] || null;
-    var contentInfo = contentLookup[dateStr] || null;
+    var pubItems = publishedByDate[dateStr] || [];
 
     var cell = document.createElement('div');
     cell.className = 'calendar-grid-day';
     if (isOtherMonth) cell.className += ' other-month';
     if (isToday) cell.className += ' today';
-    if (weekEntry && contentInfo && contentInfo.total > 0) cell.className += ' content-week-start';
+    if (pubItems.length > 0) cell.className += ' content-week-start';
 
     // Day number
     var numEl = document.createElement('div');
@@ -2354,76 +2320,48 @@ function renderCalendarGrid(data) {
     numEl.textContent = cellDay;
     cell.appendChild(numEl);
 
-    // Content indicators (only on Mondays with content)
-    if (weekEntry && contentInfo && contentInfo.total > 0) {
-      // Pillar badge
-      if (weekEntry.pillar) {
-        var pillarEl = document.createElement('span');
-        var pNum = weekEntry.pillar.charAt(0);
-        pillarEl.className = 'calendar-day-pillar pillar-' + pNum;
-        pillarEl.textContent = weekEntry.pillar;
-        cell.appendChild(pillarEl);
-      }
-
-      // Icons row
+    // Published content indicators
+    if (pubItems.length > 0) {
+      // Icons summary row
+      var iconCounts = {};
+      pubItems.forEach(function(it) {
+        if (!iconCounts[it.icon]) iconCounts[it.icon] = 0;
+        iconCounts[it.icon]++;
+      });
       var iconsEl = document.createElement('div');
       iconsEl.className = 'calendar-day-icons';
-      contentInfo.icons.forEach(function(ic) {
+      Object.keys(iconCounts).forEach(function(icon) {
         var iconSpan = document.createElement('span');
         iconSpan.className = 'calendar-day-icon';
-        iconSpan.textContent = ic.icon;
-        iconSpan.title = ic.count + ' item' + (ic.count > 1 ? 's' : '');
+        iconSpan.textContent = icon;
+        iconSpan.title = iconCounts[icon] + ' published';
         iconsEl.appendChild(iconSpan);
       });
-      // Count
       var countSpan = document.createElement('span');
       countSpan.className = 'calendar-day-count';
-      countSpan.textContent = contentInfo.complete + '/' + contentInfo.total;
+      countSpan.textContent = pubItems.length + ' pub';
       iconsEl.appendChild(countSpan);
       cell.appendChild(iconsEl);
 
-      // Clickable item links (open in Obsidian + click to mark active)
-      if (contentInfo.items.length > 0) {
-        var itemsEl = document.createElement('div');
-        itemsEl.className = 'calendar-day-items';
-        contentInfo.items.forEach(function(it) {
-          var link = document.createElement('a');
-          link.className = 'calendar-day-item-link';
-          if (isActiveCalendarItem(it.title)) link.className += ' active-item';
-          link.textContent = it.icon + ' ' + it.title;
-          link.title = 'Click: mark active · Double-click: open in Obsidian';
-          // Single click: toggle active/working-on state
-          link.addEventListener('click', (function(item) {
+      // Published item links
+      var itemsEl = document.createElement('div');
+      itemsEl.className = 'calendar-day-items';
+      pubItems.forEach(function(it) {
+        var link = document.createElement('a');
+        link.className = 'calendar-day-item-link';
+        link.textContent = it.icon + ' ' + it.title;
+        link.title = 'Double-click: open in Obsidian';
+        if (it.path) {
+          link.addEventListener('dblclick', (function(path) {
             return function(e) {
               e.preventDefault();
-              var current = getActiveCalendarItem();
-              if (current && current.title === item.title) {
-                setActiveCalendarItem(null);
-              } else {
-                setActiveCalendarItem({ title: item.title, icon: item.icon, path: item.path });
-              }
-              renderCalendarGrid(_dashboardData);
+              window.location.href = buildObsidianLink(path);
             };
-          })(it));
-          // Double-click: open in Obsidian
-          if (it.path) {
-            link.addEventListener('dblclick', (function(path) {
-              return function(e) {
-                e.preventDefault();
-                window.location.href = buildObsidianLink(path);
-              };
-            })(it.path));
-          }
-          itemsEl.appendChild(link);
-        });
-        cell.appendChild(itemsEl);
-      } else if (weekEntry.topic) {
-        // Fallback to topic if no items have paths
-        var topicEl = document.createElement('div');
-        topicEl.className = 'calendar-day-topic';
-        topicEl.textContent = weekEntry.topic;
-        cell.appendChild(topicEl);
-      }
+          })(it.path));
+        }
+        itemsEl.appendChild(link);
+      });
+      cell.appendChild(itemsEl);
     }
 
     grid.appendChild(cell);
@@ -2458,13 +2396,6 @@ function renderCalendarGrid(data) {
     _calendarGridCollapsed = !_calendarGridCollapsed;
     renderCalendarGrid(_dashboardData);
   });
-  var clearBtn = document.getElementById('calGridClearActive');
-  if (clearBtn) {
-    clearBtn.addEventListener('click', function() {
-      setActiveCalendarItem(null);
-      renderCalendarGrid(_dashboardData);
-    });
-  }
 }
 
 // ===== THIS WEEK FOCUS =====
