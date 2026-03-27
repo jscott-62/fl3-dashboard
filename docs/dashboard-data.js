@@ -556,9 +556,12 @@ window.FL3_DASHBOARD_DATA = {
                 "write": true,
                 "film": true,
                 "edit": true,
-                "publish": false
+                "publish": true
               },
-              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/Pillar Vid 1 Short #2.md"
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Archive/Unscheduled/Pillar Vid 1 Short #2 PUB (2026-03-27).md",
+              "originalPath": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/Pillar Vid 1 Short #2.md",
+              "archived": true,
+              "archivedDate": "2026-03-27"
             }
           ]
         },
@@ -880,5 +883,4 @@ window.FL3_DASHBOARD_DATA = {
     "courseSalesTarget": 20,
     "costPerLeadTarget": 5
   }
-}
-;
+};
