@@ -3159,10 +3159,10 @@ function buildAssetProjectView(project) {
 // =====================================================================
 
 var _weeklyViewMode = 'calendar';
-var FOLDER_ORDER = ['youtube', 'social-media', 'articles', 'email'];
-var FOLDER_ICONS = { 'youtube': '🎬', 'social-media': '📱', 'articles': '📝', 'email': '📧' };
+var FOLDER_ORDER = ['youtube', 'future-of-money', 'social-media', 'articles', 'email'];
+var FOLDER_ICONS = { 'youtube': '🎬', 'future-of-money': '💰', 'social-media': '📱', 'articles': '📝', 'email': '📧' };
 
-var FOLDER_NAMES = { 'youtube': 'YouTube', 'social-media': 'Social Media', 'articles': 'Articles', 'email': 'Email', 'briefs': 'Briefs', 'archive': 'Archive' };
+var FOLDER_NAMES = { 'youtube': 'YouTube', 'future-of-money': 'The Future Of Money', 'social-media': 'Social Media', 'articles': 'Articles', 'email': 'Email', 'briefs': 'Briefs', 'archive': 'Archive' };
 
 function generateContentPath(folderKey, title, weekOf) {
   var safeName = (title || 'Untitled').replace(/[/\\:*?"<>|]/g, '').replace(/\s+/g, ' ').trim();
@@ -3468,7 +3468,7 @@ function processNewContentFiles(files, prefix) {
     var folderKey = detectContentType(title);
 
     // Build steps
-    var stepKeys = (folderKey === 'youtube' || folderKey === 'social-media')
+    var stepKeys = (folderKey === 'youtube' || folderKey === 'social-media' || folderKey === 'future-of-money')
       ? ['research', 'write', 'film', 'edit', 'publish']
       : ['research', 'write', 'edit', 'publish'];
     var steps = {};
@@ -3496,6 +3496,7 @@ function processNewContentFiles(files, prefix) {
 
 function detectContentType(title) {
   var lower = title.toLowerCase();
+  if (lower.indexOf('future of money') !== -1) return 'future-of-money';
   if (lower.indexOf('youtube script') !== -1 || lower.indexOf('youtube') !== -1) return 'youtube';
   if (lower.indexOf('yt script') !== -1) return 'youtube';
   if (/\bvid\b/.test(lower) && lower.indexOf('heygen') === -1) return 'youtube';
@@ -3544,7 +3545,7 @@ function makeEditableTitle(titleEl, folderKey, itemIdx) {
 }
 
 function getFolderStepDefs(folderKey) {
-  if (folderKey === 'youtube' || folderKey === 'social-media') {
+  if (folderKey === 'youtube' || folderKey === 'social-media' || folderKey === 'future-of-money') {
     return [
       { key: 'research', label: 'Research' },
       { key: 'write', label: 'Write' },

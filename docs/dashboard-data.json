@@ -695,6 +695,33 @@
             }
           ]
         },
+        "future-of-money": {
+          "label": "The Future Of Money",
+          "items": [
+            {
+              "title": "Episode 1 The Future Of Money - Who Is Satoshi",
+              "steps": {
+                "research": true,
+                "write": true,
+                "film": true,
+                "edit": true,
+                "publish": true
+              },
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/The Future Of Money/Episode 1 The Future Of Money - Who Is Satoshi.md"
+            },
+            {
+              "title": "Episode 2 The Future Of Money - You Did Everything Right",
+              "steps": {
+                "research": true,
+                "write": true,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/The Future Of Money/Episode 2 The Future Of Money - You Did Everything Right.md"
+            }
+          ]
+        },
         "email": {
           "label": "Email",
           "items": [
