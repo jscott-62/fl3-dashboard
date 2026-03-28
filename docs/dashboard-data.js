@@ -449,6 +449,29 @@ window.FL3_DASHBOARD_DATA = {
                 "publish": false
               },
               "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/The Petrodollar Shift Nobody Is Explaining to You - YouTube Script.md"
+            },
+            {
+              "title": "YouTube-Content-Strategy-Competitor-Analysis",
+              "steps": {
+                "research": false,
+                "write": false,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/YouTube-Content-Strategy-Competitor-Analysis.md"
+            },
+            {
+              "title": "The Fed Does What Lenin Did With Guns - YouTube Script",
+              "steps": {
+                "research": false,
+                "write": false,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Mar 24/The Fed Does What Lenin Did With Guns - YouTube Script.md",
+              "weekOf": "2026-03-24"
             }
           ]
         },
@@ -696,6 +719,26 @@ window.FL3_DASHBOARD_DATA = {
               "originalPath": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/The Petrodollar Shift Nobody Is Explaining to You (2026-03-01).md",
               "archived": true,
               "archivedDate": "2026-03-19"
+            },
+            {
+              "title": "James Check (Checkmate) - Bitcoin Analysis Deep Dive",
+              "steps": {
+                "research": false,
+                "write": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/James Check (Checkmate) - Bitcoin Analysis Deep Dive.md"
+            },
+            {
+              "title": "the-risk-flip-what-is-really-dangerous-for-your-retirement",
+              "steps": {
+                "research": false,
+                "write": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/the-risk-flip-what-is-really-dangerous-for-your-retirement.md"
             }
           ]
         },
