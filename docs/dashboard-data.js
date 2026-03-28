@@ -766,6 +766,17 @@ window.FL3_DASHBOARD_DATA = {
                 "publish": false
               },
               "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/The Future Of Money/Episode 2 The Future Of Money - You Did Everything Right.md"
+            },
+            {
+              "title": "Episode 3 The Future Of Money - The Pizza That Cost 800 Million",
+              "steps": {
+                "research": true,
+                "write": true,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/The Future Of Money/Episode 3 The Future Of Money - The Pizza That Cost 800 Million.md"
             }
           ]
         },
@@ -926,4 +937,5 @@ window.FL3_DASHBOARD_DATA = {
     "courseSalesTarget": 20,
     "costPerLeadTarget": 5
   }
-};
+}
+;
