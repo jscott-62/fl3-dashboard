@@ -769,8 +769,8 @@
             {
               "title": "Episode 3 The Future Of Money - The Pizza That Cost 800 Million",
               "steps": {
-                "research": true,
-                "write": true,
+                "research": false,
+                "write": false,
                 "film": false,
                 "edit": false,
                 "publish": false
