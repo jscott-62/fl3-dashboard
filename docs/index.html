@@ -3358,19 +3358,43 @@ function syncWeeklyContent() {
   var headers = { 'Authorization': 'Bearer ' + apiKey };
   var CONTENT_PREFIX = '00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/';
 
-  fetch(baseUrl + '/vault/', { headers: headers })
-    .then(function(res) {
-      if (res.status === 401) {
-        localStorage.removeItem('fl3-obsidian-api-key');
-        throw new Error('Invalid API key. Click Sync again to re-enter.');
-      }
-      if (!res.ok) throw new Error('Obsidian API error: ' + res.status);
-      return res.json();
-    })
-    .then(function(data) {
-      var allFiles = data.files || data || [];
+  // Recursively list files in a vault directory (API only returns immediate children)
+  function listFilesRecursive(dirPath) {
+    return fetch(baseUrl + '/vault/' + encodeURIComponent(dirPath).replace(/%2F/g, '/'), { headers: headers })
+      .then(function(res) {
+        if (res.status === 401) {
+          localStorage.removeItem('fl3-obsidian-api-key');
+          throw new Error('Invalid API key. Click Sync again to re-enter.');
+        }
+        if (!res.ok) throw new Error('Obsidian API error: ' + res.status);
+        return res.json();
+      })
+      .then(function(data) {
+        var entries = data.files || data || [];
+        var fileList = [];
+        var subdirPromises = [];
+        entries.forEach(function(entry) {
+          var fullPath = dirPath + entry;
+          if (entry.endsWith('/')) {
+            subdirPromises.push(listFilesRecursive(fullPath));
+          } else {
+            fileList.push(fullPath);
+          }
+        });
+        if (subdirPromises.length === 0) return fileList;
+        return Promise.all(subdirPromises).then(function(results) {
+          results.forEach(function(subFiles) {
+            fileList = fileList.concat(subFiles);
+          });
+          return fileList;
+        });
+      });
+  }
+
+  listFilesRecursive(CONTENT_PREFIX)
+    .then(function(allFiles) {
       var contentFiles = allFiles.filter(function(f) {
-        return f.startsWith(CONTENT_PREFIX) && f.endsWith('.md');
+        return f.endsWith('.md');
       });
 
       var added = processNewContentFiles(contentFiles, CONTENT_PREFIX);
