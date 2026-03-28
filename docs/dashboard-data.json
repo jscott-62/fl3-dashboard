@@ -772,10 +772,10 @@
             {
               "title": "Episode 3 The Future Of Money - The Pizza That Cost 800 Million",
               "steps": {
-                "research": false,
-                "write": false,
-                "film": false,
-                "edit": false,
+                "research": true,
+                "write": true,
+                "film": true,
+                "edit": true,
                 "publish": false
               },
               "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/The Future Of Money/Episode 3 The Future Of Money - The Pizza That Cost 800 Million.md"
