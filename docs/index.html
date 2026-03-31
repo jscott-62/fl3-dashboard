@@ -1633,218 +1633,6 @@
     background: var(--green);
   }
 
-  /* ===== CALENDAR GRID ===== */
-  .calendar-grid-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px 24px;
-    margin-bottom: 24px;
-  }
-  .calendar-grid-nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 16px;
-  }
-  .calendar-grid-nav-left {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .calendar-grid-nav-title {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--accent);
-  }
-  .calendar-grid-toggle {
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    width: 28px;
-    height: 28px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.25s;
-  }
-  .calendar-grid-toggle:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-  .calendar-grid-toggle.collapsed {
-    transform: rotate(-90deg);
-  }
-  .calendar-grid.collapsed {
-    display: none;
-  }
-  .calendar-grid-nav-btns {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .calendar-grid-nav-btn {
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    width: 32px;
-    height: 32px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.15s;
-  }
-  .calendar-grid-nav-btn:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-  .calendar-grid-today-btn {
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    padding: 4px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 12px;
-    font-weight: 600;
-    transition: all 0.15s;
-  }
-  .calendar-grid-today-btn:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-  .calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 1px;
-    background: var(--border);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  .calendar-grid-header-cell {
-    background: var(--bg);
-    padding: 8px 4px;
-    text-align: center;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: var(--muted);
-  }
-  .calendar-grid-day {
-    background: var(--card);
-    min-height: 80px;
-    padding: 6px 8px;
-    position: relative;
-    transition: background 0.15s;
-  }
-  .calendar-grid-day.other-month {
-    opacity: 0.35;
-  }
-  .calendar-grid-day.today {
-    box-shadow: inset 0 0 0 2px var(--accent);
-  }
-  .calendar-grid-day.content-week-start {
-    background: rgba(245,158,11,0.06);
-  }
-  .calendar-day-number {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 4px;
-  }
-  .calendar-grid-day.today .calendar-day-number {
-    color: var(--accent);
-  }
-  .calendar-day-icons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2px;
-    margin-bottom: 2px;
-  }
-  .calendar-day-icon {
-    font-size: 12px;
-    line-height: 1;
-  }
-  .calendar-day-count {
-    font-size: 10px;
-    color: var(--muted);
-    font-weight: 600;
-  }
-  .calendar-day-topic {
-    font-size: 10px;
-    color: var(--muted);
-    line-height: 1.3;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-  }
-  .calendar-day-pillar {
-    font-size: 9px;
-    padding: 1px 5px;
-    border-radius: 3px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    display: inline-block;
-    margin-bottom: 2px;
-  }
-  .calendar-day-pillar.pillar-1 { background: rgba(59,130,246,0.15); color: var(--blue); }
-  .calendar-day-pillar.pillar-2 { background: rgba(168,85,247,0.15); color: var(--purple); }
-  .calendar-day-pillar.pillar-3 { background: rgba(34,197,94,0.15); color: var(--green); }
-  .calendar-day-pillar.pillar-4 { background: rgba(239,68,68,0.15); color: var(--red); }
-  .calendar-day-items {
-    margin-top: 2px;
-  }
-  .calendar-day-item-link {
-    display: block;
-    font-size: 10px;
-    color: var(--text);
-    text-decoration: none;
-    padding: 3px 6px;
-    border-radius: 3px;
-    margin-bottom: 1px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    transition: background 0.15s;
-    cursor: pointer;
-  }
-  .calendar-day-item-link:hover {
-    background: rgba(245,158,11,0.15);
-    color: var(--accent);
-  }
-  .calendar-day-item-link.active-item {
-    background: rgba(245,158,11,0.2);
-    color: var(--accent);
-    font-weight: 700;
-    box-shadow: inset 3px 0 0 var(--accent);
-    position: relative;
-  }
-  .calendar-day-item-link.active-item::before {
-    content: '';
-    position: absolute;
-    right: 4px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
-    animation: activePulse 2s ease-in-out infinite;
-  }
-  @keyframes activePulse {
-    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(245,158,11,0.4); }
-    50% { opacity: 0.6; box-shadow: 0 0 0 4px rgba(245,158,11,0); }
-  }
   .calendar-active-banner {
     display: flex;
     align-items: center;
@@ -1995,9 +1783,6 @@
 
 <!-- ===== THIS WEEK FOCUS ===== -->
 <div id="thisWeekFocus"></div>
-
-<!-- ===== CALENDAR VIEW ===== -->
-<div id="calendarView"></div>
 
 <!-- ===== PROJECT TABS ===== -->
 <div class="project-tabs" id="projectTabs"></div>
@@ -2197,14 +1982,9 @@ function render(data) {
   // This Week focus card
   renderThisWeek(data);
 
-  // Calendar grid view
-  renderCalendarGrid(data);
 }
 
-// ===== CALENDAR GRID VIEW =====
-
-var _calendarGridMonth = null; // { year, month } - null means current month
-var _calendarGridCollapsed = false;
+// ===== ACTIVE CALENDAR ITEM =====
 
 function getActiveCalendarItem() {
   try { return JSON.parse(localStorage.getItem('fl3-active-item')) || null; } catch(e) { return null; }
@@ -2219,183 +1999,6 @@ function setActiveCalendarItem(item) {
 function isActiveCalendarItem(title) {
   var active = getActiveCalendarItem();
   return active && active.title === title;
-}
-
-function renderCalendarGrid(data) {
-  var container = document.getElementById('calendarView');
-  if (!container) return;
-  container.innerHTML = '';
-
-  var project = data.projects['weekly-content'];
-  if (!project) return;
-
-  // Determine display month
-  var now = new Date();
-  if (!_calendarGridMonth) {
-    _calendarGridMonth = { year: now.getFullYear(), month: now.getMonth() };
-  }
-  var dispYear = _calendarGridMonth.year;
-  var dispMonth = _calendarGridMonth.month;
-
-  // Build lookup: publishDate -> array of published items
-  var publishedByDate = {};
-  var folders = project.contentFolders || {};
-  FOLDER_ORDER.forEach(function(fk) {
-    var folder = folders[fk];
-    if (!folder || !folder.items) return;
-    folder.items.forEach(function(item) {
-      if (!item.steps || !item.steps.publish) return;
-      var pubDate = item.archivedDate || null;
-      if (!pubDate) return;
-      if (!publishedByDate[pubDate]) publishedByDate[pubDate] = [];
-      publishedByDate[pubDate].push({ icon: FOLDER_ICONS[fk] || '', title: item.title, path: item.path, folderKey: fk });
-    });
-  });
-
-  // Card
-  var card = document.createElement('div');
-  card.className = 'calendar-grid-card';
-
-  // Navigation
-  var monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  var nav = document.createElement('div');
-  nav.className = 'calendar-grid-nav';
-  nav.innerHTML =
-    '<div class="calendar-grid-nav-left">' +
-      '<button class="calendar-grid-toggle' + (_calendarGridCollapsed ? ' collapsed' : '') + '" id="calGridToggle">&#9660;</button>' +
-      '<span class="calendar-grid-nav-title">' + monthNames[dispMonth] + ' ' + dispYear + '</span>' +
-    '</div>' +
-    '<div class="calendar-grid-nav-btns">' +
-      '<button class="calendar-grid-today-btn" id="calGridToday">Today</button>' +
-      '<button class="calendar-grid-nav-btn" id="calGridPrev">&#9664;</button>' +
-      '<button class="calendar-grid-nav-btn" id="calGridNext">&#9654;</button>' +
-    '</div>';
-  card.appendChild(nav);
-
-  // Grid
-  var grid = document.createElement('div');
-  grid.className = 'calendar-grid' + (_calendarGridCollapsed ? ' collapsed' : '');
-
-  // Header row (Mon-Sun)
-  var dayNames = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-  dayNames.forEach(function(d) {
-    var cell = document.createElement('div');
-    cell.className = 'calendar-grid-header-cell';
-    cell.textContent = d;
-    grid.appendChild(cell);
-  });
-
-  // Calculate grid days
-  var firstOfMonth = new Date(dispYear, dispMonth, 1);
-  var lastOfMonth = new Date(dispYear, dispMonth + 1, 0);
-  var startDow = (firstOfMonth.getDay() + 6) % 7;
-
-  var gridStart = new Date(firstOfMonth);
-  gridStart.setDate(gridStart.getDate() - startDow);
-
-  var totalCells = 42;
-  var todayStr = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
-
-  for (var i = 0; i < totalCells; i++) {
-    var cellDate = new Date(gridStart);
-    cellDate.setDate(gridStart.getDate() + i);
-    var cellYear = cellDate.getFullYear();
-    var cellMonth = cellDate.getMonth();
-    var cellDay = cellDate.getDate();
-
-    var dateStr = cellYear + '-' + String(cellMonth + 1).padStart(2, '0') + '-' + String(cellDay).padStart(2, '0');
-    var isOtherMonth = cellMonth !== dispMonth;
-    var isToday = dateStr === todayStr;
-    var pubItems = publishedByDate[dateStr] || [];
-
-    var cell = document.createElement('div');
-    cell.className = 'calendar-grid-day';
-    if (isOtherMonth) cell.className += ' other-month';
-    if (isToday) cell.className += ' today';
-    if (pubItems.length > 0) cell.className += ' content-week-start';
-
-    // Day number
-    var numEl = document.createElement('div');
-    numEl.className = 'calendar-day-number';
-    numEl.textContent = cellDay;
-    cell.appendChild(numEl);
-
-    // Published content indicators
-    if (pubItems.length > 0) {
-      // Icons summary row
-      var iconCounts = {};
-      pubItems.forEach(function(it) {
-        if (!iconCounts[it.icon]) iconCounts[it.icon] = 0;
-        iconCounts[it.icon]++;
-      });
-      var iconsEl = document.createElement('div');
-      iconsEl.className = 'calendar-day-icons';
-      Object.keys(iconCounts).forEach(function(icon) {
-        var iconSpan = document.createElement('span');
-        iconSpan.className = 'calendar-day-icon';
-        iconSpan.textContent = icon;
-        iconSpan.title = iconCounts[icon] + ' published';
-        iconsEl.appendChild(iconSpan);
-      });
-      var countSpan = document.createElement('span');
-      countSpan.className = 'calendar-day-count';
-      countSpan.textContent = pubItems.length + ' pub';
-      iconsEl.appendChild(countSpan);
-      cell.appendChild(iconsEl);
-
-      // Published item links
-      var itemsEl = document.createElement('div');
-      itemsEl.className = 'calendar-day-items';
-      pubItems.forEach(function(it) {
-        var link = document.createElement('a');
-        link.className = 'calendar-day-item-link';
-        link.textContent = it.icon + ' ' + it.title;
-        link.title = 'Double-click: open in Obsidian';
-        if (it.path) {
-          link.addEventListener('dblclick', (function(path) {
-            return function(e) {
-              e.preventDefault();
-              window.location.href = buildObsidianLink(path);
-            };
-          })(it.path));
-        }
-        itemsEl.appendChild(link);
-      });
-      cell.appendChild(itemsEl);
-    }
-
-    grid.appendChild(cell);
-  }
-
-  card.appendChild(grid);
-  container.appendChild(card);
-
-  // Nav event handlers
-  document.getElementById('calGridPrev').addEventListener('click', function() {
-    _calendarGridMonth.month--;
-    if (_calendarGridMonth.month < 0) {
-      _calendarGridMonth.month = 11;
-      _calendarGridMonth.year--;
-    }
-    renderCalendarGrid(_dashboardData);
-  });
-  document.getElementById('calGridNext').addEventListener('click', function() {
-    _calendarGridMonth.month++;
-    if (_calendarGridMonth.month > 11) {
-      _calendarGridMonth.month = 0;
-      _calendarGridMonth.year++;
-    }
-    renderCalendarGrid(_dashboardData);
-  });
-  document.getElementById('calGridToday').addEventListener('click', function() {
-    var n = new Date();
-    _calendarGridMonth = { year: n.getFullYear(), month: n.getMonth() };
-    renderCalendarGrid(_dashboardData);
-  });
-  document.getElementById('calGridToggle').addEventListener('click', function() {
-    _calendarGridCollapsed = !_calendarGridCollapsed;
-    renderCalendarGrid(_dashboardData);
-  });
 }
 
 // ===== THIS WEEK FOCUS =====
@@ -3944,7 +3547,6 @@ function buildCalendarContentRow(entry, folderKey) {
         setActiveCalendarItem({ title: itm.title, icon: '', path: itm.path });
       }
       reRenderWeeklyContent();
-      renderCalendarGrid(_dashboardData);
     });
   })(entry.item);
 
@@ -4328,8 +3930,7 @@ function buildFolderListView(folderKey, folder, data) {
           setActiveCalendarItem({ title: itm.title, icon: '', path: itm.path });
         }
         reRenderWeeklyContent();
-        renderCalendarGrid(_dashboardData);
-      });
+        });
     })(item);
 
     container.appendChild(itemDiv);
