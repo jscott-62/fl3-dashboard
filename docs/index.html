@@ -4463,14 +4463,14 @@ async function pushToGHLBlog(folderKey, itemIdx) {
 }
 
 // =====================================================================
-// REPURPOSE: Generate derivative content from an article via Claude API
+// REPURPOSE: Queue article for content generation via Claude Code
 // =====================================================================
-// Reads the source article from Obsidian, sends it to Claude API to
-// generate 3 fully-written content pieces:
+// Reads the source article from Obsidian, writes a queue file with the
+// article content, then the user runs /repurpose in Claude Code to
+// generate 3 content pieces:
 //   1. Long-form YouTube script (10-15 min)
 //   2. Short-form video script (60-90 sec, Instagram/Facebook Reels)
 //   3. Social media posts (Instagram, Facebook, X thread)
-// Saves generated content to Obsidian and adds dashboard entries.
 
 async function writeFileToObsidian(vaultPath, content) {
   var apiKey = localStorage.getItem('fl3-obsidian-api-key');
@@ -4501,51 +4501,6 @@ async function writeFileToObsidian(vaultPath, content) {
   }
 }
 
-function getAnthropicKey() {
-  var key = localStorage.getItem('fl3-anthropic-api-key');
-  if (!key) {
-    key = prompt('Enter your Anthropic API key to enable AI content generation.\n\nGet one at console.anthropic.com → API Keys');
-    if (!key) return null;
-    localStorage.setItem('fl3-anthropic-api-key', key);
-  }
-  return key;
-}
-
-var FL3_VOICE_SYSTEM = 'You are J. Scott MacMillan, creator of Freedom Life 3.0 (FL3). You write for people aged 45-65 who feel behind on retirement savings and have been failed by traditional financial advice. Your voice is direct, conversational, and validating. You use short sentences for impact. You address the reader as "you" and speak from experience. You are honest about risks while remaining optimistic about opportunities.\n\nCRITICAL RULES:\n- NEVER use em dashes (—). Use periods, commas, colons, or parentheses instead.\n- Use "to" for ranges (e.g., "$350,000 to $400,000" not "$350,000-$400,000")\n- 85% toward language (what they gain) / 15% away language (what they avoid)\n- Education, not financial advice\n- Bitcoin is a key topic but frame it as math and opportunity, not hype\n- Validate struggles without being condescending';
-
-async function callClaudeAPI(systemPrompt, userPrompt) {
-  var apiKey = getAnthropicKey();
-  if (!apiKey) throw new Error('Anthropic API key required for content generation.');
-
-  var resp = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': apiKey,
-      'anthropic-version': '2023-06-01',
-      'anthropic-dangerous-direct-browser-access': 'true'
-    },
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 4096,
-      system: systemPrompt,
-      messages: [{ role: 'user', content: userPrompt }]
-    })
-  });
-
-  if (resp.status === 401) {
-    localStorage.removeItem('fl3-anthropic-api-key');
-    throw new Error('Invalid Anthropic API key. Click Repurpose again to re-enter.');
-  }
-  if (!resp.ok) {
-    var errBody = await resp.text();
-    throw new Error('Claude API error (' + resp.status + '): ' + errBody.substring(0, 200));
-  }
-
-  var data = await resp.json();
-  return data.content[0].text;
-}
-
 async function repurposeArticle(folderKey, itemIdx) {
   var project = _dashboardData.projects['weekly-content'];
   var item = project.contentFolders[folderKey].items[itemIdx];
@@ -4568,10 +4523,6 @@ async function repurposeArticle(folderKey, itemIdx) {
     var cleanContent = stripFrontmatter(markdown);
     var articleTitle = item.title || 'Untitled';
 
-    // Verify Anthropic key before starting generation
-    var anthropicKey = getAnthropicKey();
-    if (!anthropicKey) throw new Error('Anthropic API key required.');
-
     // Determine the week folder from the source article path
     var pathParts = item.path.split('/');
     var weekFolder = 'Unscheduled';
@@ -4582,117 +4533,39 @@ async function repurposeArticle(folderKey, itemIdx) {
 
     var basePath = '00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/' + weekFolder + '/';
     var safeName = articleTitle.replace(/[/\\:*?"<>|]/g, '').replace(/\s+/g, ' ').trim();
-    var today = new Date().toISOString().slice(0, 10);
 
-    // 2. Generate content via Claude API (3 calls)
-    var derivatives = [
-      {
-        suffix: ' - YouTube Script',
-        folder: 'youtube',
-        label: 'YouTube',
-        steps: { research: true, write: true, film: false, edit: false, publish: false },
-        prompt: 'Write a complete long-form YouTube video script (10 to 15 minutes when spoken) based on this article. The script should be written word-for-word as I would say it on camera.\n\nStructure:\n1. HOOK (first 30 seconds): A shocking stat, provocative question, or bold claim that stops the scroll. Speak directly to camera.\n2. INTRO (30 sec to 1:30): Introduce the topic, establish why it matters to someone 50+ who feels behind on retirement. Tell them exactly what they will learn.\n3. MAIN CONTENT (3 to 5 key sections): Take the article\'s arguments and expand them conversationally. Use analogies, real examples, and data. Each section should feel like I am explaining this to a friend over coffee.\n4. THE SHIFT: The paradigm-changing moment where the viewer realizes the old way of thinking is wrong.\n5. CTA & CLOSE: Subscribe prompt, comment question, and tease what is coming next.\n\nInclude [B-ROLL] notes where visual cuts would enhance the message.\nInclude [ON-SCREEN TEXT] notes for key stats or quotes to display.\n\nOutput format: Markdown with clear section headers and timestamps.\nDo NOT include any metadata or front matter. Start directly with the script.\n\nHere is the source article:\n\n' + cleanContent
-      },
-      {
-        suffix: ' - Short Video',
-        folder: 'social-media',
-        label: 'Social Media',
-        steps: { research: true, write: true, film: false, edit: false, publish: false },
-        prompt: 'Write a complete short-form video script (60 to 90 seconds when spoken) for Instagram Reels and Facebook Reels based on this article. This should be the single most compelling point from the article, distilled for maximum impact.\n\nStructure:\n1. HOOK (0:00 to 0:05): One punchy line that stops the scroll. Pattern interrupt.\n2. TENSION (0:05 to 0:20): Set up the problem. Make them feel the pain.\n3. INSIGHT (0:20 to 0:50): Deliver the key insight. Use one powerful stat or analogy.\n4. REFRAME (0:50 to 1:10): Flip their perspective. The "wait, what?" moment.\n5. CTA (1:10 to 1:20): Follow for more, link in bio, or comment prompt.\n\nAlso include:\n- ON-SCREEN TEXT: Exact text overlays for each section (short, punchy phrases)\n- B-ROLL / VISUAL NOTES: What should be on screen during each section\n- CAPTION: The post caption for under the video (with hashtags)\n\nWrite every word I would actually say. No placeholders. No brackets to fill in.\nOutput format: Markdown.\nDo NOT include any metadata or front matter. Start directly with the script.\n\nHere is the source article:\n\n' + cleanContent
-      },
-      {
-        suffix: ' - Social Post',
-        folder: 'social-media',
-        label: 'Social Media',
-        steps: { research: true, write: true, edit: false, publish: false },
-        prompt: 'Write complete, ready-to-post social media content based on this article. Create all three versions below.\n\n## INSTAGRAM / FACEBOOK POST\nWrite a compelling post (150 to 300 words). Lead with a hook line that stops the scroll. Include 2 to 3 key points from the article. End with a question or call to action. Add relevant hashtags (8 to 12).\n\n## X (TWITTER) THREAD\nWrite a 5 to 7 tweet thread. Tweet 1 should be the hook that makes people click "Show thread." Each tweet should be under 280 characters. The last tweet should be the CTA. Use line breaks within tweets for readability.\n\n## LINKEDIN POST\nWrite a LinkedIn-style post (200 to 400 words). More professional tone but still conversational. Lead with a pattern-interrupt first line. Use single-line paragraphs for readability. End with a question to drive comments.\n\nWrite every word ready to copy and paste. No placeholders. No brackets.\nOutput format: Markdown with clear ## headers for each platform.\nDo NOT include any metadata or front matter. Start directly with the content.\n\nHere is the source article:\n\n' + cleanContent
-      }
-    ];
+    // 2. Build the queue request
+    var queueData = {
+      articleTitle: articleTitle,
+      articleContent: cleanContent,
+      sourcePath: item.path,
+      weekFolder: weekFolder,
+      basePath: basePath,
+      safeName: safeName,
+      folderKey: folderKey,
+      itemIdx: itemIdx,
+      weekOf: item.weekOf || null,
+      queuedAt: new Date().toISOString(),
+      derivatives: [
+        { suffix: ' - YouTube Script', folder: 'youtube', label: 'YouTube', steps: { research: true, write: true, film: false, edit: false, publish: false } },
+        { suffix: ' - Short Video', folder: 'social-media', label: 'Social Media', steps: { research: true, write: true, film: false, edit: false, publish: false } },
+        { suffix: ' - Social Post', folder: 'social-media', label: 'Social Media', steps: { research: true, write: true, edit: false, publish: false } }
+      ]
+    };
 
-    // 3. Generate content and create files
-    var created = [];
-    var failed = [];
+    // 3. Write queue file to Obsidian
+    var queuePath = '00-ZenithPro - FL3/Projects/fl3-dashboard/repurpose-queue.json';
+    var success = await writeFileToObsidian(queuePath, JSON.stringify(queueData, null, 2));
+    if (!success) throw new Error('Could not write queue file to Obsidian.');
 
-    for (var d = 0; d < derivatives.length; d++) {
-      var deriv = derivatives[d];
-      var fileName = safeName + deriv.suffix + '.md';
-      var filePath = basePath + fileName;
-
-      // Check if this item already exists in the dashboard
-      var targetFolder = project.contentFolders[deriv.folder];
-      if (targetFolder) {
-        var alreadyExists = false;
-        for (var e = 0; e < (targetFolder.items || []).length; e++) {
-          if (targetFolder.items[e].path === filePath) { alreadyExists = true; break; }
-        }
-        if (alreadyExists) {
-          failed.push(deriv.suffix.trim() + ' (already exists)');
-          continue;
-        }
-      }
-
-      // Update button status
-      btns.forEach(function(btn) {
-        btn.textContent = '⏳ Writing ' + (d + 1) + '/3...';
-      });
-
-      // Call Claude API to generate content
-      var generatedContent;
-      try {
-        generatedContent = await callClaudeAPI(FL3_VOICE_SYSTEM, deriv.prompt);
-      } catch(apiErr) {
-        failed.push(deriv.suffix.trim() + ' (' + apiErr.message + ')');
-        continue;
-      }
-
-      // Add metadata header
-      var fileContent = '**Type:** ' + deriv.label + '\n**Source Article:** ' + articleTitle + '\n**Generated:** ' + today + '\n\n' + generatedContent;
-
-      // Write file to Obsidian
-      var success = await writeFileToObsidian(filePath, fileContent);
-      if (!success) {
-        failed.push(deriv.suffix.trim() + ' (Obsidian write failed)');
-        continue;
-      }
-
-      // Add to dashboard data
-      if (!project.contentFolders[deriv.folder]) {
-        project.contentFolders[deriv.folder] = { label: deriv.label, items: [] };
-      }
-
-      var newItem = {
-        title: articleTitle + deriv.suffix,
-        steps: deriv.steps,
-        path: filePath
-      };
-      if (item.weekOf) newItem.weekOf = item.weekOf;
-
-      project.contentFolders[deriv.folder].items.push(newItem);
-      created.push(deriv.suffix.trim());
-    }
-
-    // 4. Save and re-render
-    saveToLocalStorage();
-    reRenderWeeklyContent();
-
-    // 5. Mark as completed and persist
-    if (!item.actions) item.actions = {};
-    item.actions.repurpose = true;
-    saveToLocalStorage();
-
-    // Update buttons with strikethrough
+    // 4. Update buttons and show instructions
     btns.forEach(function(btn) {
       btn.classList.remove('working');
-      btn.classList.add('completed');
       btn.textContent = '🔄 Repurpose';
       btn.disabled = false;
     });
 
-    // Build result message
-    var msg = '';
-    if (created.length > 0) msg += 'Created: ' + created.join(', ') + '. ';
-    if (failed.length > 0) msg += 'Skipped: ' + failed.join(', ') + '.';
-    showArchiveNotice(msg || 'Repurpose complete!', created.length > 0 ? 'success' : 'warning');
+    showArchiveNotice('Article queued! In Claude Code, type: /repurpose', 'success');
 
   } catch(e) {
     btns.forEach(function(btn) {
