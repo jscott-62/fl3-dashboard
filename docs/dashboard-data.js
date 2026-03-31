@@ -739,6 +739,16 @@ window.FL3_DASHBOARD_DATA = {
                 "publish": false
               },
               "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/the-risk-flip-what-is-really-dangerous-for-your-retirement.md"
+            },
+            {
+              "title": "OpenClaw and Bitcoin: The Same Pattern Most People Miss",
+              "steps": {
+                "research": false,
+                "write": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/OpenClaw and Bitcoin The Same Pattern Most People Miss.md"
             }
           ]
         },
