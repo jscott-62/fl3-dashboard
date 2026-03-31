@@ -871,7 +871,7 @@ window.FL3_DASHBOARD_DATA = {
               "steps": {
                 "research": true,
                 "write": true,
-                "film": false,
+                "film": true,
                 "edit": false,
                 "publish": false
               },
