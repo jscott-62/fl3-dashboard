@@ -4392,9 +4392,17 @@ async function fetchGHLMetrics() {
     // Parse contacts total
     var emailListTotal = (contactsData.meta && contactsData.meta.total) ? contactsData.meta.total : 0;
 
-    // Parse orders: only completed, paid, liveMode orders
+    // Parse orders: only completed, paid, liveMode orders for tracked products
+    var TRACKED_PRODUCTS = [
+      'great catch-up',
+      'freedom number calculator',
+      'retirement revitalization blueprint',
+      'black friday offer'
+    ];
     var orders = (ordersData.data || []).filter(function(o) {
-      return o.status === 'completed' && o.liveMode === true;
+      if (o.status !== 'completed' || o.liveMode !== true) return false;
+      var src = (o.sourceName || '').toLowerCase();
+      return TRACKED_PRODUCTS.some(function(p) { return src.indexOf(p) !== -1; });
     });
     var totalRevenue = 0;
     var totalSales = 0;
