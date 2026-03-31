@@ -821,8 +821,8 @@ window.FL3_DASHBOARD_DATA = {
             {
               "title": "The K Shaped Economy",
               "steps": {
-                "research": false,
-                "write": false,
+                "research": true,
+                "write": true,
                 "film": false,
                 "edit": false,
                 "publish": false
