@@ -1767,10 +1767,6 @@
 <!-- ===== WEEKLY METRICS ===== -->
 <div class="metrics-grid" id="weeklyMetrics">
   <div class="metric-card">
-    <div class="metric-value" id="metricYTViews">0</div>
-    <div class="metric-label">YouTube Views</div>
-  </div>
-  <div class="metric-card">
     <div class="metric-value" id="metricWebReg">0</div>
     <div class="metric-label">Webinar Registrations</div>
   </div>
@@ -1964,7 +1960,6 @@ function render(data) {
   setGoalBarInverse('goalCPL', 'goalCPLBar', latest.costPerLead, goals.costPerLeadTarget, true);
 
   // Weekly metrics
-  document.getElementById('metricYTViews').textContent = latest.youtubeViews.toLocaleString();
   document.getElementById('metricWebReg').textContent = latest.webinarRegistrations.toLocaleString();
 
   // Facebook Ads metrics
