@@ -744,7 +744,7 @@ window.FL3_DASHBOARD_DATA = {
               "title": "OpenClaw and Bitcoin: The Same Pattern Most People Miss",
               "steps": {
                 "research": true,
-                "write": false,
+                "write": true,
                 "edit": false,
                 "publish": false
               },
