@@ -817,7 +817,7 @@ window.FL3_DASHBOARD_DATA = {
           "label": "Power Content",
           "items": [
             {
-              "title": "The K Shaped Economy",
+              "title": "The K-Shaped Economy: Which Side Are You On?",
               "steps": {
                 "research": true,
                 "write": true,
@@ -825,7 +825,7 @@ window.FL3_DASHBOARD_DATA = {
                 "edit": false,
                 "publish": false
               },
-              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/The K Shaped Economy.md"
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/The K-Shaped Economy Which Side Are You On.md"
             }
           ]
         },
