@@ -872,9 +872,12 @@
                 "write": true,
                 "film": true,
                 "edit": true,
-                "publish": false
+                "publish": true
               },
-              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/The K-Shaped Economy Which Side Are You On.md"
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Archive/Unscheduled/The K-Shaped Economy Which Side Are You On PUB (2026-03-31).md",
+              "originalPath": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/The K-Shaped Economy Which Side Are You On.md",
+              "archived": true,
+              "archivedDate": "2026-03-31"
             }
           ]
         },
