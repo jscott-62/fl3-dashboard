@@ -748,7 +748,10 @@ window.FL3_DASHBOARD_DATA = {
                 "edit": false,
                 "publish": false
               },
-              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/OpenClaw and Bitcoin The Same Pattern Most People Miss.md"
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/OpenClaw and Bitcoin The Same Pattern Most People Miss.md",
+              "actions": {
+                "medium": true
+              }
             }
           ]
         },
