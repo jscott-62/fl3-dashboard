@@ -3527,7 +3527,7 @@ function buildCalendarContentRow(entry, folderKey) {
         if (!entry.item.steps) entry.item.steps = {};
         entry.item.steps[stepKey] = !entry.item.steps[stepKey];
         // Auto-archive when Publish is checked
-        if (stepKey === 'publish' && entry.item.steps[stepKey] && entry.item.path && !entry.item.archived) {
+        if (stepKey === 'publish' && entry.item.steps[stepKey] && entry.item.path && !entry.item.archived && entry.folderKey !== 'future-of-money') {
           autoArchiveItem(entry.item, entry.folderKey, entry.idx);
         }
         saveToLocalStorage();
@@ -3892,7 +3892,7 @@ function buildFolderListView(folderKey, folder, data) {
         if (e.target.checked) { lbl.classList.add('checked'); } else { lbl.classList.remove('checked'); }
 
         // Auto-archive when Publish is checked
-        if (stepKey === 'publish' && e.target.checked && targetItem.path && !targetItem.archived) {
+        if (stepKey === 'publish' && e.target.checked && targetItem.path && !targetItem.archived && fKey !== 'future-of-money') {
           autoArchiveItem(targetItem, fKey, idx);
         }
 
@@ -4078,7 +4078,7 @@ function createFolderContentCard(item, folderKey, itemIdx, data) {
       if (!targetItem.steps) targetItem.steps = {};
       targetItem.steps[stepKey] = e.target.checked;
       // Auto-archive when Publish is checked
-      if (stepKey === 'publish' && e.target.checked && targetItem.path && !targetItem.archived) {
+      if (stepKey === 'publish' && e.target.checked && targetItem.path && !targetItem.archived && fKey !== 'future-of-money') {
         autoArchiveItem(targetItem, fKey, idx);
       }
       saveToLocalStorage();
