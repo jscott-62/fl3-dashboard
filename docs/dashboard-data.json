@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-28",
+  "lastUpdated": "2026-03-31",
   "projects": {
     "wrong-asset-manifesto": {
       "name": "The Wrong Asset Manifesto",
@@ -816,7 +816,19 @@
         },
         "power-content": {
           "label": "Power Content",
-          "items": []
+          "items": [
+            {
+              "title": "The K Shaped Economy",
+              "steps": {
+                "research": false,
+                "write": false,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/The K Shaped Economy.md"
+            }
+          ]
         },
         "conveyor-belt": {
           "label": "Conveyor Belt",
