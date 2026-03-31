@@ -1716,7 +1716,13 @@
 <!-- ===== GOALS PROGRESS ===== -->
 <div class="goals-section">
   <div class="card">
-    <h2>Goals Progress</h2>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+      <h2 style="margin:0;">Goals Progress</h2>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span id="ghlLiveBadge" style="font-size:11px; color:var(--muted); cursor:default;"></span>
+        <button id="ghlRefreshBtn" onclick="fetchGHLMetrics()" style="background:none; border:1px solid var(--border); border-radius:6px; color:var(--muted); font-size:12px; padding:3px 8px; cursor:pointer;" title="Refresh from GHL">&#x21bb; Sync</button>
+      </div>
+    </div>
     <div class="goals-bars">
       <div class="metric-bar-container">
         <div class="metric-bar-label">
@@ -1936,6 +1942,9 @@ async function loadData() {
   }
 
   render(data);
+
+  // Fetch live GHL metrics after initial render
+  fetchGHLMetrics();
 }
 
 // =====================================================================
@@ -4335,6 +4344,98 @@ async function copyForMedium(folderKey, itemIdx) {
       btn.disabled = false;
     }
     showArchiveNotice('Medium: ' + e.message, 'error');
+  }
+}
+
+// =====================================================================
+// GHL METRICS: Fetch live data from GoHighLevel API
+// =====================================================================
+
+var GHL_METRICS_CONFIG = {
+  apiBase: 'https://services.leadconnectorhq.com',
+  locationId: 'AIbLlefEQIbk2f5YaG2Y',
+  version: '2021-07-28'
+};
+
+var _ghlMetricsCache = null;
+
+async function fetchGHLMetrics() {
+  var token = localStorage.getItem('fl3-ghl-api-token');
+  if (!token) return null;
+
+  var hdr = {
+    'Accept': 'application/json',
+    'Authorization': 'Bearer ' + token,
+    'Version': GHL_METRICS_CONFIG.version
+  };
+  var loc = GHL_METRICS_CONFIG.locationId;
+  var base = GHL_METRICS_CONFIG.apiBase;
+
+  // Show loading state
+  var badge = document.getElementById('ghlLiveBadge');
+  if (badge) { badge.textContent = 'syncing...'; badge.style.color = 'var(--muted)'; }
+
+  try {
+    // Fetch all 3 in parallel
+    var [contactsRes, ordersRes] = await Promise.all([
+      fetch(base + '/contacts/?limit=1&locationId=' + loc, { headers: hdr }),
+      fetch(base + '/payments/orders?altId=' + loc + '&altType=location&limit=100', { headers: hdr })
+    ]);
+
+    if (!contactsRes.ok || !ordersRes.ok) {
+      throw new Error('GHL API returned ' + contactsRes.status + ' / ' + ordersRes.status);
+    }
+
+    var contactsData = await contactsRes.json();
+    var ordersData = await ordersRes.json();
+
+    // Parse contacts total
+    var emailListTotal = (contactsData.meta && contactsData.meta.total) ? contactsData.meta.total : 0;
+
+    // Parse orders: only completed, paid, liveMode orders
+    var orders = (ordersData.data || []).filter(function(o) {
+      return o.status === 'completed' && o.liveMode === true;
+    });
+    var totalRevenue = 0;
+    var totalSales = 0;
+    for (var i = 0; i < orders.length; i++) {
+      totalRevenue += (orders[i].amount || 0);
+      totalSales++;
+    }
+
+    var metrics = {
+      emailList: emailListTotal,
+      revenue: totalRevenue,
+      courseSales: totalSales,
+      fetchedAt: new Date().toISOString()
+    };
+
+    _ghlMetricsCache = metrics;
+
+    // Update goal bars with live data
+    if (_dashboardData && _dashboardData.goals) {
+      var goals = _dashboardData.goals;
+      setGoalBar('goalEmail', 'goalEmailBar', metrics.emailList, goals.emailListTarget);
+      setGoalBar('goalRevenue', 'goalRevenueBar', metrics.revenue, goals.revenueTarget, true);
+      setGoalBar('goalSales', 'goalSalesBar', metrics.courseSales, goals.courseSalesTarget);
+    }
+
+    // Show success
+    if (badge) {
+      badge.textContent = 'GHL Live';
+      badge.style.color = 'var(--green)';
+      badge.title = 'Last synced: ' + new Date().toLocaleTimeString();
+    }
+
+    return metrics;
+  } catch(e) {
+    console.warn('GHL metrics fetch failed:', e);
+    if (badge) {
+      badge.textContent = 'GHL offline';
+      badge.style.color = 'var(--red)';
+      badge.title = e.message;
+    }
+    return null;
   }
 }
 
