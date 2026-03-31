@@ -472,6 +472,17 @@ window.FL3_DASHBOARD_DATA = {
               },
               "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Mar 24/The Fed Does What Lenin Did With Guns - YouTube Script.md",
               "weekOf": "2026-03-24"
+            },
+            {
+              "title": "OpenClaw and Bitcoin: The Same Pattern Most People Miss - YouTube Script",
+              "steps": {
+                "research": true,
+                "write": true,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/OpenClaw and Bitcoin The Same Pattern Most People Miss - YouTube Script.md"
             }
           ]
         },
@@ -585,6 +596,27 @@ window.FL3_DASHBOARD_DATA = {
               "originalPath": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/Pillar Vid 1 Short #2.md",
               "archived": true,
               "archivedDate": "2026-03-27"
+            },
+            {
+              "title": "OpenClaw and Bitcoin: The Same Pattern Most People Miss - Short Video",
+              "steps": {
+                "research": true,
+                "write": true,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/OpenClaw and Bitcoin The Same Pattern Most People Miss - Short Video.md"
+            },
+            {
+              "title": "OpenClaw and Bitcoin: The Same Pattern Most People Miss - Social Post",
+              "steps": {
+                "research": true,
+                "write": true,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/OpenClaw and Bitcoin The Same Pattern Most People Miss - Social Post.md"
             }
           ]
         },
@@ -751,7 +783,8 @@ window.FL3_DASHBOARD_DATA = {
               "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/OpenClaw and Bitcoin The Same Pattern Most People Miss.md",
               "actions": {
                 "medium": true,
-                "ghlBlog": true
+                "ghlBlog": true,
+                "repurpose": true
               }
             }
           ]
@@ -972,4 +1005,5 @@ window.FL3_DASHBOARD_DATA = {
     "courseSalesTarget": 20,
     "costPerLeadTarget": 5
   }
-};
+}
+;
