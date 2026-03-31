@@ -4399,8 +4399,10 @@ async function fetchGHLMetrics() {
       'retirement revitalization blueprint',
       'black friday offer'
     ];
+    var GHL_ORDERS_START = '2026-04-01T00:00:00.000Z'; // ignore all test orders before this date
     var orders = (ordersData.data || []).filter(function(o) {
-      if (o.status !== 'completed' || o.liveMode !== true) return false;
+      if (o.status !== 'completed' || o.liveMode !== true || o.amount <= 0) return false;
+      if (o.createdAt < GHL_ORDERS_START) return false;
       var src = (o.sourceName || '').toLowerCase();
       return TRACKED_PRODUCTS.some(function(p) { return src.indexOf(p) !== -1; });
     });
