@@ -1767,14 +1767,6 @@
 <!-- ===== WEEKLY METRICS ===== -->
 <div class="metrics-grid" id="weeklyMetrics">
   <div class="metric-card">
-    <div class="metric-value" id="metricNewEmails">0</div>
-    <div class="metric-label">New Emails This Week</div>
-  </div>
-  <div class="metric-card">
-    <div class="metric-value" id="metricOpenRate">0%</div>
-    <div class="metric-label">Email Open Rate</div>
-  </div>
-  <div class="metric-card">
     <div class="metric-value" id="metricYTViews">0</div>
     <div class="metric-label">YouTube Views</div>
   </div>
@@ -1972,16 +1964,6 @@ function render(data) {
   setGoalBarInverse('goalCPL', 'goalCPLBar', latest.costPerLead, goals.costPerLeadTarget, true);
 
   // Weekly metrics
-  var newEmails = 0;
-  if (weeks.length >= 2) {
-    var previous = weeks[weeks.length - 2];
-    newEmails = latest.emailList - previous.emailList;
-  }
-  var newEmailsEl = document.getElementById('metricNewEmails');
-  newEmailsEl.textContent = (newEmails >= 0 ? '+' : '') + newEmails.toLocaleString();
-  newEmailsEl.style.color = newEmails > 0 ? 'var(--green)' : 'var(--text)';
-
-  document.getElementById('metricOpenRate').textContent = (latest.emailOpenRate * 100).toFixed(1) + '%';
   document.getElementById('metricYTViews').textContent = latest.youtubeViews.toLocaleString();
   document.getElementById('metricWebReg').textContent = latest.webinarRegistrations.toLocaleString();
 
@@ -4376,10 +4358,19 @@ async function fetchGHLMetrics() {
   if (badge) { badge.textContent = 'syncing...'; badge.style.color = 'var(--muted)'; }
 
   try {
-    // Fetch all 3 in parallel
-    var [contactsRes, ordersRes] = await Promise.all([
+    // Fetch all in parallel: contacts count, orders, webinar registrations (by tag)
+    var [contactsRes, ordersRes, webinarRes] = await Promise.all([
       fetch(base + '/contacts/?limit=1&locationId=' + loc, { headers: hdr }),
-      fetch(base + '/payments/orders?altId=' + loc + '&altType=location&limit=100', { headers: hdr })
+      fetch(base + '/payments/orders?altId=' + loc + '&altType=location&limit=100', { headers: hdr }),
+      fetch(base + '/contacts/search', {
+        method: 'POST',
+        headers: Object.assign({ 'Content-Type': 'application/json' }, hdr),
+        body: JSON.stringify({
+          locationId: loc,
+          pageLimit: 1,
+          filters: [{ field: 'tags', operator: 'contains', value: 'Webinar-greatcatchup' }]
+        })
+      })
     ]);
 
     if (!contactsRes.ok || !ordersRes.ok) {
@@ -4388,9 +4379,13 @@ async function fetchGHLMetrics() {
 
     var contactsData = await contactsRes.json();
     var ordersData = await ordersRes.json();
+    var webinarData = webinarRes.ok ? await webinarRes.json() : {};
 
     // Parse contacts total
     var emailListTotal = (contactsData.meta && contactsData.meta.total) ? contactsData.meta.total : 0;
+
+    // Parse webinar registrations (contacts tagged Webinar-greatcatchup)
+    var webinarRegistrations = webinarData.total || 0;
 
     // Parse orders: only completed, paid, liveMode orders for tracked products
     var TRACKED_PRODUCTS = [
@@ -4417,6 +4412,7 @@ async function fetchGHLMetrics() {
       emailList: emailListTotal,
       revenue: totalRevenue,
       courseSales: totalSales,
+      webinarRegistrations: webinarRegistrations,
       fetchedAt: new Date().toISOString()
     };
 
@@ -4429,6 +4425,10 @@ async function fetchGHLMetrics() {
       setGoalBar('goalRevenue', 'goalRevenueBar', metrics.revenue, goals.revenueTarget, true);
       setGoalBar('goalSales', 'goalSalesBar', metrics.courseSales, goals.courseSalesTarget);
     }
+
+    // Update webinar registrations metric card
+    var webRegEl = document.getElementById('metricWebReg');
+    if (webRegEl) webRegEl.textContent = metrics.webinarRegistrations.toLocaleString();
 
     // Show success
     if (badge) {
