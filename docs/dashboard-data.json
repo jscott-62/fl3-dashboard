@@ -813,6 +813,14 @@
               "archivedDate": "2026-03-21"
             }
           ]
+        },
+        "power-content": {
+          "label": "Power Content",
+          "items": []
+        },
+        "conveyor-belt": {
+          "label": "Conveyor Belt",
+          "items": []
         }
       }
     },

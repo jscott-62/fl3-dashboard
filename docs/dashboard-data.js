@@ -811,6 +811,14 @@ window.FL3_DASHBOARD_DATA = {
               "archivedDate": "2026-03-21"
             }
           ]
+        },
+        "power-content": {
+          "label": "Power Content",
+          "items": []
+        },
+        "conveyor-belt": {
+          "label": "Conveyor Belt",
+          "items": []
         }
       }
     },
@@ -937,5 +945,4 @@ window.FL3_DASHBOARD_DATA = {
     "courseSalesTarget": 20,
     "costPerLeadTarget": 5
   }
-}
-;
+};

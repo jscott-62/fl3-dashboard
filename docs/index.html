@@ -2762,10 +2762,10 @@ function buildAssetProjectView(project) {
 // =====================================================================
 
 var _weeklyViewMode = 'calendar';
-var FOLDER_ORDER = ['youtube', 'future-of-money', 'social-media', 'articles', 'email'];
-var FOLDER_ICONS = { 'youtube': '🎬', 'future-of-money': '💰', 'social-media': '📱', 'articles': '📝', 'email': '📧' };
+var FOLDER_ORDER = ['youtube', 'future-of-money', 'social-media', 'articles', 'email', 'power-content', 'conveyor-belt'];
+var FOLDER_ICONS = { 'youtube': '🎬', 'future-of-money': '💰', 'social-media': '📱', 'articles': '📝', 'email': '📧', 'power-content': '⚡', 'conveyor-belt': '🏭' };
 
-var FOLDER_NAMES = { 'youtube': 'YouTube', 'future-of-money': 'The Future Of Money', 'social-media': 'Social Media', 'articles': 'Articles', 'email': 'Email', 'briefs': 'Briefs', 'archive': 'Archive' };
+var FOLDER_NAMES = { 'youtube': 'YouTube', 'future-of-money': 'The Future Of Money', 'social-media': 'Social Media', 'articles': 'Articles', 'email': 'Email', 'briefs': 'Briefs', 'archive': 'Archive', 'power-content': 'Power Content', 'conveyor-belt': 'Conveyor Belt' };
 
 function generateContentPath(folderKey, title, weekOf) {
   var safeName = (title || 'Untitled').replace(/[/\\:*?"<>|]/g, '').replace(/\s+/g, ' ').trim();
@@ -3027,7 +3027,7 @@ function processNewContentFiles(files, prefix) {
 
   var folders = project.contentFolders || {};
   // Ensure all folder keys exist
-  ['youtube', 'social-media', 'articles', 'email'].forEach(function(key) {
+  ['youtube', 'social-media', 'articles', 'email', 'power-content', 'conveyor-belt'].forEach(function(key) {
     if (!folders[key]) folders[key] = { label: FOLDER_NAMES[key] || key, items: [] };
   });
   project.contentFolders = folders;
@@ -3172,7 +3172,7 @@ function makeEditableTitle(titleEl, folderKey, itemIdx) {
 }
 
 function getFolderStepDefs(folderKey) {
-  if (folderKey === 'youtube' || folderKey === 'social-media' || folderKey === 'future-of-money') {
+  if (folderKey === 'youtube' || folderKey === 'social-media' || folderKey === 'future-of-money' || folderKey === 'power-content' || folderKey === 'conveyor-belt') {
     return [
       { key: 'research', label: 'Research' },
       { key: 'write', label: 'Write' },
