@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-03-31",
+  "lastUpdated": "2026-04-01",
   "projects": {
     "wrong-asset-manifesto": {
       "name": "The Wrong Asset Manifesto",
@@ -433,10 +433,13 @@
                 "write": true,
                 "film": true,
                 "edit": true,
-                "publish": false
+                "publish": true
               },
-              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Mar 24/YT Script - Stop Managing Scarcity Start Building Wealth.md",
-              "weekOf": "2026-03-24"
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Archive/Week of Mar 24/YT Script - Stop Managing Scarcity Start Building Wealth PUB (2026-04-01).md",
+              "weekOf": "2026-03-24",
+              "originalPath": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Mar 24/YT Script - Stop Managing Scarcity Start Building Wealth.md",
+              "archived": true,
+              "archivedDate": "2026-04-01"
             },
             {
               "title": "The Petrodollar Shift Nobody Is Explaining to You - YouTube Script",
