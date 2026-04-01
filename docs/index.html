@@ -3630,6 +3630,8 @@ function addNewCalendarWeek(project) {
 // ARCHIVE VIEW
 // =====================================================================
 
+var _archiveGroupMode = 'date'; // 'date' or 'category'
+
 function buildArchiveView(project, data) {
   var container = document.createElement('div');
   container.className = 'archive-view';
@@ -3652,14 +3654,33 @@ function buildArchiveView(project, data) {
     return container;
   }
 
-  // Group by archive date (most recent first)
+  // Group-by toggle (date vs category)
+  var toggleRow = document.createElement('div');
+  toggleRow.style.cssText = 'display:flex;align-items:center;gap:8px;margin-bottom:16px;';
+  toggleRow.innerHTML =
+    '<span style="font-size:12px;color:var(--muted);margin-right:4px;">Group by:</span>' +
+    '<button class="view-toggle-btn' + (_archiveGroupMode === 'date' ? ' active' : '') + '" data-archive-group="date" style="font-size:12px;padding:4px 12px;">📅 Date</button>' +
+    '<button class="view-toggle-btn' + (_archiveGroupMode === 'category' ? ' active' : '') + '" data-archive-group="category" style="font-size:12px;padding:4px 12px;">🏷 Category</button>';
+  toggleRow.querySelectorAll('[data-archive-group]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      _archiveGroupMode = btn.dataset.archiveGroup;
+      reRenderWeeklyContent();
+    });
+  });
+  container.appendChild(toggleRow);
+
+  // Count unique categories
+  var categorySet = {};
+  archivedItems.forEach(function(e) { categorySet[e.folderKey] = true; });
+  var categoryCount = Object.keys(categorySet).length;
+
+  // Group by date
   var byDate = {};
   archivedItems.forEach(function(entry) {
     var dateKey = entry.item.archivedDate || 'Unknown';
     if (!byDate[dateKey]) byDate[dateKey] = [];
     byDate[dateKey].push(entry);
   });
-
   var sortedDates = Object.keys(byDate).sort().reverse();
 
   // Summary header
@@ -3671,43 +3692,86 @@ function buildArchiveView(project, data) {
       '<div style="font-size:12px;color:var(--muted);">Total Archived</div>' +
     '</div>' +
     '<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 20px;text-align:center;flex:1;min-width:120px;">' +
-      '<div style="font-size:24px;font-weight:700;color:var(--text);">' + sortedDates.length + '</div>' +
-      '<div style="font-size:12px;color:var(--muted);">Archive Dates</div>' +
+      '<div style="font-size:24px;font-weight:700;color:var(--text);">' + (_archiveGroupMode === 'date' ? sortedDates.length : categoryCount) + '</div>' +
+      '<div style="font-size:12px;color:var(--muted);">' + (_archiveGroupMode === 'date' ? 'Archive Dates' : 'Categories') + '</div>' +
     '</div>';
   container.appendChild(summary);
 
-  // Render each date group
-  sortedDates.forEach(function(dateKey) {
-    var group = document.createElement('div');
-    group.style.cssText = 'margin-bottom:16px;';
-
-    var groupHeader = document.createElement('div');
-    groupHeader.style.cssText = 'font-size:14px;font-weight:600;color:var(--accent);padding:8px 0;border-bottom:1px solid var(--border);margin-bottom:8px;';
-    groupHeader.textContent = '📦 Archived ' + dateKey + ' (' + byDate[dateKey].length + ' items)';
-    group.appendChild(groupHeader);
-
-    byDate[dateKey].forEach(function(entry) {
-      var row = document.createElement('div');
-      row.style.cssText = 'display:flex;align-items:center;gap:12px;padding:8px 12px;border-radius:6px;margin-bottom:4px;background:rgba(30,41,59,0.5);';
-
-      var folderIcon = FOLDER_ICONS[entry.folderKey] || '📁';
-      var typeBadge = '<span style="background:rgba(100,116,139,0.3);color:var(--muted);padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;text-transform:uppercase;white-space:nowrap;">' + folderIcon + ' ' + escapeHtml(entry.folderLabel) + '</span>';
-
-      var title = escapeHtml(entry.item.title || 'Untitled');
-      var obsidianLink = buildObsidianLink(entry.item.path);
-
-      row.innerHTML =
-        typeBadge +
-        '<span style="flex:1;color:var(--text);font-size:14px;">' + title + '</span>' +
-        '<a class="hub-btn hub-btn-obsidian" href="' + escapeAttr(obsidianLink) + '" title="Open in Obsidian" style="font-size:10px;padding:2px 6px;">Obsidian</a>';
-
-      group.appendChild(row);
+  if (_archiveGroupMode === 'category') {
+    // Group by category (folder)
+    var byCategory = {};
+    archivedItems.forEach(function(entry) {
+      if (!byCategory[entry.folderKey]) byCategory[entry.folderKey] = { label: entry.folderLabel, items: [] };
+      byCategory[entry.folderKey].items.push(entry);
     });
 
-    container.appendChild(group);
-  });
+    FOLDER_ORDER.forEach(function(folderKey) {
+      if (!byCategory[folderKey]) return;
+      var catData = byCategory[folderKey];
+      var group = document.createElement('div');
+      group.style.cssText = 'margin-bottom:16px;';
+
+      var folderIcon = FOLDER_ICONS[folderKey] || '📁';
+      var groupHeader = document.createElement('div');
+      groupHeader.style.cssText = 'font-size:14px;font-weight:600;color:var(--accent);padding:8px 0;border-bottom:1px solid var(--border);margin-bottom:8px;';
+      groupHeader.textContent = folderIcon + ' ' + catData.label + ' (' + catData.items.length + ' items)';
+      group.appendChild(groupHeader);
+
+      // Sort items within category by archived date, most recent first
+      catData.items.sort(function(a, b) {
+        return (b.item.archivedDate || '').localeCompare(a.item.archivedDate || '');
+      });
+
+      catData.items.forEach(function(entry) {
+        group.appendChild(buildArchiveRow(entry, true));
+      });
+
+      container.appendChild(group);
+    });
+  } else {
+    // Group by date (default)
+    sortedDates.forEach(function(dateKey) {
+      var group = document.createElement('div');
+      group.style.cssText = 'margin-bottom:16px;';
+
+      var groupHeader = document.createElement('div');
+      groupHeader.style.cssText = 'font-size:14px;font-weight:600;color:var(--accent);padding:8px 0;border-bottom:1px solid var(--border);margin-bottom:8px;';
+      groupHeader.textContent = '📦 Archived ' + dateKey + ' (' + byDate[dateKey].length + ' items)';
+      group.appendChild(groupHeader);
+
+      byDate[dateKey].forEach(function(entry) {
+        group.appendChild(buildArchiveRow(entry, false));
+      });
+
+      container.appendChild(group);
+    });
+  }
 
   return container;
+}
+
+function buildArchiveRow(entry, showDate) {
+  var row = document.createElement('div');
+  row.style.cssText = 'display:flex;align-items:center;gap:12px;padding:8px 12px;border-radius:6px;margin-bottom:4px;background:rgba(30,41,59,0.5);';
+
+  var folderIcon = FOLDER_ICONS[entry.folderKey] || '📁';
+  var typeBadge = '<span style="background:rgba(100,116,139,0.3);color:var(--muted);padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;text-transform:uppercase;white-space:nowrap;">' + folderIcon + ' ' + escapeHtml(entry.folderLabel) + '</span>';
+
+  var title = escapeHtml(entry.item.title || 'Untitled');
+  var obsidianLink = buildObsidianLink(entry.item.path);
+
+  var dateBadge = '';
+  if (showDate && entry.item.archivedDate) {
+    dateBadge = '<span style="color:var(--muted);font-size:11px;white-space:nowrap;">' + escapeHtml(entry.item.archivedDate) + '</span>';
+  }
+
+  row.innerHTML =
+    typeBadge +
+    '<span style="flex:1;color:var(--text);font-size:14px;">' + title + '</span>' +
+    dateBadge +
+    '<a class="hub-btn hub-btn-obsidian" href="' + escapeAttr(obsidianLink) + '" title="Open in Obsidian" style="font-size:10px;padding:2px 6px;">Obsidian</a>';
+
+  return row;
 }
 
 // =====================================================================
