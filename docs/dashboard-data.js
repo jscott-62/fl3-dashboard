@@ -508,6 +508,17 @@ window.FL3_DASHBOARD_DATA = {
                 "publish": false
               },
               "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/The Wrong Asset Problem - 10 Min YouTube Script.md"
+            },
+            {
+              "title": "The Pattern You Cant Unsee - 10 Min YouTube Script",
+              "steps": {
+                "research": false,
+                "write": false,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/The Pattern You Cant Unsee - 10 Min YouTube Script.md"
             }
           ]
         },
