@@ -449,7 +449,8 @@ window.FL3_DASHBOARD_DATA = {
                 "write": true,
                 "film": false,
                 "edit": false,
-                "publish": false
+                "publish": false,
+                "textedit": true
               },
               "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/The Petrodollar Shift Nobody Is Explaining to You - YouTube Script.md"
             },
