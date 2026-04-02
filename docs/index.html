@@ -3158,7 +3158,17 @@ function makeEditableTitle(titleEl, folderKey, itemIdx) {
 }
 
 function getFolderStepDefs(folderKey) {
-  if (folderKey === 'youtube' || folderKey === 'social-media' || folderKey === 'future-of-money' || folderKey === 'power-content' || folderKey === 'conveyor-belt') {
+  if (folderKey === 'youtube' || folderKey === 'social-media') {
+    return [
+      { key: 'research', label: 'Research' },
+      { key: 'write', label: 'Write' },
+      { key: 'textedit', label: 'TextEdit' },
+      { key: 'film', label: 'Film' },
+      { key: 'edit', label: 'Edit' },
+      { key: 'publish', label: 'Publish' }
+    ];
+  }
+  if (folderKey === 'future-of-money' || folderKey === 'power-content' || folderKey === 'conveyor-belt') {
     return [
       { key: 'research', label: 'Research' },
       { key: 'write', label: 'Write' },
