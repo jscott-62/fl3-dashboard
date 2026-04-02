@@ -479,8 +479,8 @@ window.FL3_DASHBOARD_DATA = {
             {
               "title": "Its Math Not Tech - 10 Min YouTube Script",
               "steps": {
-                "research": false,
-                "write": false,
+                "research": true,
+                "write": true,
                 "film": false,
                 "edit": false,
                 "publish": false
