@@ -79,7 +79,8 @@ window.FL3_DASHBOARD_DATA = {
           "useScottsPhoto": false,
           "steps": {
             "imageCreated": true,
-            "adCreatedInFB": true
+            "adCreatedInFB": true,
+            "adPublished": true
           }
         },
         {
@@ -93,7 +94,8 @@ window.FL3_DASHBOARD_DATA = {
           "useScottsPhoto": false,
           "steps": {
             "imageCreated": true,
-            "adCreatedInFB": true
+            "adCreatedInFB": true,
+            "adPublished": true
           }
         },
         {
@@ -107,7 +109,8 @@ window.FL3_DASHBOARD_DATA = {
           "useScottsPhoto": true,
           "steps": {
             "imageCreated": true,
-            "adCreatedInFB": true
+            "adCreatedInFB": true,
+            "adPublished": true
           }
         },
         {
@@ -121,7 +124,8 @@ window.FL3_DASHBOARD_DATA = {
           "useScottsPhoto": false,
           "steps": {
             "imageCreated": true,
-            "adCreatedInFB": true
+            "adCreatedInFB": true,
+            "adPublished": true
           }
         },
         {
