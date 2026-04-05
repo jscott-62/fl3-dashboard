@@ -207,11 +207,11 @@ window.FL3_DASHBOARD_DATA = {
               "id": "vid-webinar-reg",
               "title": "Webinar Reg",
               "steps": {
-                "research": true,
-                "write": true,
-                "textedit": true,
-                "film": true,
-                "edit": true,
+                "research": false,
+                "write": false,
+                "textedit": false,
+                "film": false,
+                "edit": false,
                 "thumbnail": false,
                 "keywords": false
               }
