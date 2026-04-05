@@ -137,6 +137,51 @@
     margin-top: 4px;
   }
 
+  /* ===== CATCH-UP SUB-TABS ===== */
+  .catchup-subtabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .catchup-subtab {
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+  }
+  .catchup-subtab:hover { color: var(--text); }
+  .catchup-subtab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+  .catchup-subview { display: none; }
+  .catchup-subview.active { display: block; }
+  .vid-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .vid-card-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .vid-card-steps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
   /* ===== STATUS BADGES ===== */
   .status-badge {
     font-size: 12px;
@@ -1942,6 +1987,28 @@ async function loadData() {
 function render(data) {
   _dashboardData = data;
 
+  // Ensure video tracking data exists for The Great Catch-Up
+  var catchup = data.projects && data.projects['the-great-catch-up'];
+  if (catchup && !catchup.videos) {
+    catchup.videos = {
+      'pre-webinar': {
+        label: 'Pre-Webinar Vids',
+        items: [
+          { id: 'vid-webinar-reg', title: 'Webinar Reg', steps: {} },
+          { id: 'vid-pre-webinar-2', title: 'Pre-Webinar Vid2', steps: {} },
+          { id: 'vid-risk-reversal', title: 'RiskReversal', steps: {} }
+        ]
+      },
+      'post-webinar': {
+        label: 'Post-Webinar Vids',
+        items: [
+          { id: 'vid-objection-1', title: 'ObjectionVid1', steps: {} },
+          { id: 'vid-objection-2', title: 'ObjectionVid2', steps: {} }
+        ]
+      }
+    };
+  }
+
   // Last updated
   document.getElementById('lastUpdated').textContent = data.lastUpdated;
 
@@ -2522,6 +2589,98 @@ function renderProjectTabs(data) {
 // AD TRACKER VIEW (The Great Catch-Up)
 // =====================================================================
 
+function getVideoStepDefs() {
+  return [
+    { key: 'research', label: 'Research' },
+    { key: 'write', label: 'Write' },
+    { key: 'textedit', label: 'TextEdit' },
+    { key: 'film', label: 'Film' },
+    { key: 'edit', label: 'Edit' },
+    { key: 'thumbnail', label: 'Thumbnail' },
+    { key: 'keywords', label: 'Keywords' },
+    { key: 'title', label: 'Title' },
+    { key: 'description', label: 'Description' }
+  ];
+}
+
+function buildVideoGroupView(groupKey, groupData) {
+  var container = document.createElement('div');
+  var stepDefs = getVideoStepDefs();
+  var items = groupData.items || [];
+
+  items.forEach(function(item, idx) {
+    var vidCard = document.createElement('div');
+    vidCard.className = 'vid-card';
+
+    var titleDiv = document.createElement('div');
+    titleDiv.className = 'vid-card-title';
+    titleDiv.textContent = item.title;
+    vidCard.appendChild(titleDiv);
+
+    var stepsDiv = document.createElement('div');
+    stepsDiv.className = 'vid-card-steps';
+
+    stepDefs.forEach(function(def) {
+      var checked = item.steps && item.steps[def.key];
+      var checkedClass = checked ? ' checked' : '';
+      var checkedAttr = checked ? ' checked' : '';
+      var label = document.createElement('label');
+      label.className = 'step-checkbox' + checkedClass;
+      label.innerHTML = '<input type="checkbox"' + checkedAttr + ' data-vid-group="' + groupKey + '" data-vid-idx="' + idx + '" data-step="' + def.key + '"><span>' + def.label + '</span>';
+      stepsDiv.appendChild(label);
+    });
+
+    vidCard.appendChild(stepsDiv);
+
+    // Checkbox handlers
+    vidCard.querySelectorAll('input[type="checkbox"]').forEach(function(cb) {
+      cb.addEventListener('change', function() {
+        var gKey = this.dataset.vidGroup;
+        var vIdx = parseInt(this.dataset.vidIdx);
+        var step = this.dataset.step;
+        var checked = this.checked;
+        var lbl = this.closest('.step-checkbox');
+        if (checked) { lbl.classList.add('checked'); } else { lbl.classList.remove('checked'); }
+
+        var targetItem = _dashboardData.projects['the-great-catch-up'].videos[gKey].items[vIdx];
+        if (!targetItem.steps) targetItem.steps = {};
+        targetItem.steps[step] = checked;
+        updateVideoProgress(gKey);
+        saveToLocalStorage();
+      });
+    });
+
+    container.appendChild(vidCard);
+  });
+
+  // Progress bar
+  var progressDiv = document.createElement('div');
+  progressDiv.id = 'vid-progress-' + groupKey;
+  container.appendChild(progressDiv);
+  setTimeout(function() { updateVideoProgress(groupKey); }, 0);
+
+  return container;
+}
+
+function updateVideoProgress(groupKey) {
+  var el = document.getElementById('vid-progress-' + groupKey);
+  if (!el || !_dashboardData) return;
+  var videos = ((_dashboardData.projects['the-great-catch-up'] || {}).videos || {})[groupKey];
+  if (!videos) return;
+  var stepDefs = getVideoStepDefs();
+  var total = videos.items.length * stepDefs.length;
+  var done = 0;
+  videos.items.forEach(function(item) {
+    stepDefs.forEach(function(def) {
+      if (item.steps && item.steps[def.key]) done++;
+    });
+  });
+  var pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  var barColor = pct === 100 ? 'green' : (pct >= 50 ? 'blue' : 'amber');
+  el.innerHTML = '<div class="progress-bar" style="margin-top:20px;"><div class="progress-fill ' + barColor + '" style="width:' + pct + '%"></div></div>' +
+    '<div class="progress-text">' + pct + '% complete (' + done + '/' + total + ' steps)</div>';
+}
+
 function buildAdTrackerView(project) {
   var card = document.createElement('div');
   card.className = 'card';
@@ -2556,6 +2715,53 @@ function buildAdTrackerView(project) {
     }
     card.appendChild(briefEl);
   }
+
+  // Sub-tabs: Ads, Pre-Webinar Vids, Post-Webinar Vids
+  var subtabDefs = [
+    { key: 'ads', label: 'Ads' },
+    { key: 'pre-webinar', label: 'Pre-Webinar Vids' },
+    { key: 'post-webinar', label: 'Post-Webinar Vids' }
+  ];
+
+  var subtabBar = document.createElement('div');
+  subtabBar.className = 'catchup-subtabs';
+
+  var subviewContainer = document.createElement('div');
+
+  subtabDefs.forEach(function(def, i) {
+    var btn = document.createElement('button');
+    btn.className = 'catchup-subtab' + (i === 0 ? ' active' : '');
+    btn.textContent = def.label;
+    btn.dataset.subtab = def.key;
+    btn.addEventListener('click', function() {
+      subtabBar.querySelectorAll('.catchup-subtab').forEach(function(t) { t.classList.remove('active'); });
+      subviewContainer.querySelectorAll('.catchup-subview').forEach(function(v) { v.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById('catchup-view-' + def.key).classList.add('active');
+    });
+    subtabBar.appendChild(btn);
+
+    var subview = document.createElement('div');
+    subview.className = 'catchup-subview' + (i === 0 ? ' active' : '');
+    subview.id = 'catchup-view-' + def.key;
+
+    if (def.key === 'ads') {
+      subview.appendChild(buildAdContent(project));
+    } else if (project.videos && project.videos[def.key]) {
+      subview.appendChild(buildVideoGroupView(def.key, project.videos[def.key]));
+    }
+
+    subviewContainer.appendChild(subview);
+  });
+
+  card.appendChild(subtabBar);
+  card.appendChild(subviewContainer);
+
+  return card;
+}
+
+function buildAdContent(project) {
+  var wrapper = document.createElement('div');
 
   // Ads grouped by wave
   var ads = project.ads || [];
@@ -2637,16 +2843,16 @@ function buildAdTrackerView(project) {
     return section;
   }
 
-  card.appendChild(renderAdGroup(wave1, 1));
-  card.appendChild(renderAdGroup(wave2, 2));
+  wrapper.appendChild(renderAdGroup(wave1, 1));
+  wrapper.appendChild(renderAdGroup(wave2, 2));
 
   // Progress bar
   var progressDiv = document.createElement('div');
   progressDiv.id = 'promo-tracker-progress';
-  card.appendChild(progressDiv);
+  wrapper.appendChild(progressDiv);
   setTimeout(updateAdProgress, 0);
 
-  return card;
+  return wrapper;
 }
 
 function updateAdProgress() {

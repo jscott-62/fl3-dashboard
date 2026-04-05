@@ -197,7 +197,24 @@
             "adCreatedInFB": false
           }
         }
-      ]
+      ],
+      "videos": {
+        "pre-webinar": {
+          "label": "Pre-Webinar Vids",
+          "items": [
+            { "id": "vid-webinar-reg", "title": "Webinar Reg", "steps": {} },
+            { "id": "vid-pre-webinar-2", "title": "Pre-Webinar Vid2", "steps": {} },
+            { "id": "vid-risk-reversal", "title": "RiskReversal", "steps": {} }
+          ]
+        },
+        "post-webinar": {
+          "label": "Post-Webinar Vids",
+          "items": [
+            { "id": "vid-objection-1", "title": "ObjectionVid1", "steps": {} },
+            { "id": "vid-objection-2", "title": "ObjectionVid2", "steps": {} }
+          ]
+        }
+      }
     },
     "weekly-content": {
       "name": "Weekly Content",
