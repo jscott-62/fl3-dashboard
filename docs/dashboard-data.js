@@ -702,17 +702,6 @@ window.FL3_DASHBOARD_DATA = {
               "archivedDate": "2026-03-05"
             },
             {
-              "title": "Is Bitcoin in Its \"iPhone 3\" Moment? Why the Best is Yet to Come",
-              "steps": {
-                "research": true,
-                "write": true,
-                "edit": false,
-                "publish": false
-              },
-              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Mar 17/Is Bitcoin in Its \"iPhone 3\" Moment? Why the Best is Yet to Come.md",
-              "weekOf": "2026-03-17"
-            },
-            {
               "title": "The Playbook Against Your Retirement",
               "steps": {
                 "research": true,
