@@ -203,16 +203,40 @@ window.FL3_DASHBOARD_DATA = {
         "pre-webinar": {
           "label": "Pre-Webinar Vids",
           "items": [
-            { "id": "vid-webinar-reg", "title": "Webinar Reg", "steps": {} },
-            { "id": "vid-pre-webinar-2", "title": "Pre-Webinar Vid2", "steps": {} },
-            { "id": "vid-risk-reversal", "title": "RiskReversal", "steps": {} }
+            {
+              "id": "vid-webinar-reg",
+              "title": "Webinar Reg",
+              "steps": {
+                "research": true,
+                "write": true,
+                "textedit": true
+              }
+            },
+            {
+              "id": "vid-pre-webinar-2",
+              "title": "Pre-Webinar Vid2",
+              "steps": {}
+            },
+            {
+              "id": "vid-risk-reversal",
+              "title": "RiskReversal",
+              "steps": {}
+            }
           ]
         },
         "post-webinar": {
           "label": "Post-Webinar Vids",
           "items": [
-            { "id": "vid-objection-1", "title": "ObjectionVid1", "steps": {} },
-            { "id": "vid-objection-2", "title": "ObjectionVid2", "steps": {} }
+            {
+              "id": "vid-objection-1",
+              "title": "ObjectionVid1",
+              "steps": {}
+            },
+            {
+              "id": "vid-objection-2",
+              "title": "ObjectionVid2",
+              "steps": {}
+            }
           ]
         }
       }
