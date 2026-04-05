@@ -2674,6 +2674,37 @@ function buildVideoGroupView(groupKey, groupData) {
     container.appendChild(vidCard);
   });
 
+  // Add button
+  var addBtn = document.createElement('button');
+  addBtn.className = 'hub-btn';
+  addBtn.style.cssText = 'margin-top:12px;font-size:12px;';
+  addBtn.textContent = '+ Add Video';
+  addBtn.addEventListener('click', function() {
+    var existing = container.querySelector('.content-add-input-row');
+    if (existing) { existing.remove(); return; }
+    var inputRow = document.createElement('div');
+    inputRow.className = 'content-add-input-row';
+    inputRow.innerHTML = '<input type="text" placeholder="Enter video title..." autofocus><button>Add</button>';
+    function doAdd() {
+      var title = inputRow.querySelector('input').value.trim();
+      if (!title) return;
+      var newSteps = {};
+      getVideoStepDefs().forEach(function(s) { newSteps[s.key] = false; });
+      var vids = _dashboardData.projects['the-great-catch-up'].videos[groupKey];
+      vids.items.push({ id: 'vid-' + Date.now(), title: title, steps: newSteps });
+      saveToLocalStorage();
+      reRenderCatchUp();
+    }
+    inputRow.querySelector('button').addEventListener('click', doAdd);
+    inputRow.querySelector('input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') doAdd();
+      if (e.key === 'Escape') inputRow.remove();
+    });
+    container.insertBefore(inputRow, progressDiv);
+    inputRow.querySelector('input').focus();
+  });
+  container.appendChild(addBtn);
+
   // Progress bar
   var progressDiv = document.createElement('div');
   progressDiv.id = 'vid-progress-' + groupKey;
@@ -2884,6 +2915,45 @@ function buildAdContent(project) {
 
   wrapper.appendChild(renderAdGroup(wave1, 1));
   wrapper.appendChild(renderAdGroup(wave2, 2));
+
+  // Add button
+  var addAdBtn = document.createElement('button');
+  addAdBtn.className = 'hub-btn';
+  addAdBtn.style.cssText = 'margin-top:12px;font-size:12px;';
+  addAdBtn.textContent = '+ Add Ad';
+  addAdBtn.addEventListener('click', function() {
+    var existing = wrapper.querySelector('.content-add-input-row');
+    if (existing) { existing.remove(); return; }
+    var inputRow = document.createElement('div');
+    inputRow.className = 'content-add-input-row';
+    inputRow.innerHTML = '<input type="text" placeholder="Enter ad title..." autofocus><button>Add</button>';
+    function doAdd() {
+      var title = inputRow.querySelector('input').value.trim();
+      if (!title) return;
+      var adsArr = _dashboardData.projects['the-great-catch-up'].ads;
+      adsArr.push({
+        id: 'ad-' + Date.now(),
+        title: title,
+        wave: 1,
+        format: 'feed',
+        headline: '',
+        hook: '',
+        imageDirection: '',
+        useScottsPhoto: false,
+        steps: { imageCreated: false, adCreatedInFB: false, adPublished: false }
+      });
+      saveToLocalStorage();
+      reRenderCatchUp();
+    }
+    inputRow.querySelector('button').addEventListener('click', doAdd);
+    inputRow.querySelector('input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') doAdd();
+      if (e.key === 'Escape') inputRow.remove();
+    });
+    wrapper.insertBefore(inputRow, progressDiv);
+    inputRow.querySelector('input').focus();
+  });
+  wrapper.appendChild(addAdBtn);
 
   // Progress bar
   var progressDiv = document.createElement('div');
