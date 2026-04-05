@@ -209,7 +209,9 @@ window.FL3_DASHBOARD_DATA = {
               "steps": {
                 "research": true,
                 "write": true,
-                "textedit": true
+                "textedit": true,
+                "film": true,
+                "edit": true
               }
             },
             {
