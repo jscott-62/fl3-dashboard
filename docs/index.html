@@ -2674,16 +2674,17 @@ function buildVideoGroupView(groupKey, groupData) {
     container.appendChild(vidCard);
   });
 
-  // Add button
+  // Add button (at top)
   var addBtn = document.createElement('button');
   addBtn.className = 'hub-btn';
-  addBtn.style.cssText = 'margin-top:12px;font-size:12px;';
+  addBtn.style.cssText = 'margin-bottom:12px;font-size:12px;';
   addBtn.textContent = '+ Add Video';
   addBtn.addEventListener('click', function() {
     var existing = container.querySelector('.content-add-input-row');
     if (existing) { existing.remove(); return; }
     var inputRow = document.createElement('div');
     inputRow.className = 'content-add-input-row';
+    inputRow.style.marginBottom = '12px';
     inputRow.innerHTML = '<input type="text" placeholder="Enter video title..." autofocus><button>Add</button>';
     function doAdd() {
       var title = inputRow.querySelector('input').value.trim();
@@ -2700,10 +2701,10 @@ function buildVideoGroupView(groupKey, groupData) {
       if (e.key === 'Enter') doAdd();
       if (e.key === 'Escape') inputRow.remove();
     });
-    container.insertBefore(inputRow, progressDiv);
+    addBtn.after(inputRow);
     inputRow.querySelector('input').focus();
   });
-  container.appendChild(addBtn);
+  container.insertBefore(addBtn, container.firstChild);
 
   // Progress bar
   var progressDiv = document.createElement('div');
@@ -2916,16 +2917,17 @@ function buildAdContent(project) {
   wrapper.appendChild(renderAdGroup(wave1, 1));
   wrapper.appendChild(renderAdGroup(wave2, 2));
 
-  // Add button
+  // Add button (at top)
   var addAdBtn = document.createElement('button');
   addAdBtn.className = 'hub-btn';
-  addAdBtn.style.cssText = 'margin-top:12px;font-size:12px;';
+  addAdBtn.style.cssText = 'margin-bottom:12px;font-size:12px;';
   addAdBtn.textContent = '+ Add Ad';
   addAdBtn.addEventListener('click', function() {
     var existing = wrapper.querySelector('.content-add-input-row');
     if (existing) { existing.remove(); return; }
     var inputRow = document.createElement('div');
     inputRow.className = 'content-add-input-row';
+    inputRow.style.marginBottom = '12px';
     inputRow.innerHTML = '<input type="text" placeholder="Enter ad title..." autofocus><button>Add</button>';
     function doAdd() {
       var title = inputRow.querySelector('input').value.trim();
@@ -2950,10 +2952,10 @@ function buildAdContent(project) {
       if (e.key === 'Enter') doAdd();
       if (e.key === 'Escape') inputRow.remove();
     });
-    wrapper.insertBefore(inputRow, progressDiv);
+    addAdBtn.after(inputRow);
     inputRow.querySelector('input').focus();
   });
-  wrapper.appendChild(addAdBtn);
+  wrapper.insertBefore(addAdBtn, wrapper.firstChild);
 
   // Progress bar
   var progressDiv = document.createElement('div');
