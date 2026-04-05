@@ -211,7 +211,9 @@ window.FL3_DASHBOARD_DATA = {
                 "write": true,
                 "textedit": true,
                 "film": true,
-                "edit": true
+                "edit": true,
+                "thumbnail": true,
+                "keywords": true
               }
             },
             {
