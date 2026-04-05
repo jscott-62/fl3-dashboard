@@ -181,6 +181,8 @@
     flex-wrap: wrap;
     gap: 8px;
   }
+  .vid-card:hover .content-remove-btn,
+  .promo-card:hover .content-remove-btn { opacity: 0.5; }
 
   /* ===== STATUS BADGES ===== */
   .status-badge {
@@ -2612,10 +2614,29 @@ function buildVideoGroupView(groupKey, groupData) {
     var vidCard = document.createElement('div');
     vidCard.className = 'vid-card';
 
+    var titleRow = document.createElement('div');
+    titleRow.style.cssText = 'display:flex;align-items:center;justify-content:space-between;';
     var titleDiv = document.createElement('div');
     titleDiv.className = 'vid-card-title';
+    titleDiv.style.marginBottom = '0';
     titleDiv.textContent = item.title;
-    vidCard.appendChild(titleDiv);
+    var removeBtn = document.createElement('button');
+    removeBtn.className = 'content-remove-btn';
+    removeBtn.title = 'Remove';
+    removeBtn.innerHTML = '&times;';
+    removeBtn.dataset.vidGroup = groupKey;
+    removeBtn.dataset.vidIdx = idx;
+    removeBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var gKey = this.dataset.vidGroup;
+      var vIdx = parseInt(this.dataset.vidIdx);
+      _dashboardData.projects['the-great-catch-up'].videos[gKey].items.splice(vIdx, 1);
+      saveToLocalStorage();
+      reRenderCatchUp();
+    });
+    titleRow.appendChild(titleDiv);
+    titleRow.appendChild(removeBtn);
+    vidCard.appendChild(titleRow);
 
     var stepsDiv = document.createElement('div');
     stepsDiv.className = 'vid-card-steps';
@@ -2792,9 +2813,9 @@ function buildAdContent(project) {
         : '<span class="promo-card-title">' + escapeHtml(ad.title) + '</span>';
 
       adCard.innerHTML =
-        '<div class="promo-card-header">' +
-          titleHtml +
-          formatBadge + photoBadge +
+        '<div class="promo-card-header" style="display:flex;align-items:center;justify-content:space-between;">' +
+          '<div>' + titleHtml + formatBadge + photoBadge + '</div>' +
+          '<button class="content-remove-btn" data-promo-id="' + ad.id + '" title="Remove">&times;</button>' +
         '</div>' +
         '<div class="promo-card-detail"><strong>Headline:</strong> ' + escapeHtml(ad.headline) + '</div>' +
         '<div class="promo-card-detail"><strong>Hook:</strong> ' + escapeHtml(ad.hook) + '</div>' +
@@ -2813,6 +2834,24 @@ function buildAdContent(project) {
             '<span>FB Ad Published</span>' +
           '</label>' +
         '</div>';
+
+      // Remove button handler
+      var adRemoveBtn = adCard.querySelector('.content-remove-btn');
+      if (adRemoveBtn) {
+        adRemoveBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          var removeId = this.dataset.promoId;
+          var adsArr = _dashboardData.projects['the-great-catch-up'].ads;
+          for (var i = 0; i < adsArr.length; i++) {
+            if (adsArr[i].id === removeId) {
+              adsArr.splice(i, 1);
+              break;
+            }
+          }
+          saveToLocalStorage();
+          reRenderCatchUp();
+        });
+      }
 
       // Checkbox handlers
       adCard.querySelectorAll('input[type="checkbox"]').forEach(function(cb) {
@@ -2853,6 +2892,14 @@ function buildAdContent(project) {
   setTimeout(updateAdProgress, 0);
 
   return wrapper;
+}
+
+function reRenderCatchUp() {
+  var view = document.getElementById('view-the-great-catch-up');
+  if (!view) return;
+  var project = _dashboardData.projects['the-great-catch-up'];
+  view.innerHTML = '';
+  view.appendChild(buildAdTrackerView(project));
 }
 
 function updateAdProgress() {
