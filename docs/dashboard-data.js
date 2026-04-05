@@ -511,6 +511,28 @@ window.FL3_DASHBOARD_DATA = {
                 "textedit": true
               },
               "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/The Pattern You Cant Unsee - 10 Min YouTube Script.md"
+            },
+            {
+              "title": "Milk Road Weekly Digest - April 5 2026 - YouTube Script",
+              "steps": {
+                "research": false,
+                "write": false,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/Milk Road Weekly Digest - April 5 2026 - YouTube Script.md"
+            },
+            {
+              "title": "YT Script - Is Bitcoin in Its iPhone 3 Moment",
+              "steps": {
+                "research": false,
+                "write": false,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/YT Script - Is Bitcoin in Its iPhone 3 Moment.md"
             }
           ]
         },
@@ -827,6 +849,16 @@ window.FL3_DASHBOARD_DATA = {
                 "publish": false
               },
               "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/The K-Shaped Economy- Which Side Are You On.md"
+            },
+            {
+              "title": "Milk Road Weekly Digest - April 5 2026 - Summary Article",
+              "steps": {
+                "research": false,
+                "write": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/Milk Road Weekly Digest - April 5 2026 - Summary Article.md"
             }
           ]
         },
