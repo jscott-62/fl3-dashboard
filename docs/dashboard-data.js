@@ -220,7 +220,13 @@ window.FL3_DASHBOARD_DATA = {
             {
               "id": "vid-pre-webinar-2",
               "title": "Pre-Webinar Vid2",
-              "steps": {}
+              "steps": {
+                "research": true,
+                "write": true,
+                "textedit": true,
+                "film": true,
+                "edit": true
+              }
             },
             {
               "id": "vid-risk-reversal",
