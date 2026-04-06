@@ -224,7 +224,8 @@
                 "write": true,
                 "textedit": true,
                 "film": true,
-                "edit": true
+                "edit": true,
+                "publish": true
               }
             },
             {
