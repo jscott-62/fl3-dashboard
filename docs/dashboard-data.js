@@ -260,182 +260,25 @@ window.FL3_DASHBOARD_DATA = {
         }
       },
       "emails": [
-        {
-          "id": "email-01",
-          "title": "Email 1: Registration Confirmation",
-          "sequence": "Seq 1: Indoctrination",
-          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-01-Registration-Confirmation.md",
-          "steps": {
-            "write": true,
-            "edit": false,
-            "publish": false
-          }
-        },
-        {
-          "id": "email-02",
-          "title": "Email 2: What You'll Learn",
-          "sequence": "Seq 1: Indoctrination",
-          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-02-What-Youll-Learn.md",
-          "steps": {
-            "write": true,
-            "edit": false,
-            "publish": false
-          }
-        },
-        {
-          "id": "email-03",
-          "title": "Email 3: WWWW Video",
-          "sequence": "Seq 1: Indoctrination",
-          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-03-WWWW-Video.md",
-          "steps": {
-            "write": true,
-            "edit": false,
-            "publish": false
-          }
-        },
-        {
-          "id": "email-04",
-          "title": "Email 4: Results in Advance",
-          "sequence": "Seq 1: Indoctrination",
-          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-04-Results-In-Advance.md",
-          "steps": {
-            "write": true,
-            "edit": false,
-            "publish": false
-          }
-        },
-        {
-          "id": "email-05",
-          "title": "Email 5: See You Tomorrow",
-          "sequence": "Seq 1: Indoctrination",
-          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-05-See-You-Tomorrow.md",
-          "steps": {
-            "write": true,
-            "edit": false,
-            "publish": false
-          }
-        },
-        {
-          "id": "email-06",
-          "title": "Email 6: Morning Reminder",
-          "sequence": "Seq 2: Day-Of",
-          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-06-Morning-Reminder.md",
-          "steps": {
-            "write": true,
-            "edit": false,
-            "publish": false
-          }
-        },
-        {
-          "id": "email-07",
-          "title": "Email 7: One-Hour Reminder",
-          "sequence": "Seq 2: Day-Of",
-          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-07-One-Hour-Reminder.md",
-          "steps": {
-            "write": true,
-            "edit": false,
-            "publish": false
-          }
-        },
-        {
-          "id": "email-08",
-          "title": "Email 8: We're Live",
-          "sequence": "Seq 2: Day-Of",
-          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-08-Were-Live.md",
-          "steps": {
-            "write": true,
-            "edit": false,
-            "publish": false
-          }
-        },
-        {
-          "id": "email-09",
-          "title": "Email 9: Replay Available",
-          "sequence": "Seq 3: Post-Masterclass",
-          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-09-Replay-Available.md",
-          "steps": {
-            "write": false,
-            "edit": false,
-            "publish": false
-          }
-        },
-        {
-          "id": "email-10",
-          "title": "Email 10: Objection Video #1",
-          "sequence": "Seq 3: Post-Masterclass",
-          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-10-Objection-Video-1.md",
-          "steps": {
-            "write": false,
-            "edit": false,
-            "publish": false
-          }
-        },
-        {
-          "id": "email-11",
-          "title": "Email 11: Objection Video #2",
-          "sequence": "Seq 3: Post-Masterclass",
-          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-11-Objection-Video-2.md",
-          "steps": {
-            "write": false,
-            "edit": false,
-            "publish": false
-          }
-        },
-        {
-          "id": "email-12",
-          "title": "Email 12: Urgency + Deadline",
-          "sequence": "Seq 3: Post-Masterclass",
-          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-12-Urgency-Deadline.md",
-          "steps": {
-            "write": false,
-            "edit": false,
-            "publish": false
-          }
-        },
-        {
-          "id": "email-13",
-          "title": "Email 13: Final Call",
-          "sequence": "Seq 3: Post-Masterclass",
-          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-13-Final-Call.md",
-          "steps": {
-            "write": false,
-            "edit": false,
-            "publish": false
-          }
-        },
-        {
-          "id": "email-14",
-          "title": "Email 14: You Missed It",
-          "sequence": "Seq 4: No-Show",
-          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-14-You-Missed-It.md",
-          "steps": {
-            "write": false,
-            "edit": false,
-            "publish": false
-          }
-        },
-        {
-          "id": "email-15",
-          "title": "Email 15: Key Takeaway",
-          "sequence": "Seq 4: No-Show",
-          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-15-Key-Takeaway.md",
-          "steps": {
-            "write": false,
-            "edit": false,
-            "publish": false
-          }
-        },
-        {
-          "id": "email-16",
-          "title": "Email 16: Final Reminder",
-          "sequence": "Seq 4: No-Show",
-          "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-16-Final-Reminder.md",
-          "steps": {
-            "write": false,
-            "edit": false,
-            "publish": false
-          }
-        }
+        { "id": "email-01", "title": "Email 1: Registration Confirmation", "sequence": "Seq 1: Indoctrination", "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-01-Registration-Confirmation.md", "steps": { "write": true, "edit": false, "publish": false } },
+        { "id": "email-02", "title": "Email 2: What You'll Learn", "sequence": "Seq 1: Indoctrination", "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-02-What-Youll-Learn.md", "steps": { "write": true, "edit": false, "publish": false } },
+        { "id": "email-03", "title": "Email 3: WWWW Video", "sequence": "Seq 1: Indoctrination", "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-03-WWWW-Video.md", "steps": { "write": true, "edit": false, "publish": false } },
+        { "id": "email-04", "title": "Email 4: Results in Advance", "sequence": "Seq 1: Indoctrination", "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-04-Results-In-Advance.md", "steps": { "write": true, "edit": false, "publish": false } },
+        { "id": "email-05", "title": "Email 5: See You Tomorrow", "sequence": "Seq 1: Indoctrination", "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-05-See-You-Tomorrow.md", "steps": { "write": true, "edit": false, "publish": false } },
+        { "id": "email-06", "title": "Email 6: Morning Reminder", "sequence": "Seq 2: Day-Of", "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-06-Morning-Reminder.md", "steps": { "write": true, "edit": false, "publish": false } },
+        { "id": "email-07", "title": "Email 7: One-Hour Reminder", "sequence": "Seq 2: Day-Of", "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-07-One-Hour-Reminder.md", "steps": { "write": true, "edit": false, "publish": false } },
+        { "id": "email-08", "title": "Email 8: We're Live", "sequence": "Seq 2: Day-Of", "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-08-Were-Live.md", "steps": { "write": true, "edit": false, "publish": false } },
+        { "id": "email-09", "title": "Email 9: Replay Available", "sequence": "Seq 3: Post-Masterclass", "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-09-Replay-Available.md", "steps": { "write": true, "edit": false, "publish": false } },
+        { "id": "email-10", "title": "Email 10: Objection Video #1", "sequence": "Seq 3: Post-Masterclass", "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-10-Objection-Video-1.md", "steps": { "write": true, "edit": false, "publish": false } },
+        { "id": "email-11", "title": "Email 11: Objection Video #2", "sequence": "Seq 3: Post-Masterclass", "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-11-Objection-Video-2.md", "steps": { "write": true, "edit": false, "publish": false } },
+        { "id": "email-12", "title": "Email 12: Urgency + Deadline", "sequence": "Seq 3: Post-Masterclass", "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-12-Urgency-Deadline.md", "steps": { "write": true, "edit": false, "publish": false } },
+        { "id": "email-13", "title": "Email 13: Final Call", "sequence": "Seq 3: Post-Masterclass", "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-13-Final-Call.md", "steps": { "write": true, "edit": false, "publish": false } },
+        { "id": "email-14", "title": "Email 14: You Missed It", "sequence": "Seq 4: No-Show", "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-14-You-Missed-It.md", "steps": { "write": true, "edit": false, "publish": false } },
+        { "id": "email-15", "title": "Email 15: Key Takeaway", "sequence": "Seq 4: No-Show", "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-15-Key-Takeaway.md", "steps": { "write": true, "edit": false, "publish": false } },
+        { "id": "email-16", "title": "Email 16: Final Reminder", "sequence": "Seq 4: No-Show", "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-16-Final-Reminder.md", "steps": { "write": true, "edit": false, "publish": false } },
+        { "id": "bridge-a", "title": "Bridge A: The Question Everyone Asks", "sequence": "Bridge: Early Registrant Nurture", "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Bridge-Email-A-The-Question-Everyone-Asks.md", "steps": { "write": true, "edit": false, "publish": false } },
+        { "id": "bridge-b", "title": "Bridge B: What Linda Almost Missed", "sequence": "Bridge: Early Registrant Nurture", "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Bridge-Email-B-What-Linda-Almost-Missed.md", "steps": { "write": true, "edit": false, "publish": false } },
+        { "id": "bridge-c", "title": "Bridge C: Have You Done This Yet?", "sequence": "Bridge: Early Registrant Nurture", "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Bridge-Email-C-Have-You-Done-This-Yet.md", "steps": { "write": true, "edit": false, "publish": false } }
       ]
     },
     "weekly-content": {
