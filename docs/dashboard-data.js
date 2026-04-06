@@ -365,7 +365,7 @@ window.FL3_DASHBOARD_DATA = {
           "sequence": "Seq 3: Post-Masterclass",
           "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-10-Objection-Video-1.md",
           "steps": {
-            "write": true,
+            "write": false,
             "edit": false,
             "publish": false
           }
@@ -376,7 +376,7 @@ window.FL3_DASHBOARD_DATA = {
           "sequence": "Seq 3: Post-Masterclass",
           "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-11-Objection-Video-2.md",
           "steps": {
-            "write": true,
+            "write": false,
             "edit": false,
             "publish": false
           }
@@ -387,7 +387,7 @@ window.FL3_DASHBOARD_DATA = {
           "sequence": "Seq 3: Post-Masterclass",
           "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-12-Urgency-Deadline.md",
           "steps": {
-            "write": true,
+            "write": false,
             "edit": false,
             "publish": false
           }
@@ -398,7 +398,7 @@ window.FL3_DASHBOARD_DATA = {
           "sequence": "Seq 3: Post-Masterclass",
           "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-13-Final-Call.md",
           "steps": {
-            "write": true,
+            "write": false,
             "edit": false,
             "publish": false
           }
