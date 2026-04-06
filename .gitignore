@@ -9,3 +9,4 @@ scripts/.env
 
 # Obsidian
 .obsidian/
+scripts/fb-csv-drop/processed/
