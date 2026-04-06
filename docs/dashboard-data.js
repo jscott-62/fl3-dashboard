@@ -171,20 +171,6 @@ window.FL3_DASHBOARD_DATA = {
           }
         },
         {
-          "id": "story1",
-          "title": "Story/Reel 1: Savings of a 30-Year-Old",
-          "wave": 1,
-          "format": "story",
-          "headline": "Tap to see the math that changes everything",
-          "hook": "53 with the savings of a 30-year-old? The vehicle is the problem. Not you.",
-          "imageDirection": "1080x1920 vertical. Dark navy bg. Stacked text: '53 with the savings' / 'of a 30-year-old?' (white) / 'The vehicle is the problem. Not you.' (gold). CTA zone clear below y:1500.",
-          "useScottsPhoto": false,
-          "steps": {
-            "imageCreated": false,
-            "adCreatedInFB": false
-          }
-        },
-        {
           "id": "story2",
           "title": "Story/Reel 2: Working Until You Can't",
           "wave": 2,
