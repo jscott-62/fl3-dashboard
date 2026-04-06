@@ -344,8 +344,8 @@ window.FL3_DASHBOARD_DATA = {
           "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-08-Were-Live.md",
           "steps": {
             "write": true,
-            "edit": false,
-            "publish": false
+            "edit": true,
+            "publish": true
           }
         },
         {
