@@ -1989,8 +1989,28 @@ async function loadData() {
 function render(data) {
   _dashboardData = data;
 
-  // Ensure video tracking data exists for The Great Catch-Up
+  // Ensure video and email tracking data exists for The Great Catch-Up
   var catchup = data.projects && data.projects['the-great-catch-up'];
+  if (catchup && !catchup.emails) {
+    catchup.emails = [
+      { id: 'email-01', title: 'Email 1: Registration Confirmation', sequence: 'Seq 1: Indoctrination', path: '00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-01-Registration-Confirmation.md', steps: { write: true, edit: false, publish: false } },
+      { id: 'email-02', title: "Email 2: What You'll Learn", sequence: 'Seq 1: Indoctrination', path: '00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-02-What-Youll-Learn.md', steps: { write: true, edit: false, publish: false } },
+      { id: 'email-03', title: 'Email 3: WWWW Video', sequence: 'Seq 1: Indoctrination', path: '00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-03-WWWW-Video.md', steps: { write: true, edit: false, publish: false } },
+      { id: 'email-04', title: 'Email 4: Results in Advance', sequence: 'Seq 1: Indoctrination', path: '00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-04-Results-In-Advance.md', steps: { write: true, edit: false, publish: false } },
+      { id: 'email-05', title: 'Email 5: See You Tomorrow', sequence: 'Seq 1: Indoctrination', path: '00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-05-See-You-Tomorrow.md', steps: { write: true, edit: false, publish: false } },
+      { id: 'email-06', title: 'Email 6: Morning Reminder', sequence: 'Seq 2: Day-Of', path: '00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-06-Morning-Reminder.md', steps: { write: true, edit: false, publish: false } },
+      { id: 'email-07', title: 'Email 7: One-Hour Reminder', sequence: 'Seq 2: Day-Of', path: '00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-07-One-Hour-Reminder.md', steps: { write: true, edit: false, publish: false } },
+      { id: 'email-08', title: "Email 8: We're Live", sequence: 'Seq 2: Day-Of', path: '00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-08-Were-Live.md', steps: { write: true, edit: false, publish: false } },
+      { id: 'email-09', title: 'Email 9: Replay Available', sequence: 'Seq 3: Post-Masterclass', path: '00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-09-Replay-Available.md', steps: { write: true, edit: false, publish: false } },
+      { id: 'email-10', title: 'Email 10: Objection Video #1', sequence: 'Seq 3: Post-Masterclass', path: '00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-10-Objection-Video-1.md', steps: { write: true, edit: false, publish: false } },
+      { id: 'email-11', title: 'Email 11: Objection Video #2', sequence: 'Seq 3: Post-Masterclass', path: '00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-11-Objection-Video-2.md', steps: { write: true, edit: false, publish: false } },
+      { id: 'email-12', title: 'Email 12: Urgency + Deadline', sequence: 'Seq 3: Post-Masterclass', path: '00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-12-Urgency-Deadline.md', steps: { write: true, edit: false, publish: false } },
+      { id: 'email-13', title: 'Email 13: Final Call', sequence: 'Seq 3: Post-Masterclass', path: '00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-13-Final-Call.md', steps: { write: true, edit: false, publish: false } },
+      { id: 'email-14', title: 'Email 14: You Missed It', sequence: 'Seq 4: No-Show', path: '00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-14-You-Missed-It.md', steps: { write: true, edit: false, publish: false } },
+      { id: 'email-15', title: 'Email 15: Key Takeaway', sequence: 'Seq 4: No-Show', path: '00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-15-Key-Takeaway.md', steps: { write: true, edit: false, publish: false } },
+      { id: 'email-16', title: 'Email 16: Final Reminder', sequence: 'Seq 4: No-Show', path: '00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-16-Final-Reminder.md', steps: { write: true, edit: false, publish: false } }
+    ];
+  }
   if (catchup && !catchup.videos) {
     catchup.videos = {
       'pre-webinar': {
@@ -2770,7 +2790,8 @@ function buildAdTrackerView(project) {
   var subtabDefs = [
     { key: 'ads', label: 'Ads' },
     { key: 'pre-webinar', label: 'Pre-Webinar Vids' },
-    { key: 'post-webinar', label: 'Post-Webinar Vids' }
+    { key: 'post-webinar', label: 'Post-Webinar Vids' },
+    { key: 'emails', label: 'Emails' }
   ];
 
   var subtabBar = document.createElement('div');
@@ -2797,6 +2818,8 @@ function buildAdTrackerView(project) {
 
     if (def.key === 'ads') {
       subview.appendChild(buildAdContent(project));
+    } else if (def.key === 'emails') {
+      subview.appendChild(buildEmailsView(project));
     } else if (project.videos && project.videos[def.key]) {
       subview.appendChild(buildVideoGroupView(def.key, project.videos[def.key]));
     }
@@ -2808,6 +2831,161 @@ function buildAdTrackerView(project) {
   card.appendChild(subviewContainer);
 
   return card;
+}
+
+function getEmailStepDefs() {
+  return [
+    { key: 'write', label: 'Write' },
+    { key: 'edit', label: 'Edit' },
+    { key: 'publish', label: 'Publish' }
+  ];
+}
+
+function buildEmailsView(project) {
+  var container = document.createElement('div');
+  var emails = project.emails || [];
+  var stepDefs = getEmailStepDefs();
+
+  // Add button (at top)
+  var addBtn = document.createElement('button');
+  addBtn.className = 'hub-btn';
+  addBtn.style.cssText = 'margin-bottom:12px;font-size:12px;';
+  addBtn.textContent = '+ Add Email';
+  addBtn.addEventListener('click', function() {
+    var existing = container.querySelector('.content-add-input-row');
+    if (existing) { existing.remove(); return; }
+    var inputRow = document.createElement('div');
+    inputRow.className = 'content-add-input-row';
+    inputRow.style.marginBottom = '12px';
+    inputRow.innerHTML = '<input type="text" placeholder="Enter email title..." autofocus><button>Add</button>';
+    function doAdd() {
+      var title = inputRow.querySelector('input').value.trim();
+      if (!title) return;
+      var newSteps = {};
+      stepDefs.forEach(function(s) { newSteps[s.key] = false; });
+      if (!_dashboardData.projects['the-great-catch-up'].emails) _dashboardData.projects['the-great-catch-up'].emails = [];
+      _dashboardData.projects['the-great-catch-up'].emails.push({ id: 'email-' + Date.now(), title: title, sequence: '', path: '', steps: newSteps });
+      saveToLocalStorage();
+      reRenderCatchUp();
+    }
+    inputRow.querySelector('button').addEventListener('click', doAdd);
+    inputRow.querySelector('input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') doAdd();
+      if (e.key === 'Escape') inputRow.remove();
+    });
+    addBtn.after(inputRow);
+    inputRow.querySelector('input').focus();
+  });
+  container.appendChild(addBtn);
+
+  // Group emails by sequence
+  var sequences = {};
+  var seqOrder = [];
+  emails.forEach(function(email, idx) {
+    var seq = email.sequence || 'Unassigned';
+    if (!sequences[seq]) { sequences[seq] = []; seqOrder.push(seq); }
+    sequences[seq].push({ email: email, idx: idx });
+  });
+
+  seqOrder.forEach(function(seqName) {
+    var seqHeader = document.createElement('div');
+    seqHeader.className = 'promo-section-header';
+    seqHeader.innerHTML = '<span class="wave-badge wave-1">' + escapeHtml(seqName) + '</span>';
+    container.appendChild(seqHeader);
+
+    sequences[seqName].forEach(function(entry) {
+      var email = entry.email;
+      var idx = entry.idx;
+      var emailCard = document.createElement('div');
+      emailCard.className = 'vid-card';
+
+      // Title row with Obsidian link and remove button
+      var titleRow = document.createElement('div');
+      titleRow.style.cssText = 'display:flex;align-items:center;justify-content:space-between;';
+      var titleDiv = document.createElement('div');
+      titleDiv.className = 'vid-card-title';
+      titleDiv.style.marginBottom = '0';
+      if (email.path) {
+        titleDiv.innerHTML = '<a href="' + escapeAttr(buildObsidianLink(email.path)) + '" title="Open in Obsidian" style="color:var(--text);text-decoration:none;border-bottom:1px dashed var(--muted);">' + escapeHtml(email.title) + '</a>' +
+          ' <a class="hub-btn hub-btn-obsidian" href="' + escapeAttr(buildObsidianLink(email.path)) + '" title="Open in Obsidian" style="font-size:10px;padding:2px 6px;">Obsidian</a>';
+      } else {
+        titleDiv.textContent = email.title;
+      }
+      var removeBtn = document.createElement('button');
+      removeBtn.className = 'content-remove-btn';
+      removeBtn.title = 'Remove';
+      removeBtn.innerHTML = '&times;';
+      removeBtn.dataset.emailIdx = idx;
+      removeBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var eIdx = parseInt(this.dataset.emailIdx);
+        _dashboardData.projects['the-great-catch-up'].emails.splice(eIdx, 1);
+        saveToLocalStorage();
+        reRenderCatchUp();
+      });
+      titleRow.appendChild(titleDiv);
+      titleRow.appendChild(removeBtn);
+      emailCard.appendChild(titleRow);
+
+      // Checkboxes
+      var stepsDiv = document.createElement('div');
+      stepsDiv.className = 'vid-card-steps';
+      stepDefs.forEach(function(def) {
+        var checked = email.steps && email.steps[def.key];
+        var checkedClass = checked ? ' checked' : '';
+        var checkedAttr = checked ? ' checked' : '';
+        var label = document.createElement('label');
+        label.className = 'step-checkbox' + checkedClass;
+        label.innerHTML = '<input type="checkbox"' + checkedAttr + ' data-email-idx="' + idx + '" data-step="' + def.key + '"><span>' + def.label + '</span>';
+        stepsDiv.appendChild(label);
+      });
+      emailCard.appendChild(stepsDiv);
+
+      // Checkbox handlers
+      emailCard.querySelectorAll('input[type="checkbox"]').forEach(function(cb) {
+        cb.addEventListener('change', function() {
+          var eIdx = parseInt(this.dataset.emailIdx);
+          var step = this.dataset.step;
+          var checked = this.checked;
+          var lbl = this.closest('.step-checkbox');
+          if (checked) { lbl.classList.add('checked'); } else { lbl.classList.remove('checked'); }
+          var targetEmail = _dashboardData.projects['the-great-catch-up'].emails[eIdx];
+          if (!targetEmail.steps) targetEmail.steps = {};
+          targetEmail.steps[step] = checked;
+          updateEmailProgress();
+          saveToLocalStorage();
+        });
+      });
+
+      container.appendChild(emailCard);
+    });
+  });
+
+  // Progress bar
+  var progressDiv = document.createElement('div');
+  progressDiv.id = 'email-tracker-progress';
+  container.appendChild(progressDiv);
+  setTimeout(updateEmailProgress, 0);
+
+  return container;
+}
+
+function updateEmailProgress() {
+  var el = document.getElementById('email-tracker-progress');
+  if (!el || !_dashboardData) return;
+  var emails = (_dashboardData.projects['the-great-catch-up'] || {}).emails || [];
+  var stepDefs = getEmailStepDefs();
+  var total = emails.length * stepDefs.length;
+  var done = 0;
+  emails.forEach(function(email) {
+    stepDefs.forEach(function(def) {
+      if (email.steps && email.steps[def.key]) done++;
+    });
+  });
+  var pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  var barColor = pct === 100 ? 'green' : (pct >= 50 ? 'blue' : 'amber');
+  el.innerHTML = '<div class="progress-bar" style="margin-top:20px;"><div class="progress-fill ' + barColor + '" style="width:' + pct + '%"></div></div>' +
+    '<div class="progress-text">' + pct + '% complete (' + done + '/' + total + ' steps)</div>';
 }
 
 function buildAdContent(project) {
