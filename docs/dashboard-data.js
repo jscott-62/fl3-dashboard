@@ -232,7 +232,14 @@ window.FL3_DASHBOARD_DATA = {
             {
               "id": "vid-risk-reversal",
               "title": "RiskReversal",
-              "steps": {}
+              "steps": {
+                "research": true,
+                "write": true,
+                "textedit": true,
+                "film": true,
+                "edit": true,
+                "publish": true
+              }
             }
           ]
         },
