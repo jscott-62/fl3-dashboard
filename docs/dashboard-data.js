@@ -409,7 +409,7 @@ window.FL3_DASHBOARD_DATA = {
           "sequence": "Seq 4: No-Show",
           "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-14-You-Missed-It.md",
           "steps": {
-            "write": true,
+            "write": false,
             "edit": false,
             "publish": false
           }
@@ -420,7 +420,7 @@ window.FL3_DASHBOARD_DATA = {
           "sequence": "Seq 4: No-Show",
           "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-15-Key-Takeaway.md",
           "steps": {
-            "write": true,
+            "write": false,
             "edit": false,
             "publish": false
           }
@@ -431,7 +431,7 @@ window.FL3_DASHBOARD_DATA = {
           "sequence": "Seq 4: No-Show",
           "path": "00-ZenithPro - FL3/Projects/The-Great-Catch-Up Webinar/Email-Sequences/Email-16-Final-Reminder.md",
           "steps": {
-            "write": true,
+            "write": false,
             "edit": false,
             "publish": false
           }
