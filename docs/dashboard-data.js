@@ -1096,14 +1096,17 @@ window.FL3_DASHBOARD_DATA = {
                 "research": true,
                 "write": true,
                 "edit": true,
-                "publish": false
+                "publish": true
               },
-              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Apr 7/The 39 Trillion Trap and What It Quietly Does to Your Retirement.md",
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Archive/Week of Apr 7/The 39 Trillion Trap and What It Quietly Does to Your Retirement PUB (2026-04-09).md",
               "weekOf": "2026-04-07",
               "actions": {
                 "medium": true,
                 "ghlBlog": true
-              }
+              },
+              "originalPath": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Apr 7/The 39 Trillion Trap and What It Quietly Does to Your Retirement.md",
+              "archived": true,
+              "archivedDate": "2026-04-09"
             },
             {
               "title": "Is Bitcoin in Its \"iPhone 3\" Moment? Why the Best is Yet to Come",
