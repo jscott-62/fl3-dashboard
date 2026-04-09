@@ -783,6 +783,18 @@
                 "publish": false
               },
               "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/Milk Road Weekly Digest - April 5 2026 - YouTube Script.md"
+            },
+            {
+              "title": "The 39 Trillion Trap and What It Quietly Does to Your Retirement - YouTube Script",
+              "steps": {
+                "research": true,
+                "write": true,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Apr 7/The 39 Trillion Trap and What It Quietly Does to Your Retirement - YouTube Script.md",
+              "weekOf": "2026-04-07"
             }
           ]
         },
@@ -917,6 +929,29 @@
                 "publish": false
               },
               "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/OpenClaw and Bitcoin The Same Pattern Most People Miss - Social Post.md"
+            },
+            {
+              "title": "The 39 Trillion Trap and What It Quietly Does to Your Retirement - Short Video",
+              "steps": {
+                "research": true,
+                "write": true,
+                "film": false,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Apr 7/The 39 Trillion Trap and What It Quietly Does to Your Retirement - Short Video.md",
+              "weekOf": "2026-04-07"
+            },
+            {
+              "title": "The 39 Trillion Trap and What It Quietly Does to Your Retirement - Social Post",
+              "steps": {
+                "research": true,
+                "write": true,
+                "edit": false,
+                "publish": false
+              },
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Apr 7/The 39 Trillion Trap and What It Quietly Does to Your Retirement - Social Post.md",
+              "weekOf": "2026-04-07"
             }
           ]
         },
@@ -1101,7 +1136,8 @@
               "weekOf": "2026-04-07",
               "actions": {
                 "medium": true,
-                "ghlBlog": true
+                "ghlBlog": true,
+                "repurpose": true
               },
               "originalPath": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Apr 7/The 39 Trillion Trap and What It Quietly Does to Your Retirement.md",
               "archived": true,
