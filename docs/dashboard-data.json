@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-09",
+  "lastUpdated": "2026-04-10",
   "projects": {
     "wrong-asset-manifesto": {
       "name": "The Wrong Asset Manifesto",
@@ -947,11 +947,16 @@
               "steps": {
                 "research": true,
                 "write": true,
-                "edit": false,
-                "publish": false
+                "edit": true,
+                "publish": true,
+                "textedit": true,
+                "film": true
               },
-              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Apr 7/The 39 Trillion Trap and What It Quietly Does to Your Retirement - Social Post.md",
-              "weekOf": "2026-04-07"
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Archive/Week of Apr 7/The 39 Trillion Trap and What It Quietly Does to Your Retirement - Social Post PUB (2026-04-10).md",
+              "weekOf": "2026-04-07",
+              "originalPath": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Apr 7/The 39 Trillion Trap and What It Quietly Does to Your Retirement - Social Post.md",
+              "archived": true,
+              "archivedDate": "2026-04-10"
             }
           ]
         },
