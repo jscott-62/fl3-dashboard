@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-11",
+  "lastUpdated": "2026-04-12",
   "projects": {
     "wrong-asset-manifesto": {
       "name": "The Wrong Asset Manifesto",
@@ -789,12 +789,20 @@
               "steps": {
                 "research": true,
                 "write": true,
-                "film": false,
-                "edit": false,
-                "publish": false
+                "film": true,
+                "edit": true,
+                "publish": true,
+                "textedit": true,
+                "thumbnail": true,
+                "keywords": true,
+                "title": true,
+                "description": true
               },
-              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Apr 7/The 39 Trillion Trap and What It Quietly Does to Your Retirement - YouTube Script.md",
-              "weekOf": "2026-04-07"
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Archive/Week of Apr 7/The 39 Trillion Trap and What It Quietly Does to Your Retirement - YouTube Script PUB (2026-04-12).md",
+              "weekOf": "2026-04-07",
+              "originalPath": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Week of Apr 7/The 39 Trillion Trap and What It Quietly Does to Your Retirement - YouTube Script.md",
+              "archived": true,
+              "archivedDate": "2026-04-12"
             },
             {
               "title": "they-cut-their-costs-by-99-percent-youtube",
