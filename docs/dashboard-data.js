@@ -1238,7 +1238,8 @@ window.FL3_DASHBOARD_DATA = {
               },
               "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Archive/Unscheduled/Bitcoin-Demand-Just-Hit-a-New-Frontier-The-Reason-Goes-Back-to-Your-Mailbox PUB (2026-05-05).md",
               "actions": {
-                "medium": true
+                "medium": true,
+                "ghlBlog": true
               },
               "originalPath": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/Bitcoin-Demand-Just-Hit-a-New-Frontier-The-Reason-Goes-Back-to-Your-Mailbox.md",
               "archived": true,
