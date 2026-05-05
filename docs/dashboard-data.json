@@ -841,8 +841,8 @@
             {
               "title": "Bitcoin-Demand-Just-Hit-a-New-Frontier-The-Reason-Goes-Back-to-Your-Mailbox - YouTube Script",
               "steps": {
-                "research": true,
-                "write": true,
+                "research": false,
+                "write": false,
                 "film": false,
                 "edit": false,
                 "publish": false
@@ -1030,8 +1030,8 @@
             {
               "title": "Bitcoin-Demand-Just-Hit-a-New-Frontier-The-Reason-Goes-Back-to-Your-Mailbox - Short Video",
               "steps": {
-                "research": true,
-                "write": true,
+                "research": false,
+                "write": false,
                 "film": false,
                 "edit": false,
                 "publish": false
@@ -1041,8 +1041,9 @@
             {
               "title": "Bitcoin-Demand-Just-Hit-a-New-Frontier-The-Reason-Goes-Back-to-Your-Mailbox - Social Post",
               "steps": {
-                "research": true,
-                "write": true,
+                "research": false,
+                "write": false,
+                "film": false,
                 "edit": false,
                 "publish": false
               },
@@ -1270,8 +1271,7 @@
               "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Archive/Unscheduled/Bitcoin-Demand-Just-Hit-a-New-Frontier-The-Reason-Goes-Back-to-Your-Mailbox PUB (2026-05-05).md",
               "actions": {
                 "medium": true,
-                "ghlBlog": true,
-                "repurpose": true
+                "ghlBlog": true
               },
               "originalPath": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/Bitcoin-Demand-Just-Hit-a-New-Frontier-The-Reason-Goes-Back-to-Your-Mailbox.md",
               "archived": true,
