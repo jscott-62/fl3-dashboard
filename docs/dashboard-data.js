@@ -1232,14 +1232,17 @@ window.FL3_DASHBOARD_DATA = {
               "title": "Bitcoin-Demand-Just-Hit-a-New-Frontier-The-Reason-Goes-Back-to-Your-Mailbox",
               "steps": {
                 "research": true,
-                "write": false,
-                "edit": false,
-                "publish": false
+                "write": true,
+                "edit": true,
+                "publish": true
               },
-              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/Bitcoin-Demand-Just-Hit-a-New-Frontier-The-Reason-Goes-Back-to-Your-Mailbox.md",
+              "path": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Archive/Unscheduled/Bitcoin-Demand-Just-Hit-a-New-Frontier-The-Reason-Goes-Back-to-Your-Mailbox PUB (2026-05-05).md",
               "actions": {
                 "medium": true
-              }
+              },
+              "originalPath": "00-ZenithPro - FL3/Projects/fl3-dashboard/Weekly-Content/Unscheduled/Bitcoin-Demand-Just-Hit-a-New-Frontier-The-Reason-Goes-Back-to-Your-Mailbox.md",
+              "archived": true,
+              "archivedDate": "2026-05-05"
             },
             {
               "title": "Saylors-Genius-Machine-STRC-Article",
