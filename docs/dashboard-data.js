@@ -1231,7 +1231,7 @@ window.FL3_DASHBOARD_DATA = {
             {
               "title": "Bitcoin-Demand-Just-Hit-a-New-Frontier-The-Reason-Goes-Back-to-Your-Mailbox",
               "steps": {
-                "research": false,
+                "research": true,
                 "write": false,
                 "edit": false,
                 "publish": false
